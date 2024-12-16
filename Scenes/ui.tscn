@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://gin1s6t5p5jh"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_5inc3"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_r1nfe"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_05r3x"]
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SprintSlider" type="VSlider" parent="."]
+layout_mode = 0
+offset_left = 1635.0
+offset_top = 318.0
+offset_right = 1708.0
+offset_bottom = 605.0
+scale = Vector2(2.64001, 1.4)
+theme_override_icons/grabber = SubResource("ImageTexture_5inc3")
+theme_override_icons/grabber_highlight = SubResource("ImageTexture_r1nfe")
+theme_override_icons/grabber_disabled = SubResource("ImageTexture_05r3x")
+max_value = 1.0
+step = 0.01
+value = 1.0
+editable = false
+scrollable = false

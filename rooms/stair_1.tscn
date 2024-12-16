@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://7pskmagldtnr"]
+
+[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_cv6ik"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rgyku"]
+albedo_color = Color(0.937255, 0.803922, 0.592157, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s7xsx"]
+albedo_color = Color(0.937255, 0.803922, 0.592157, 1)
+
+[node name="stair_1" type="Node3D"]
+script = ExtResource("1_cv6ik")
+size_in_voxels = Vector3i(2, 2, 1)
+max_count = 10
+is_stair_room = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00354004, 0.0057373, 0)
+material_override = SubResource("StandardMaterial3D_rgyku")
+use_collision = true
+size = Vector3(19.7229, 19.8645, 10)
+
+[node name="Roomcut" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0852509, -0.0686951, 0)
+operation = 2
+size = Vector3(19.3382, 18.5278, 9)
+
+[node name="DOOR?2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.43017, 4.26677, -0.276978)
+operation = 2
+size = Vector3(1, 8.1129, 5.48071)
+
+[node name="DOOR?3" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.44451, -4.41159, -0.276978)
+operation = 2
+size = Vector3(1, 8.1129, 5.48071)
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0375896, -0.773665, 4.81151)
+material_override = SubResource("StandardMaterial3D_s7xsx")
+use_collision = true
+polygon = PackedVector2Array(-9.78291, -8.60492, -9.72482, 0.981842, 0.553494, -8.60715)
+depth = 9.5
