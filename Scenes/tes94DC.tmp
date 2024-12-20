@@ -1,11 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://c8y6hkpnlip1g"]
+[gd_scene load_steps=16 format=3 uid="uid://c8y6hkpnlip1g"]
 
 [ext_resource type="PackedScene" uid="uid://busyfigb6e8mo" path="res://Scenes/player.tscn" id="1_36ui5"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
 [ext_resource type="PackedScene" uid="uid://b1ls3w6t7ybnv" path="res://anim/Venus.glb" id="3_5v742"]
 [ext_resource type="Script" path="res://Scenes/venus.gd" id="3_o5w8a"]
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonGenerator3D.gd" id="6_s8vmo"]
-[ext_resource type="PackedScene" uid="uid://7pskmagldtnr" path="res://rooms/stair_1.tscn" id="7_d3uit"]
 [ext_resource type="PackedScene" uid="uid://ch0yrvh1wr6nv" path="res://rooms/small_room_1.tscn" id="7_fiwcu"]
 [ext_resource type="PackedScene" uid="uid://btqev772fc7bl" path="res://rooms/start_room.tscn" id="8_n1yd6"]
 [ext_resource type="PackedScene" uid="uid://c6gmwiknceior" path="res://rooms/medium_room.tscn" id="8_osxs0"]
@@ -46,6 +45,8 @@ transform = Transform3D(-0.979272, -0.00361349, -0.202518, -0.13989, 0.735146, 0
 shadow_enabled = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" parent="CanvasLayer" instance=ExtResource("2_j6u47")]
 
 [node name="Venus" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.31047, 0)
@@ -225,13 +226,13 @@ shape = SubResource("CapsuleShape3D_6kp62")
 
 [node name="Navi" type="NavigationRegion3D" parent="."]
 
-[node name="Player" parent="." node_paths=PackedStringArray("interact_label") instance=ExtResource("1_36ui5")]
+[node name="Player" parent="." node_paths=PackedStringArray("stamina_bar") instance=ExtResource("1_36ui5")]
 transform = Transform3D(0.99954, 0.0303292, 0, -0.0303292, 0.99954, 0, 0, 0, 1, 39.8975, 45.9977, -3.90268)
-interact_label = NodePath("../UI/InteractLabel")
+stamina_bar = NodePath("../CanvasLayer/UI/SprintSlider")
 
 [node name="DungeonGenerator3D" type="Node3D" parent="."]
 script = ExtResource("6_s8vmo")
-room_scenes = Array[PackedScene]([ExtResource("7_fiwcu"), ExtResource("8_osxs0"), ExtResource("7_d3uit")])
+room_scenes = Array[PackedScene]([ExtResource("7_fiwcu"), ExtResource("8_osxs0")])
 corridor_room_scene = ExtResource("9_svjm5")
 junctions = 30
 max_retries = 2
@@ -252,7 +253,5 @@ stream = ExtResource("11_wadk3")
 autoplay = true
 max_distance = 3967.43
 
-[node name="UI" parent="." instance=ExtResource("2_j6u47")]
-
+[editable path="CanvasLayer/UI"]
 [editable path="Venus/VenusSKin"]
-[editable path="UI"]

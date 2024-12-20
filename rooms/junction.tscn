@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://cisl75a2ha5p8"]
+[gd_scene load_steps=4 format=3 uid="uid://c4lvx2bce1ryx"]
 
-[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_stnse"]
+[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_682a6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uxuwy"]
 albedo_color = Color(0.937255, 0.803922, 0.592157, 1)
@@ -21,8 +21,8 @@ func remove_unused_doors():
 	
 "
 
-[node name="corridor_1" type="Node3D"]
-script = ExtResource("1_stnse")
+[node name="junction" type="Node3D"]
+script = ExtResource("1_682a6")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 material_override = SubResource("StandardMaterial3D_uxuwy")
@@ -34,25 +34,25 @@ operation = 2
 snap = 0.1
 size = Vector3(9, 9, 9)
 
-[node name="DOOR?2" type="CSGBox3D" parent="CSGBox3D"]
+[node name="DOOR2" type="CSGBox3D" parent="CSGBox3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, -0.45, 0)
 operation = 2
 snap = 0.1
 size = Vector3(1, 8.1129, 5.48071)
 
-[node name="DOOR?3" type="CSGBox3D" parent="CSGBox3D"]
+[node name="DOOR3" type="CSGBox3D" parent="CSGBox3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, -0.45, 0)
 operation = 2
 snap = 0.1
 size = Vector3(1, 8.1129, 5.48071)
 
-[node name="DOOR?4" type="CSGBox3D" parent="CSGBox3D"]
+[node name="DOOR4" type="CSGBox3D" parent="CSGBox3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.45, -4.5)
 operation = 2
 snap = 0.1
 size = Vector3(1, 8.1129, 5.48071)
 
-[node name="DOOR?5" type="CSGBox3D" parent="CSGBox3D"]
+[node name="DOOR5" type="CSGBox3D" parent="CSGBox3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.45, 4.5)
 operation = 2
 snap = 0.1

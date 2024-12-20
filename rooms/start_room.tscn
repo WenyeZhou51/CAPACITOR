@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://btqev772fc7bl"]
+[gd_scene load_steps=4 format=3 uid="uid://btqev772fc7bl"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_pykbe"]
+[ext_resource type="PackedScene" uid="uid://c07usi2nurnmb" path="res://Scenes/prefabs/Door.tscn" id="2_lspxd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y0qck"]
 albedo_color = Color(0, 0.803922, 0.592157, 1)
@@ -26,3 +27,6 @@ size = Vector3(18.6145, 9, 16.282)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85784, -0.0639216, -4.23582)
 operation = 2
 size = Vector3(1, 8.1129, 5.48071)
+
+[node name="Door" parent="." instance=ExtResource("2_lspxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.84678, -3.16364, 2.66783)

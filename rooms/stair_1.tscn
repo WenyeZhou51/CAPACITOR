@@ -11,7 +11,7 @@ albedo_color = Color(0.937255, 0.803922, 0.592157, 1)
 [node name="stair_1" type="Node3D"]
 script = ExtResource("1_cv6ik")
 size_in_voxels = Vector3i(2, 2, 1)
-max_count = 10
+max_count = 15
 is_stair_room = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]

@@ -29,3 +29,12 @@ step = 0.01
 value = 1.0
 editable = false
 scrollable = false
+
+[node name="InteractLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 998.0
+offset_top = 525.0
+offset_right = 1038.0
+offset_bottom = 548.0
+scale = Vector2(1.92, 1.92)
+text = "[E]"

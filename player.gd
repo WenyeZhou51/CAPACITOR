@@ -1,16 +1,18 @@
 extends CharacterBody3D
 
 # Constants
-const WALK_SPEED = 1.0  # Default walking speed
-const RUN_SPEED = 3.0  # Sprinting speed
+const WALK_SPEED = 3.0  # Default walking speed
+const RUN_SPEED = 6.0  # Sprinting speed
 const JUMP_FORCE = 4.5  # Force applied for jumping
-const STAMINA_DRAIN_RATE = 0.3  # Rate at which stamina drains while sprinting
+const STAMINA_DRAIN_RATE = 0.01  # Rate at which stamina drains while sprinting
 const STAMINA_REGEN_RATE = 0.5  # Rate at which stamina regenerates while not sprinting
 const GRAVITY_FORCE = Vector3.DOWN * 9.8  # Gravity vector
 const STAMINA_THRESHOLD = 0.5  # Buffer threshold for stamina management
 
 # Variables
 @export var stamina_bar: VSlider  # Reference to the stamina UI slider
+@export var interact_ray: RayCast3D
+@export var interact_label: Label
 var current_stamina: float = 1.0 + STAMINA_THRESHOLD  # Current stamina level
 var is_running: bool = false  # Whether the player is sprinting
 var movement_speed: float = WALK_SPEED  # Current movement speed
@@ -38,7 +40,26 @@ func _physics_process(delta: float) -> void:
 		is_running = false
 		movement_speed = WALK_SPEED
 		current_stamina += STAMINA_REGEN_RATE * delta
+	if interact_ray.is_colliding():
+		var hit_object = interact_ray.get_collider()
+		# Start from the hit object and move up until we find a node with 'interact()'
+		var candidate = hit_object
+		while candidate and not candidate.has_method("interact"):
+			candidate = candidate.get_parent()
+		
+		if candidate and candidate.has_method("interact"):
+			interact_label.visible = true
+			if Input.is_action_just_pressed("Interact"):
+				candidate.interact(global_transform)
+		else:
+			interact_label.visible = false
+	else:
+		interact_label.visible = false
 
+
+		
+	
+	
 	# Clamp stamina to valid range
 	current_stamina = clamp(current_stamina, 0.0, 1.5)
 

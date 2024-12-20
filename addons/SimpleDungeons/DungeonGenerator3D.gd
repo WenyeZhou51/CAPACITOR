@@ -28,7 +28,12 @@ var stage : BuildStage = BuildStage.NOT_STARTED :
 @export var dungeon_size := Vector3i(10,10,10) :
 	set(v):
 		dungeon_size = v.clamp(Vector3i(1,1,1),Vector3i(9999,9999,9999))
+#///////////////////////////////////
+#My variable here
+@export var junctions : int = 5
+var junction_count : int = 0
 
+#////////////////////////////////////////
 ## Voxel scale/size in world units. Controls the standardized 1x1x1 room size of the dungeon.
 ## This should match the voxel scale on each of your rooms.voxel_scale
 ## If the voxel scale is different, the rooms will be scaled (perhaps non uniformly) to match the DungeonGenerator's voxel scale.
@@ -618,6 +623,56 @@ func separate_rooms_iteration(first_call_in_loop : bool) -> void:
 	if not any_overlap:
 		stage += 1
 
+#Open doors helper
+func force_all_doors_open(room: DungeonRoom3D) -> void:
+	for door in room.get_doors_cached():
+		door.optional = false
+func create_junction(corridor_pos: Vector3i):
+	# Possible directions (assuming +X, -X, +Z, -Z)
+	var directions = [
+		Vector3i(1,0,0),
+		Vector3i(-1,0,0),
+		Vector3i(0,0,1),
+		Vector3i(0,0,-1)
+	]
+
+	# Shuffle directions to pick random branching paths
+	directions.shuffle()
+
+	var branches_to_create = 1 + int(rng.randf() * 1) # Try 1 or 2 extra branches
+	var created_branches = 0
+
+	for dir in directions:
+		if created_branches >= branches_to_create:
+			break
+		var target = corridor_pos + dir
+		# Check if we can place a corridor here (not occupied and inside dungeon)
+		if get_grid_aabbi().contains_point(target) and not _quick_room_check_dict.has(target) and not _quick_corridors_check_dict.has(target):
+			# Carve a short corridor branch
+			if carve_corridor_branch(target, dir):
+				created_branches += 1
+func carve_corridor_branch(start_pos: Vector3i, direction: Vector3i) -> bool:
+	var branch_length = rng.randi_range(2,4) # random short length
+	var current_pos = start_pos
+	var created_any = false
+
+	for i in range(branch_length):
+		if not get_grid_aabbi().contains_point(current_pos):
+			break
+		# Stop if we hit an existing room/corridor
+		if _quick_room_check_dict.has(current_pos) or _quick_corridors_check_dict.has(current_pos):
+			break
+		
+		var room := corridor_room_instance.create_clone_and_make_virtual_unless_visualizing()
+		room.set_position_by_grid_pos(current_pos)
+		place_room(room)
+		_quick_corridors_check_dict[current_pos] = room
+		current_pos += direction
+		created_any = true
+
+	return created_any
+
+
 # Connecting rooms:
 
 var _astar3d : DungeonAStar3D
@@ -637,9 +692,10 @@ func connect_rooms_iteration(first_call_in_loop : bool) -> void:
 		_quick_corridors_check_dict = {}
 		_all_doors_dict = {}
 		_required_doors_dict = {}
+
 		for room in get_all_placed_and_preplaced_rooms():
 			var doors = room.get_doors_cached()
-			if room.get_doors_cached().size() > 0:
+			if doors.size() > 0:
 				_rooms_to_connect.push_back(room)
 				_non_corridor_rooms.push_back(room)
 			for door in doors:
@@ -648,72 +704,82 @@ func connect_rooms_iteration(first_call_in_loop : bool) -> void:
 					if not door.optional:
 						_required_doors_dict[door.exit_pos_grid] = door
 			var aabbi = room.get_grid_aabbi(false)
-			for x in aabbi.size.x: for y in aabbi.size.y: for z in aabbi.size.z:
-				_quick_room_check_dict[aabbi.position + Vector3i(x,y,z)] = room
-		# Init after corridors/room dict setup
+			for x in aabbi.size.x:
+				for y in aabbi.size.y:
+					for z in aabbi.size.z:
+						_quick_room_check_dict[aabbi.position + Vector3i(x,y,z)] = room
+
 		_astar3d = DungeonAStar3D.new(self, _quick_room_check_dict, _quick_corridors_check_dict)
-		# Sort rooms by door y positions. Likely to make astar connections more stable
-		_rooms_to_connect.sort_custom(func(a,b): return b.get_doors_cached()[0].exit_pos_grid.y > a.get_doors_cached()[0].exit_pos_grid.y)
-	
-	# Can exit early if _rooms_to_connect stops going down, aka we tried shuffling and couldn't find a connection
-	# Don't think this is necessary actually, I just exit below instead if it fails ever.
-	#_last_rooms_to_connect_counts.push_front(len(_rooms_to_connect))
-	#_last_rooms_to_connect_counts = _last_rooms_to_connect_counts.filter(func(c): return c == _last_rooms_to_connect_counts[0])
-	#if len(_last_rooms_to_connect_counts) > (len(_rooms_to_connect) * 4) and _last_rooms_to_connect_counts[0] == len(_rooms_to_connect):
-		#_fail_generation("Unable to connect all rooms")
-		#return
-	
-	# First, just pathfind through all the rooms, one to the next, until all rooms are connected
+		_rooms_to_connect.sort_custom(func(a,b):
+			return b.get_doors_cached()[0].exit_pos_grid.y > a.get_doors_cached()[0].exit_pos_grid.y)
+
+	# Connect main rooms first
 	if len(_rooms_to_connect) >= 2:
 		var room_0_pos = _rooms_to_connect[0].get_grid_aabbi(false).position
 		var room_1_pos = _rooms_to_connect[1].get_grid_aabbi(false).position
 		var connect_path := _astar3d.get_vec3i_path(room_0_pos, room_1_pos)
 		var room_a := _rooms_to_connect.pop_front()
 		if len(connect_path) == 0:
-			#print("Failed somehow")
-			#_rooms_to_connect.insert(rng.randi_range(1, len(_rooms_to_connect)), room_a)
 			_fail_generation("Failed to fully connect dungeon rooms with corridors.")
 			return
-		#print("Connecting ", room_a.name, " to ", _rooms_to_connect[0].name, ". Result: ", connect_path)
-		for corridor_pos in connect_path:
+		for i in range(connect_path.size()):
+			var corridor_pos = connect_path[i]
 			if not _quick_room_check_dict.has(corridor_pos) and not _quick_corridors_check_dict.has(corridor_pos):
 				var room := corridor_room_instance.create_clone_and_make_virtual_unless_visualizing()
 				room.set_position_by_grid_pos(corridor_pos)
 				place_room(room)
 				_quick_corridors_check_dict[corridor_pos] = room
+
+				# Attempt to turn this corridor tile into a junction if we still have junction count left and not the first or last tile in path
+				# (Typically, middle corridor tiles are better junction candidates)
+				if junction_count < junctions and i > 0 and i < connect_path.size() - 1:
+					force_all_doors_open(room)
+					# Attempt to create additional branches:
+					create_junction(corridor_pos)
+					junction_count += 1
 		return
-	
-	# Next, not all the doors may be connected, so we have to do some strategy to nicely connect the required doors remaining.
-	for required_door in _required_doors_dict.values().slice(0): # Slice necessary? Not sure.
-		# No need to connect doors which already have a corridor
+
+	# Connect remaining required doors
+	for required_door in _required_doors_dict.values().slice(0):
+		# If already in a room or corridor, skip
 		if _quick_room_check_dict.has(required_door.exit_pos_grid) or _quick_corridors_check_dict.has(required_door.exit_pos_grid):
 			_required_doors_dict.erase(required_door)
 			continue
-		# Get other room doors which are closest to the required door
-		var closest_other_room_doors = _all_doors_dict.values().slice(0)#filter(func(d): return d.room != required_door.room)
+
+		# Find closest other door to connect
+		var closest_other_room_doors = _all_doors_dict.values().slice(0)
 		closest_other_room_doors.sort_custom(func(a,b):
-			# Make sure doors not on same floor sorted far after
-			# Also make sure doors of same room sorted far after
 			var b_dist = Vector3(b.exit_pos_grid - required_door.exit_pos_grid).length()
 			var a_dist = Vector3(a.exit_pos_grid - required_door.exit_pos_grid).length()
 			if a.exit_pos_grid.y != required_door.exit_pos_grid.y or a.room == required_door.room:
 				a_dist += dungeon_size.x + dungeon_size.y + dungeon_size.z
 			if b.exit_pos_grid.y != required_door.exit_pos_grid.y or b.room == required_door.room:
 				b_dist += dungeon_size.x + dungeon_size.y + dungeon_size.z
-			return b_dist > a_dist)
-		
+			return b_dist > a_dist
+		)
+
 		_astar3d.cap_required_doors_phase = true
 		var connect_path := _astar3d.get_vec3i_path(required_door.exit_pos_grid, closest_other_room_doors[0].exit_pos_grid)
-		for corridor_pos in connect_path:
+		for i in range(connect_path.size()):
+			var corridor_pos = connect_path[i]
 			if not _quick_room_check_dict.has(corridor_pos) and not _quick_corridors_check_dict.has(corridor_pos):
 				var room := corridor_room_instance.create_clone_and_make_virtual_unless_visualizing()
 				room.set_position_by_grid_pos(corridor_pos)
 				place_room(room)
 				_quick_corridors_check_dict[corridor_pos] = room
+
+				# Attempt junction creation here as well
+				if junction_count < junctions and i > 0 and i < connect_path.size() - 1:
+					force_all_doors_open(room)
+					create_junction(corridor_pos)
+					junction_count += 1
+
 		_required_doors_dict.erase(required_door)
 		return
-	
+
 	stage = BuildStage.FINALIZING
+
+
 
 ####################################
 ## DUNGEON BUILD HELPER FUNCTIONS ##

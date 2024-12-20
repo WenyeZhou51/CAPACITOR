@@ -24,8 +24,9 @@ func _process(_delta: float) -> void:
 	
 "
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("interact_ray")]
 script = ExtResource("1_pwhjp")
+interact_ray = NodePath("RayCast3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_ehc7k")
@@ -48,3 +49,7 @@ spot_range = 50.0
 spot_attenuation = 0.5
 spot_angle_attenuation = 2.73209
 script = ExtResource("3_auqqx")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00446808, -0.440804)
+target_position = Vector3(0, 0, -4)

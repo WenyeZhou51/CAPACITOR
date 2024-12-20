@@ -3,11 +3,12 @@
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_sv0a6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y0qck"]
-albedo_color = Color(0.937255, 0.803922, 0.592157, 1)
+albedo_color = Color(0.937255, 0, 0.592157, 1)
 
 [node name="small_room_1" type="Node3D"]
 script = ExtResource("1_sv0a6")
 size_in_voxels = Vector3i(2, 1, 2)
+min_count = 5
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00202942, 0, 0.000610352)
