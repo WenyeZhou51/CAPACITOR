@@ -17,6 +17,9 @@ var current_stamina: float = 1.0 + STAMINA_THRESHOLD  # Current stamina level
 var is_running: bool = false  # Whether the player is sprinting
 var movement_speed: float = WALK_SPEED  # Current movement speed
 
+func _ready():
+	add_to_group("players")
+	
 func _physics_process(delta: float) -> void:
 	# Apply gravity if not on the floor
 	if not is_on_floor():

@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Door.gd" id="1_mhw3v"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qu4yt"]
-size = Vector3(2.28625, 4.14221, 0.195801)
+size = Vector3(3.08014, 5.44659, 0.195801)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1rqdx"]
 albedo_color = Color(0, 0.545098, 0, 1)
@@ -16,12 +16,13 @@ script = ExtResource("1_mhw3v")
 
 [node name="DoorBody" type="StaticBody3D" parent="."]
 transform = Transform3D(0.987795, 0, 0, 0, 1.03055, 0, 0, 0, 0.999999, 0.0450392, 0.0792512, 0.0632937)
+collision_layer = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DoorBody"]
-transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999992, 0.643127, 0.78717, -0.0192871)
+transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999998, 1.04007, 1.43936, -0.0192871)
 shape = SubResource("BoxShape3D_qu4yt")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(2.28638, 0, 0, 0, 4.17581, 0, 0, 0, 0.229475, 0.636493, 0.794762, 0)
+transform = Transform3D(3.08644, 0, 0, 0, 5.63309, 0, 0, 0, 0.229475, 1.05678, 1.5575, 0)
 material_override = SubResource("StandardMaterial3D_1rqdx")
 mesh = SubResource("BoxMesh_hhxqg")

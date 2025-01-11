@@ -10,9 +10,11 @@ var target_angle_y: float = 0.0
 var current_tween: Tween = null
 
 func _ready():
+	add_to_group("doors")
 	# Store the original rotation around Y axis
 	original_rotation_y = rotation.y
 	target_angle_y = original_rotation_y
+	
 
 func interact(player_global_transform: Transform3D) -> void:
 	if current_tween != null:

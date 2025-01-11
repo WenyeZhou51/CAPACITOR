@@ -24,9 +24,9 @@ operation = 2
 size = Vector3(18.6145, 9, 16.282)
 
 [node name="DOOR" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85784, -0.0639216, -4.23582)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.8467, -0.352095, -5.53636)
 operation = 2
 size = Vector3(1, 8.1129, 5.48071)
 
 [node name="Door" parent="." instance=ExtResource("2_lspxd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.84678, -3.16364, 2.66783)
+transform = Transform3D(-8.49513e-08, 0, -1, 0, 1.4458, 0, 1.94346, 0, -4.37114e-08, -9.50207, -2.3211, -5.98647)

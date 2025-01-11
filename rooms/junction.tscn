@@ -35,7 +35,7 @@ snap = 0.1
 size = Vector3(9, 9, 9)
 
 [node name="DOOR2" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, -0.45, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, -0.4, 0)
 operation = 2
 snap = 0.1
 size = Vector3(1, 8.1129, 5.48071)
