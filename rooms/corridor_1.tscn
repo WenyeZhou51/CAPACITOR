@@ -1,6 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://cisl75a2ha5p8"]
+[gd_scene load_steps=5 format=3 uid="uid://cisl75a2ha5p8"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_stnse"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_hydhw"]
+vertices = PackedVector3Array(-4.5, 5.5, -4.5, -4.5, 5.5, 4.5, 4.5, 5.5, 4.5, 4.5, 5.5, -4.5, -2.25, -4, -3.75, -3.75, -4, -3.75, -3.75, -4, -2.25, -3.75, -4, 2.25, -3.75, -4, 4, -2.25, -4, 4, 4, -4, -2.25, 4, -4, -3.75, 2.25, -4, -3.75, 2.25, -4, 4, 4, -4, 4, 4, -4, 2.25, -2, -4.25, 4.5, 2, -4.25, 4.5, 4.5, -4.25, 2, 4.5, -4.25, -2, -4.5, -4.25, -2, -4.5, -4.25, 2, 2, -4.25, -4.5, -2, -4.25, -4.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(6, 5, 4), PackedInt32Array(9, 8, 7), PackedInt32Array(12, 11, 10), PackedInt32Array(15, 14, 13), PackedInt32Array(16, 9, 17), PackedInt32Array(17, 9, 13), PackedInt32Array(18, 15, 19), PackedInt32Array(19, 15, 10), PackedInt32Array(20, 6, 21), PackedInt32Array(21, 6, 7), PackedInt32Array(22, 12, 23), PackedInt32Array(23, 12, 4), PackedInt32Array(6, 4, 12), PackedInt32Array(12, 10, 15), PackedInt32Array(9, 7, 13), PackedInt32Array(13, 7, 15), PackedInt32Array(15, 7, 6), PackedInt32Array(15, 6, 12)]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uxuwy"]
 albedo_color = Color(0.937255, 0.803922, 0.592157, 1)
@@ -24,35 +28,38 @@ func remove_unused_doors():
 [node name="corridor_1" type="Node3D"]
 script = ExtResource("1_stnse")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_hydhw")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D"]
 material_override = SubResource("StandardMaterial3D_uxuwy")
 use_collision = true
 size = Vector3(10, 10, 10)
 
-[node name="Roomcut" type="CSGBox3D" parent="CSGBox3D"]
+[node name="Roomcut" type="CSGBox3D" parent="NavigationRegion3D/CSGBox3D"]
 operation = 2
 snap = 0.1
 size = Vector3(9, 9, 9)
 
-[node name="DOOR?2" type="CSGBox3D" parent="CSGBox3D"]
+[node name="DOOR?2" type="CSGBox3D" parent="NavigationRegion3D/CSGBox3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, -0.45, 0)
 operation = 2
 snap = 0.1
 size = Vector3(1, 8.1129, 5.48071)
 
-[node name="DOOR?3" type="CSGBox3D" parent="CSGBox3D"]
+[node name="DOOR?3" type="CSGBox3D" parent="NavigationRegion3D/CSGBox3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, -0.45, 0)
 operation = 2
 snap = 0.1
 size = Vector3(1, 8.1129, 5.48071)
 
-[node name="DOOR?4" type="CSGBox3D" parent="CSGBox3D"]
+[node name="DOOR?4" type="CSGBox3D" parent="NavigationRegion3D/CSGBox3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.45, -4.5)
 operation = 2
 snap = 0.1
 size = Vector3(1, 8.1129, 5.48071)
 
-[node name="DOOR?5" type="CSGBox3D" parent="CSGBox3D"]
+[node name="DOOR?5" type="CSGBox3D" parent="NavigationRegion3D/CSGBox3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.45, 4.5)
 operation = 2
 snap = 0.1

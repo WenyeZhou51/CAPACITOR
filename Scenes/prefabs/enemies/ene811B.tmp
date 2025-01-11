@@ -11,8 +11,6 @@ transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, -0.106848, 0)
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
 safe_margin = 0.1
 script = ExtResource("2_4grln")
-normal_speed = 1.0
-chase_speed = 3.0
 animation_speed = 5.0
 
 [node name="Venus" parent="CharacterBody3D" instance=ExtResource("1_eopk2")]
@@ -137,6 +135,6 @@ speed_scale = 3.0
 transform = Transform3D(4.9563, 0, 0, 0, 8.13981, 0, 0, 0, 2.173, 0.69717, 8.05099, 0)
 shape = SubResource("CapsuleShape3D_33x1u")
 
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="CharacterBody3D"]
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 
 [editable path="CharacterBody3D/Venus"]
