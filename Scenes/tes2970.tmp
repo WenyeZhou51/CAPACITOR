@@ -67,6 +67,7 @@ transform = Transform3D(-0.2, 0, -1.74846e-08, 0, 0.2, 0, 1.74846e-08, 0, -0.2, 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_t4gef")
 script = ExtResource("6_jds6y")
+bake_delay_frames = null
 dungeon_generator_path = NodePath("DungeonGenerator3D")
 
 [node name="DungeonGenerator3D" type="Node3D" parent="NavigationRegion3D"]

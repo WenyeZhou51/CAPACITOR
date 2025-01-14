@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c8y6hkpnlip1g"]
+[gd_scene load_steps=16 format=3 uid="uid://c8y6hkpnlip1g"]
 
 [ext_resource type="PackedScene" uid="uid://busyfigb6e8mo" path="res://Scenes/player.tscn" id="1_36ui5"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
@@ -33,8 +33,6 @@ volumetric_fog_density = 0.1
 volumetric_fog_albedo = Color(0.984314, 1, 1, 1)
 volumetric_fog_emission = Color(0.0196078, 0, 0, 1)
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_t4gef"]
-
 [node name="Level" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -65,9 +63,7 @@ max_distance = 3967.43
 transform = Transform3D(-0.2, 0, -1.74846e-08, 0, 0.2, 0, 1.74846e-08, 0, -0.2, 39.5748, 43.951, 5.17188)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
-navigation_mesh = SubResource("NavigationMesh_t4gef")
 script = ExtResource("6_jds6y")
-dungeon_generator_path = NodePath("DungeonGenerator3D")
 
 [node name="DungeonGenerator3D" type="Node3D" parent="NavigationRegion3D"]
 script = ExtResource("6_s8vmo")
@@ -82,7 +78,5 @@ room_cost_at_end_for_required_doors = 3.0
 
 [node name="start_room" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("8_n1yd6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 45, 0)
-
-[connection signal="done_generating" from="NavigationRegion3D/DungeonGenerator3D" to="NavigationRegion3D" method="on_dungeon_done_generating"]
 
 [editable path="UI"]
