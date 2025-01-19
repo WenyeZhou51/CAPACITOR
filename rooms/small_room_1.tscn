@@ -1,10 +1,11 @@
-[gd_scene load_steps=19 format=4 uid="uid://ch0yrvh1wr6nv"]
+[gd_scene load_steps=20 format=4 uid="uid://ch0yrvh1wr6nv"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_sv0a6"]
 [ext_resource type="Texture2D" uid="uid://bnf832wawynw4" path="res://objectmodels/marble_bust/textures/marble_bust_01_diff_4k.jpg" id="2_60xrq"]
 [ext_resource type="Texture2D" uid="uid://dt3pv5r6vjd3r" path="res://textures/small_room_texture/rusty_metal_sheet_diff_4k.png" id="2_wut14"]
 [ext_resource type="Texture2D" uid="uid://ilqrfm647tau" path="res://textures/door_texture/metal_plate_diff_4k.png" id="3_il334"]
 [ext_resource type="Texture2D" uid="uid://1gs8jsab1mdh" path="res://objectmodels/cat_statue/textures/concrete_cat_statue_diff_4k.jpg" id="5_cmvhu"]
+[ext_resource type="PackedScene" uid="uid://cvvhr51m3d3cb" path="res://objectmodels/cardboard_box_01_4k/cardboard_box_01_4k.gltf" id="6_j8qt6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rixdp"]
 resource_name = "marble_bust_01"
@@ -170,3 +171,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, -2.98023e-08, -5.82077e-11, 1, -0.0001
 mesh = SubResource("ArrayMesh_conmy")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_2bf4l")
+
+[node name="cardboard_box_01_4k" parent="." instance=ExtResource("6_j8qt6")]
+transform = Transform3D(2.14916, 0, -2.09311, 0, 3, 0, 2.09311, 0, 2.14916, -1.88522, -4.46613, -4.73094)
+
+[node name="cardboard_box_01_4k2" parent="." instance=ExtResource("6_j8qt6")]
+transform = Transform3D(-0.221315, 1.98601, -0.0824735, 0.364504, 0.122126, 1.96271, 1.95401, 0.202158, -0.375467, -0.561575, -3.9762, -4.80737)
+
+[node name="cardboard_box_01_4k3" parent="." instance=ExtResource("6_j8qt6")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -0.792816, -4.46911, -3.6025)

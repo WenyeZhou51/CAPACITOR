@@ -22,6 +22,10 @@ window/size/viewport_height=1080
 window/size/mode=2
 window/stretch/mode="canvas_items"
 
+[editor]
+
+movie_writer/movie_file="/Users/junhokim/Desktop/Game Recordings/Test_Run_1.avi"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/SimpleDungeons/plugin.cfg")
