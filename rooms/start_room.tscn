@@ -7,10 +7,6 @@
 [ext_resource type="Script" path="res://Door.gd" id="5_3802a"]
 [ext_resource type="Texture2D" uid="uid://cj6ljcbmi8sw6" path="res://objectmodels/utility_box_02_4k/textures/utility_box_02_diff_4k.jpg" id="6_crhvs"]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_2up67"]
-vertices = PackedVector3Array(-9.48562, 5.5, -9.49464, -9.48562, 5.5, 9.50536, 9.51438, 5.5, 9.50536, 9.51438, 5.5, -9.49464, 8.51438, -4, -7.99464, -9.48562, -4, -7.74464, -8.73562, -4, -7.24464, -8.73562, -4, 7.00536, 8.51438, -4, 7.00536)
-polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(6, 5, 4), PackedInt32Array(7, 6, 8), PackedInt32Array(8, 6, 4)]
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y0qck"]
 albedo_texture = ExtResource("2_1gccj")
 uv1_scale = Vector3(5, 5, 5)
@@ -85,22 +81,19 @@ size_in_voxels = Vector3i(2, 1, 2)
 min_count = 1
 max_count = 1
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
-navigation_mesh = SubResource("NavigationMesh_2up67")
-
-[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000595094, -0.00548935, 0.000283659)
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00202942, 0, 0.000610352)
 material_override = SubResource("StandardMaterial3D_y0qck")
 use_collision = true
 size = Vector3(19.9753, 10, 19.9905)
 material = SubResource("StandardMaterial3D_u177w")
 
-[node name="Roomcut" type="CSGBox3D" parent="NavigationRegion3D/CSGBox3D"]
+[node name="Roomcut" type="CSGBox3D" parent="CSGBox3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0910292, 0, -0.5802)
 operation = 2
 size = Vector3(18.6145, 9, 16.282)
 
-[node name="DOOR" type="CSGBox3D" parent="NavigationRegion3D/CSGBox3D"]
+[node name="DOOR" type="CSGBox3D" parent="CSGBox3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.8467, -0.352095, -5.53636)
 material_override = SubResource("StandardMaterial3D_tftht")
 material_overlay = SubResource("StandardMaterial3D_rkh88")
@@ -108,27 +101,5 @@ operation = 2
 size = Vector3(1, 8.1129, 5.48071)
 material = SubResource("StandardMaterial3D_8bjfd")
 
-[node name="Door" type="Node3D" parent="NavigationRegion3D"]
-transform = Transform3D(-8.49513e-08, 0, -1, 0, 1.4458, 0, 1.94346, 0, -4.37114e-08, -9.34251, -2.30102, -7.44781)
-script = ExtResource("5_3802a")
-
-[node name="DoorBody" type="StaticBody3D" parent="NavigationRegion3D/Door"]
-transform = Transform3D(0.987795, 0, 0, 0, 1.03055, 0, 0, 0, 0.999999, 0.0450392, 0.0792512, 0.0632937)
-collision_layer = 3
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Door/DoorBody"]
-transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999998, 1.04007, 1.43936, -0.0192871)
-shape = SubResource("BoxShape3D_qu4yt")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Door"]
-transform = Transform3D(3.08644, 0, 0, 0, 5.63309, 0, 0, 0, 0.229475, 1.05678, 1.5575, 0)
-material_overlay = SubResource("StandardMaterial3D_lhqy4")
-mesh = SubResource("BoxMesh_hhxqg")
-
-[node name="utility_box_02_4k" type="Node3D" parent="."]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 6.03037, -3.98441, -6.19161)
-
-[node name="utility_box_02" type="MeshInstance3D" parent="utility_box_02_4k"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00288939, -0.00707603, -0.242762)
-mesh = SubResource("ArrayMesh_rooll")
-skeleton = NodePath("")
+[node name="Door" parent="CSGBox3D" instance=ExtResource("2_lspxd")]
+transform = Transform3D(-8.49513e-08, 0, -1, 0, 1.4458, 0, 1.94346, 0, -4.37114e-08, -9.5041, -2.3211, -5.98708)
