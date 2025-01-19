@@ -144,6 +144,7 @@ func process_search(delta: float) -> void:
 	if has_line_of_sight():
 		set_state(States.CHASE)
 
+@warning_ignore("unused_parameter")
 func process_chase(delta: float) -> void:
 	print("[DEBUG] process_chase called")
 	agent.target_position = player.global_transform.origin

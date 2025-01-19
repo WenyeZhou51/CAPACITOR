@@ -26,6 +26,10 @@ window/stretch/mode="canvas_items"
 
 enabled=PackedStringArray("res://addons/SimpleDungeons/plugin.cfg")
 
+[filesystem]
+
+import/blender/enabled=false
+
 [input]
 
 Forward={
