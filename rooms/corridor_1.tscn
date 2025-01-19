@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cisl75a2ha5p8"]
+[gd_scene load_steps=6 format=3 uid="uid://wjusr64wyn8o"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_stnse"]
+[ext_resource type="Texture2D" uid="uid://dt3pv5r6vjd3r" path="res://textures/small_room_texture/rusty_metal_sheet_diff_4k.png" id="2_mcx5q"]
+[ext_resource type="PackedScene" uid="uid://0ij7ac5rnuij" path="res://objectmodels/treasure_chest_4k/treasure_chest_4k.gltf" id="3_1dvcf"]
 
 [sub_resource type="GDScript" id="GDScript_1tv7g"]
 resource_name = "corridor"
@@ -18,8 +20,8 @@ func remove_unused_doors():
 	
 "
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uxuwy"]
-albedo_color = Color(0.937255, 0.803922, 0.592157, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wj10s"]
+albedo_texture = ExtResource("2_mcx5q")
 
 [node name="corridor_1" type="Node3D"]
 script = ExtResource("1_stnse")
@@ -28,7 +30,7 @@ script = ExtResource("1_stnse")
 script = SubResource("GDScript_1tv7g")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
-material_override = SubResource("StandardMaterial3D_uxuwy")
+material_override = SubResource("StandardMaterial3D_wj10s")
 use_collision = true
 size = Vector3(10, 10, 10)
 
@@ -60,5 +62,8 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.
 operation = 2
 snap = 0.1
 size = Vector3(1, 8.1129, 5.48071)
+
+[node name="treasure_chest_4k" parent="." instance=ExtResource("3_1dvcf")]
+transform = Transform3D(1.10556, 0, 1.01377, 0, 1.5, 0, -1.01377, 0, 1.10556, -3.2994, -4.49088, -2.90962)
 
 [connection signal="dungeon_done_generating" from="." to="RemoveUnusedDoors" method="remove_unused_doors"]

@@ -130,6 +130,7 @@ func process_search(delta: float) -> void:
 	if has_line_of_sight():
 		set_state(States.CHASE)
 
+@warning_ignore("unused_parameter")
 func process_chase(delta: float) -> void:
 	# If we still see the player, chase; otherwise begin a 1s countdown.
 	if has_line_of_sight():
