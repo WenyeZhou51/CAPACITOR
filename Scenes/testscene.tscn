@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c8y6hkpnlip1g"]
+[gd_scene load_steps=19 format=3 uid="uid://c8y6hkpnlip1g"]
 
 [ext_resource type="PackedScene" uid="uid://busyfigb6e8mo" path="res://Scenes/player.tscn" id="1_36ui5"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
@@ -12,6 +12,9 @@
 [ext_resource type="AudioStream" uid="uid://bc2qvfrbnwvn6" path="res://audio/demoLevel.wav" id="11_wadk3"]
 [ext_resource type="PackedScene" uid="uid://dhmtymlk3gb34" path="res://Scenes/prefabs/items/flashlight.tscn" id="12_lf2vw"]
 [ext_resource type="PackedScene" uid="uid://bjjrllm15flh4" path="res://Scenes/prefabs/enemies/enemy_venus.tscn" id="13_h0o74"]
+[ext_resource type="PackedScene" uid="uid://cjdanhbr7qd50" path="res://Scenes/prefabs/items/scrap1.tscn" id="13_kphk1"]
+[ext_resource type="PackedScene" uid="uid://dt2qtx8apgmb0" path="res://Scenes/prefabs/items/scrap2.tscn" id="14_8p5j4"]
+[ext_resource type="PackedScene" uid="uid://5vmsy0mgcrox" path="res://Scenes/prefabs/items/scrap3.tscn" id="15_5ejdf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_binvk"]
 sky_top_color = Color(0.0101014, 0.0122771, 0.0165181, 1)
@@ -78,5 +81,14 @@ transform = Transform3D(-0.2, 0, -1.74846e-08, 0, 0.2, 0, 1.74846e-08, 0, -0.2, 
 
 [node name="Flashlight" parent="." instance=ExtResource("12_lf2vw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.5919, 41.8592, 0)
+
+[node name="scrap1" parent="." instance=ExtResource("13_kphk1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.4014, 42.8561, 0)
+
+[node name="Scrap2" parent="." instance=ExtResource("14_8p5j4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.7586, 43.1251, 5.69481)
+
+[node name="Scrap3" parent="." instance=ExtResource("15_5ejdf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.8883, 44.3145, 5.88374)
 
 [editable path="UI"]
