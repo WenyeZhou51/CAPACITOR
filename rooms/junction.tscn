@@ -1,0 +1,64 @@
+[gd_scene load_steps=4 format=3 uid="uid://c4lvx2bce1ryx"]
+
+[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_682a6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uxuwy"]
+albedo_color = Color(0.937255, 0.803922, 0.592157, 1)
+
+[sub_resource type="GDScript" id="GDScript_1tv7g"]
+resource_name = "corridor"
+script/source = "extends Node
+
+func _ready() -> void:
+	print(\"connected\")
+	#$\"..\".connect(\"dungeon_done_generating\", remove_unused_doors)
+
+func remove_unused_doors():
+	print(\"remove doors called\")
+	for door in $\"..\".get_doors():
+		if door.get_room_leads_to() == null:
+			door.door_node.queue_free()
+	
+"
+
+[node name="junction" type="Node3D"]
+script = ExtResource("1_682a6")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+material_override = SubResource("StandardMaterial3D_uxuwy")
+use_collision = true
+size = Vector3(10, 10, 10)
+
+[node name="Roomcut" type="CSGBox3D" parent="CSGBox3D"]
+operation = 2
+snap = 0.1
+size = Vector3(9, 9, 9)
+
+[node name="DOOR2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, -0.4, 0)
+operation = 2
+snap = 0.1
+size = Vector3(1, 8.1129, 5.48071)
+
+[node name="DOOR3" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, -0.45, 0)
+operation = 2
+snap = 0.1
+size = Vector3(1, 8.1129, 5.48071)
+
+[node name="DOOR4" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.45, -4.5)
+operation = 2
+snap = 0.1
+size = Vector3(1, 8.1129, 5.48071)
+
+[node name="DOOR5" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.45, 4.5)
+operation = 2
+snap = 0.1
+size = Vector3(1, 8.1129, 5.48071)
+
+[node name="RemoveUnusedDoors" type="Node" parent="."]
+script = SubResource("GDScript_1tv7g")
+
+[connection signal="dungeon_done_generating" from="." to="RemoveUnusedDoors" method="remove_unused_doors"]
