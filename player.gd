@@ -16,6 +16,7 @@ const STAMINA_THRESHOLD = 0.5  # Buffer threshold for stamina management
 var current_stamina: float = 1.0 + STAMINA_THRESHOLD  # Current stamina level
 var is_running: bool = false  # Whether the player is sprinting
 var movement_speed: float = WALK_SPEED  # Current movement speed
+var is_holding: bool = false # Whether the player is holding an intem
 
 func _ready():
 	add_to_group("players")
@@ -52,16 +53,26 @@ func _physics_process(delta: float) -> void:
 		
 		if candidate and candidate.has_method("interact"):
 			interact_label.visible = true
-			if Input.is_action_just_pressed("Interact"):
+			if Input.is_action_just_pressed("Interact") and candidate.is_in_group("doors"):
 				candidate.interact(global_transform)
+			elif Input.is_action_just_pressed("Interact") and is_holding:
+				var item_socket = self.get_node("Head/ItemSocket")
+				var curr_item = item_socket.get_child(0)
+				curr_item.drop(self)
+				candidate.interact(self)
+			elif Input.is_action_just_pressed("Interact"):
+				candidate.interact(self)
+				is_holding = true
 		else:
 			interact_label.visible = false
 	else:
 		interact_label.visible = false
 
-
-		
-	
+	if(Input.is_action_just_pressed("Drop") and is_holding):
+		var item_socket = self.get_node("Head/ItemSocket")
+		var curr_item = item_socket.get_child(0)
+		curr_item.drop(self)
+		is_holding = false
 	
 	# Clamp stamina to valid range
 	current_stamina = clamp(current_stamina, 0.0, 1.5)
