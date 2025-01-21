@@ -1,0 +1,69 @@
+[gd_scene load_steps=6 format=3 uid="uid://wjusr64wyn8o"]
+
+[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_stnse"]
+[ext_resource type="Texture2D" uid="uid://dt3pv5r6vjd3r" path="res://textures/small_room_texture/rusty_metal_sheet_diff_4k.png" id="2_mcx5q"]
+[ext_resource type="PackedScene" uid="uid://0ij7ac5rnuij" path="res://objectmodels/treasure_chest_4k/treasure_chest_4k.gltf" id="3_1dvcf"]
+
+[sub_resource type="GDScript" id="GDScript_1tv7g"]
+resource_name = "corridor"
+script/source = "extends Node
+
+func _ready() -> void:
+	print(\"connected\")
+	#$\"..\".connect(\"dungeon_done_generating\", remove_unused_doors)
+
+func remove_unused_doors():
+	print(\"remove doors called\")
+	for door in $\"..\".get_doors():
+		if door.get_room_leads_to() == null:
+			door.door_node.queue_free()
+	
+"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wj10s"]
+albedo_texture = ExtResource("2_mcx5q")
+
+[node name="corridor_1" type="Node3D"]
+script = ExtResource("1_stnse")
+
+[node name="RemoveUnusedDoors" type="Node" parent="."]
+script = SubResource("GDScript_1tv7g")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+material_override = SubResource("StandardMaterial3D_wj10s")
+use_collision = true
+size = Vector3(10, 10, 10)
+
+[node name="Roomcut" type="CSGBox3D" parent="CSGBox3D"]
+operation = 2
+snap = 0.1
+size = Vector3(9, 9, 9)
+
+[node name="DOOR?2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, -0.45, 0)
+operation = 2
+snap = 0.1
+size = Vector3(1, 8.1129, 5.48071)
+
+[node name="DOOR?3" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, -0.45, 0)
+operation = 2
+snap = 0.1
+size = Vector3(1, 8.1129, 5.48071)
+
+[node name="DOOR?4" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.45, -4.5)
+operation = 2
+snap = 0.1
+size = Vector3(1, 8.1129, 5.48071)
+
+[node name="DOOR?5" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.45, 4.5)
+operation = 2
+snap = 0.1
+size = Vector3(1, 8.1129, 5.48071)
+
+[node name="treasure_chest_4k" parent="." instance=ExtResource("3_1dvcf")]
+transform = Transform3D(1.10556, 0, 1.01377, 0, 1.5, 0, -1.01377, 0, 1.10556, -3.2994, -4.49088, -2.90962)
+
+[connection signal="dungeon_done_generating" from="." to="RemoveUnusedDoors" method="remove_unused_doors"]
