@@ -24,7 +24,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/SimpleDungeons/plugin.cfg")
+enabled=PackedStringArray()
 
 [input]
 
