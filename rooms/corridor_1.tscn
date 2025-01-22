@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://wjusr64wyn8o"]
+[gd_scene load_steps=6 format=3 uid="uid://cisl75a2ha5p8"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_stnse"]
 [ext_resource type="Texture2D" uid="uid://dt3pv5r6vjd3r" path="res://textures/small_room_texture/rusty_metal_sheet_diff_4k.png" id="2_mcx5q"]

@@ -60,6 +60,7 @@ albedo_texture = ExtResource("2_60xrq")
 roughness_texture = SubResource("NoiseTexture2D_dt26w")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y0qck"]
+albedo_color = Color(0.937255, 0, 0.592157, 1)
 albedo_texture = ExtResource("2_wut14")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dt84r"]
@@ -142,22 +143,22 @@ operation = 2
 size = Vector3(18.6145, 9, 16.282)
 
 [node name="DOOR?2" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85784, -0.0639216, -4.23582)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85784, -0.367157, -4.23582)
 operation = 2
 size = Vector3(1, 8.1129, 5.48071)
 
 [node name="DOOR?6" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85784, -0.0639216, 4.98674)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85784, -0.370753, 4.98674)
 operation = 2
 size = Vector3(1, 8.1129, 5.48071)
 
 [node name="DOOR?5" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(-4.36821e-08, 0.0365914, 0.99933, 1.59946e-09, 0.99933, -0.0365914, -1, 0, -4.37114e-08, 5.48661, -0.0639216, 9.90648)
+transform = Transform3D(-4.36821e-08, 0.0365914, 0.99933, 1.59946e-09, 0.99933, -0.0365914, -1, 0, -4.37114e-08, 5.487, -0.3, 9.906)
 operation = 2
 size = Vector3(1, 8.1129, 5.48071)
 
 [node name="DOOR?7" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(-4.36821e-08, 0.0365914, 0.99933, 1.59946e-09, 0.99933, -0.0365914, -1, 0, -4.37114e-08, -3.8576, -0.0639216, 9.90648)
+transform = Transform3D(-4.36821e-08, 0.0365914, 0.99933, 1.59946e-09, 0.99933, -0.0365914, -1, 0, -4.37114e-08, -3.858, -0.3, 9.906)
 material_override = SubResource("StandardMaterial3D_dt84r")
 operation = 2
 size = Vector3(1, 8.1129, 5.48071)

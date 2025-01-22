@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://c1d5kcr4f1c5l" path="res://textures/worn_plank/worn_planks_diff_4k.png" id="7_ba2kl"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y0qck"]
+albedo_color = Color(0.937255, 0, 0.592157, 1)
 albedo_texture = ExtResource("2_0r2tp")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b67du"]

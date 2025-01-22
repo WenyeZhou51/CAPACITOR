@@ -11,7 +11,7 @@ const STAMINA_THRESHOLD = 0.5  # Buffer threshold for stamina management
 
 # Variables
 @export var stamina_bar: VSlider  # Reference to the stamina UI slider
-@export var interact_ray: RayCast3D
+@export var interaction_area: Area3D
 @export var interact_label: Label
 var current_stamina: float = 1.0 + STAMINA_THRESHOLD  # Current stamina level
 var is_running: bool = false  # Whether the player is sprinting
@@ -33,42 +33,55 @@ func _physics_process(delta: float) -> void:
 	# Handle sprinting input
 	if Input.is_action_pressed("Sprint"):
 		if not is_running and current_stamina > STAMINA_THRESHOLD / 2:
-			is_running = true  # Start sprinting only if stamina is above the threshold
+			is_running = true
 		elif is_running and current_stamina > 0:
 			movement_speed = RUN_SPEED
 			current_stamina -= STAMINA_DRAIN_RATE * delta
 		else:
-			is_running = false  # Stop sprinting when stamina depletes
+			is_running = false
 			movement_speed = WALK_SPEED
 	else:
 		is_running = false
 		movement_speed = WALK_SPEED
 		current_stamina += STAMINA_REGEN_RATE * delta
-	if interact_ray.is_colliding():
-		var hit_object = interact_ray.get_collider()
-		# Start from the hit object and move up until we find a node with 'interact()'
-		var candidate = hit_object
-		while candidate and not candidate.has_method("interact"):
-			candidate = candidate.get_parent()
+
+	# Get the interaction area
+	var overlapping_bodies = interaction_area.get_overlapping_bodies()
+	
+	if overlapping_bodies.size() > 0:
+		var closest_object = null
+		var closest_distance = INF
+		var camera_position = $Head/Camera3D.global_position
 		
-		if candidate and candidate.has_method("interact"):
-			interact_label.visible = true
-			if Input.is_action_just_pressed("Interact") and candidate.is_in_group("doors"):
-				candidate.interact(global_transform)
-			elif Input.is_action_just_pressed("Interact") and is_holding:
-				var item_socket = self.get_node("Head/ItemSocket")
-				var curr_item = item_socket.get_child(0)
-				curr_item.drop(self)
-				candidate.interact(self)
-			elif Input.is_action_just_pressed("Interact"):
-				candidate.interact(self)
-				is_holding = true
-		else:
-			interact_label.visible = false
+		for body in overlapping_bodies:
+			var distance = camera_position.distance_to(body.global_position)
+			if distance < closest_distance:
+				closest_distance = distance
+				closest_object = body
+		
+		if closest_object:
+			var candidate = closest_object
+			while candidate and not candidate.has_method("interact"):
+				candidate = candidate.get_parent()
+			
+			if candidate and candidate.has_method("interact"):
+				interact_label.visible = true
+				if Input.is_action_just_pressed("Interact") and candidate.is_in_group("doors"):
+					candidate.interact(global_transform)
+				elif Input.is_action_just_pressed("Interact") and is_holding:
+					var item_socket = self.get_node("Head/ItemSocket")
+					var curr_item = item_socket.get_child(0)
+					curr_item.drop(self)
+					candidate.interact(self)
+				elif Input.is_action_just_pressed("Interact"):
+					candidate.interact(self)
+					is_holding = true
+			else:
+				interact_label.visible = false
 	else:
 		interact_label.visible = false
 
-	if(Input.is_action_just_pressed("Drop") and is_holding):
+	if Input.is_action_just_pressed("Drop") and is_holding:
 		var item_socket = self.get_node("Head/ItemSocket")
 		var curr_item = item_socket.get_child(0)
 		curr_item.drop(self)

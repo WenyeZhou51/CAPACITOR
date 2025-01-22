@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dob0y1cay5v7v"]
+
+[ext_resource type="Script" path="res://rooms/door_marker.gd" id="1_dl5ab"]
+[ext_resource type="PackedScene" uid="uid://c07usi2nurnmb" path="res://Scenes/prefabs/Door.tscn" id="2_6cafu"]
+
+[node name="DoorMarker" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.02904, -5.67672)
+script = ExtResource("1_dl5ab")
+door_scene = ExtResource("2_6cafu")
