@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://c6gmwiknceior"]
+[gd_scene load_steps=22 format=4 uid="uid://c6gmwiknceior"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_t55gw"]
 [ext_resource type="Texture2D" uid="uid://dt3pv5r6vjd3r" path="res://textures/small_room_texture/rusty_metal_sheet_diff_4k.png" id="2_0r2tp"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://dadim805mug84" path="res://objectmodels/gallinera_table_4k/textures/gallinera_table_diff_4k.jpg" id="5_0l231"]
 [ext_resource type="Texture2D" uid="uid://d3mlc4gaky4cn" path="res://objectmodels/wooden_stool_02_4k/textures/wooden_stool_02_diff_4k.jpg" id="6_yr32h"]
 [ext_resource type="Texture2D" uid="uid://c1d5kcr4f1c5l" path="res://textures/worn_plank/worn_planks_diff_4k.png" id="7_ba2kl"]
+[ext_resource type="PackedScene" uid="uid://cdf8lpjxddsvr" path="res://Scenes/prefabs/enemy_marker.tscn" id="8_ximhl"]
+[ext_resource type="PackedScene" uid="uid://bh18kskaruq62" path="res://Scenes/prefabs/scrap_marker.tscn" id="9_me5js"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y0qck"]
 albedo_color = Color(0.937255, 0, 0.592157, 1)
@@ -266,3 +268,12 @@ transform = Transform3D(1, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 1, 0.019317
 material_override = SubResource("StandardMaterial3D_u8ri0")
 mesh = SubResource("ArrayMesh_m6vaq")
 skeleton = NodePath("")
+
+[node name="EnemyMarker" parent="." instance=ExtResource("8_ximhl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.94309, -3.76611, 1.3705)
+
+[node name="ScrapMarker" parent="." instance=ExtResource("9_me5js")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.04342, -3.60794, 4.09733)
+
+[node name="ScrapMarker2" parent="." instance=ExtResource("9_me5js")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.3205, -3.0811, -8.72383)

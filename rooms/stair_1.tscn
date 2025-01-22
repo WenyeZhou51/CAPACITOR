@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=4 uid="uid://7pskmagldtnr"]
+[gd_scene load_steps=12 format=4 uid="uid://7pskmagldtnr"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_cv6ik"]
 [ext_resource type="Texture2D" uid="uid://c4p4wywhawnay" path="res://textures/medival_brick_wall_stair/medieval_red_brick_diff_4k.png" id="2_xao37"]
 [ext_resource type="Texture2D" uid="uid://bprjmcjx0cnhu" path="res://textures/stairs/worn_brick_floor_diff_4k.png" id="3_8atra"]
 [ext_resource type="Texture2D" uid="uid://bdjdvefgswosx" path="res://objectmodels/Chandelier_02_4k/textures/Chandelier_02_diff_4k.jpg" id="4_jc4ey"]
+[ext_resource type="PackedScene" uid="uid://bh18kskaruq62" path="res://Scenes/prefabs/scrap_marker.tscn" id="5_sm446"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rgyku"]
 albedo_color = Color(0.937255, 0.803922, 0.592157, 1)
@@ -128,3 +129,6 @@ transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 6.1576, 3.67495, 0.166832)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.75781e-05, 0, 0.00366747)
 mesh = SubResource("ArrayMesh_w5jwu")
 skeleton = NodePath("")
+
+[node name="ScrapMarker" parent="." instance=ExtResource("5_sm446")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.00535, -8.88689, 0.236269)
