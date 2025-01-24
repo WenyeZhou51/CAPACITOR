@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=4 uid="uid://btqev772fc7bl"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_pykbe"]
-[ext_resource type="Texture2D" uid="uid://dt3pv5r6vjd3r" path="res://textures/small_room_texture/rusty_metal_sheet_diff_4k.png" id="2_uakwu"]
+[ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="3_e13x1"]
 [ext_resource type="PackedScene" uid="uid://3pcw2q81hvrs" path="res://objectmodels/utility_box_02_4k/utility_box_02_4k.gltf" id="4_2liu2"]
 [ext_resource type="Texture2D" uid="uid://dd75fl6rr2y7f" path="res://objectmodels/security_camera_02_4k/textures/security_camera_02_diff_4k.jpg" id="5_fsw4f"]
 [ext_resource type="PackedScene" uid="uid://chjq57h8xmpmb" path="res://objectmodels/utility_box_01_4k/utility_box_01_4k.gltf" id="6_m3clu"]
@@ -12,9 +12,11 @@ vertices = PackedVector3Array(-9.48562, 5.5, -9.49464, -9.48562, 5.5, 9.50536, 9
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(6, 5, 4), PackedInt32Array(7, 6, 8), PackedInt32Array(8, 6, 4)]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mg30d"]
-albedo_texture = ExtResource("2_uakwu")
+albedo_texture = ExtResource("3_e13x1")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mklwe"]
+albedo_color = Color(0.288518, 0.288518, 0.288518, 1)
+albedo_texture = ExtResource("3_e13x1")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4fdq8"]
 resource_name = "security_camera_02"
@@ -60,6 +62,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_50jlj")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q3vlb"]
+albedo_color = Color(0.448712, 0.448712, 0.448712, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rjowg"]
 resource_name = "security_camera_02_glass"
@@ -159,6 +162,7 @@ transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 6.33308, -4.48755, -7.86182)
 transform = Transform3D(3, 0, 0, 0, 2.81208, -1.04508, 0, 1.04508, 2.81208, -9.0665, 3.50543, -8.7159)
 
 [node name="security_camera_02_mount" type="MeshInstance3D" parent="security_camera_02_4k"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000194073, -0.0024941, -0.00125337)
 material_override = SubResource("StandardMaterial3D_mklwe")
 mesh = SubResource("ArrayMesh_gbbft")
 skeleton = NodePath("")

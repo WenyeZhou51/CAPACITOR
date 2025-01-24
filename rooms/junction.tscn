@@ -1,11 +1,11 @@
 [gd_scene load_steps=14 format=4 uid="uid://c4lvx2bce1ryx"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_682a6"]
-[ext_resource type="Texture2D" uid="uid://dt3pv5r6vjd3r" path="res://textures/small_room_texture/rusty_metal_sheet_diff_4k.png" id="2_4o8b1"]
+[ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="2_cdkr3"]
 [ext_resource type="Texture2D" uid="uid://c4e1b4aidy7ai" path="res://objectmodels/vintage_grandfather_clock_01_4k/textures/vintage_grandfather_clock_01_diff_4k.jpg" id="3_hgh82"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mxmsu"]
-albedo_texture = ExtResource("2_4o8b1")
+albedo_texture = ExtResource("2_cdkr3")
 uv1_scale = Vector3(3, 3, 3)
 
 [sub_resource type="GDScript" id="GDScript_1tv7g"]
