@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_cv6ik"]
 [ext_resource type="Texture2D" uid="uid://c4p4wywhawnay" path="res://textures/medival_brick_wall_stair/medieval_red_brick_diff_4k.png" id="2_xao37"]
-[ext_resource type="Texture2D" uid="uid://bprjmcjx0cnhu" path="res://textures/stairs/worn_brick_floor_diff_4k.png" id="3_8atra"]
+[ext_resource type="Texture2D" uid="uid://dkv12hnqoe7m3" path="res://textures/stairs/worn_brick_floor_diff_1k_compressed.png" id="3_fc4cs"]
 [ext_resource type="Texture2D" uid="uid://bdjdvefgswosx" path="res://objectmodels/Chandelier_02_4k/textures/Chandelier_02_diff_4k.jpg" id="4_jc4ey"]
 [ext_resource type="PackedScene" uid="uid://bh18kskaruq62" path="res://Scenes/prefabs/scrap_marker.tscn" id="5_sm446"]
 
@@ -12,7 +12,7 @@ albedo_texture = ExtResource("2_xao37")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s7xsx"]
 albedo_color = Color(0.937255, 0.803922, 0.592157, 1)
-albedo_texture = ExtResource("3_8atra")
+albedo_texture = ExtResource("3_fc4cs")
 uv1_scale = Vector3(5, 5, 5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tv26l"]

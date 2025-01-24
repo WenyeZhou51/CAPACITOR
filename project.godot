@@ -26,6 +26,10 @@ window/stretch/mode="canvas_items"
 
 enabled=PackedStringArray()
 
+[filesystem]
+
+import/blender/enabled=false
+
 [input]
 
 Forward={

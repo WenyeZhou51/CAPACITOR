@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cisl75a2ha5p8"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_stnse"]
-[ext_resource type="Texture2D" uid="uid://dt3pv5r6vjd3r" path="res://textures/small_room_texture/rusty_metal_sheet_diff_4k.png" id="2_mcx5q"]
+[ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="2_mqn3y"]
 [ext_resource type="PackedScene" uid="uid://0ij7ac5rnuij" path="res://objectmodels/treasure_chest_4k/treasure_chest_4k.gltf" id="3_1dvcf"]
 
 [sub_resource type="GDScript" id="GDScript_1tv7g"]
@@ -21,7 +21,7 @@ func remove_unused_doors():
 "
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wj10s"]
-albedo_texture = ExtResource("2_mcx5q")
+albedo_texture = ExtResource("2_mqn3y")
 
 [node name="corridor_1" type="Node3D"]
 script = ExtResource("1_stnse")

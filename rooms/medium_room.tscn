@@ -1,8 +1,8 @@
 [gd_scene load_steps=22 format=4 uid="uid://c6gmwiknceior"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_t55gw"]
-[ext_resource type="Texture2D" uid="uid://dt3pv5r6vjd3r" path="res://textures/small_room_texture/rusty_metal_sheet_diff_4k.png" id="2_0r2tp"]
 [ext_resource type="PackedScene" uid="uid://dltoljaoknl4w" path="res://Scenes/Spawn Points/enemy_spawn_point.tscn" id="2_4g2rj"]
+[ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="2_kijdn"]
 [ext_resource type="PackedScene" uid="uid://dbjqr81kyo0m3" path="res://Scenes/Spawn Points/loot_spawn_point.tscn" id="3_8virv"]
 [ext_resource type="Texture2D" uid="uid://dadim805mug84" path="res://objectmodels/gallinera_table_4k/textures/gallinera_table_diff_4k.jpg" id="5_0l231"]
 [ext_resource type="Texture2D" uid="uid://d3mlc4gaky4cn" path="res://objectmodels/wooden_stool_02_4k/textures/wooden_stool_02_diff_4k.jpg" id="6_yr32h"]
@@ -12,7 +12,7 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y0qck"]
 albedo_color = Color(0.937255, 0, 0.592157, 1)
-albedo_texture = ExtResource("2_0r2tp")
+albedo_texture = ExtResource("2_kijdn")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b67du"]
 resource_name = "gallinera_table"
