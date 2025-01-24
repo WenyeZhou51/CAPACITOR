@@ -1,14 +1,17 @@
-[gd_scene load_steps=11 format=4 uid="uid://7pskmagldtnr"]
+[gd_scene load_steps=12 format=4 uid="uid://7pskmagldtnr"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_cv6ik"]
 [ext_resource type="Texture2D" uid="uid://c4p4wywhawnay" path="res://textures/medival_brick_wall_stair/medieval_red_brick_diff_4k.png" id="2_xao37"]
 [ext_resource type="Texture2D" uid="uid://bprjmcjx0cnhu" path="res://textures/stairs/worn_brick_floor_diff_4k.png" id="3_8atra"]
 [ext_resource type="Texture2D" uid="uid://bdjdvefgswosx" path="res://objectmodels/Chandelier_02_4k/textures/Chandelier_02_diff_4k.jpg" id="4_jc4ey"]
+[ext_resource type="PackedScene" uid="uid://bh18kskaruq62" path="res://Scenes/prefabs/scrap_marker.tscn" id="5_sm446"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rgyku"]
+albedo_color = Color(0.937255, 0.803922, 0.592157, 1)
 albedo_texture = ExtResource("2_xao37")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s7xsx"]
+albedo_color = Color(0.937255, 0.803922, 0.592157, 1)
 albedo_texture = ExtResource("3_8atra")
 uv1_scale = Vector3(5, 5, 5)
 
@@ -98,17 +101,17 @@ use_collision = true
 size = Vector3(19.7229, 19.8645, 10)
 
 [node name="Roomcut" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0852509, -0.0686951, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0929151, -0.139685, 0.000453949)
 operation = 2
-size = Vector3(19.3382, 18.5278, 9)
+size = Vector3(19.3382, 18.7014, 9)
 
 [node name="DOOR?2" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.43017, 4.26677, -0.276978)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.43017, 4.60896, -0.276978)
 operation = 2
 size = Vector3(1, 8.1129, 5.48071)
 
 [node name="DOOR?3" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.44451, -4.41159, -0.276978)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.43171, -5.49313, -0.281726)
 operation = 2
 size = Vector3(1, 8.1129, 5.48071)
 
@@ -116,7 +119,7 @@ size = Vector3(1, 8.1129, 5.48071)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0375896, -0.773665, 4.81151)
 material_override = SubResource("StandardMaterial3D_s7xsx")
 use_collision = true
-polygon = PackedVector2Array(-9.78291, -8.60492, -9.72482, 0.981842, 0.553494, -8.60715)
+polygon = PackedVector2Array(-9.78291, -8.60492, -9.725, 1.35, 0.553494, -8.60715)
 depth = 9.5
 
 [node name="Chandelier_02_4k" type="Node3D" parent="."]
@@ -126,3 +129,6 @@ transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 6.1576, 3.67495, 0.166832)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.75781e-05, 0, 0.00366747)
 mesh = SubResource("ArrayMesh_w5jwu")
 skeleton = NodePath("")
+
+[node name="ScrapMarker" parent="." instance=ExtResource("5_sm446")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.00535, -8.88689, 0.236269)

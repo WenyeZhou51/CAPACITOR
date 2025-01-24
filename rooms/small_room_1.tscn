@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://ch0yrvh1wr6nv"]
+[gd_scene load_steps=22 format=4 uid="uid://ch0yrvh1wr6nv"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_sv0a6"]
 [ext_resource type="Texture2D" uid="uid://bnf832wawynw4" path="res://objectmodels/marble_bust/textures/marble_bust_01_diff_4k.jpg" id="2_60xrq"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://ilqrfm647tau" path="res://textures/door_texture/metal_plate_diff_4k.png" id="3_il334"]
 [ext_resource type="Texture2D" uid="uid://1gs8jsab1mdh" path="res://objectmodels/cat_statue/textures/concrete_cat_statue_diff_4k.jpg" id="5_cmvhu"]
 [ext_resource type="PackedScene" uid="uid://cvvhr51m3d3cb" path="res://objectmodels/cardboard_box_01_4k/cardboard_box_01_4k.gltf" id="6_j8qt6"]
+[ext_resource type="PackedScene" uid="uid://bh18kskaruq62" path="res://Scenes/prefabs/scrap_marker.tscn" id="7_6ksem"]
+[ext_resource type="PackedScene" uid="uid://cdf8lpjxddsvr" path="res://Scenes/prefabs/enemy_marker.tscn" id="8_ph5vl"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rixdp"]
 resource_name = "marble_bust_01"
@@ -60,6 +62,7 @@ albedo_texture = ExtResource("2_60xrq")
 roughness_texture = SubResource("NoiseTexture2D_dt26w")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y0qck"]
+albedo_color = Color(0.937255, 0, 0.592157, 1)
 albedo_texture = ExtResource("2_wut14")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dt84r"]
@@ -142,22 +145,22 @@ operation = 2
 size = Vector3(18.6145, 9, 16.282)
 
 [node name="DOOR?2" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85784, -0.0639216, -4.23582)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85784, -0.367157, -4.23582)
 operation = 2
 size = Vector3(1, 8.1129, 5.48071)
 
 [node name="DOOR?6" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85784, -0.0639216, 4.98674)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85784, -0.370753, 4.98674)
 operation = 2
 size = Vector3(1, 8.1129, 5.48071)
 
 [node name="DOOR?5" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(-4.36821e-08, 0.0365914, 0.99933, 1.59946e-09, 0.99933, -0.0365914, -1, 0, -4.37114e-08, 5.48661, -0.0639216, 9.90648)
+transform = Transform3D(-4.36821e-08, 0.0365914, 0.99933, 1.59946e-09, 0.99933, -0.0365914, -1, 0, -4.37114e-08, 5.487, -0.3, 9.49863)
 operation = 2
 size = Vector3(1, 8.1129, 5.48071)
 
 [node name="DOOR?7" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(-4.36821e-08, 0.0365914, 0.99933, 1.59946e-09, 0.99933, -0.0365914, -1, 0, -4.37114e-08, -3.8576, -0.0639216, 9.90648)
+transform = Transform3D(-4.36821e-08, 0.0365914, 0.99933, 1.59946e-09, 0.99933, -0.0365914, -1, 0, -4.37114e-08, -3.858, -0.3, 9.52077)
 material_override = SubResource("StandardMaterial3D_dt84r")
 operation = 2
 size = Vector3(1, 8.1129, 5.48071)
@@ -180,3 +183,12 @@ transform = Transform3D(-0.221315, 1.98601, -0.0824735, 0.364504, 0.122126, 1.96
 
 [node name="cardboard_box_01_4k3" parent="." instance=ExtResource("6_j8qt6")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -0.792816, -4.46911, -3.6025)
+
+[node name="ScrapMarker" parent="." instance=ExtResource("7_6ksem")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.158, -4.05346, -0.734)
+
+[node name="ScrapMarker2" parent="." instance=ExtResource("7_6ksem")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.55075, -4.05346, 11.0372)
+
+[node name="EnemyMarker" parent="." instance=ExtResource("8_ph5vl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.271934, -4.50275, -7.5449)

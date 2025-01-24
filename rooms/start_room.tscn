@@ -1,11 +1,11 @@
 [gd_scene load_steps=17 format=4 uid="uid://btqev772fc7bl"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_pykbe"]
-[ext_resource type="PackedScene" uid="uid://c07usi2nurnmb" path="res://Scenes/prefabs/Door.tscn" id="2_lspxd"]
 [ext_resource type="Texture2D" uid="uid://dt3pv5r6vjd3r" path="res://textures/small_room_texture/rusty_metal_sheet_diff_4k.png" id="2_uakwu"]
 [ext_resource type="PackedScene" uid="uid://3pcw2q81hvrs" path="res://objectmodels/utility_box_02_4k/utility_box_02_4k.gltf" id="4_2liu2"]
 [ext_resource type="Texture2D" uid="uid://dd75fl6rr2y7f" path="res://objectmodels/security_camera_02_4k/textures/security_camera_02_diff_4k.jpg" id="5_fsw4f"]
 [ext_resource type="PackedScene" uid="uid://chjq57h8xmpmb" path="res://objectmodels/utility_box_01_4k/utility_box_01_4k.gltf" id="6_m3clu"]
+[ext_resource type="PackedScene" uid="uid://dob0y1cay5v7v" path="res://Scenes/prefabs/door_marker.tscn" id="6_xsa8n"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_2up67"]
 vertices = PackedVector3Array(-9.48562, 5.5, -9.49464, -9.48562, 5.5, 9.50536, 9.51438, 5.5, 9.50536, 9.51438, 5.5, -9.49464, 8.51438, -4, -7.99464, -9.48562, -4, -7.74464, -8.73562, -4, -7.24464, -8.73562, -4, 7.00536, 8.51438, -4, 7.00536)
@@ -152,9 +152,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.8467, -0.352095, -5.53636)
 operation = 2
 size = Vector3(1, 8.1129, 5.48071)
 
-[node name="Door" parent="NavigationRegion3D" instance=ExtResource("2_lspxd")]
-transform = Transform3D(-8.49513e-08, 0, -1, 0, 1.4458, 0, 1.94346, 0, -4.37114e-08, -9.50207, -2.3211, -5.98647)
-
 [node name="utility_box_02_4k" parent="." instance=ExtResource("4_2liu2")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 6.33308, -4.48755, -7.86182)
 
@@ -174,3 +171,6 @@ skeleton = NodePath("")
 
 [node name="utility_box_01_4k" parent="security_camera_02_4k" instance=ExtResource("6_m3clu")]
 transform = Transform3D(-2.49999, 1.53979e-07, -0.00698126, 0.00243205, 2.3434, -0.870895, 0.00654388, -0.870898, -2.34339, 0.859741, -0.792961, 5.49756)
+
+[node name="DoorMarker2" parent="." instance=ExtResource("6_xsa8n")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -9.99856, -4.65394, -3.31934)

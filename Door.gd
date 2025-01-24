@@ -12,6 +12,7 @@ var current_tween: Tween = null
 func _ready():
 	add_to_group("doors")
 	# Store the original rotation around Y axis
+	await get_tree().process_frame
 	original_rotation_y = rotation.y
 	target_angle_y = original_rotation_y
 	
