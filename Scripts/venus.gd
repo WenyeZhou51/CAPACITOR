@@ -7,6 +7,10 @@ extends CharacterBody3D
 @export var turn_speed: float = 2.0
 @export var animation_speed: float = 8.0
 @export var chase_animation_speed: float = 16.0
+@export var attack_radius: float = 3.0
+@export var attack_damage: float = 10.0
+@export var attack_cooldown: float = 1.0
+
 
 # debug colors
 @export var debug_visual_colors: bool = false
@@ -270,3 +274,20 @@ func _update_debug_color():
 	var mat := material as StandardMaterial3D
 	mat.albedo_color = color
 	print("Debug: Updated material color to:", color)
+
+
+# Attack if near player and timer passed
+func _on_timer_timeout() -> void:
+	if !is_instance_valid(player):
+		return
+	
+	var dist = global_transform.origin.distance_to(player.global_transform.origin)
+	print("[DEBUG] timer!!", dist)
+	
+	if has_line_of_sight():
+		print("Line of sight!")
+		
+		if dist < attack_radius:
+			player.take_damage(attack_damage)
+			$AudioStreamPlayer3D.play()
+			print("ATTACKING!!")

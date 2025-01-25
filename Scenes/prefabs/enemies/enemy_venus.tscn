@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bjjrllm15flh4"]
+[gd_scene load_steps=5 format=3 uid="uid://bjjrllm15flh4"]
 
 [ext_resource type="PackedScene" uid="uid://be2r833svd7bu" path="res://Assets/Venus.glb" id="1_eopk2"]
 [ext_resource type="Script" path="res://Scripts/venus.gd" id="2_4grln"]
+[ext_resource type="AudioStream" uid="uid://dgoy501pik4vb" path="res://audio/venusAttack.wav" id="3_uhqb2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_33x1u"]
 
@@ -14,6 +15,7 @@ script = ExtResource("2_4grln")
 normal_speed = 1.0
 chase_speed = 3.0
 animation_speed = 5.0
+attack_damage = 50.0
 
 [node name="Venus" parent="CharacterBody3D" instance=ExtResource("1_eopk2")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 15.0893, 0)
@@ -138,5 +140,14 @@ transform = Transform3D(4.9563, 0, 0, 0, 8.13981, 0, 0, 0, 2.173, 0.69717, 8.050
 shape = SubResource("CapsuleShape3D_33x1u")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="CharacterBody3D"]
+
+[node name="AttackTimer" type="Timer" parent="CharacterBody3D"]
+autostart = true
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="CharacterBody3D"]
+transform = Transform3D(-5, 0, -4.37114e-07, 0, 5, 0, 4.37114e-07, 0, -5, 0, 15.0893, 0)
+stream = ExtResource("3_uhqb2")
+
+[connection signal="timeout" from="CharacterBody3D/AttackTimer" to="CharacterBody3D" method="_on_timer_timeout"]
 
 [editable path="CharacterBody3D/Venus"]
