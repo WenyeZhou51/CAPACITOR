@@ -13,13 +13,26 @@ const STAMINA_THRESHOLD = 0.5  # Buffer threshold for stamina management
 @export var stamina_bar: VSlider  # Reference to the stamina UI slider
 @export var interaction_area: Area3D
 @export var interact_label: Label
+@export var texture_rect: TextureRect
+
+@export var min_vignette_intensity: float = 0.0
+@export var max_vignette_intensity: float = 1.0
+@export var min_noise_amount: float = 0.03
+@export var max_noise_amount: float = 0.13
+@export var min_scan_line_amount: float = 0.5
+@export var max_scan_line_amount: float = 1.0
+
 var current_stamina: float = 1.0 + STAMINA_THRESHOLD  # Current stamina level
 var is_running: bool = false  # Whether the player is sprinting
 var movement_speed: float = WALK_SPEED  # Current movement speed
 var is_holding: bool = false # Whether the player is holding an intem
+var current_health: float = 100.0
+var max_health: float = 100.0
+var crt_shader_material: ShaderMaterial
 
 func _ready():
 	add_to_group("players")
+	crt_shader_material = texture_rect.material
 	
 func _physics_process(delta: float) -> void:
 	# Apply gravity if not on the floor
@@ -107,3 +120,27 @@ func _physics_process(delta: float) -> void:
 
 	# Move the character
 	move_and_slide()
+
+func update_health_indicator():
+	if crt_shader_material and crt_shader_material is ShaderMaterial:
+		var health_ratio = float(current_health) / float(max_health)
+		
+		# Calculate parameter values using the min and max ranges
+		var vignette_intensity = lerp(max_vignette_intensity, min_vignette_intensity, health_ratio)
+		var noise_amount = lerp(min_noise_amount, max_noise_amount, 1.0 - health_ratio)
+		var scan_line_amount = lerp(min_scan_line_amount, max_scan_line_amount, 1.0 - health_ratio)
+		
+		# Adjust shader parameters
+		crt_shader_material.set("shader_param/vignette_intensity", vignette_intensity)
+		crt_shader_material.set("shader_param/noise_amount", noise_amount)
+		crt_shader_material.set("shader_param/scan_line_amount", scan_line_amount)
+
+func take_damage(amount: int):
+	print("Player took damage: ", amount)
+	current_health -= amount
+	
+	if current_health <= 0:
+		current_health = 0
+		get_tree().reload_current_scene()
+	else:
+		update_health_indicator()
