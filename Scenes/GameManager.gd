@@ -54,3 +54,27 @@ func _on_navigation_region_3d_bake_finished() -> void:
 	spawn_doors()
 	spawn_scrap()
 	
+	
+
+	
+var is_ui_mode = false  # Tracks whether you're in UI interaction mode
+
+func _input(event):
+	if event is InputEventKey and event.pressed:
+		if event.keycode == KEY_ALT:
+			toggle_ui_mode()
+
+	# Process mouse events in UI mode
+	if is_ui_mode and event is InputEventMouseButton and event.pressed:
+		# Let Godot handle button clicks as normal
+		pass
+
+func toggle_ui_mode():
+	is_ui_mode = !is_ui_mode  # Toggle the mode
+
+	if is_ui_mode:
+		# Enable mouse for HUD interaction
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	else:
+		# Lock mouse back to 3D gameplay
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)

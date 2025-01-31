@@ -114,6 +114,13 @@ extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_rdfmn")
 surface_material_override/0 = SubResource("ShaderMaterial_xnko0")
 
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/multiplayer_player.tscn")
+spawn_path = NodePath("../players")
+spawn_limit = 4
+
+[node name="players" type="Node3D" parent="."]
+
 [connection signal="bake_finished" from="NavigationRegion3D" to="GameManager" method="_on_navigation_region_3d_bake_finished"]
 [connection signal="done_generating" from="NavigationRegion3D/DungeonGenerator3D" to="NavigationRegion3D" method="on_dungeon_done_generating"]
 

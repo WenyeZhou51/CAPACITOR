@@ -45,15 +45,15 @@
 - **Randomly Generated Facility** with key features:
   - **Dimensions:** ~2:1:2 ratio.
   - **Room Types:**
-    - Standard Rooms: Loot and monster spawns.
-    - Locked Rooms: Require keys to access (0-3 doors).
-    - Capacitor Rooms: 1-3 rooms with single-use capacitors.
-    - Generator Room: Always near the entrance; includes coolant bottles.
-    - Surveillance Station: Offers top-down views of players, enemies, and loot.
-    - Containment Cells: Contain medium/large monsters.
-    - Stairs Room: For vertical movement.
-    - Hallways: Connect rooms.
-    
+	- Standard Rooms: Loot and monster spawns.
+	- Locked Rooms: Require keys to access (0-3 doors).
+	- Capacitor Rooms: 1-3 rooms with single-use capacitors.
+	- Generator Room: Always near the entrance; includes coolant bottles.
+	- Surveillance Station: Offers top-down views of players, enemies, and loot.
+	- Containment Cells: Contain medium/large monsters.
+	- Stairs Room: For vertical movement.
+	- Hallways: Connect rooms.
+	
 ---
 
 ## 🎒 Items
@@ -105,4 +105,3 @@
 ---
 
 ## 🎉 DEMO
-

@@ -1,4 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://gin1s6t5p5jh"]
+[gd_scene load_steps=5 format=3 uid="uid://gin1s6t5p5jh"]
+
+[ext_resource type="Script" path="res://Scenes/ui.gd" id="1_ul0xm"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_5inc3"]
 
@@ -13,6 +15,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_ul0xm")
 
 [node name="SprintSlider" type="VSlider" parent="."]
 layout_mode = 0
@@ -38,3 +41,30 @@ offset_right = 1038.0
 offset_bottom = 548.0
 scale = Vector2(1.92, 1.92)
 text = "[E]"
+
+[node name="MultiplayerHUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Panel" type="Panel" parent="MultiplayerHUD"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MultiplayerHUD/Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Host" type="Button" parent="MultiplayerHUD/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Host"
+
+[node name="Join" type="Button" parent="MultiplayerHUD/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Join"
+
+[connection signal="pressed" from="MultiplayerHUD/Panel/VBoxContainer/Host" to="." method="host_game"]
+[connection signal="pressed" from="MultiplayerHUD/Panel/VBoxContainer/Join" to="." method="join_game"]

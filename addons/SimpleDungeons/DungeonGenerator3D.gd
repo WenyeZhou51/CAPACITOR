@@ -133,7 +133,7 @@ func _ready():
 	if Engine.is_editor_hint():
 		return
 	if generate_on_ready:
-		generate()
+		generate(1)
 
 func _process(delta):
 	if Engine.is_editor_hint():

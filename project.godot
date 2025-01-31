@@ -15,6 +15,10 @@ run/main_scene="res://Scenes/testscene.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+MultiplayerManager="*res://Scripts/multiplayer/multiplayer_manager.gd"
+
 [display]
 
 window/size/viewport_width=1920
@@ -22,9 +26,17 @@ window/size/viewport_height=1080
 window/size/mode=2
 window/stretch/mode="canvas_items"
 
+[dotnet]
+
+project/assembly_name="demo"
+
 [editor_plugins]
 
 enabled=PackedStringArray()
+
+[filesystem]
+
+import/blender/enabled=false
 
 [input]
 
