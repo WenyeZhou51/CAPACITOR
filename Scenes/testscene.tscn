@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c8y6hkpnlip1g"]
+[gd_scene load_steps=26 format=3 uid="uid://c8y6hkpnlip1g"]
 
 [ext_resource type="PackedScene" uid="uid://busyfigb6e8mo" path="res://Scenes/player.tscn" id="1_36ui5"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
@@ -39,6 +39,8 @@ volumetric_fog_density = 0.1
 volumetric_fog_albedo = Color(0.984314, 1, 1, 1)
 volumetric_fog_emission = Color(0.0196078, 0, 0, 1)
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_0to3f"]
+
 [sub_resource type="NavigationMesh" id="NavigationMesh_t4gef"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_rdfmn"]
@@ -66,9 +68,10 @@ shadow_enabled = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Player" parent="." node_paths=PackedStringArray("interact_label") instance=ExtResource("1_36ui5")]
+[node name="Player" parent="." node_paths=PackedStringArray("interact_label", "texture_rect") instance=ExtResource("1_36ui5")]
 transform = Transform3D(0.99954, 0.0303292, 0, -0.0303292, 0.99954, 0, 0, 0, 1, 39.8975, 45.9977, -3.90268)
 interact_label = NodePath("../UI/InteractLabel")
+texture_rect = NodePath("../UI/TextureRect")
 
 [node name="GameManager" type="Node" parent="."]
 script = ExtResource("10_2bpfs")
@@ -87,6 +90,9 @@ autoplay = true
 max_distance = 3967.43
 
 [node name="UI" parent="." instance=ExtResource("2_j6u47")]
+
+[node name="TextureRect" parent="UI" index="2"]
+texture = SubResource("ViewportTexture_0to3f")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_t4gef")
