@@ -197,6 +197,7 @@ albedo_texture = ExtResource("7_ba2kl")
 script = ExtResource("1_t55gw")
 size_in_voxels = Vector3i(3, 1, 2)
 min_count = 5
+max_count = 10
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00892019, 0, 0.000610352)
@@ -211,11 +212,6 @@ size = Vector3(29.3675, 9, 19.1641)
 
 [node name="DOOR2" type="CSGBox3D" parent="CSGBox3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.4278, -0.0639216, -4.83759)
-operation = 2
-size = Vector3(1, 8.1129, 5.48071)
-
-[node name="DOOR6" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.4763, -0.0795843, 6.6687)
 operation = 2
 size = Vector3(1, 8.1129, 5.48071)
 

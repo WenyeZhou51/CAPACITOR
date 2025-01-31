@@ -1,8 +1,7 @@
-[gd_scene load_steps=22 format=4 uid="uid://ch0yrvh1wr6nv"]
+[gd_scene load_steps=19 format=4 uid="uid://ch0yrvh1wr6nv"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_sv0a6"]
 [ext_resource type="Texture2D" uid="uid://bnf832wawynw4" path="res://objectmodels/marble_bust/textures/marble_bust_01_diff_4k.jpg" id="2_60xrq"]
-[ext_resource type="Texture2D" uid="uid://ilqrfm647tau" path="res://textures/door_texture/metal_plate_diff_4k.png" id="3_il334"]
 [ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="3_vbl6q"]
 [ext_resource type="Texture2D" uid="uid://1gs8jsab1mdh" path="res://objectmodels/cat_statue/textures/concrete_cat_statue_diff_4k.jpg" id="5_cmvhu"]
 [ext_resource type="PackedScene" uid="uid://cvvhr51m3d3cb" path="res://objectmodels/cardboard_box_01_4k/cardboard_box_01_4k.gltf" id="6_j8qt6"]
@@ -65,13 +64,6 @@ roughness_texture = SubResource("NoiseTexture2D_dt26w")
 albedo_color = Color(0.937255, 0, 0.592157, 1)
 albedo_texture = ExtResource("3_vbl6q")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dt84r"]
-render_priority = 5
-albedo_texture = ExtResource("3_il334")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2x7q0"]
-albedo_texture = ExtResource("3_il334")
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ciyo2"]
 resource_name = "concrete_cat_statue"
 cull_mode = 2
@@ -123,6 +115,7 @@ albedo_texture = ExtResource("5_cmvhu")
 script = ExtResource("1_sv0a6")
 size_in_voxels = Vector3i(2, 1, 2)
 min_count = 5
+max_count = 10
 
 [node name="marble_bust_01_4k" type="Node3D" parent="."]
 transform = Transform3D(-4.25533, 0, -6.77438, 0, 8, 0, 6.77438, 0, -4.25533, 4.19381, -3.13096, 2.72601)
@@ -144,11 +137,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0910292, 0, -0.5802)
 operation = 2
 size = Vector3(18.6145, 9, 16.282)
 
-[node name="DOOR?2" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85784, -0.367157, -4.23582)
-operation = 2
-size = Vector3(1, 8.1129, 5.48071)
-
 [node name="DOOR?6" type="CSGBox3D" parent="CSGBox3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85784, -0.370753, 4.98674)
 operation = 2
@@ -158,13 +146,6 @@ size = Vector3(1, 8.1129, 5.48071)
 transform = Transform3D(-4.36821e-08, 0.0365914, 0.99933, 1.59946e-09, 0.99933, -0.0365914, -1, 0, -4.37114e-08, 5.487, -0.3, 9.49863)
 operation = 2
 size = Vector3(1, 8.1129, 5.48071)
-
-[node name="DOOR?7" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(-4.36821e-08, 0.0365914, 0.99933, 1.59946e-09, 0.99933, -0.0365914, -1, 0, -4.37114e-08, -3.858, -0.3, 9.52077)
-material_override = SubResource("StandardMaterial3D_dt84r")
-operation = 2
-size = Vector3(1, 8.1129, 5.48071)
-material = SubResource("StandardMaterial3D_2x7q0")
 
 [node name="concrete_cat_statue_4k" type="Node3D" parent="."]
 transform = Transform3D(5.61414, -0.000707611, -2.11693, 0.0022621, 6, 0.00399331, 2.11693, -0.00453463, 5.61414, 6.14188, -4.47849, -7.47189)

@@ -19,7 +19,6 @@ script = ExtResource("1_1rl1i")
 transform = Transform3D(0.970972, 0.239194, 0, -0.239194, 0.970972, 0, 0, 0, 1, 0, 0, 0)
 light_color = Color(1, 1, 0.760784, 1)
 light_volumetric_fog_energy = 0.1
-shadow_enabled = true
 distance_fade_enabled = true
 spot_range = 70.0
 spot_attenuation = 0.7

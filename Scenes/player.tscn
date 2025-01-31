@@ -56,3 +56,5 @@ shape = SubResource("CylinderShape3D_22rlx")
 
 [node name="ItemSocket" type="Node3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.317, -0.495, -0.5)
+
+[node name="InventoryContainer" type="Node3D" parent="."]

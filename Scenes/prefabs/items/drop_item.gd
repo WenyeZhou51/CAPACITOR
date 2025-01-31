@@ -1,6 +1,7 @@
 extends StaticBody3D
 
 var pick_script
+@export var Price: int = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
@@ -55,6 +56,6 @@ func convert_staticbody_to_rigidbody(static_body: StaticBody3D):
 	rigidbody.collision_mask = 0b00000101
 	
 	rigidbody.set_script(pick_script)
-
+	rigidbody.Price = static_body.Price
 	# Optionally free the old StaticBody3D to clean up memory
 	static_body.queue_free()
