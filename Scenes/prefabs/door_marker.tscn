@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dob0y1cay5v7v"]
+
+[ext_resource type="Script" path="res://rooms/door_marker.gd" id="1_dl5ab"]
+
+[node name="DoorMarker" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00574851, 0.00631434, -0.00298405)
+script = ExtResource("1_dl5ab")
