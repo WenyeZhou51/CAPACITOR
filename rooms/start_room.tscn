@@ -1,7 +1,8 @@
-[gd_scene load_steps=17 format=4 uid="uid://btqev772fc7bl"]
+[gd_scene load_steps=18 format=4 uid="uid://btqev772fc7bl"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_pykbe"]
 [ext_resource type="Texture2D" uid="uid://dt3pv5r6vjd3r" path="res://textures/small_room_texture/rusty_metal_sheet_diff_4k.png" id="2_uakwu"]
+[ext_resource type="Texture2D" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="3_e13x1"]
 [ext_resource type="PackedScene" uid="uid://3pcw2q81hvrs" path="res://objectmodels/utility_box_02_4k/utility_box_02_4k.gltf" id="4_2liu2"]
 [ext_resource type="Texture2D" uid="uid://dd75fl6rr2y7f" path="res://objectmodels/security_camera_02_4k/textures/security_camera_02_diff_4k.jpg" id="5_fsw4f"]
 [ext_resource type="PackedScene" uid="uid://chjq57h8xmpmb" path="res://objectmodels/utility_box_01_4k/utility_box_01_4k.gltf" id="6_m3clu"]
@@ -15,6 +16,8 @@ polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Arr
 albedo_texture = ExtResource("2_uakwu")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mklwe"]
+albedo_color = Color(0.288518, 0.288518, 0.288518, 1)
+albedo_texture = ExtResource("3_e13x1")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4fdq8"]
 resource_name = "security_camera_02"
@@ -60,6 +63,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_50jlj")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q3vlb"]
+albedo_color = Color(0.448712, 0.448712, 0.448712, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rjowg"]
 resource_name = "security_camera_02_glass"

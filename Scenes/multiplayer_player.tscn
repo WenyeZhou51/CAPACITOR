@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://hv2n0x1brtt7"]
+[gd_scene load_steps=8 format=3 uid="uid://bvb05xe1tn77w"]
 
 [ext_resource type="Script" path="res://head.gd" id="1_jmy54"]
 
@@ -31,12 +31,17 @@ var is_holding: bool = false # Whether the player is holding an intem
 		player_id = id
 
 
-func _enter_tree() -> void:
-	set_multiplayer_authority(name.to_int())
+#func _enter_tree() -> void:
+	#set_multiplayer_authority(name.to_int())
 
 func _ready():
 	add_to_group(\"players\")
-	cam.current = is_multiplayer_authority()
+	
+	# Check if this node's player_id matches our local peer's unique ID
+	if get_tree().get_multiplayer().get_unique_id() == player_id:
+		cam.current = true
+	else:
+		cam.current = false
 	#synchronizer.set_multiplayer_authority(str(name).to_int())
 	
 func _physics_process(delta: float) -> void:
@@ -160,6 +165,9 @@ radius = 0.4
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
+properties/1/path = NodePath(".:transform")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [node name="MultiplayerPlayer" type="CharacterBody3D" node_paths=PackedStringArray("interaction_area")]
 script = SubResource("GDScript_aks8u")
