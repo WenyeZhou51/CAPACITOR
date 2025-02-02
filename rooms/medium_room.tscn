@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://c6gmwiknceior"]
+[gd_scene load_steps=25 format=4 uid="uid://c6gmwiknceior"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_t55gw"]
 [ext_resource type="PackedScene" uid="uid://dltoljaoknl4w" path="res://Scenes/Spawn Points/enemy_spawn_point.tscn" id="2_4g2rj"]
@@ -11,8 +11,10 @@
 [ext_resource type="PackedScene" uid="uid://bh18kskaruq62" path="res://Scenes/prefabs/scrap_marker.tscn" id="9_me5js"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y0qck"]
-albedo_color = Color(0.937255, 0, 0.592157, 1)
 albedo_texture = ExtResource("2_kijdn")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vxp15"]
+size = Vector3(1.2, 0.7, 0.8)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b67du"]
 resource_name = "gallinera_table"
@@ -124,6 +126,12 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_1gya3")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_pvh7h"]
+size = Vector3(1.2, 0.9, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u8ri0"]
+albedo_texture = ExtResource("7_ba2kl")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_66of8"]
 resource_name = "wooden_stool_02"
 cull_mode = 2
@@ -190,8 +198,8 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_d3pj2")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u8ri0"]
-albedo_texture = ExtResource("7_ba2kl")
+[sub_resource type="BoxShape3D" id="BoxShape3D_3cw35"]
+size = Vector3(1.25, 0.9, 0.9)
 
 [node name="medium_room" type="Node3D"]
 script = ExtResource("1_t55gw")
@@ -210,24 +218,24 @@ operation = 2
 size = Vector3(29.3675, 9, 19.1641)
 
 [node name="DOOR2" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.4278, -0.0639216, -4.83759)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.5, -0.5, -5)
 operation = 2
-size = Vector3(1, 8.1129, 5.48071)
+size = Vector3(1, 8, 6)
 
 [node name="DOOR6" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.4763, -0.0795843, 6.6687)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.5, -0.5, 5)
 operation = 2
-size = Vector3(1, 8.1129, 5.48071)
+size = Vector3(1, 8, 6)
 
 [node name="DOOR5" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(-4.36821e-08, 0.0365914, 0.99933, 1.59946e-09, 0.99933, -0.0365914, -1, 0, -4.37114e-08, 11.5913, -0.0639216, -9.61067)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10, -0.5, -9.5)
 operation = 2
-size = Vector3(1, 8.1129, 5.48071)
+size = Vector3(1, 8, 6)
 
 [node name="DOOR7" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(-4.36821e-08, 0.0365914, 0.99933, 1.59946e-09, 0.99933, -0.0365914, -1, 0, -4.37114e-08, 9.22452, -0.0639216, 9.90648)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10, -0.5, 9.5)
 operation = 2
-size = Vector3(1, 8.1129, 5.48071)
+size = Vector3(1, 8, 6)
 
 [node name="Enemy Spawn Point" parent="." instance=ExtResource("2_4g2rj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.73723, -5.17634, -8.84273)
@@ -238,37 +246,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2061, -4.5, -0.157276)
 [node name="Loot Spawn Point2" parent="." instance=ExtResource("3_8virv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.1689, -4.5, 0.476883)
 
-[node name="gallinera_table_4k" type="Node3D" parent="."]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -0.226966, -4.4843, -8.42237)
-
-[node name="gallinera_table" type="MeshInstance3D" parent="gallinera_table_4k"]
-mesh = SubResource("ArrayMesh_pnxhv")
-skeleton = NodePath("")
-
-[node name="gallinera_table_door_a" type="MeshInstance3D" parent="gallinera_table_4k"]
-mesh = SubResource("ArrayMesh_h0aeh")
-skeleton = NodePath("")
-
-[node name="gallinera_table_door_b" type="MeshInstance3D" parent="gallinera_table_4k"]
-mesh = SubResource("ArrayMesh_bfxfn")
-skeleton = NodePath("")
-
-[node name="blend_export" type="Node3D" parent="."]
-transform = Transform3D(1.58725, 0, -3.6716, 0, 4, 0, 3.6716, 0, 1.58725, -3.7382, -4.48109, 8.37486)
-
-[node name="wooden_stool_02" type="MeshInstance3D" parent="blend_export"]
-mesh = SubResource("ArrayMesh_m6vaq")
-skeleton = NodePath("")
-
-[node name="blend_export2" type="Node3D" parent="."]
-transform = Transform3D(3.61301, 0, -1.71643, 0, 4, 0, 1.71643, 0, 3.61301, -2.23766, -4.48407, 7.07542)
-
-[node name="wooden_stool_02" type="MeshInstance3D" parent="blend_export2"]
-transform = Transform3D(1, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 1, 0.019317, 0.0050683, 0.0406613)
-material_override = SubResource("StandardMaterial3D_u8ri0")
-mesh = SubResource("ArrayMesh_m6vaq")
-skeleton = NodePath("")
-
 [node name="EnemyMarker" parent="." instance=ExtResource("8_ximhl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.94309, -3.76611, 1.3705)
 
@@ -277,3 +254,53 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.04342, -3.60794, 4.09733)
 
 [node name="ScrapMarker2" parent="." instance=ExtResource("9_me5js")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.3205, -3.0811, -8.72383)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(2.8, 0, 0, 0, 2.8, 0, 0, 0, 2.8, -0.226966, -3.26525, -8.16224)
+shape = SubResource("BoxShape3D_vxp15")
+
+[node name="gallinera_table_4k" type="Node3D" parent="StaticBody3D"]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -0.226966, -4.4843, -8.42237)
+
+[node name="gallinera_table" type="MeshInstance3D" parent="StaticBody3D/gallinera_table_4k"]
+mesh = SubResource("ArrayMesh_pnxhv")
+skeleton = NodePath("")
+
+[node name="gallinera_table_door_a" type="MeshInstance3D" parent="StaticBody3D/gallinera_table_4k"]
+mesh = SubResource("ArrayMesh_h0aeh")
+skeleton = NodePath("")
+
+[node name="gallinera_table_door_b" type="MeshInstance3D" parent="StaticBody3D/gallinera_table_4k"]
+mesh = SubResource("ArrayMesh_bfxfn")
+skeleton = NodePath("")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(0.722602, 0, -0.343286, 0, 0.8, 0, 0.343286, 0, 0.722602, -2.23766, -4.07919, 7.25549)
+shape = SubResource("BoxShape3D_pvh7h")
+
+[node name="blend_export2" type="Node3D" parent="StaticBody3D2"]
+transform = Transform3D(3.61301, 0, -1.71643, 0, 4, 0, 1.71643, 0, 3.61301, -2.23766, -4.48407, 7.07542)
+
+[node name="wooden_stool_02" type="MeshInstance3D" parent="StaticBody3D2/blend_export2"]
+transform = Transform3D(1, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 1, 0.019317, 0.0050683, 0.0406613)
+material_override = SubResource("StandardMaterial3D_u8ri0")
+mesh = SubResource("ArrayMesh_m6vaq")
+skeleton = NodePath("")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D3"]
+transform = Transform3D(0.31745, 0, -0.73432, 0, 0.8, 0, 0.73432, 0, 0.31745, -3.70226, -4.11578, 8.32175)
+shape = SubResource("BoxShape3D_3cw35")
+
+[node name="blend_export" type="Node3D" parent="StaticBody3D3"]
+transform = Transform3D(1.58725, 0, -3.6716, 0, 4, 0, 3.6716, 0, 1.58725, -3.7382, -4.48109, 8.37486)
+
+[node name="wooden_stool_02" type="MeshInstance3D" parent="StaticBody3D3/blend_export"]
+transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0)
+mesh = SubResource("ArrayMesh_m6vaq")
+skeleton = NodePath("")
