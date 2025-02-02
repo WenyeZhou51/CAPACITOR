@@ -12,10 +12,9 @@ transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, -0.106848, 0)
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
 safe_margin = 0.1
 script = ExtResource("2_4grln")
-normal_speed = 1.0
 chase_speed = 3.0
+attack_damage = 20.0
 animation_speed = 5.0
-attack_damage = 50.0
 
 [node name="Venus" parent="CharacterBody3D" instance=ExtResource("1_eopk2")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 15.0893, 0)

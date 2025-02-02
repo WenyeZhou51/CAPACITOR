@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://c8y6hkpnlip1g"]
+[gd_scene load_steps=30 format=3 uid="uid://c8y6hkpnlip1g"]
 
 [ext_resource type="PackedScene" uid="uid://busyfigb6e8mo" path="res://Scenes/player.tscn" id="1_36ui5"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
@@ -12,12 +12,16 @@
 [ext_resource type="PackedScene" uid="uid://bjjrllm15flh4" path="res://Scenes/prefabs/enemies/enemy_venus.tscn" id="7_gmf4o"]
 [ext_resource type="PackedScene" uid="uid://btqev772fc7bl" path="res://rooms/start_room.tscn" id="8_n1yd6"]
 [ext_resource type="PackedScene" uid="uid://c6gmwiknceior" path="res://rooms/medium_room.tscn" id="8_osxs0"]
+[ext_resource type="Script" path="res://Scenes/ui.gd" id="9_76pp2"]
 [ext_resource type="PackedScene" uid="uid://cisl75a2ha5p8" path="res://rooms/corridor_1.tscn" id="9_svjm5"]
 [ext_resource type="Script" path="res://Scenes/GameManager.gd" id="10_2bpfs"]
 [ext_resource type="AudioStream" uid="uid://bc2qvfrbnwvn6" path="res://audio/demoLevel.wav" id="11_wadk3"]
 [ext_resource type="PackedScene" uid="uid://dhmtymlk3gb34" path="res://Scenes/prefabs/items/flashlight.tscn" id="13_1s1s2"]
 [ext_resource type="Shader" path="res://shaders/bayer.gdshader" id="14_hrlu7"]
 [ext_resource type="PackedScene" uid="uid://cjdanhbr7qd50" path="res://Scenes/prefabs/items/scrap1.tscn" id="14_q11nm"]
+[ext_resource type="PackedScene" uid="uid://c6p4c52jcwm6k" path="res://Scenes/prefabs/items/cashBox.tscn" id="19_65my3"]
+[ext_resource type="PackedScene" uid="uid://bwoto031wapot" path="res://Scenes/pause_menu.tscn" id="20_chau2"]
+[ext_resource type="Script" path="res://Scenes/electricity_manager.gd" id="22_fg5vs"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_binvk"]
 sky_top_color = Color(0.0101014, 0.0122771, 0.0165181, 1)
@@ -66,13 +70,6 @@ environment = SubResource("Environment_0737e")
 transform = Transform3D(-0.979272, -0.00361312, -0.202518, -0.13989, 0.735146, 0.663318, 0.146484, 0.677899, -0.720413, 40.5561, 43.841, -4.01321)
 shadow_enabled = true
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Player" parent="." node_paths=PackedStringArray("interact_label", "texture_rect") instance=ExtResource("1_36ui5")]
-transform = Transform3D(0.99954, 0.0303292, 0, -0.0303292, 0.99954, 0, 0, 0, 1, 39.8975, 45.9977, -3.90268)
-interact_label = NodePath("../UI/InteractLabel")
-texture_rect = NodePath("../UI/TextureRect")
-
 [node name="GameManager" type="Node" parent="."]
 script = ExtResource("10_2bpfs")
 scrap_scenes = Array[PackedScene]([ExtResource("14_q11nm"), ExtResource("4_occg4"), ExtResource("5_kvhlf")])
@@ -80,7 +77,7 @@ num_scrap_to_spawn = 20
 door_scene = ExtResource("6_rrefc")
 enemy_scene = ExtResource("7_gmf4o")
 min_spawn_time = 10.0
-max_spawn_time = 10.0
+max_spawn_time = 20.0
 
 [node name="GlobalAudio" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.6726, 39.7102, 2.79768)
@@ -90,9 +87,26 @@ autoplay = true
 max_distance = 3967.43
 
 [node name="UI" parent="." instance=ExtResource("2_j6u47")]
+script = ExtResource("9_76pp2")
 
 [node name="TextureRect" parent="UI" index="2"]
 texture = SubResource("ViewportTexture_0to3f")
+
+[node name="Label" type="Label" parent="UI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 45
+text = "Remaining Quota: "
+
+[node name="Label2" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 64.0
+offset_right = 86.0
+offset_bottom = 127.0
+theme_override_font_sizes/font_size = 45
+text = "666"
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_t4gef")
@@ -105,6 +119,7 @@ script = ExtResource("6_s8vmo")
 room_scenes = Array[PackedScene]([ExtResource("7_fiwcu"), ExtResource("8_osxs0"), ExtResource("7_d3uit")])
 corridor_room_scene = ExtResource("9_svjm5")
 junctions = 30
+generate_seed = "67592"
 max_retries = 2
 max_safe_iterations = 500
 corridor_cost_multiplier = 0.05
@@ -124,6 +139,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.7764, 41.603, 0)
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_rdfmn")
 surface_material_override/0 = SubResource("ShaderMaterial_xnko0")
+
+[node name="Player" parent="." node_paths=PackedStringArray("stamina_bar", "interact_label", "texture_rect") instance=ExtResource("1_36ui5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.9016, 43.5875, 1.71351)
+stamina_bar = NodePath("../UI/SprintSlider")
+interact_label = NodePath("../UI/InteractLabel")
+texture_rect = NodePath("../UI/TextureRect")
+
+[node name="CashBox" parent="." instance=ExtResource("19_65my3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.6142, 40.7128, 6.03421)
+collision_layer = 4
+
+[node name="PauseMenu" parent="." instance=ExtResource("20_chau2")]
+
+[node name="Electricity Manager" type="Node" parent="."]
+script = ExtResource("22_fg5vs")
 
 [connection signal="bake_finished" from="NavigationRegion3D" to="GameManager" method="_on_navigation_region_3d_bake_finished"]
 [connection signal="done_generating" from="NavigationRegion3D/DungeonGenerator3D" to="NavigationRegion3D" method="on_dungeon_done_generating"]

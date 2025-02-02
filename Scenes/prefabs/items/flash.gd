@@ -2,16 +2,22 @@ extends RigidBody3D
 
 
 var drop_script
+@export var Price: int
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	
-	pass
-
-func interact(player: CharacterBody3D) -> void:
+func interact(player: CharacterBody3D) -> StaticBody3D:
 #	 1) Get the reference to the player's 'ItemSocket'
 	var item_socket = player.get_node("Head/ItemSocket") # Adjust path as needed
-
+	var static_obj: StaticBody3D
+	
+	if item_socket.get_child_count() > 0:
+		var old_item = item_socket.get_child(0)
+		item_socket.remove_child(old_item)
+		var container = player.get_node("InventoryContainer")
+		if container:
+			container.add_child(old_item)
+		else:
+			print("no container")
+	
 	# 2) Re-parent this object to the player's ItemSocket
 	if self.get_parent():
 		self.get_parent().remove_child(self)
@@ -21,13 +27,9 @@ func interact(player: CharacterBody3D) -> void:
 	self.transform = Transform3D()
 	
 	# 5) Disable physics behavior (e.g., gravity, rigid body movement)
-	if self is RigidBody3D:
-		convert_rigidbody_to_staticbody(self)
-	# Or, if you need a custom offset or rotation, you can manually set transform:
-	# self.transform.origin = Vector3(0, 0, 0)
-	# self.transform.basis = Basis() # e.g., identity (no rotation)
+	return convert_rigidbody_to_staticbody(self)
 
-func convert_rigidbody_to_staticbody(rigidbody: RigidBody3D):
+func convert_rigidbody_to_staticbody(rigidbody: RigidBody3D) -> StaticBody3D:
 	drop_script = load("res://Scenes/prefabs/items/drop_item.gd")
 	# Get the parent node
 	var parent = rigidbody.get_parent()
@@ -53,5 +55,8 @@ func convert_rigidbody_to_staticbody(rigidbody: RigidBody3D):
 	static_body.collision_mask = 0
 	
 	static_body.set_script(drop_script)
+	static_body.Price = rigidbody.Price
 	# Optionally free the old RigidBody3D to clean up memory
 	rigidbody.queue_free()
+	
+	return static_body
