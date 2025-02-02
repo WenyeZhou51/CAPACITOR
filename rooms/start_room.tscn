@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://btqev772fc7bl"]
+[gd_scene load_steps=23 format=4 uid="uid://btqev772fc7bl"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_pykbe"]
 [ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="3_e13x1"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dob0y1cay5v7v" path="res://Scenes/prefabs/door_marker.tscn" id="6_xsa8n"]
 [ext_resource type="Texture2D" uid="uid://bx5cau0dcic4g" path="res://objectmodels/planter_box_01_4k/textures/planter_box_01_diff_4k.jpg" id="7_ho42o"]
 [ext_resource type="PackedScene" uid="uid://yd6lu668s2rd" path="res://objectmodels/korean_public_payphone_01_4k/korean_public_payphone_01_4k.gltf" id="8_hof4i"]
+[ext_resource type="PackedScene" uid="uid://bcot47xqk0oe3" path="res://Scenes/generator.tscn" id="9_3lovi"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_2up67"]
 vertices = PackedVector3Array(-9.48562, 5.5, -9.49464, -9.48562, 5.5, 9.50536, 9.51438, 5.5, 9.50536, 9.51438, 5.5, -9.49464, 8.51438, -4, -7.99464, -9.48562, -4, -7.74464, -8.73562, -4, -7.24464, -8.73562, -4, 7.00536, 8.51438, -4, 7.00536)
@@ -233,3 +234,6 @@ skeleton = NodePath("")
 
 [node name="korean_public_payphone_01_4k" parent="." instance=ExtResource("8_hof4i")]
 transform = Transform3D(2.99686, 0, -0.13724, 0, 3, 0, 0.13724, 0, 2.99686, 1.20527, -3.0188, -8.37966)
+
+[node name="Generator" parent="." instance=ExtResource("9_3lovi")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.474962, -4.27081, 5.64823)

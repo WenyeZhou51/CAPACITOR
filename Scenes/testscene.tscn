@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://c8y6hkpnlip1g"]
+[gd_scene load_steps=30 format=3 uid="uid://c8y6hkpnlip1g"]
 
 [ext_resource type="PackedScene" uid="uid://busyfigb6e8mo" path="res://Scenes/player.tscn" id="1_36ui5"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://cjdanhbr7qd50" path="res://Scenes/prefabs/items/scrap1.tscn" id="14_q11nm"]
 [ext_resource type="PackedScene" uid="uid://c6p4c52jcwm6k" path="res://Scenes/prefabs/items/cashBox.tscn" id="19_65my3"]
 [ext_resource type="PackedScene" uid="uid://bwoto031wapot" path="res://Scenes/pause_menu.tscn" id="20_chau2"]
+[ext_resource type="Script" path="res://Scenes/electricity_manager.gd" id="22_fg5vs"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_binvk"]
 sky_top_color = Color(0.0101014, 0.0122771, 0.0165181, 1)
@@ -150,6 +151,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.6142, 40.7128, 6.03421)
 collision_layer = 4
 
 [node name="PauseMenu" parent="." instance=ExtResource("20_chau2")]
+
+[node name="Electricity Manager" type="Node" parent="."]
+script = ExtResource("22_fg5vs")
 
 [connection signal="bake_finished" from="NavigationRegion3D" to="GameManager" method="_on_navigation_region_3d_bake_finished"]
 [connection signal="done_generating" from="NavigationRegion3D/DungeonGenerator3D" to="NavigationRegion3D" method="on_dungeon_done_generating"]
