@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bopth0yxj6lvv"
-path="res://.godot/imported/wooden_stool_02_4k.gltf-35bdcc3b1652988cc4ad642e60417cd2.scn"
+valid=false
 
 [deps]
 
-source_file="res://objectmodels/wooden_stool_02_4k/wooden_stool_02_4k.gltf"
-dest_files=["res://.godot/imported/wooden_stool_02_4k.gltf-35bdcc3b1652988cc4ad642e60417cd2.scn"]
+source_file="res://objectmodels/wooden_stool_02_4k.gltf"
 
 [params]
 

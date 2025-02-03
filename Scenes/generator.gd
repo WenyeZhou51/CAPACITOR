@@ -1,13 +1,13 @@
-extends Control
+extends StaticBody3D
 
+@export var sub_viewport: SubViewport
 @export var heat_bar: ProgressBar
 @export var energy_bar: ProgressBar
+@onready var electricity_manager = get_node("/root/Level/Electricity Manager")
 
 @export var heat_level: float = 0.0
 @export var heat_increase_rate: float = 1.0  # Heat units increased per second
 @export var max_heat: float = 100.0
-
-@onready var electricity_manager = get_node("/root/Electricity Manager")
 
 var time_accumulator: float = 0.0
 const HEAT_UPDATE_INTERVAL: float = 1.0  # Update heat every second
@@ -19,6 +19,30 @@ const HOT_COLOR := Color(0.8, 0.2, 0.2)   # Red
 func _ready():
 	# Set up initial heat bar style
 	update_heat_bar_color()
+	add_to_group("generator")
+
+
+func interact(player: CharacterBody3D) -> int:
+	var item_socket = player.get_node("Head/ItemSocket")
+	
+	# Check if player is holding an item
+	if item_socket.get_child_count() > 0:
+		var held_item = item_socket.get_child(0)
+		
+		# Check if the held item is coolant
+		if held_item.is_in_group("coolant"):
+			# Remove coolant from player
+			item_socket.remove_child(held_item)
+			held_item.queue_free()
+			
+			# Reduce heat
+			heat_level = max(heat_level - 40.0, 0.0)
+			update_heat_bar_color()
+			print("is coolant")
+			
+			return 0  # Return 0 since this isn't a cash value interaction
+	print("not coolant")
+	return 0  # Return 0 for no interaction
 
 func _process(delta):
 	# Accumulate time
@@ -43,13 +67,15 @@ func update_heat_bar_color():
 	if not heat_bar:
 		return
 		
-	# Calculate the interpolation factor (0.0 to 1.0)
-	var t = heat_level / max_heat
+	# Create a new style box for the heat bar
+	var style = heat_bar.get_theme_stylebox("fill").duplicate()
 	
-	# Interpolate between green and red
+	# Interpolate between cold and hot colors based on heat level
+	var t = heat_level / max_heat
 	var current_color = COLD_COLOR.lerp(HOT_COLOR, t)
 	
-	# Get the style box and update its color
-	var style = heat_bar.get_theme_stylebox("fill").duplicate()
+	# Set the color
 	style.bg_color = current_color
+	
+	# Apply the style
 	heat_bar.add_theme_stylebox_override("fill", style)

@@ -142,6 +142,11 @@ func _physics_process(delta: float) -> void:
 				interact_label.visible = true
 				if Input.is_action_just_pressed("Interact") and candidate.is_in_group("doors"):
 					candidate.interact(global_transform)
+				elif Input.is_action_just_pressed("Interact") and candidate.is_in_group("generator"):
+					candidate.interact(self)
+					inventory[current_slot] = null
+					inv_size -= 1
+					is_holding = false
 				elif Input.is_action_just_pressed("Interact") and candidate.is_in_group("cash"):
 					var val = candidate.interact(self)
 					inventory[current_slot] = null

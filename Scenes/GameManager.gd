@@ -1,7 +1,9 @@
 extends Node
 
 @export var scrap_scenes: Array[PackedScene]
+@export var coolant_scene: PackedScene
 @export var num_scrap_to_spawn: int = 5
+@export var num_coolant_to_spawn: int = 9
 @export var door_scene: PackedScene
 @export var enemy_scene: PackedScene
 @export var min_spawn_time: float = 15.0
@@ -72,6 +74,36 @@ func spawn_scrap():
 		get_tree().root.add_child(scrap_instance)
 		scrap_instance.global_position = scrap_markers[i].global_position
 
+
+
+func spawn_coolant():
+	# Get all scrap markers in the scene
+	var coolant_markers = get_tree().get_nodes_in_group("coolant_marker")
+	
+	# If no markers or scenes, return
+	if coolant_markers.size() == 0:
+		push_warning("No coolant markers found or no scrap scenes configured")
+		return
+		
+	# Shuffle the markers array to randomize spawn positions
+	coolant_markers.shuffle()
+	
+	# Spawn only up to the number of available markers
+	var spawn_count = min(num_coolant_to_spawn, coolant_markers.size())
+	print(spawn_count)
+	# Spawn scrap at random markers
+	for i in range(spawn_count):
+		
+
+		# Instance the scrap
+		var coolant_instance = coolant_scene.instantiate()
+		
+		# Add it to the scene and set its position to the marker's position
+		get_tree().root.add_child(coolant_instance)
+		coolant_instance.global_position = coolant_markers[i].global_position
+
+
+
 func spawn_doors():
 	if not door_scene:
 		push_warning("No door scene configured in GameManager")
@@ -92,4 +124,5 @@ func spawn_doors():
 func _on_navigation_region_3d_bake_finished() -> void:
 	spawn_doors()
 	spawn_scrap()
+	spawn_coolant()
 	
