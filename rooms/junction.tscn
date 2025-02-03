@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://c4lvx2bce1ryx"]
+[gd_scene load_steps=15 format=4 uid="uid://c4lvx2bce1ryx"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_682a6"]
 [ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="2_cdkr3"]
@@ -167,6 +167,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_63xnw")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_v82kq"]
+size = Vector3(2.2, 8, 1.5)
+
 [node name="junction" type="Node3D"]
 script = ExtResource("1_682a6")
 
@@ -181,48 +184,54 @@ snap = 0.1
 size = Vector3(9, 9, 9)
 
 [node name="DOOR2" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, -0.4, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, -0.5, 0)
 operation = 2
 snap = 0.1
-size = Vector3(1, 8.1129, 5.48071)
+size = Vector3(1, 8, 6)
 
 [node name="DOOR3" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, -0.45, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, -0.5, 0)
 operation = 2
 snap = 0.1
-size = Vector3(1, 8.1129, 5.48071)
+size = Vector3(1, 8, 6)
 
 [node name="DOOR4" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.45, -4.5)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.5, -4.5)
 operation = 2
 snap = 0.1
-size = Vector3(1, 8.1129, 5.48071)
+size = Vector3(1, 8, 6)
 
 [node name="DOOR5" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.45, 4.5)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.5, 4.5)
 operation = 2
 snap = 0.1
-size = Vector3(1, 8.1129, 5.48071)
+size = Vector3(1, 8, 6)
 
 [node name="RemoveUnusedDoors" type="Node" parent="."]
 script = SubResource("GDScript_1tv7g")
 
-[node name="vintage_grandfather_clock_01_4k" type="Node3D" parent="."]
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="vintage_grandfather_clock_01_4k" type="Node3D" parent="StaticBody3D"]
 transform = Transform3D(2.78664, 0, -2.1177, 0, 3.5, 0, 2.1177, 0, 2.78664, 2.56615, -4.47405, -3.18318)
 
-[node name="vintage_grandfather_clock_01_body" type="MeshInstance3D" parent="vintage_grandfather_clock_01_4k"]
+[node name="vintage_grandfather_clock_01_body" type="MeshInstance3D" parent="StaticBody3D/vintage_grandfather_clock_01_4k"]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.0627659, 0, -0.0627659)
 mesh = SubResource("ArrayMesh_1dfp2")
 skeleton = NodePath("")
 
-[node name="vintage_grandfather_clock_01_minute_hand" type="MeshInstance3D" parent="vintage_grandfather_clock_01_4k"]
+[node name="vintage_grandfather_clock_01_minute_hand" type="MeshInstance3D" parent="StaticBody3D/vintage_grandfather_clock_01_4k"]
 transform = Transform3D(0.934871, 0.347494, -0.0725543, -0.348884, 0.93714, -0.00703943, 0.0655474, 0.031894, 0.99734, 0.0627659, 1.73194, 0.0627659)
 mesh = SubResource("ArrayMesh_l4te5")
 skeleton = NodePath("")
 
-[node name="vintage_grandfather_clock_01_houd_hand" type="MeshInstance3D" parent="vintage_grandfather_clock_01_4k"]
+[node name="vintage_grandfather_clock_01_houd_hand" type="MeshInstance3D" parent="StaticBody3D/vintage_grandfather_clock_01_4k"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0627659, 1.73194, 0.0627659)
 mesh = SubResource("ArrayMesh_1sj4m")
 skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(0.788322, 0, -0.615263, 0, 1, 0, 0.615263, 0, 0.788322, 2.58456, -0.371299, -2.97736)
+shape = SubResource("BoxShape3D_v82kq")
 
 [connection signal="dungeon_done_generating" from="." to="RemoveUnusedDoors" method="remove_unused_doors"]
