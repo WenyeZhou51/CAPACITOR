@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=4 uid="uid://cjdanhbr7qd50"]
 
 [ext_resource type="Script" path="res://Scenes/prefabs/items/flash.gd" id="1_v1bm4"]
-[ext_resource type="Texture2D" uid="uid://ciygsk1c10qya" path="res://objectmodels2/brass_vase_03_4k/textures/brass_vase_03_diff_4k.jpg" id="2_m4g4f"]
+[ext_resource type="Texture2D" path="res://objectmodels2/brass_vase_03_4k/textures/brass_vase_03_diff_4k.jpg" id="2_m4g4f"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_67k3p"]
 resource_name = "brass_vase_03"

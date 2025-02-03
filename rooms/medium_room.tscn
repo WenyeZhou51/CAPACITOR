@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bh18kskaruq62" path="res://Scenes/prefabs/scrap_marker.tscn" id="9_me5js"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y0qck"]
+albedo_color = Color(0.937255, 0, 0.592157, 1)
 albedo_texture = ExtResource("2_kijdn")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vxp15"]

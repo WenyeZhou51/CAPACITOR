@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://cmlxtf8o6y20d"]
+[gd_scene load_steps=27 format=4 uid="uid://ch0yrvh1wr6nv"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_sv0a6"]
 [ext_resource type="Texture2D" uid="uid://bnf832wawynw4" path="res://objectmodels/marble_bust/textures/marble_bust_01_diff_4k.jpg" id="2_60xrq"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cdf8lpjxddsvr" path="res://Scenes/prefabs/enemy_marker.tscn" id="8_ph5vl"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y0qck"]
+albedo_color = Color(0.937255, 0, 0.592157, 1)
 albedo_texture = ExtResource("3_vbl6q")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dt84r"]

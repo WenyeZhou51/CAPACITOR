@@ -78,6 +78,7 @@ func spawn_scrap():
 
 func spawn_coolant():
 	# Get all scrap markers in the scene
+	var coolant_scene = preload("res://Scenes/prefabs/items/coolant.tscn")
 	var coolant_markers = get_tree().get_nodes_in_group("coolant_marker")
 	
 	# If no markers or scenes, return
