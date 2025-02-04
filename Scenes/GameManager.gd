@@ -19,6 +19,13 @@ func _ready():
 	spawn_timer.timeout.connect(_on_spawn_timer_timeout)
 	# Start the initial spawn timer
 	_start_spawn_timer()
+	
+	if (MultiplayerManager.multiState == 1):
+		MultiplayerManager.host_game()
+		print_debug("MUTLIPLAYER START")
+	elif MultiplayerManager.multiState == 2:
+		MultiplayerManager.join_game()
+		print_debug("MUTLIPLAYER JOIN")
 
 func _start_spawn_timer():
 	var next_spawn_time = randf_range(min_spawn_time, max_spawn_time)
