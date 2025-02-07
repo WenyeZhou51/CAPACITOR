@@ -5,6 +5,9 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 func _input(event : InputEvent) -> void:
+	var player = get_parent()
+	if player.camera_locked:
+		return
 	if event is InputEventMouseMotion:
 		get_parent().rotate_y(-event.relative.x * sensitivity)
 		rotate_x(-event.relative.y*sensitivity)

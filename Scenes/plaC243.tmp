@@ -28,9 +28,16 @@ radius = 0.4
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("interaction_area")]
 collision_layer = 2
-collision_mask = 7
+collision_mask = 3
 script = ExtResource("1_pwhjp")
 interaction_area = NodePath("Head/Camera3D/Area3D")
+min_vignette_intensity = null
+max_vignette_intensity = null
+min_noise_amount = null
+max_noise_amount = null
+min_scan_line_amount = null
+max_scan_line_amount = null
+quota = null
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_ehc7k")

@@ -16,7 +16,7 @@ signal value_changed(new_value)
 @export var interaction_area: Area3D
 @export var interact_label: Label
 @export var texture_rect: TextureRect
-
+@export var bypass_material: ShaderMaterial
 @export var min_vignette_intensity: float = 0.0
 @export var max_vignette_intensity: float = 1.0
 @export var min_noise_amount: float = 0.03
@@ -43,6 +43,13 @@ var popup_scene = preload("res://Scenes/pop_up.tscn")
 
 var is_invincible: bool = false
 var invincibility_timer: Timer
+#for console interaction
+var using_console: bool = false
+var near_console: bool = false
+var console_window: Control = null
+var camera_locked: bool = false
+var camera_target: Vector3
+@onready var camera: Camera3D = $Head/Camera3D
 
 func _ready():
 	add_to_group("players")
@@ -58,20 +65,55 @@ func _ready():
 	add_child(invincibility_timer)
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
-		if event.pressed:
-			## Check if user scrolled up (4) or down (5)
-			if event.button_index == 4:
-				current_slot = (current_slot + 1) % inventory.size()
-				_update_equipped_item()
-			elif event.button_index == 5:  # Scroll wheel down
-				current_slot = (current_slot - 1 + inventory.size()) % inventory.size()
-				_update_equipped_item()
-			if inventory[currIdx] == null:
-				is_holding = false
-			else:
-				is_holding = true
-#
+	if using_console:
+		if event.is_action_pressed("Pause"):
+			print("console toggled off")
+			toggle_console()
+		if console_window:
+			print("pushing input to console side")
+			console_window.get_parent().get_viewport().push_input(event)
+		get_viewport().set_input_as_handled()
+	else:
+		if event.is_action_pressed("Use"):
+			var current_item = inventory[current_slot]
+			if current_item and current_item.has_method("use"):
+				current_item.use(self)
+				print("player using flashlight")
+		if event is InputEventMouseButton:
+			if event.pressed:
+				## Check if user scrolled up (4) or down (5)
+				if event.button_index == 4:
+					current_slot = (current_slot + 1) % inventory.size()
+					_update_equipped_item()
+				elif event.button_index == 5:  # Scroll wheel down
+					current_slot = (current_slot - 1 + inventory.size()) % inventory.size()
+					_update_equipped_item()
+				if inventory[currIdx] == null:
+					is_holding = false
+				else:
+					is_holding = true
+#helper for console
+func toggle_console() -> void:
+	using_console = !using_console
+	if using_console:
+		console_window.visible = true
+		console_window.input_bar.grab_focus()
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		#clear crt shader effect completely
+		texture_rect.visible = false
+		camera_locked = true
+
+		print("shader disabled")
+	else:
+		console_window.visible = false
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		texture_rect.visible = true
+		update_health_indicator()
+		camera_locked = false
+		
+		
+
+		
 func _update_equipped_item() -> void:
 	"""
 	Equip (visually attach) whatever item is in `current_slot`, 
@@ -96,7 +138,30 @@ func _update_equipped_item() -> void:
 		new_item.transform = Transform3D()
 
 func _physics_process(delta: float) -> void:
+	if camera_locked and console_window:
+		var console_root = console_window.get_parent().get_parent()
+		var console_screen = console_root.get_node("CSGBox3D/MeshInstance3D")
+		
+		if console_screen:
+			var target_transform = console_screen.global_transform
+			# Position player 1m away from console screen
+			var player_offset = target_transform.basis.z * 1.0
+			global_transform.origin = target_transform.origin + player_offset
+			
+			# Face player towards console screen
+			look_at(target_transform.origin, Vector3.UP)
+			rotation.x = 0  # Keep player upright
+			rotation.z = 0
+			
+			# Align camera with player's new rotation
+			camera.global_transform = camera.global_transform.interpolate_with(
+				Transform3D(global_transform.basis, global_transform.origin),
+				delta * 5
+			)
+		return
 	# Apply gravity if not on the floor
+	if using_console:
+		return
 	if not is_on_floor():
 		velocity += GRAVITY_FORCE * delta
 
@@ -180,7 +245,13 @@ func _physics_process(delta: float) -> void:
 							break
 					is_holding = true
 			else:
-				interact_label.visible = false
+				# Check for console interaction
+				if closest_object.is_in_group("console_collider") and near_console:
+					interact_label.visible = true
+					if Input.is_action_just_pressed("Interact"):
+						toggle_console()
+				else:
+					interact_label.visible = false
 	else:
 		interact_label.visible = false
 	
