@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdt7xr181laxx"]
+
+[ext_resource type="Texture2D" uid="uid://cl0t71t7msrfx" path="res://imgs/Screenshot 2025-02-07 133347.png" id="1_unsoa"]
+
+[node name="CoolantSlot" type="Panel"]
+custom_minimum_size = Vector2(100, 100)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(50, 49)
+scale = Vector2(0.236911, 0.234887)
+texture = ExtResource("1_unsoa")
