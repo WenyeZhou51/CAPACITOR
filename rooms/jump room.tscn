@@ -31,14 +31,14 @@ operation = 2
 size = Vector3(13.6938, 14.9229, 17.7527)
 
 [node name="DOOR2" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.2398, -0.964137, -4.99872)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, -0.5, -5)
 operation = 2
-size = Vector3(2.61963, 8, 6.20264)
+size = Vector3(2.5, 8, 6)
 
 [node name="DOOR3" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.7707, -1.02583, -4.94331)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, -0.5, -5)
 operation = 2
-size = Vector3(2.61963, 8, 6.20264)
+size = Vector3(2.5, 8, 6)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="CSGBox3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.142751, -5.82253, 7.89343)

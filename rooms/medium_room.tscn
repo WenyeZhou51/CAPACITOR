@@ -10,8 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cdf8lpjxddsvr" path="res://Scenes/prefabs/enemy_marker.tscn" id="8_ximhl"]
 [ext_resource type="PackedScene" uid="uid://bh18kskaruq62" path="res://Scenes/prefabs/scrap_marker.tscn" id="9_me5js"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y0qck"]
-albedo_color = Color(0.937255, 0, 0.592157, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vf8wn"]
 albedo_texture = ExtResource("2_kijdn")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vxp15"]
@@ -210,7 +209,7 @@ max_count = 10
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00892019, 0, 0.000610352)
-material_override = SubResource("StandardMaterial3D_y0qck")
+material_override = SubResource("StandardMaterial3D_vf8wn")
 use_collision = true
 size = Vector3(29.8545, 10, 19.9905)
 

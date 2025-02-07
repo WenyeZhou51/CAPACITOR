@@ -43,24 +43,24 @@ operation = 2
 size = Vector3(18.6145, 18.355, 7.87135)
 
 [node name="DOOR2" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, 5.13562, -5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, 5, -5)
 operation = 2
 size = Vector3(1, 8, 6)
 
 [node name="DOOR3" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.61608, 5.13562, -5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 5, -5)
 operation = 2
 size = Vector3(1, 8, 6)
 
 [node name="DOOR7" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.6852, -5.09818, 4.92779)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, -5, 5)
 material_override = SubResource("StandardMaterial3D_dt84r")
 operation = 2
 size = Vector3(1, 8, 6)
 material = SubResource("StandardMaterial3D_2x7q0")
 
 [node name="DOOR8" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.50777, -5.09818, 4.92779)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, -5, 5)
 material_override = SubResource("StandardMaterial3D_dt84r")
 operation = 2
 size = Vector3(1, 8, 6)

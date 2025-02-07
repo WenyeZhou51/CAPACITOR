@@ -1,7 +1,8 @@
-[gd_scene load_steps=27 format=4 uid="uid://btqev772fc7bl"]
+[gd_scene load_steps=32 format=4 uid="uid://btqev772fc7bl"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_pykbe"]
 [ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="3_e13x1"]
+[ext_resource type="PackedScene" uid="uid://ceswkthrcvfrj" path="res://objectmodels2/modern_ceiling_lamp_01_4k/modern_ceiling_lamp_01_4k.gltf" id="3_jqacc"]
 [ext_resource type="PackedScene" uid="uid://3pcw2q81hvrs" path="res://objectmodels/utility_box_02_4k/utility_box_02_4k.gltf" id="4_2liu2"]
 [ext_resource type="Texture2D" uid="uid://dd75fl6rr2y7f" path="res://objectmodels/security_camera_02_4k/textures/security_camera_02_diff_4k.jpg" id="5_fsw4f"]
 [ext_resource type="PackedScene" uid="uid://chjq57h8xmpmb" path="res://objectmodels/utility_box_01_4k/utility_box_01_4k.gltf" id="6_m3clu"]
@@ -10,7 +11,7 @@
 [ext_resource type="Script" path="res://Scenes/prefabs/items/cashBox.gd" id="7_lf1au"]
 [ext_resource type="PackedScene" uid="uid://yd6lu668s2rd" path="res://objectmodels/korean_public_payphone_01_4k/korean_public_payphone_01_4k.gltf" id="8_hof4i"]
 [ext_resource type="PackedScene" uid="uid://bcot47xqk0oe3" path="res://Scenes/generator.tscn" id="9_3lovi"]
-[ext_resource type="PackedScene" uid="uid://dvleiqfmloahr" path="res://Scenes/prefabs/coolant_marker.tscn" id="10_ytvcr"]
+[ext_resource type="PackedScene" path="res://Scenes/prefabs/coolant_marker.tscn" id="10_ytvcr"]
 [ext_resource type="PackedScene" uid="uid://xcj3me4ww2u2" path="res://console folder/console.tscn" id="11_s0eup"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_2up67"]
@@ -136,6 +137,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_uuekj")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_wwlvr"]
+size = Vector3(2, 2.3, 0.9)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pykwn"]
 resource_name = "planter_box_01"
 cull_mode = 2
@@ -182,11 +186,24 @@ shadow_mesh = SubResource("ArrayMesh_ps5gx")
 [sub_resource type="BoxShape3D" id="BoxShape3D_n77td"]
 size = Vector3(0.862061, 0.476501, 0.486053)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_bt0kh"]
+size = Vector3(3.7, 1.8, 1.7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mw6lm"]
+size = Vector3(1.2, 3, 0.9)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xa56l"]
+size = Vector3(4, 8.6, 3.1)
+
 [node name="start_room" type="Node3D"]
 script = ExtResource("1_pykbe")
 size_in_voxels = Vector3i(2, 1, 2)
 min_count = 1
 max_count = 1
+
+[node name="Console" parent="." instance=ExtResource("11_s0eup")]
+transform = Transform3D(3.85835, 0, 0, 0, 2.55677, 0, 0, 0, 3.08341, -4.02, -2.81254, -7.31016)
+use_collision = true
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_2up67")
@@ -203,12 +220,12 @@ operation = 2
 size = Vector3(18.6145, 9, 16.282)
 
 [node name="DOOR" type="CSGBox3D" parent="NavigationRegion3D/CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.8467, -0.352095, -5.53636)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, -0.5, -5)
 operation = 2
-size = Vector3(1, 8.1129, 5.48071)
+size = Vector3(1, 8, 6)
 
-[node name="utility_box_02_4k" parent="." instance=ExtResource("4_2liu2")]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 6.33308, -4.48755, -7.86182)
+[node name="modern_ceiling_lamp_01_4k" parent="NavigationRegion3D/CSGBox3D" instance=ExtResource("3_jqacc")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 7.73692, 0.973719, 0.118461)
 
 [node name="security_camera_02_4k" type="Node3D" parent="."]
 transform = Transform3D(3, 0, 0, 0, 2.81208, -1.04508, 0, 1.04508, 2.81208, -9.0665, 3.50543, -8.7159)
@@ -225,28 +242,8 @@ material_override = SubResource("StandardMaterial3D_q3vlb")
 mesh = SubResource("ArrayMesh_vrf4f")
 skeleton = NodePath("")
 
-[node name="utility_box_01_4k" parent="security_camera_02_4k" instance=ExtResource("6_m3clu")]
-transform = Transform3D(-2.49999, 1.53979e-07, -0.00698126, 0.00243205, 2.3434, -0.870895, 0.00654388, -0.870898, -2.34339, 0.859741, -0.792961, 5.49756)
-
 [node name="DoorMarker2" parent="." instance=ExtResource("6_xsa8n")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -9.99856, -4.65394, -3.31934)
-
-[node name="planter_box_01_4k" type="StaticBody3D" parent="."]
-transform = Transform3D(-0.116222, 0, 3.99831, 0, 4, 0, -3.99831, 0, -0.116222, 7.0558, -4.48161, 0.141352)
-collision_layer = 4
-collision_mask = 7
-script = ExtResource("7_lf1au")
-
-[node name="planter_box_01" type="MeshInstance3D" parent="planter_box_01_4k"]
-mesh = SubResource("ArrayMesh_tdus8")
-skeleton = NodePath("")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="planter_box_01_4k"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0133986, 0.226831, -0.0102599)
-shape = SubResource("BoxShape3D_n77td")
-
-[node name="korean_public_payphone_01_4k" parent="." instance=ExtResource("8_hof4i")]
-transform = Transform3D(2.99686, 0, -0.13724, 0, 3, 0, 0.13724, 0, 2.99686, 1.20527, -3.0188, -8.37966)
 
 [node name="Generator" parent="." instance=ExtResource("9_3lovi")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.474962, -4.27081, 5.64823)
@@ -254,5 +251,75 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.474962, -4.27081, 5.64823)
 [node name="ScrapMarker" parent="." instance=ExtResource("10_ytvcr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.60026, -3.79305, 2.86139)
 
-[node name="Console" parent="." instance=ExtResource("11_s0eup")]
-transform = Transform3D(3.85835, 0, 0, 0, 2.55677, 0, 0, 0, 3.08341, -4.02, -2.81254, -7.31016)
+[node name="Lights" type="Node3D" parent="."]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, -0.0139796, 0.999902, 0, -0.999902, -0.0139796, 7.73058, 0.727866, 0.0853076)
+light_color = Color(0.834402, 0.833558, 1.54018e-06, 1)
+light_energy = 6.0
+light_indirect_energy = 2.0
+spot_range = 5.66704
+spot_angle = 26.0371
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, -0.03162, 0.9995, 0, -0.9995, -0.03162, 7.39475, 0.684956, 0.828902)
+light_color = Color(0.903479, 0.902613, 7.70092e-07, 1)
+light_energy = 4.0
+light_indirect_energy = 2.0
+spot_range = 5.78442
+spot_angle = 27.9059
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, -0.03162, 0.9995, 0, -0.9995, -0.03162, 7.39475, 0.684956, -0.757324)
+light_color = Color(0.903479, 0.902613, 7.70092e-07, 1)
+light_energy = 4.0
+light_indirect_energy = 2.0
+spot_range = 5.86025
+spot_angle = 27.9059
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="utility_box_02_4k" parent="StaticBody3D" instance=ExtResource("4_2liu2")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 6.33308, -4.48755, -7.86182)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 6.40654, -2.20006, -7.81607)
+shape = SubResource("BoxShape3D_wwlvr")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+
+[node name="planter_box_01_4k" type="StaticBody3D" parent="StaticBody3D2"]
+transform = Transform3D(-0.116222, 0, 3.99831, 0, 4, 0, -3.99831, 0, -0.116222, 7.41064, -4.48161, 0.141352)
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("7_lf1au")
+
+[node name="planter_box_01" type="MeshInstance3D" parent="StaticBody3D2/planter_box_01_4k"]
+mesh = SubResource("ArrayMesh_tdus8")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2/planter_box_01_4k"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0133986, 0.226831, -0.0102599)
+shape = SubResource("BoxShape3D_n77td")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(-0.0493379, 0, 0.998782, 0, 1, 0, -0.998782, 0, -0.0493379, 7.39503, -3.60077, 0.167362)
+shape = SubResource("BoxShape3D_bt0kh")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05267, -1.54652, -8.26586)
+shape = SubResource("BoxShape3D_mw6lm")
+
+[node name="korean_public_payphone_01_4k" parent="StaticBody3D3" instance=ExtResource("8_hof4i")]
+transform = Transform3D(2.99686, 0, -0.13724, 0, 3, 0, 0.13724, 0, 2.99686, 1.20527, -3.0188, -8.37966)
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="."]
+
+[node name="utility_box_01_4k" parent="StaticBody3D4" instance=ExtResource("6_m3clu")]
+transform = Transform3D(-7.49997, 4.61937e-07, -0.0209438, 2.41213e-07, 7.49999, 3.57628e-06, 0.0209436, 5.72205e-06, -7.49995, -6.48728, -4.46983, 5.91497)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.53699, -0.207274, 5.88963)
+shape = SubResource("BoxShape3D_xa56l")
