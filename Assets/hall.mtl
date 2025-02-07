@@ -1,0 +1,310 @@
+# Blender 4.3.0 MTL File: 'hall.blend'
+# www.blender.org
+
+newmtl Concrete_wall
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Concrete wall_BaseColor.jpg
+map_Ns C:/Concrete wall_Roughness.jpg
+map_Bump -bm 1.300000 C:/Concrete wall_Normal.jpg
+
+newmtl Concrete_wall.001
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Concrete wall_BaseColor.jpg
+map_Ns C:/Concrete wall_Roughness.jpg
+map_Bump -bm 1.300000 C:/Concrete wall_Normal.jpg
+
+newmtl Concrete_wall.002
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Concrete wall_BaseColor.jpg
+map_Ns C:/Concrete wall_Roughness.jpg
+map_Bump -bm 1.300000 C:/Concrete wall_Normal.jpg
+
+newmtl Concrete_wall.003
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Concrete wall_BaseColor.jpg
+map_Ns C:/Concrete wall_Roughness.jpg
+map_Bump -bm 1.300000 C:/Concrete wall_Normal.jpg
+
+newmtl Concrete_wall.004
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Concrete wall_BaseColor.jpg
+map_Ns C:/Concrete wall_Roughness.jpg
+map_Bump -bm 1.300000 C:/Concrete wall_Normal.jpg
+
+newmtl Concrete_wall.005
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Concrete wall_BaseColor.jpg
+map_Ns C:/Concrete wall_Roughness.jpg
+map_Bump -bm 1.300000 C:/Concrete wall_Normal.jpg
+
+newmtl Concrete_wall.006
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Concrete wall_BaseColor.jpg
+map_Ns C:/Concrete wall_Roughness.jpg
+map_Bump -bm 1.300000 C:/Concrete wall_Normal.jpg
+
+newmtl Concrete_wall.007
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Concrete wall_BaseColor.jpg
+map_Ns C:/Concrete wall_Roughness.jpg
+map_Bump -bm 1.300000 C:/Concrete wall_Normal.jpg
+
+newmtl Concrete_wall.008
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Concrete wall_BaseColor.jpg
+map_Ns C:/Concrete wall_Roughness.jpg
+map_Bump -bm 1.300000 C:/Concrete wall_Normal.jpg
+
+newmtl Concrete_wall.009
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Concrete wall_BaseColor.jpg
+map_Ns C:/Concrete wall_Roughness.jpg
+map_Bump -bm 1.300000 C:/Concrete wall_Normal.jpg
+
+newmtl Concrete_wall.010
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Concrete wall_BaseColor.jpg
+map_Ns C:/Concrete wall_Roughness.jpg
+map_Bump -bm 1.300000 C:/Concrete wall_Normal.jpg
+
+newmtl Concrete_wall.011
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Concrete wall_BaseColor.jpg
+map_Ns C:/Concrete wall_Roughness.jpg
+map_Bump -bm 1.300000 C:/Concrete wall_Normal.jpg
+
+newmtl Concrete_wall.012
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Concrete wall_BaseColor.jpg
+map_Ns C:/Concrete wall_Roughness.jpg
+map_Bump -bm 1.300000 C:/Concrete wall_Normal.jpg
+
+newmtl Concrete_wall.013
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Concrete wall_BaseColor.jpg
+map_Ns C:/Concrete wall_Roughness.jpg
+map_Bump -bm 1.300000 C:/Concrete wall_Normal.jpg
+
+newmtl Concrete_wall.014
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Concrete wall_BaseColor.jpg
+map_Ns C:/Concrete wall_Roughness.jpg
+map_Bump -bm 1.300000 C:/Concrete wall_Normal.jpg
+
+newmtl Concrete_wall.015
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Concrete wall_BaseColor.jpg
+map_Ns C:/Concrete wall_Roughness.jpg
+map_Bump -bm 1.300000 C:/Concrete wall_Normal.jpg
+
+newmtl Concrete_wall.016
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Concrete wall_BaseColor.jpg
+map_Ns C:/Concrete wall_Roughness.jpg
+map_Bump -bm 1.300000 C:/Concrete wall_Normal.jpg
+
+newmtl Concrete_wall.017
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Concrete wall_BaseColor.jpg
+map_Ns C:/Concrete wall_Roughness.jpg
+map_Bump -bm 1.300000 C:/Concrete wall_Normal.jpg
+
+newmtl Concrete_wall.018
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Concrete wall_BaseColor.jpg
+map_Ns C:/Concrete wall_Roughness.jpg
+map_Bump -bm 1.300000 C:/Concrete wall_Normal.jpg
+
+newmtl Concrete_wall.019
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Concrete wall_BaseColor.jpg
+map_Ns C:/Concrete wall_Roughness.jpg
+map_Bump -bm 1.300000 C:/Concrete wall_Normal.jpg
+
+newmtl Concrete_wall.020
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Concrete wall_BaseColor.jpg
+map_Ns C:/Concrete wall_Roughness.jpg
+map_Bump -bm 1.300000 C:/Concrete wall_Normal.jpg
+
+newmtl Concrete_wall.021
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Concrete wall_BaseColor.jpg
+map_Ns C:/Concrete wall_Roughness.jpg
+map_Bump -bm 1.300000 C:/Concrete wall_Normal.jpg
+
+newmtl Metal_floor
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/metal floor_diffuseOriginal.bmp
+map_refl C:/metal floor_ao.bmp
+
+newmtl Metal_floor.002
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/metal floor_diffuseOriginal.bmp
+map_refl C:/metal floor_ao.bmp
+
+newmtl Metal_floor.003
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/metal floor_diffuseOriginal.bmp
+map_refl C:/metal floor_ao.bmp
+
+newmtl Metal_floor.004
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/metal floor_diffuseOriginal.bmp
+map_refl C:/metal floor_ao.bmp
+
+newmtl Metal_floor.005
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/metal floor_diffuseOriginal.bmp
+map_refl C:/metal floor_ao.bmp
+
+newmtl Metal_floor.006
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/metal floor_diffuseOriginal.bmp
+map_refl C:/metal floor_ao.bmp

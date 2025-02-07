@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://cbn467wek4y8o"]
+
+[ext_resource type="Script" path="res://Scripts/pickupable.gd" id="1_kty08"]
+[ext_resource type="Texture2D" uid="uid://cjcgalvxq82e2" path="res://objectmodels/korean_public_payphone_01_4k/textures/korean_public_payphone_01_diff_4k.jpg" id="2_0654d"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dcebv"]
+albedo_color = Color(0.054902, 0.737255, 1, 1)
+albedo_texture = ExtResource("2_0654d")
+metallic = 0.4
+emission_enabled = true
+emission = Color(0.268587, 0.307653, 0.575741, 1)
+emission_energy_multiplier = 0.1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_olvwk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a5t05"]
+size = Vector3(0.376205, 0.385712, 0.464172)
+
+[node name="Coolant" type="RigidBody3D"]
+collision_layer = 8
+collision_mask = 5
+script = ExtResource("1_kty08")
+Price = 1
+type = "coolant"
+
+[node name="coolant mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.45, 0, 0, 0, 0.42, 0, 0, 0, 0.45, 0.0329471, -0.00698996, 0.0202395)
+material_override = SubResource("StandardMaterial3D_dcebv")
+mesh = SubResource("CylinderMesh_olvwk")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00467682, 0.235886, 0.016449)
+shape = SubResource("BoxShape3D_a5t05")

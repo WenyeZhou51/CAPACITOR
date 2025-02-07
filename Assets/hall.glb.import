@@ -1,0 +1,171 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://c3sctrihi30ut"
+path="res://.godot/imported/hall.glb-763a90b8482672c6207d4553e835f5a6.scn"
+
+[deps]
+
+source_file="res://Assets/hall.glb"
+dest_files=["res://.godot/imported/hall.glb-763a90b8482672c6207d4553e835f5a6.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+_subresources={
+"materials": {
+"Concrete wall": {
+"use_external/enabled": false,
+"use_external/path": "res://Assets/Concrete wall.tres"
+},
+"Concrete wall.001": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Concrete wall.001.tres"
+},
+"Concrete wall.002": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Concrete wall.002.tres"
+},
+"Concrete wall.003": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Concrete wall.003.tres"
+},
+"Concrete wall.004": {
+"use_external/enabled": false,
+"use_external/path": "res://Assets/Concrete wall.004.tres"
+},
+"Concrete wall.005": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Concrete wall.005.tres"
+},
+"Concrete wall.006": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Concrete wall.006.tres"
+},
+"Concrete wall.007": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Concrete wall.007.tres"
+},
+"Concrete wall.008": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Concrete wall.008.tres"
+},
+"Concrete wall.009": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Concrete wall.009.tres"
+},
+"Concrete wall.010": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Concrete wall.010.tres"
+},
+"Concrete wall.011": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Concrete wall.011.tres"
+},
+"Concrete wall.012": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Concrete wall.012.tres"
+},
+"Concrete wall.013": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Concrete wall.013.tres"
+},
+"Concrete wall.014": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Concrete wall.014.tres"
+},
+"Concrete wall.015": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Concrete wall.015.tres"
+},
+"Concrete wall.016": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Concrete wall.016.tres"
+},
+"Concrete wall.017": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Concrete wall.017.tres"
+},
+"Concrete wall.018": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Concrete wall.018.tres"
+},
+"Concrete wall.019": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Concrete wall.019.tres"
+},
+"Concrete wall.020": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Concrete wall.020.tres"
+},
+"Concrete wall.021": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Concrete wall.021.tres"
+},
+"Metal floor": {
+"use_external/enabled": false,
+"use_external/path": "res://Assets/Metal floor.tres"
+},
+"Metal floor.002": {
+"use_external/enabled": false,
+"use_external/path": "res://Assets/Metal floor.002.tres"
+},
+"Metal floor.003": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Metal floor.003.tres"
+},
+"Metal floor.004": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Metal floor.004.tres"
+},
+"Metal floor.005": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Metal floor.005.tres"
+},
+"Metal floor.006": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Metal floor.006.tres"
+}
+},
+"meshes": {
+"hall_Plane_003": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://Assets/hall_Plane_003.res"
+},
+"hall_Plane_012": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://Assets/hall_Plane_012.res"
+}
+}
+}
+gltf/naming_version=1
+gltf/embedded_image_handling=1
