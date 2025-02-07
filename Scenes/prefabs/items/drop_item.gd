@@ -2,6 +2,7 @@ extends StaticBody3D
 
 var pick_script
 @export var Price: int = 0
+@export var type: String
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
@@ -30,7 +31,7 @@ func convert_staticbody_to_rigidbody(static_body: StaticBody3D):
 	# Get the parent node
 	var parent = static_body.get_parent()
 	
-	pick_script = load("res://Scenes/prefabs/items/flash.gd")
+	pick_script = load("res://Scripts/pickupable.gd")
 	
 	# Create a new RigidBody3D
 	var rigidbody = RigidBody3D.new()
@@ -57,5 +58,6 @@ func convert_staticbody_to_rigidbody(static_body: StaticBody3D):
 	
 	rigidbody.set_script(pick_script)
 	rigidbody.Price = static_body.Price
+	rigidbody.type = static_body.type
 	# Optionally free the old StaticBody3D to clean up memory
 	static_body.queue_free()

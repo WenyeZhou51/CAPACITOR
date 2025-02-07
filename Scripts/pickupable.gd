@@ -1,6 +1,9 @@
 class_name Pickapable extends RigidBody3D
+
+
 var drop_script
 @export var Price: int
+@export var type: String
 
 func interact(player: CharacterBody3D) -> StaticBody3D:
 #	 1) Get the reference to the player's 'ItemSocket'
@@ -54,6 +57,7 @@ func convert_rigidbody_to_staticbody(rigidbody: RigidBody3D) -> StaticBody3D:
 	
 	static_body.set_script(drop_script)
 	static_body.Price = rigidbody.Price
+	static_body.type = rigidbody.type
 	# Optionally free the old RigidBody3D to clean up memory
 	rigidbody.queue_free()
 	

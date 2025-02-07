@@ -10,6 +10,8 @@ const GRAVITY_FORCE = Vector3.DOWN * 9.8  # Gravity vector
 const STAMINA_THRESHOLD = 0.5  # Buffer threshold for stamina management
 
 signal value_changed(new_value)
+signal change_ui(idx, type)
+signal inv_high(pI, cI)
 
 # Variables
 @export var stamina_bar: VSlider  # Reference to the stamina UI slider
@@ -76,18 +78,21 @@ func _input(event: InputEvent) -> void:
 	else:
 		if event.is_action_pressed("Use"):
 			var current_item = inventory[current_slot]
-			if current_item and current_item.has_method("use"):
-				current_item.use(self)
-				print("player using flashlight")
+			print(current_item)
+			if current_item and current_item.type == "flash":
+				var light = current_item.get_node("Model").get_node("FlashLight")
+				light.visible = !light.visible
 		if event is InputEventMouseButton:
 			if event.pressed:
 				## Check if user scrolled up (4) or down (5)
 				if event.button_index == 4:
 					current_slot = (current_slot + 1) % inventory.size()
 					_update_equipped_item()
+					emit_signal("inv_high", (current_slot - 1 + inventory.size()) % inventory.size(), current_slot)
 				elif event.button_index == 5:  # Scroll wheel down
 					current_slot = (current_slot - 1 + inventory.size()) % inventory.size()
 					_update_equipped_item()
+					emit_signal("inv_high", (current_slot + 1) % inventory.size(), current_slot)
 				if inventory[currIdx] == null:
 					is_holding = false
 				else:
@@ -200,6 +205,7 @@ func _physics_process(delta: float) -> void:
 		
 		if closest_object:
 			var candidate = closest_object
+			print(candidate)
 			while candidate and not candidate.has_method("interact"):
 				candidate = candidate.get_parent()
 			
@@ -208,44 +214,50 @@ func _physics_process(delta: float) -> void:
 				if Input.is_action_just_pressed("Interact") and candidate.is_in_group("doors"):
 					candidate.interact(global_transform)
 				elif Input.is_action_just_pressed("Interact") and candidate.is_in_group("generator"):
-					candidate.interact(self)
-					inventory[current_slot] = null
-					inv_size -= 1
-					is_holding = false
+					if(candidate.interact(self) == 1):
+						inventory[current_slot] = null
+						inv_size -= 1
+						is_holding = false
+						emit_signal("change_ui", current_slot, "empty")
 				elif Input.is_action_just_pressed("Interact") and candidate.is_in_group("cash"):
 					var val = candidate.interact(self)
 					inventory[current_slot] = null
 					inv_size -= 1
 					score += val
 					print(score)
-					var msg = "Scrap value " + str(val)
+					var msg: String
 					var popup_instance = popup_scene.instantiate()
-					popup_instance.popup_text = msg
-					add_child(popup_instance)
-					emit_signal("value_changed", val)
-					endGame()
-					inventory[current_slot] = null
+					if(val == 0):
+						msg = "Please deposit a scrap"
+						popup_instance.popup_text = msg
+						
+					else:
+						msg = "Scrap value " + str(val)
+						popup_instance.popup_text = msg
+						add_child(popup_instance)
+						emit_signal("value_changed", val)
+						emit_signal("change_ui", current_slot, "empty")
+						endGame()
+					#inventory[current_slot] = null
 				elif Input.is_action_just_pressed("Interact") and inv_size == 4:
 					var item_socket = self.get_node("Head/ItemSocket")
 					var curr_item = item_socket.get_child(0)
 					curr_item.drop(self)
 					var static_candidate = candidate.interact(self)
+					emit_signal("change_ui", current_slot, static_candidate.type)
 					inventory[current_slot] = static_candidate
 				elif Input.is_action_just_pressed("Interact"):
 					var static_candidate = candidate.interact(self)
 					for i in range(inventory.size()):
 						if inventory[i] == null:
 							inventory[i] = static_candidate
+							emit_signal("inv_high", current_slot, i)
 							current_slot = i
 							inv_size += 1
-							## Move the item under a hidden "inventory_container" node so it stays in the scene tree but out of the world
-							#var container = get_node("InventoryContainer")
-							#if container:
-								#container.add_child(static_candidate)
+							emit_signal("change_ui", current_slot, static_candidate.type)
 							break
 					is_holding = true
 			else:
-				# Check for console interaction
 				if closest_object.is_in_group("console_collider") and near_console:
 					interact_label.visible = true
 					if Input.is_action_just_pressed("Interact"):
@@ -261,6 +273,7 @@ func _physics_process(delta: float) -> void:
 		print(curr_item.name)
 		curr_item.drop(self)
 		inventory[current_slot] = null
+		emit_signal("change_ui", current_slot, "empty")
 		inv_size -= 1
 		is_holding = false
 	

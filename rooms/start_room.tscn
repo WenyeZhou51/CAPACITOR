@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://btqev772fc7bl"]
+[gd_scene load_steps=27 format=4 uid="uid://btqev772fc7bl"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_pykbe"]
 [ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="3_e13x1"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://chjq57h8xmpmb" path="res://objectmodels/utility_box_01_4k/utility_box_01_4k.gltf" id="6_m3clu"]
 [ext_resource type="PackedScene" uid="uid://dob0y1cay5v7v" path="res://Scenes/prefabs/door_marker.tscn" id="6_xsa8n"]
 [ext_resource type="Texture2D" uid="uid://bx5cau0dcic4g" path="res://objectmodels/planter_box_01_4k/textures/planter_box_01_diff_4k.jpg" id="7_ho42o"]
+[ext_resource type="Script" path="res://Scenes/prefabs/items/cashBox.gd" id="7_lf1au"]
 [ext_resource type="PackedScene" uid="uid://yd6lu668s2rd" path="res://objectmodels/korean_public_payphone_01_4k/korean_public_payphone_01_4k.gltf" id="8_hof4i"]
 [ext_resource type="PackedScene" uid="uid://bcot47xqk0oe3" path="res://Scenes/generator.tscn" id="9_3lovi"]
 [ext_resource type="PackedScene" uid="uid://dvleiqfmloahr" path="res://Scenes/prefabs/coolant_marker.tscn" id="10_ytvcr"]
@@ -178,6 +179,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ps5gx")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_n77td"]
+size = Vector3(0.862061, 0.476501, 0.486053)
+
 [node name="start_room" type="Node3D"]
 script = ExtResource("1_pykbe")
 size_in_voxels = Vector3i(2, 1, 2)
@@ -227,12 +231,19 @@ transform = Transform3D(-2.49999, 1.53979e-07, -0.00698126, 0.00243205, 2.3434, 
 [node name="DoorMarker2" parent="." instance=ExtResource("6_xsa8n")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -9.99856, -4.65394, -3.31934)
 
-[node name="planter_box_01_4k" type="Node3D" parent="."]
+[node name="planter_box_01_4k" type="StaticBody3D" parent="."]
 transform = Transform3D(-0.116222, 0, 3.99831, 0, 4, 0, -3.99831, 0, -0.116222, 7.0558, -4.48161, 0.141352)
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("7_lf1au")
 
 [node name="planter_box_01" type="MeshInstance3D" parent="planter_box_01_4k"]
 mesh = SubResource("ArrayMesh_tdus8")
 skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="planter_box_01_4k"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0133986, 0.226831, -0.0102599)
+shape = SubResource("BoxShape3D_n77td")
 
 [node name="korean_public_payphone_01_4k" parent="." instance=ExtResource("8_hof4i")]
 transform = Transform3D(2.99686, 0, -0.13724, 0, 3, 0, 0.13724, 0, 2.99686, 1.20527, -3.0188, -8.37966)

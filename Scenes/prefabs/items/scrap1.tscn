@@ -1,12 +1,10 @@
-[gd_scene load_steps=7 format=4 uid="uid://cjdanhbr7qd50"]
+[gd_scene load_steps=6 format=4 uid="uid://cjdanhbr7qd50"]
 
-[ext_resource type="Script" path="res://Scenes/prefabs/items/flash.gd" id="1_v1bm4"]
-[ext_resource type="Texture2D" path="res://objectmodels2/brass_vase_03_4k/textures/brass_vase_03_diff_4k.jpg" id="2_m4g4f"]
+[ext_resource type="Script" path="res://Scripts/pickupable.gd" id="1_srse0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_67k3p"]
 resource_name = "brass_vase_03"
 cull_mode = 2
-albedo_texture = ExtResource("2_m4g4f")
 metallic = 1.0
 metallic_texture_channel = 2
 roughness_texture_channel = 1
@@ -50,10 +48,11 @@ shadow_mesh = SubResource("ArrayMesh_flq83")
 size = Vector3(0.605209, 1.59131, 0.61853)
 
 [node name="scrap1" type="RigidBody3D"]
-collision_layer = 4
+collision_layer = 8
 collision_mask = 5
-script = ExtResource("1_v1bm4")
+script = ExtResource("1_srse0")
 Price = 100
+type = "scrap"
 
 [node name="brass_vase_03" type="MeshInstance3D" parent="."]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)

@@ -28,9 +28,8 @@ func interact(player: CharacterBody3D) -> int:
 	# Check if player is holding an item
 	if item_socket.get_child_count() > 0:
 		var held_item = item_socket.get_child(0)
-		
 		# Check if the held item is coolant
-		if held_item.is_in_group("coolant"):
+		if held_item.type == "coolant":
 			# Remove coolant from player
 			item_socket.remove_child(held_item)
 			held_item.queue_free()
@@ -40,7 +39,7 @@ func interact(player: CharacterBody3D) -> int:
 			update_heat_bar_color()
 			print("is coolant")
 			
-			return 0  # Return 0 since this isn't a cash value interaction
+			return 1  # Return 0 since this isn't a cash value interaction
 	print("not coolant")
 	return 0  # Return 0 for no interaction
 

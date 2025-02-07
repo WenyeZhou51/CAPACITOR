@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=4 uid="uid://dt2qtx8apgmb0"]
 
-[ext_resource type="Script" path="res://Scenes/prefabs/items/flash.gd" id="1_8tlli"]
+[ext_resource type="Script" path="res://Scripts/pickupable.gd" id="1_fi5hp"]
 [ext_resource type="Texture2D" uid="uid://bgomvgiyepuus" path="res://objectmodels2/multi_cleaner_5_litre_4k/textures/multi_cleaner_5_litre_diff_4k.jpg" id="2_c4ebv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_esqaj"]
@@ -83,10 +83,11 @@ shadow_mesh = SubResource("ArrayMesh_dxw5m")
 size = Vector3(0.37738, 0.433212, 0.240112)
 
 [node name="Scrap2" type="RigidBody3D"]
-collision_layer = 4
+collision_layer = 8
 collision_mask = 5
-script = ExtResource("1_8tlli")
+script = ExtResource("1_fi5hp")
 Price = 200
+type = "scrap"
 
 [node name="multi_cleaner_5_litre" type="MeshInstance3D" parent="."]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)

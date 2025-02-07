@@ -17,10 +17,10 @@
 [ext_resource type="PackedScene" uid="uid://cisl75a2ha5p8" path="res://rooms/corridor_1.tscn" id="9_svjm5"]
 [ext_resource type="Script" path="res://Scenes/GameManager.gd" id="10_2bpfs"]
 [ext_resource type="AudioStream" uid="uid://bc2qvfrbnwvn6" path="res://audio/demoLevel.wav" id="11_wadk3"]
+[ext_resource type="PackedScene" uid="uid://cli3ed0vm0drp" path="res://imgs/inv_slot_ui.tscn" id="11_yg2qu"]
 [ext_resource type="PackedScene" uid="uid://dhmtymlk3gb34" path="res://Scenes/prefabs/items/flashlight.tscn" id="13_1s1s2"]
 [ext_resource type="Shader" path="res://shaders/bayer.gdshader" id="14_hrlu7"]
 [ext_resource type="PackedScene" uid="uid://cjdanhbr7qd50" path="res://Scenes/prefabs/items/scrap1.tscn" id="14_q11nm"]
-[ext_resource type="PackedScene" uid="uid://c6p4c52jcwm6k" path="res://Scenes/prefabs/items/cashBox.tscn" id="19_65my3"]
 [ext_resource type="PackedScene" uid="uid://bwoto031wapot" path="res://Scenes/pause_menu.tscn" id="20_chau2"]
 [ext_resource type="Script" path="res://Scenes/electricity_manager.gd" id="22_fg5vs"]
 
@@ -110,6 +110,31 @@ offset_bottom = 127.0
 theme_override_font_sizes/font_size = 45
 text = "666"
 
+[node name="ninepatch" type="NinePatchRect" parent="UI"]
+layout_mode = 0
+offset_left = 700.0
+offset_top = 900.0
+offset_right = 740.0
+offset_bottom = 940.0
+
+[node name="GridContainer" type="GridContainer" parent="UI/ninepatch"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+columns = 4
+
+[node name="Inv_slot_UI" parent="UI/ninepatch/GridContainer" instance=ExtResource("11_yg2qu")]
+layout_mode = 2
+
+[node name="Inv_slot_UI2" parent="UI/ninepatch/GridContainer" instance=ExtResource("11_yg2qu")]
+layout_mode = 2
+
+[node name="Inv_slot_UI3" parent="UI/ninepatch/GridContainer" instance=ExtResource("11_yg2qu")]
+layout_mode = 2
+
+[node name="Inv_slot_UI4" parent="UI/ninepatch/GridContainer" instance=ExtResource("11_yg2qu")]
+layout_mode = 2
+
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_t4gef")
 script = ExtResource("6_jds6y")
@@ -147,10 +172,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.9016, 43.5875, 1.71351)
 stamina_bar = NodePath("../UI/SprintSlider")
 interact_label = NodePath("../UI/InteractLabel")
 texture_rect = NodePath("../UI/TextureRect")
-
-[node name="CashBox" parent="." instance=ExtResource("19_65my3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.6142, 40.7128, 6.03421)
-collision_layer = 4
 
 [node name="PauseMenu" parent="." instance=ExtResource("20_chau2")]
 
