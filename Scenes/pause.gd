@@ -9,9 +9,8 @@ func _ready() -> void:
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
 	self.hide()
 func _input(event):
-	if get_tree().paused || (get_node("/root/Level/Player") && get_node("/root/Level/Player").using_console):
+	if get_tree().paused || (get_node("Player") && get_node("Player").using_console):
 		return
-		
 	if event.is_action_pressed("Pause"):
 		if get_tree().paused:
 			resume_game()

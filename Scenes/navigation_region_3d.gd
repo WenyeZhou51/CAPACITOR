@@ -33,10 +33,10 @@ func bake_custom_navigation_mesh() -> void:
 	# Configure the navigation mesh parameters
 	nav_mesh.agent_height = 2.0
 	nav_mesh.agent_radius = 0.4
-	nav_mesh.cell_size = 0.3
-	nav_mesh.cell_height = 0.3
-	nav_mesh.agent_max_climb = 1
-	nav_mesh.agent_max_slope = 60.0
+	nav_mesh.cell_size = 0.1
+	nav_mesh.cell_height = 0.1
+	nav_mesh.agent_max_climb = 0.5
+	nav_mesh.agent_max_slope = 20
 	nav_mesh.edge_max_error = 1.5
 	
 	# Assign it to this region

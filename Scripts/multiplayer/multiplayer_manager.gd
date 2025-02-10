@@ -2,7 +2,7 @@ extends Node
 
 ##### GAME VARS AND LOGIC
 var map_seed = 1
-var quota = 200
+var quota = 100
 var team_score = 0
 
 signal team_score_changed
@@ -24,7 +24,7 @@ func set_team_score(score: int):
 	print_debug("client " + str(multiplayer.get_unique_id()) + " got set new score from host")
 	team_score = score
 	if (team_score >= quota):
-		get_tree().change_scene_to_file("res://Scenes/Menu.tscn") ##### SHOULD BE WIN SCENE, BUT BUG
+		get_tree().change_scene_to_file("res://Scenes/win.tscn")
 		return
 	team_score_changed.emit(team_score)
 

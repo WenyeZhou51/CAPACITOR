@@ -3,10 +3,10 @@ extends CharacterBody3D
 # Constants
 const WALK_SPEED = 3.0  # Default walking speed
 const RUN_SPEED = 6.0  # Sprinting speed
-const JUMP_FORCE = 4.5  # Force applied for jumping
+const JUMP_FORCE = 6.5  # Force applied for jumping
 const STAMINA_DRAIN_RATE = 0.01  # Rate at which stamina drains while sprinting
 const STAMINA_REGEN_RATE = 0.5  # Rate at which stamina regenerates while not sprinting
-const GRAVITY_FORCE = Vector3.DOWN * 9.8  # Gravity vector
+const GRAVITY_FORCE = Vector3.DOWN * 9.8 * 2  # Gravity vector
 const STAMINA_THRESHOLD = 0.5  # Buffer threshold for stamina management
 
 signal value_changed(new_value)
@@ -316,7 +316,6 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("Drop") and is_holding:
 		var item_socket = self.get_node("Head/ItemSocket")
 		var curr_item = item_socket.get_child(0)
-		print(curr_item.name)
 		curr_item.drop(self)
 		inventory[current_slot] = null
 		emit_signal("change_ui", current_slot, "empty")

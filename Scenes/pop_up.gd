@@ -10,8 +10,9 @@ func pop_up():
 	label.text = popup_text
 	label.modulate = Color(1, 1, 1, 1)
 	# Start fading out after the display_time
-	await get_tree().create_timer(display_time).timeout
-	fade_out(label)
+	if(get_tree()):
+		await get_tree().create_timer(display_time).timeout
+		fade_out(label)
 
 func fade_out(label: Label):
 	var tween = get_tree().create_tween()

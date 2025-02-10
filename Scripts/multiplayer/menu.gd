@@ -4,7 +4,8 @@ extends Node
 func get_system_ip() -> String:
 	var addresses = IP.get_local_addresses()
 	for addr in addresses:
-		if not addr.begins_with("127.") and not addr.begins_with("169.254."): 
+		# Only consider IPv4 addresses 
+		if "." in addr and not addr.begins_with("127.") and not addr.begins_with("169.254."): 
 			print_debug("ADDR IP FOUND: ", addr)
 			return addr
 	return ""

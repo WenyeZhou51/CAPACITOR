@@ -8,7 +8,9 @@ extends Node
 @export var enemy_scene: PackedScene
 @export var min_spawn_time: float = 15.0
 @export var max_spawn_time: float = 30.0
-
+@export var max_enemies: int = 10  # Maximum allowed simultaneous enemies
+var current_enemies: int = 0       # Track current enemy count
+"num_scrap_to_spawn"
 var items_node
 var spawn_timer: Timer
 
@@ -27,6 +29,9 @@ func _start_spawn_timer():
 	spawn_timer.start(next_spawn_time)
 
 func spawn_enemy():
+	if current_enemies >= max_enemies:
+		return  # Don't spawn if we're at capacity
+		
 	if not enemy_scene:
 		push_warning("No enemy scene configured in GameManager")
 		return
@@ -44,7 +49,15 @@ func spawn_enemy():
 	var enemy_instance = enemy_scene.instantiate()
 	items_node.add_child(enemy_instance, true)
 	enemy_instance.global_position = random_marker.global_position
+	current_enemies += 1
+	print("enemy spawned (", current_enemies, "/", max_enemies, ")")
+	
+	# Connect to enemy's destruction signal
+	enemy_instance.tree_exited.connect(_on_enemy_destroyed.bind())
 
+func _on_enemy_destroyed():
+	current_enemies = max(0, current_enemies - 1)
+	print("enemy destroyed (", current_enemies, "/", max_enemies, ")")
 func _on_spawn_timer_timeout():
 	if not multiplayer.is_server(): return
 	spawn_enemy()
@@ -130,4 +143,5 @@ func _on_navigation_region_3d_bake_finished() -> void:
 	spawn_doors()
 	spawn_scrap()
 	spawn_coolant()
+	
 	
