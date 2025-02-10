@@ -132,9 +132,7 @@ func _ready():
 	add_debug_view_if_not_exist()
 	if Engine.is_editor_hint():
 		return
-	if generate_on_ready:
-		generate()
-
+	generate(MultiplayerManager.map_seed)
 func _process(delta):
 	if Engine.is_editor_hint():
 		# Debug view doesn't get added in Editor sometimes, like if you manually drag script on.

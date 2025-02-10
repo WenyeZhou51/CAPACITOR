@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=4 uid="uid://cjdanhbr7qd50"]
+[gd_scene load_steps=7 format=4 uid="uid://cjdanhbr7qd50"]
 
 [ext_resource type="Script" path="res://Scripts/pickupable.gd" id="1_srse0"]
 
@@ -47,6 +47,11 @@ shadow_mesh = SubResource("ArrayMesh_flq83")
 [sub_resource type="BoxShape3D" id="BoxShape3D_bsfla"]
 size = Vector3(0.605209, 1.59131, 0.61853)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_37qrf"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
 [node name="scrap1" type="RigidBody3D"]
 collision_layer = 8
 collision_mask = 5
@@ -62,3 +67,6 @@ skeleton = NodePath("")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.00270462, 0.42688, 0.0267029)
 shape = SubResource("BoxShape3D_bsfla")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_37qrf")

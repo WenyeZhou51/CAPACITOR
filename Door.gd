@@ -16,7 +16,7 @@ func _ready():
 	original_rotation_y = rotation.y
 	target_angle_y = original_rotation_y
 	
-
+@rpc("any_peer")
 func interact(player_global_transform: Transform3D) -> void:
 	if current_tween != null:
 		# If the door is currently animating, ignore interactions until finished

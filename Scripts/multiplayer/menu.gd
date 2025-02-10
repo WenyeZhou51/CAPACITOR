@@ -18,20 +18,18 @@ func _on_host_button_pressed() -> void:
 	if (ip != ""):
 		hostField.text = ip
 	else:
-		hostField.text = "ERROR HOSTING"	
-	MultiplayerManager.multiState = 1
+		hostField.text = "ERROR HOSTING"
+	MultiplayerManager.host_game()
 	
-	
-
-
 func _on_join_button_pressed() -> void:
 	var input = $MarginContainer/HBoxContainer/VBoxContainer2/ip_input
-	MultiplayerManager.hostsIp = input.text
-	MultiplayerManager.multiState = 2
+	MultiplayerManager.SERVER_IP = input.text
+	MultiplayerManager.join_game()
+	print_debug("JOIN PRESSED")
 	
 	# TODO : CALL MULT MANAGER JOIN GAME WITH IP AS THIS, THEN SEE THAT NO ERROR, ADD A NAME FIELD
 	# TODO : MERGE
 
 
 func _on_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/testscene.tscn")
+	MultiplayerManager.start_game()

@@ -2,23 +2,30 @@ extends Control
 
 @export var text: String = "Default Text"  # Text to display in the popup
 @onready var label: Label = $Label2  # Reference to the Label node
-@onready var player = get_parent().get_node("Player")
+@onready var player 
 @onready var grid_container = $ninepatch/GridContainer
-var quota = 600
+# var quota = 600 // REPLACED WITH QUOTA FROM MULT MANAGER
 
-func _ready():
-	# Set the text of the label
-	label.text = str(quota)
-	player.value_changed.connect(on_value_changed)
+@rpc("authority")
+func setup_player(name: String):
+	print_debug("ui setup player " + name)
+	player = get_parent().get_node("players/" + name)
+	if (not player == null):
+		print_debug("player " + name + " found in ui")
+	label.text = str(MultiplayerManager.quota)
+	MultiplayerManager.team_score_changed.connect(on_value_changed)
 	player.change_ui.connect(on_change_ui)
 	player.inv_high.connect(update_highlight)
 	var first = grid_container.get_child(0)
 	first.self_modulate = Color(1,1,1,1)
 
+func _ready():
+	# Set the text of the label
+	pass
+
 func on_value_changed(val: int):
 	#print("signal recieved")
-	quota -= val
-	label.text = str(quota)
+	label.text = str(MultiplayerManager.quota - val)
 	
 func swap_UI(idx: int, new_scene: PackedScene):
 	var old_child = grid_container.get_child(idx)

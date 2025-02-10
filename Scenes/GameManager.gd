@@ -9,9 +9,11 @@ extends Node
 @export var min_spawn_time: float = 15.0
 @export var max_spawn_time: float = 30.0
 
+var items_node
 var spawn_timer: Timer
 
 func _ready():
+	items_node = get_tree().get_current_scene().get_node("items")
 	# Create and configure the spawn timer
 	spawn_timer = Timer.new()
 	add_child(spawn_timer)
@@ -19,13 +21,6 @@ func _ready():
 	spawn_timer.timeout.connect(_on_spawn_timer_timeout)
 	# Start the initial spawn timer
 	_start_spawn_timer()
-	
-	if (MultiplayerManager.multiState == 1):
-		MultiplayerManager.host_game()
-		print_debug("MUTLIPLAYER START")
-	elif MultiplayerManager.multiState == 2:
-		MultiplayerManager.join_game()
-		print_debug("MUTLIPLAYER JOIN")
 
 func _start_spawn_timer():
 	var next_spawn_time = randf_range(min_spawn_time, max_spawn_time)
@@ -47,10 +42,11 @@ func spawn_enemy():
 	
 	# Instance the enemy
 	var enemy_instance = enemy_scene.instantiate()
-	get_tree().root.add_child(enemy_instance)
+	items_node.add_child(enemy_instance, true)
 	enemy_instance.global_position = random_marker.global_position
 
 func _on_spawn_timer_timeout():
+	if not multiplayer.is_server(): return
 	spawn_enemy()
 	_start_spawn_timer()  # Start the timer for the next spawn
 	
@@ -78,7 +74,7 @@ func spawn_scrap():
 		var scrap_instance = random_scrap_scene.instantiate()
 		
 		# Add it to the scene and set its position to the marker's position
-		get_tree().root.add_child(scrap_instance)
+		items_node.add_child(scrap_instance, true)
 		scrap_instance.global_position = scrap_markers[i].global_position
 
 
@@ -102,12 +98,11 @@ func spawn_coolant():
 	# Spawn scrap at random markers
 	for i in range(spawn_count):
 		
-
 		# Instance the scrap
 		var coolant_instance = coolant_scene.instantiate()
 		
 		# Add it to the scene and set its position to the marker's position
-		get_tree().root.add_child(coolant_instance)
+		items_node.add_child(coolant_instance, true)
 		coolant_instance.global_position = coolant_markers[i].global_position
 
 
@@ -125,11 +120,13 @@ func spawn_doors():
 		
 	for marker in door_markers:
 		var door_instance = door_scene.instantiate()
-		get_tree().root.add_child(door_instance)
+		items_node.add_child(door_instance, true)
 		# Use the full transform of the marker to preserve rotation
 		door_instance.global_transform = marker.global_transform
 
 func _on_navigation_region_3d_bake_finished() -> void:
+	if not multiplayer.is_server(): return
+	print_debug("spawning scraps doors and coolant as server " + str(multiplayer.get_unique_id()))
 	spawn_doors()
 	spawn_scrap()
 	spawn_coolant()

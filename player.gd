@@ -27,13 +27,13 @@ signal inv_high(pI, cI, name)
 @export var min_scan_line_amount: float = 0.5
 @export var max_scan_line_amount: float = 1.0
 
-@export var quota: int = 600
+@export var quota: int = 600 ## REPLACE WITH MULT MANAGER QUOTA
 
 var current_stamina: float = 1.0 + STAMINA_THRESHOLD  # Current stamina level
 var is_running: bool = false  # Whether the player is sprinting
 var movement_speed: float = WALK_SPEED  # Current movement speed
 var is_holding: bool = false # Whether the player is holding an intem
-var current_health: float = 100.0
+@export var current_health: float = 100.0 #### MUST HAVE EXPORT FOR SYNCING
 var max_health: float = 100.0
 var crt_shader_material: ShaderMaterial
 var inv_size: int = 0
@@ -57,9 +57,13 @@ var popup_instance: Node
 @onready var camera: Camera3D = $Head/Camera3D
 
 func _ready():
+	set_multiplayer_authority(str(name).to_int())
 	add_to_group("players")
+	stamina_bar = get_node("/root/Level/UI/SprintSlider")
+	interact_label = get_node("/root/Level/UI/InteractLabel")
+	texture_rect = get_node("/root/Level/UI/TextureRect")
 	crt_shader_material = texture_rect.material
-	var msg = "Collect a total of " + str(quota)
+	var msg = "Collect a total of " + str(MultiplayerManager.quota)
 	popup_instance = popup_scene.instantiate()
 	popup_instance.popup_text = msg
 	add_child(popup_instance)
@@ -69,8 +73,21 @@ func _ready():
 	invincibility_timer.wait_time = 0.2
 	invincibility_timer.timeout.connect(_on_invincibility_timer_timeout)
 	add_child(invincibility_timer)
+	
+	print("multiplayer authority " + str(get_multiplayer_authority()))
+	
+	if is_multiplayer_authority():
+		camera.current = true
+		print("Local player: camera enabled.")
+	else:
+		camera.current = false
+		print("Remote player: camera disabled.")
+		
+	global_position = Vector3(40, 45, 0)
+	
 
 func _input(event: InputEvent) -> void:
+	if not is_multiplayer_authority(): return
 	if using_console:
 		if event.is_action_pressed("Pause"):
 			print("console toggled off")
@@ -161,6 +178,7 @@ func _update_equipped_item() -> void:
 		new_item.transform = Transform3D()
 
 func _physics_process(delta: float) -> void:
+	if not is_multiplayer_authority(): return
 	if camera_locked and console_window:
 		var console_root = console_window.get_parent().get_parent()
 		var console_screen = console_root.get_node("CSGBox3D/MeshInstance3D")
@@ -237,7 +255,10 @@ func _physics_process(delta: float) -> void:
 			if candidate and candidate.has_method("interact"):
 				interact_label.visible = true
 				if Input.is_action_just_pressed("Interact") and candidate.is_in_group("doors"):
-					candidate.interact(global_transform)
+					if multiplayer.is_server():
+						candidate.interact(global_transform)
+					else:
+						candidate.interact.rpc_id(1, global_transform)
 				elif Input.is_action_just_pressed("Interact") and candidate.is_in_group("generator"):
 					if(candidate.interact(self) == 1):
 						inventory[current_slot] = null
@@ -248,7 +269,7 @@ func _physics_process(delta: float) -> void:
 					var val = candidate.interact(self)
 					inventory[current_slot] = null
 					inv_size -= 1
-					score += val
+					MultiplayerManager.request_score_update(val)
 					print(score)
 					var msg: String
 					if(val == 0):

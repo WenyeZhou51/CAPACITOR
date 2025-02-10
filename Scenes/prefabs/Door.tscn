@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c07usi2nurnmb"]
+[gd_scene load_steps=8 format=3 uid="uid://c07usi2nurnmb"]
 
 [ext_resource type="Script" path="res://Door.gd" id="1_mhw3v"]
 [ext_resource type="Texture2D" uid="uid://ilqrfm647tau" path="res://textures/door_texture/metal_plate_diff_4k.png" id="2_mmx8h"]
@@ -11,6 +11,14 @@ size = Vector3(3.55519, 7.26033, 0.195801)
 albedo_texture = ExtResource("2_mmx8h")
 
 [sub_resource type="BoxMesh" id="BoxMesh_hhxqg"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_bie4p"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [node name="Door" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1.062, 0, 0, 0, 0.567, 0, 0, 0)
@@ -32,3 +40,6 @@ mesh = SubResource("BoxMesh_hhxqg")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_npyq0")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_bie4p")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://busyfigb6e8mo"]
+[gd_scene load_steps=33 format=4 uid="uid://busyfigb6e8mo"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_pwhjp"]
 [ext_resource type="Script" path="res://head.gd" id="2_ntvbd"]
@@ -6101,6 +6101,23 @@ _data = {
 "wave": SubResource("Animation_ohbm7")
 }
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_h8jil"]
+properties/0/path = NodePath("AnimationPlayer:current_animation")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:position")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:up_direction")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath(".:current_health")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("interaction_area", "animation_player")]
 collision_layer = 2
 collision_mask = 3
@@ -6491,7 +6508,7 @@ mesh = SubResource("ArrayMesh_lsacc")
 skin = SubResource("Skin_hj5lm")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="rig/Skeleton3D"]
-transform = Transform3D(-0.707544, -0.232117, -0.667461, 0.284335, -0.958197, 0.0318137, -0.646943, -0.167273, 0.743965, -0.0660124, 0.204029, 0.0102944)
+transform = Transform3D(-0.707544, -0.232117, -0.66746, 0.284335, -0.958197, 0.0318139, -0.646943, -0.167273, 0.743965, -0.0660124, 0.204029, 0.0102943)
 bone_name = "arm_right_top"
 bone_idx = 8
 
@@ -6501,3 +6518,6 @@ libraries = {
 "player_anim": SubResource("AnimationLibrary_en0xq")
 }
 speed_scale = 2.0
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_h8jil")
