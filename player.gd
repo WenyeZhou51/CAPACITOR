@@ -71,6 +71,8 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("Pause"):
 			print("console toggled off")
 			toggle_console()
+			get_viewport().set_input_as_handled()
+			
 		if console_window:
 			print("pushing input to console side")
 			console_window.get_parent().get_viewport().push_input(event)
@@ -107,6 +109,7 @@ func toggle_console() -> void:
 		#clear crt shader effect completely
 		texture_rect.visible = false
 		camera_locked = true
+		_update_equipped_item()
 
 		print("shader disabled")
 	else:
@@ -115,6 +118,9 @@ func toggle_console() -> void:
 		texture_rect.visible = true
 		update_health_indicator()
 		camera_locked = false
+		_update_equipped_item()
+		# Reset camera to follow head directly
+		camera.global_transform = $Head.global_transform
 		
 		
 

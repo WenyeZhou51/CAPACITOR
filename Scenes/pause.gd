@@ -8,8 +8,10 @@ func _ready() -> void:
 	# Ensure the pause menu also continues processing during pause
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
 	self.hide()
-
 func _input(event):
+	if get_tree().paused || (get_node("/root/Level/Player") && get_node("/root/Level/Player").using_console):
+		return
+		
 	if event.is_action_pressed("Pause"):
 		if get_tree().paused:
 			resume_game()
