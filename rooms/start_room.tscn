@@ -11,7 +11,7 @@
 [ext_resource type="Script" path="res://Scenes/prefabs/items/cashBox.gd" id="7_lf1au"]
 [ext_resource type="PackedScene" uid="uid://yd6lu668s2rd" path="res://objectmodels/korean_public_payphone_01_4k/korean_public_payphone_01_4k.gltf" id="8_hof4i"]
 [ext_resource type="PackedScene" uid="uid://bcot47xqk0oe3" path="res://Scenes/generator.tscn" id="9_3lovi"]
-[ext_resource type="PackedScene" uid="uid://dvleiqfmloahr" path="res://Scenes/prefabs/coolant_marker.tscn" id="10_ytvcr"]
+[ext_resource type="PackedScene" path="res://Scenes/prefabs/coolant_marker.tscn" id="10_ytvcr"]
 [ext_resource type="PackedScene" uid="uid://xcj3me4ww2u2" path="res://console folder/console.tscn" id="11_s0eup"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_2up67"]
@@ -276,6 +276,30 @@ light_energy = 4.0
 light_indirect_energy = 2.0
 spot_range = 5.86025
 spot_angle = 27.9059
+
+[node name="SpotLight3D4" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, -0.00963403, 0.999954, 0, -0.999954, -0.00963403, -0.136833, 2.16389, 0)
+light_color = Color(0.921252, 0.615242, 0.698727, 1)
+light_energy = 5.0
+shadow_enabled = true
+spot_range = 12.0156
+spot_angle = 49.1396
+
+[node name="SpotLight3D5" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, -0.00963403, 0.999954, 0, -0.999954, -0.00963403, -9.09104, 2.16389, 2.62589)
+light_color = Color(0.921252, 0.615242, 0.698727, 1)
+light_energy = 5.0
+shadow_enabled = true
+spot_range = 12.0156
+spot_angle = 49.1396
+
+[node name="SpotLight3D6" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, -0.00963403, 0.999954, 0, -0.999954, -0.00963403, -2.22409, 4.40905, -8.13543)
+light_color = Color(0.921252, 0.615242, 0.698727, 1)
+light_energy = 5.0
+shadow_enabled = true
+spot_range = 12.0156
+spot_angle = 49.1396
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
