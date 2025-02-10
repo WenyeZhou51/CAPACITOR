@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdf8lpjxddsvr"]
+
+[ext_resource type="Script" path="res://Scenes/prefabs/enemy_marker.gd" id="1_e3pef"]
+
+[node name="EnemyMarker" type="Node3D"]
+script = ExtResource("1_e3pef")

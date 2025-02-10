@@ -1,0 +1,561 @@
+[gd_scene load_steps=16 format=3 uid="uid://c8y6hkpnlip1g"]
+
+[ext_resource type="PackedScene" uid="uid://busyfigb6e8mo" path="res://Scenes/player.tscn" id="1_36ui5"]
+[ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
+[ext_resource type="Script" path="res://Scenes/navigation_region_3d.gd" id="6_jds6y"]
+[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonGenerator3D.gd" id="6_s8vmo"]
+[ext_resource type="PackedScene" uid="uid://7pskmagldtnr" path="res://rooms/stair_1.tscn" id="7_d3uit"]
+[ext_resource type="PackedScene" uid="uid://ch0yrvh1wr6nv" path="res://rooms/small_room_1.tscn" id="7_fiwcu"]
+[ext_resource type="PackedScene" uid="uid://btqev772fc7bl" path="res://rooms/start_room.tscn" id="8_n1yd6"]
+[ext_resource type="PackedScene" uid="uid://c6gmwiknceior" path="res://rooms/medium_room.tscn" id="8_osxs0"]
+[ext_resource type="PackedScene" uid="uid://cisl75a2ha5p8" path="res://rooms/corridor_1.tscn" id="9_svjm5"]
+[ext_resource type="Script" path="res://Scenes/GameManager.gd" id="10_2bpfs"]
+[ext_resource type="AudioStream" uid="uid://bc2qvfrbnwvn6" path="res://audio/demoLevel.wav" id="11_wadk3"]
+[ext_resource type="PackedScene" uid="uid://bjjrllm15flh4" path="res://Scenes/prefabs/enemies/enemy_venus.tscn" id="13_h0o74"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_binvk"]
+sky_top_color = Color(0.0101014, 0.0122771, 0.0165181, 1)
+sky_horizon_color = Color(0.125647, 0.134531, 0.143464, 1)
+ground_bottom_color = Color(0.0348853, 0.0173383, 0.0137201, 1)
+ground_horizon_color = Color(0.0509804, 0.0235294, 0.027451, 1)
+
+[sub_resource type="Sky" id="Sky_mema1"]
+sky_material = SubResource("ProceduralSkyMaterial_binvk")
+
+[sub_resource type="Environment" id="Environment_0737e"]
+background_mode = 5
+background_energy_multiplier = 16.0
+sky = SubResource("Sky_mema1")
+tonemap_mode = 3
+sdfgi_enabled = true
+glow_enabled = true
+volumetric_fog_density = 0.1
+volumetric_fog_albedo = Color(0.984314, 1, 1, 1)
+volumetric_fog_emission = Color(0.0196078, 0, 0, 1)
+
+[node name="Level" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0737e")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.979272, -0.00361349, -0.202518, -0.13989, 0.735146, 0.663319, 0.146484, 0.677899, -0.720413, 0, 17.4773, -7.4101)
+shadow_enabled = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Player" parent="." node_paths=PackedStringArray("interact_label") instance=ExtResource("1_36ui5")]
+transform = Transform3D(0.99954, 0.0303292, 0, -0.0303292, 0.99954, 0, 0, 0, 1, 39.8975, 45.9977, -3.90268)
+interact_label = NodePath("../UI/InteractLabel")
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("10_2bpfs")
+
+[node name="GlobalAudio" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.79768)
+stream = ExtResource("11_wadk3")
+autoplay = true
+max_distance = 3967.43
+
+[node name="UI" parent="." instance=ExtResource("2_j6u47")]
+
+[node name="enemy_venus" parent="." instance=ExtResource("13_h0o74")]
+transform = Transform3D(-0.2, 0, -1.74846e-08, 0, 0.2, 0, 1.74846e-08, 0, -0.2, 39.5748, 43.951, 5.17188)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+script = ExtResource("6_jds6y")
+
+[node name="DungeonGenerator3D" type="Node3D" parent="NavigationRegion3D"]
+script = ExtResource("6_s8vmo")
+room_scenes = Array[PackedScene]([ExtResource("7_fiwcu"), ExtResource("8_osxs0"), ExtResource("7_d3uit")])
+corridor_room_scene = ExtResource("9_svjm5")
+junctions = 30
+max_retries = 2
+max_safe_iterations = 500
+corridor_cost_multiplier = 0.05
+room_cost_multiplier = 0.3
+room_cost_at_end_for_required_doors = 3.0
+
+[node name="start_room" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("8_n1yd6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 45, 0)
+
+[node name="RoomsContainer" type="Node3D" parent="NavigationRegion3D/DungeonGenerator3D"]
+
+[node name="medium_room_0" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("8_osxs0")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -25, 15, -30)
+
+[node name="medium_room_1" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("8_osxs0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 25, 20)
+
+[node name="medium_room_2" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("8_osxs0")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -30, -25, 25)
+
+[node name="small_room_1_3" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("7_fiwcu")]
+transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 30, -5, 30)
+
+[node name="small_room_1_4" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("7_fiwcu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, -25, -30)
+
+[node name="medium_room_5" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("8_osxs0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, -5, -10)
+
+[node name="medium_room_6" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("8_osxs0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 15, -10)
+
+[node name="small_room_1_7" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("7_fiwcu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -25, -20)
+
+[node name="small_room_1_8" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("7_fiwcu")]
+transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, -40, 45, 30)
+
+[node name="small_room_1_9" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("7_fiwcu")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -40, 15, 10)
+
+[node name="stair_1_10" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("7_d3uit")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 25, 10, -30)
+
+[node name="stair_1_11" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("7_d3uit")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0, 10)
+
+[node name="stair_1_12" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("7_d3uit")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -45, -10, 10)
+
+[node name="stair_1_13" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("7_d3uit")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -20, -45)
+
+[node name="stair_1_14" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("7_d3uit")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 40, -45)
+
+[node name="stair_1_15" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("7_d3uit")]
+transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 25, 30, -10)
+
+[node name="stair_1_16" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("7_d3uit")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -30, 20, 45)
+
+[node name="corridor_1_17" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, -25, 15)
+
+[node name="corridor_1_18" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, -25, 5)
+
+[node name="corridor_1_19" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, -25, -5)
+
+[node name="corridor_1_20" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, -25, -15)
+
+[node name="corridor_1_21" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, -25, -25)
+
+[node name="corridor_1_22" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, -25, -35)
+
+[node name="corridor_1_23" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, -25, -45)
+
+[node name="corridor_1_24" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -25, -15)
+
+[node name="corridor_1_25" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, -25, -15)
+
+[node name="corridor_1_26" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, -25, -15)
+
+[node name="corridor_1_27" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, -25, -15)
+
+[node name="corridor_1_28" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, -25, -25)
+
+[node name="corridor_1_29" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, -25, -35)
+
+[node name="corridor_1_30" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, -25, -45)
+
+[node name="corridor_1_31" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -15, -45)
+
+[node name="corridor_1_32" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -15, -35)
+
+[node name="corridor_1_33" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -15, -25)
+
+[node name="corridor_1_34" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -15, -15)
+
+[node name="corridor_1_35" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -15, -5)
+
+[node name="corridor_1_36" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -15, -5)
+
+[node name="corridor_1_37" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, -15, -5)
+
+[node name="corridor_1_38" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -15, -5)
+
+[node name="corridor_1_39" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -15, -15)
+
+[node name="corridor_1_40" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -15, -25)
+
+[node name="corridor_1_41" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -15, -35)
+
+[node name="corridor_1_42" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, -15, -5)
+
+[node name="corridor_1_43" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, -15, -15)
+
+[node name="corridor_1_44" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, -15, -25)
+
+[node name="corridor_1_45" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, -15, -5)
+
+[node name="corridor_1_46" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -15, -5)
+
+[node name="corridor_1_47" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, -15, -5)
+
+[node name="corridor_1_48" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, -15, -5)
+
+[node name="corridor_1_49" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, -5, 25)
+
+[node name="corridor_1_50" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, -5, 35)
+
+[node name="corridor_1_51" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, -5, 45)
+
+[node name="corridor_1_52" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, -5, 25)
+
+[node name="corridor_1_53" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, -5, 15)
+
+[node name="corridor_1_54" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, -5, 5)
+
+[node name="corridor_1_55" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -5, 25)
+
+[node name="corridor_1_56" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, -5, 25)
+
+[node name="corridor_1_57" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, -5, 25)
+
+[node name="corridor_1_58" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -5, 25)
+
+[node name="corridor_1_59" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -5, 25)
+
+[node name="corridor_1_60" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -5, 15)
+
+[node name="corridor_1_61" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -5, 5)
+
+[node name="corridor_1_62" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -5, -5)
+
+[node name="corridor_1_63" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, -5, -5)
+
+[node name="corridor_1_64" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, -5, -15)
+
+[node name="corridor_1_65" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, -5, -25)
+
+[node name="corridor_1_66" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, -5, -35)
+
+[node name="corridor_1_67" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -5, -5)
+
+[node name="corridor_1_68" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -5, -15)
+
+[node name="corridor_1_69" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -5, -25)
+
+[node name="corridor_1_70" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -5, -35)
+
+[node name="corridor_1_71" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 25)
+
+[node name="corridor_1_72" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 25)
+
+[node name="corridor_1_73" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 5, 25)
+
+[node name="corridor_1_74" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 5, 25)
+
+[node name="corridor_1_75" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 5, 25)
+
+[node name="corridor_1_76" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, 25)
+
+[node name="corridor_1_77" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 5, 25)
+
+[node name="corridor_1_78" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 5, 25)
+
+[node name="corridor_1_79" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, 15)
+
+[node name="corridor_1_80" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, 5)
+
+[node name="corridor_1_81" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, -5)
+
+[node name="corridor_1_82" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, -15)
+
+[node name="corridor_1_83" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, -25)
+
+[node name="corridor_1_84" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, -35)
+
+[node name="corridor_1_85" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, -45)
+
+[node name="corridor_1_86" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 5, -45)
+
+[node name="corridor_1_87" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 5, -45)
+
+[node name="corridor_1_88" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 5, -45)
+
+[node name="corridor_1_89" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 15, -15)
+
+[node name="corridor_1_90" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 15, -25)
+
+[node name="corridor_1_91" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 15, -35)
+
+[node name="corridor_1_92" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 15, -45)
+
+[node name="corridor_1_93" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 15, -15)
+
+[node name="corridor_1_94" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 15, -15)
+
+[node name="corridor_1_95" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 15, -15)
+
+[node name="corridor_1_96" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 15, -5)
+
+[node name="corridor_1_97" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 15, -5)
+
+[node name="corridor_1_98" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 15, 15)
+
+[node name="corridor_1_99" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 15, 25)
+
+[node name="corridor_1_100" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 15, 35)
+
+[node name="corridor_1_101" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 15, 35)
+
+[node name="corridor_1_102" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 15, 35)
+
+[node name="corridor_1_103" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 15, 45)
+
+[node name="corridor_1_104" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 25, 45)
+
+[node name="corridor_1_105" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 25, 45)
+
+[node name="corridor_1_106" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 25, 45)
+
+[node name="corridor_1_107" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 25, 45)
+
+[node name="corridor_1_108" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 25, 35)
+
+[node name="corridor_1_109" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 25, 35)
+
+[node name="corridor_1_110" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 25, 35)
+
+[node name="corridor_1_111" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 25, 25)
+
+[node name="corridor_1_112" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 25, 25)
+
+[node name="corridor_1_113" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 25, 25)
+
+[node name="corridor_1_114" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 25, 25)
+
+[node name="corridor_1_115" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 25, 5)
+
+[node name="corridor_1_116" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 25, 5)
+
+[node name="corridor_1_117" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 35, -25)
+
+[node name="corridor_1_118" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 35, -25)
+
+[node name="corridor_1_119" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 35, -25)
+
+[node name="corridor_1_120" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 35, -35)
+
+[node name="corridor_1_121" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 35, -45)
+
+[node name="corridor_1_122" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 45, -45)
+
+[node name="corridor_1_123" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 45, -35)
+
+[node name="corridor_1_124" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 45, -25)
+
+[node name="corridor_1_125" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 45, -15)
+
+[node name="corridor_1_126" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 45, -5)
+
+[node name="corridor_1_127" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 45, 5)
+
+[node name="corridor_1_128" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 45, 15)
+
+[node name="corridor_1_129" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 45, 15)
+
+[node name="corridor_1_130" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 45, -5)
+
+[node name="corridor_1_131" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 45, -5)
+
+[node name="corridor_1_132" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 45, -5)
+
+[node name="corridor_1_133" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 45, -5)
+
+[node name="corridor_1_134" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 45, -5)
+
+[node name="corridor_1_135" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 15, -45)
+
+[node name="corridor_1_136" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 15, -45)
+
+[node name="corridor_1_137" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 15, -35)
+
+[node name="corridor_1_138" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 15, -25)
+
+[node name="corridor_1_139" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 15, -15)
+
+[node name="corridor_1_140" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 25, 15)
+
+[node name="corridor_1_141" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 25, 35)
+
+[node name="corridor_1_142" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, -25, 45)
+
+[node name="corridor_1_143" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, -25, 45)
+
+[node name="corridor_1_144" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, -25, 35)
+
+[node name="corridor_1_145" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, -25, 25)
+
+[node name="corridor_1_146" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -25, 45)
+
+[node name="corridor_1_147" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, -25, -5)
+
+[node name="corridor_1_148" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -25, -5)
+
+[node name="corridor_1_149" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, -25, -5)
+
+[node name="corridor_1_150" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, -25, -5)
+
+[node name="corridor_1_151" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -25, -5)
+
+[node name="corridor_1_152" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, -25, 15)
+
+[node name="corridor_1_153" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, -25, 5)
+
+[node name="corridor_1_154" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, -5, -25)
+
+[node name="corridor_1_155" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, -5, 5)
+
+[node name="corridor_1_156" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, -5, 15)
+
+[node name="corridor_1_157" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 15, -5)
+
+[node name="corridor_1_158" parent="NavigationRegion3D/DungeonGenerator3D/RoomsContainer" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 15, 5)
+
+[editable path="UI"]

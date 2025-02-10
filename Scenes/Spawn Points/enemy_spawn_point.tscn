@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://dltoljaoknl4w"]
+
+[node name="Enemy Spawn Point" type="Node3D"]

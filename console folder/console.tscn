@@ -1,0 +1,99 @@
+[gd_scene load_steps=15 format=3 uid="uid://xcj3me4ww2u2"]
+
+[ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="1_s7q62"]
+[ext_resource type="PackedScene" uid="uid://dyh3eimlu8tsw" path="res://console folder/console window.tscn" id="1_y06sx"]
+[ext_resource type="Script" path="res://console folder/console_interaction_area.gd" id="2_er0cy"]
+[ext_resource type="Script" path="res://console folder/console.gd" id="2_vxpg6"]
+[ext_resource type="PackedScene" uid="uid://c8puf845qrx4l" path="res://console folder/command.tscn" id="4_e1py3"]
+[ext_resource type="Script" path="res://console folder/console_collider.gd" id="5_5pf0d"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r6xyh"]
+albedo_texture = ExtResource("1_s7q62")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yim2q"]
+albedo_color = Color(0.479183, 0.479183, 0.479183, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_a015g"]
+size = Vector2(1.5, 1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_us03y"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7x7ty"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_us03y")
+emission_enabled = true
+emission_energy_multiplier = 0.1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1iq15"]
+size = Vector3(0.981873, 1, 1.62439)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y03ql"]
+size = Vector3(1.07983, 1, 1.26418)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ihoxq"]
+size = Vector3(1.03015, 0.248291, 1.19385)
+
+[node name="Console" type="CSGBox3D"]
+transform = Transform3D(3.85835, 0, 0, 0, 2.55677, 0, 0, 0, 3.08341, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_r6xyh")
+script = ExtResource("2_vxpg6")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1.65444, 0, 0, 0, 0.735155, 0, 0, 0, 0.735199, 0.0124784, 0.119214, 0.448006)
+material_override = SubResource("StandardMaterial3D_yim2q")
+operation = 2
+size = Vector3(0.454337, 0.729346, 0.153442)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CSGBox3D"]
+transform = Transform3D(0.302963, 0, 0, 0, 0.741019, 0, 0, 0, 1, 0, -0.00505534, -0.0361024)
+mesh = SubResource("QuadMesh_a015g")
+surface_material_override/0 = SubResource("StandardMaterial3D_7x7ty")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(0.999999, 0, 0, 0, 0.999992, 0, 0, 0, 0.999993, 0.00378418, -0.375977, 0.0331196)
+size = Vector3(1.05981, 0.248047, 1.07053)
+
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(1000, 500)
+
+[node name="ConsoleWindow" parent="SubViewport" instance=ExtResource("1_y06sx")]
+
+[node name="command handler" parent="SubViewport/ConsoleWindow" index="1"]
+console_spawn_point = NodePath("../../../Console Spawner")
+
+[node name="query" parent="SubViewport/ConsoleWindow/command handler/Console" index="2" instance=ExtResource("4_e1py3")]
+argument_names = Array[String](["subject"])
+argument_types = Array[int]([2])
+help = "get information about a particular subject"
+
+[node name="Console Interaction Area" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("2_er0cy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Console Interaction Area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00906369, 0, 0.278887)
+shape = SubResource("BoxShape3D_1iq15")
+
+[node name="Console Collider" type="StaticBody3D" parent="."]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("5_5pf0d")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Console Collider"]
+transform = Transform3D(0.999999, 0, 0, 0, 0.999997, 0, 0, 0, 0.999997, 0.00646973, 0, 0.132091)
+shape = SubResource("BoxShape3D_y03ql")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Console Collider"]
+transform = Transform3D(0.999999, 0, 0, 0, 0.999988, 0, 0, 0, 0.99999, 0.0150757, -0.364712, 0.178022)
+shape = SubResource("BoxShape3D_ihoxq")
+
+[node name="Console Spawner" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.319724, 1.23512)
+
+[connection signal="body_entered" from="Console Interaction Area" to="SubViewport/ConsoleWindow" method="_on_console_interaction_area_body_entered"]
+[connection signal="body_entered" from="Console Interaction Area" to="Console Interaction Area" method="_on_body_entered"]
+[connection signal="body_exited" from="Console Interaction Area" to="Console Interaction Area" method="_on_body_exited"]
+
+[editable path="SubViewport/ConsoleWindow"]

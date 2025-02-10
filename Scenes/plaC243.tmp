@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://busyfigb6e8mo"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_pwhjp"]
+[ext_resource type="Script" path="res://head.gd" id="2_ntvbd"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ehc7k"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_e3cpc"]
+radial_segments = 14
+
+[sub_resource type="GDScript" id="GDScript_g5nqg"]
+script/source = "extends MeshInstance3D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta: float) -> void:
+	pass
+	
+"
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_22rlx"]
+radius = 0.4
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("interaction_area")]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_pwhjp")
+interaction_area = NodePath("Head/Camera3D/Area3D")
+min_vignette_intensity = null
+max_vignette_intensity = null
+min_noise_amount = null
+max_noise_amount = null
+min_scan_line_amount = null
+max_scan_line_amount = null
+quota = null
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ehc7k")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 6.83048e-05, 0.000979942, -6.56254e-05, 0.999996, -0.00274421, -0.000980125, 0.00274414, 0.999996, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_e3cpc")
+script = SubResource("GDScript_g5nqg")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.594024, -0.288516)
+script = ExtResource("2_ntvbd")
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0116045)
+
+[node name="Area3D" type="Area3D" parent="Head/Camera3D"]
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Head/Camera3D/Area3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.0264817, -0.256173, -0.788406)
+shape = SubResource("CylinderShape3D_22rlx")
+
+[node name="ItemSocket" type="Node3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.317, -0.495, -0.5)
+
+[node name="InventoryContainer" type="Node3D" parent="."]
