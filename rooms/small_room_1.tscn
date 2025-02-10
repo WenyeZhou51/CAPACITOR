@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://ch0yrvh1wr6nv"]
+[gd_scene load_steps=26 format=4 uid="uid://ch0yrvh1wr6nv"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_sv0a6"]
 [ext_resource type="Texture2D" uid="uid://bnf832wawynw4" path="res://objectmodels/marble_bust/textures/marble_bust_01_diff_4k.jpg" id="2_60xrq"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cvvhr51m3d3cb" path="res://objectmodels/cardboard_box_01_4k/cardboard_box_01_4k.gltf" id="6_j8qt6"]
 [ext_resource type="PackedScene" uid="uid://bh18kskaruq62" path="res://Scenes/prefabs/scrap_marker.tscn" id="7_6ksem"]
 [ext_resource type="PackedScene" uid="uid://cdf8lpjxddsvr" path="res://Scenes/prefabs/enemy_marker.tscn" id="8_ph5vl"]
+[ext_resource type="PackedScene" uid="uid://cvwdeshjlru0d" path="res://objectmodels3/fence.glb" id="8_sx81q"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y0qck"]
 albedo_texture = ExtResource("3_vbl6q")
@@ -132,6 +133,9 @@ size = Vector3(0.9, 0.8, 1.3)
 [sub_resource type="BoxShape3D" id="BoxShape3D_sm83o"]
 size = Vector3(0.8, 0.8, 1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_xsfub"]
+size = Vector3(4, 2.5, 0.1)
+
 [node name="small_room_1" type="Node3D"]
 script = ExtResource("1_sv0a6")
 size_in_voxels = Vector3i(2, 1, 2)
@@ -219,3 +223,13 @@ shape = SubResource("BoxShape3D_sm83o")
 
 [node name="cardboard_box_01_4k2" parent="StaticBody3D5" instance=ExtResource("6_j8qt6")]
 transform = Transform3D(-0.221315, 1.98601, -0.0824735, 0.364504, 0.122126, 1.96271, 1.95401, 0.202158, -0.375467, -0.561575, -3.9762, -4.80737)
+
+[node name="Fence" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.18757, 0)
+
+[node name="fence2" parent="Fence" instance=ExtResource("8_sx81q")]
+transform = Transform3D(4, 0, 0, 0, 5, 0, 0, 0, 8, -1.94923, -2.30884, 3.39733)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Fence"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.94189, -1.05709, 3.38158)
+shape = SubResource("BoxShape3D_xsfub")

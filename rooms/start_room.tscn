@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://btqev772fc7bl"]
+[gd_scene load_steps=34 format=4 uid="uid://btqev772fc7bl"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_pykbe"]
 [ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="3_e13x1"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://bcot47xqk0oe3" path="res://Scenes/generator.tscn" id="9_3lovi"]
 [ext_resource type="PackedScene" path="res://Scenes/prefabs/coolant_marker.tscn" id="10_ytvcr"]
 [ext_resource type="PackedScene" uid="uid://xcj3me4ww2u2" path="res://console folder/console.tscn" id="11_s0eup"]
+[ext_resource type="PackedScene" uid="uid://cvwdeshjlru0d" path="res://objectmodels3/fence.glb" id="14_qbpxr"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_2up67"]
 vertices = PackedVector3Array(-9.48562, 5.5, -9.49464, -9.48562, 5.5, 9.50536, 9.51438, 5.5, 9.50536, 9.51438, 5.5, -9.49464, 8.51438, -4, -7.99464, -9.48562, -4, -7.74464, -8.73562, -4, -7.24464, -8.73562, -4, 7.00536, 8.51438, -4, 7.00536)
@@ -195,6 +196,9 @@ size = Vector3(1.2, 3, 0.9)
 [sub_resource type="BoxShape3D" id="BoxShape3D_xa56l"]
 size = Vector3(4, 8.6, 3.1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_17jbb"]
+size = Vector3(4, 2.5, 0.1)
+
 [node name="start_room" type="Node3D"]
 script = ExtResource("1_pykbe")
 size_in_voxels = Vector3i(2, 1, 2)
@@ -355,3 +359,33 @@ transform = Transform3D(-7.49997, 4.61937e-07, -0.0209438, 2.41213e-07, 7.49999,
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.53699, -0.207274, 5.88963)
 shape = SubResource("BoxShape3D_xa56l")
+
+[node name="Fence" type="StaticBody3D" parent="."]
+transform = Transform3D(0.0021642, 0, -0.999998, 0, 1, 0, 0.999998, 0, 0.0021642, 5.90202, -2.18757, 7.49801)
+
+[node name="fence2" parent="Fence" instance=ExtResource("14_qbpxr")]
+transform = Transform3D(4, 0, 0, 0, 5, 0, 0, 0, 8, -1.94923, -2.30884, 3.39733)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Fence"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.94189, -1.05709, 3.38158)
+shape = SubResource("BoxShape3D_17jbb")
+
+[node name="Fence3" type="StaticBody3D" parent="."]
+transform = Transform3D(-0.00485208, 0, 0.999988, 0, 1, 0, -0.999988, 0, -0.00485208, -4.28161, -2.18757, 3.61246)
+
+[node name="fence2" parent="Fence3" instance=ExtResource("14_qbpxr")]
+transform = Transform3D(4, 0, 0, 0, 5, 0, 0, 0, 8, -1.94923, -2.30884, 3.39733)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Fence3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.94189, -1.05709, 3.38158)
+shape = SubResource("BoxShape3D_17jbb")
+
+[node name="Fence2" type="StaticBody3D" parent="."]
+transform = Transform3D(-1, 0, -8.72612e-05, 0, 1, 0, 8.72612e-05, 0, -1, 2.58617, -2.18757, 6.9562)
+
+[node name="fence2" parent="Fence2" instance=ExtResource("14_qbpxr")]
+transform = Transform3D(4, 0, 0, 0, 5, 0, 0, 0, 8, -1.94923, -2.30884, 3.39733)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Fence2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.94189, -1.05709, 3.38158)
+shape = SubResource("BoxShape3D_17jbb")

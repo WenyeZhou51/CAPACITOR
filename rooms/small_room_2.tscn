@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://bi3tstfh1x606"]
+[gd_scene load_steps=27 format=4 uid="uid://bi3tstfh1x606"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_6ehsm"]
 [ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="2_j6q8f"]
@@ -136,6 +136,10 @@ size = Vector3(0.8, 0.8, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1tv8l"]
 albedo_texture = ExtResource("8_shktr")
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_0mqk3"]
+height = 1.0
+radius = 3.0
+
 [node name="small_room_1" type="Node3D"]
 script = ExtResource("1_6ehsm")
 size_in_voxels = Vector3i(2, 1, 2)
@@ -224,8 +228,14 @@ shape = SubResource("BoxShape3D_sm83o")
 [node name="cardboard_box_01_4k2" parent="StaticBody3D5" instance=ExtResource("7_yoiwk")]
 transform = Transform3D(-0.221315, 1.98601, -0.0824735, 0.364504, 0.122126, 1.96271, 1.95401, 0.202158, -0.375467, -0.561575, -3.9762, -4.80737)
 
-[node name="Node3D" type="CSGCylinder3D" parent="."]
+[node name="StaticBody3D6" type="StaticBody3D" parent="."]
+
+[node name="Node3D" type="CSGCylinder3D" parent="StaticBody3D6"]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, -3.94207, 2.88146)
 material_override = SubResource("StandardMaterial3D_1tv8l")
 radius = 0.3
 height = 0.1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.9437, 2.8748)
+shape = SubResource("CylinderShape3D_0mqk3")
