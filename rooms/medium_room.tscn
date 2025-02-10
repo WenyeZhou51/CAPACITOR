@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://c6gmwiknceior"]
+[gd_scene load_steps=30 format=4 uid="uid://c6gmwiknceior"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_t55gw"]
 [ext_resource type="PackedScene" uid="uid://dltoljaoknl4w" path="res://Scenes/Spawn Points/enemy_spawn_point.tscn" id="2_4g2rj"]
@@ -206,6 +206,18 @@ size = Vector3(1.25, 0.9, 0.9)
 albedo_texture = ExtResource("10_xdpoc")
 uv1_scale = Vector3(3, 3, 3)
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_2uuk2"]
+height = 9.0
+radius = 1.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_5uvlw"]
+height = 9.0
+radius = 1.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_jtttq"]
+height = 9.0
+radius = 1.0
+
 [node name="medium_room" type="Node3D"]
 script = ExtResource("1_t55gw")
 size_in_voxels = Vector3i(3, 1, 2)
@@ -301,23 +313,41 @@ transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0)
 mesh = SubResource("ArrayMesh_m6vaq")
 skeleton = NodePath("")
 
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
+[node name="StaticBody3D4" type="StaticBody3D" parent="."]
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="StaticBody3D4"]
+transform = Transform3D(0.993282, 0, -0.115717, 0, 1, 0, 0.115717, 0, 0.993282, -1.03533, -0.00069958, 4.03614)
+material_override = SubResource("StandardMaterial3D_puqfv")
+radius = 1.0
+height = 9.0
+sides = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.01866, 0, 4.242)
+shape = SubResource("CylinderShape3D_2uuk2")
+
+[node name="StaticBody3D5" type="StaticBody3D" parent="."]
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="StaticBody3D5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00069958, -0.332223)
 material_override = SubResource("StandardMaterial3D_puqfv")
 radius = 1.0
 height = 9.0
 sides = 3
 
-[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0100091, 0, -0.270306)
+shape = SubResource("CylinderShape3D_5uvlw")
+
+[node name="StaticBody3D6" type="StaticBody3D" parent="."]
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="StaticBody3D6"]
 transform = Transform3D(0.789941, 0, -0.613183, 0, 1, 0, 0.613183, 0, 0.789941, 2.55268, -0.00069958, 3.21407)
 material_override = SubResource("StandardMaterial3D_puqfv")
 radius = 1.0
 height = 9.0
 sides = 3
 
-[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="."]
-transform = Transform3D(0.993282, 0, -0.115717, 0, 1, 0, 0.115717, 0, 0.993282, -1.03533, -0.00069958, 4.03614)
-material_override = SubResource("StandardMaterial3D_puqfv")
-radius = 1.0
-height = 9.0
-sides = 3
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.59005, 0, 3.17264)
+shape = SubResource("CylinderShape3D_jtttq")
