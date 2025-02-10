@@ -168,15 +168,15 @@ operation = 2
 size = Vector3(1, 8, 6)
 
 [node name="DOOR?5" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, -0.5, 9.5)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, -0.5, 8.24536)
 operation = 2
-size = Vector3(1, 8, 6)
+size = Vector3(3.50928, 8, 6)
 
 [node name="DOOR?7" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5, -0.5, 9.5)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5, -0.5, 8.4516)
 material_override = SubResource("StandardMaterial3D_dt84r")
 operation = 2
-size = Vector3(1, 8, 6)
+size = Vector3(3.0968, 8, 6)
 material = SubResource("StandardMaterial3D_2x7q0")
 
 [node name="ScrapMarker" parent="." instance=ExtResource("7_6ksem")]
