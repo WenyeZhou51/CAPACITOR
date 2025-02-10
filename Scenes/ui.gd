@@ -1,6 +1,5 @@
 extends Control
 
-
 @export var text: String = "Default Text"  # Text to display in the popup
 @onready var label: Label = $Label2  # Reference to the Label node
 @onready var player = get_parent().get_node("Player")
@@ -34,21 +33,23 @@ func swap_UI(idx: int, new_scene: PackedScene):
 	grid_container.move_child(new_instance, idx)
 
 func on_change_ui(idx: int, item: String):
-	print(idx)
-	print(item)
-	print(grid_container)
 	var new_scene: PackedScene
 	if(item == "empty"):
 		new_scene = load("res://imgs/inv_slot_ui.tscn")
+		show_text("")
 	elif(item == "flash"):
 		new_scene = load("res://imgs/flash_slot.tscn")
+		show_text(item)
 	elif(item == "coolant"):
 		new_scene = load("res://imgs/coolant_slot.tscn")
+		show_text(item)
 	else:
 		new_scene = load("res://imgs/scrap_slot.tscn")
+		show_text(item)
 	swap_UI(idx, new_scene)
 
-func update_highlight(previous_idx: int, curr_idx: int):
+func update_highlight(previous_idx: int, curr_idx: int, name: String):
+	show_text(name)
 	if(previous_idx == curr_idx):
 		return  # No need to update if selection hasn't changed
 	var old_child = grid_container.get_child(previous_idx)
@@ -56,3 +57,8 @@ func update_highlight(previous_idx: int, curr_idx: int):
 	
 	var curr_child = grid_container.get_child(curr_idx)
 	curr_child.self_modulate = Color(1,1,1,1)
+
+func show_text(popup_text: String):
+	var label = get_node("Label3")
+	label.text = popup_text
+	label.modulate = Color(1, 1, 1, 1)

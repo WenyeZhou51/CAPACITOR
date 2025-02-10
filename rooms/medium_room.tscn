@@ -218,11 +218,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00654221, 0, 0.103078)
 operation = 2
 size = Vector3(29.3675, 9, 19.1641)
 
-[node name="DOOR2" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.5, -0.5, -5)
-operation = 2
-size = Vector3(1, 8, 6)
-
 [node name="DOOR6" type="CSGBox3D" parent="CSGBox3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.5, -0.5, 5)
 operation = 2
@@ -230,11 +225,6 @@ size = Vector3(1, 8, 6)
 
 [node name="DOOR5" type="CSGBox3D" parent="CSGBox3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10, -0.5, -9.5)
-operation = 2
-size = Vector3(1, 8, 6)
-
-[node name="DOOR7" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10, -0.5, 9.5)
 operation = 2
 size = Vector3(1, 8, 6)
 
@@ -254,7 +244,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.94309, -3.76611, 1.3705)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.04342, -3.60794, 4.09733)
 
 [node name="ScrapMarker2" parent="." instance=ExtResource("9_me5js")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.3205, -3.0811, -8.72383)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.3205, -3.05135, -6.7034)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 

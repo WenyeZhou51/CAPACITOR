@@ -11,7 +11,7 @@ const STAMINA_THRESHOLD = 0.5  # Buffer threshold for stamina management
 
 signal value_changed(new_value)
 signal change_ui(idx, type)
-signal inv_high(pI, cI)
+signal inv_high(pI, cI, name)
 
 # Variables
 @export var stamina_bar: VSlider  # Reference to the stamina UI slider
@@ -53,15 +53,17 @@ var near_console: bool = false
 var console_window: Control = null
 var camera_locked: bool = false
 var camera_target: Vector3
+var popup_instance: Node
 @onready var camera: Camera3D = $Head/Camera3D
 
 func _ready():
 	add_to_group("players")
 	crt_shader_material = texture_rect.material
 	var msg = "Collect a total of " + str(quota)
-	var popup_instance = popup_scene.instantiate()
+	popup_instance = popup_scene.instantiate()
 	popup_instance.popup_text = msg
 	add_child(popup_instance)
+	popup_instance.pop_up()
 	invincibility_timer = Timer.new()
 	invincibility_timer.one_shot = true
 	invincibility_timer.wait_time = 0.2
@@ -91,12 +93,20 @@ func _input(event: InputEvent) -> void:
 				## Check if user scrolled up (4) or down (5)
 				if event.button_index == 4:
 					current_slot = (current_slot + 1) % inventory.size()
+					var current_item = inventory[current_slot]
 					_update_equipped_item()
-					emit_signal("inv_high", (current_slot - 1 + inventory.size()) % inventory.size(), current_slot)
+					if(current_item):
+						emit_signal("inv_high", (current_slot - 1 + inventory.size()) % inventory.size(), current_slot, current_item.type)
+					else:
+						emit_signal("inv_high", (current_slot - 1 + inventory.size()) % inventory.size(), current_slot, "")
 				elif event.button_index == 5:  # Scroll wheel down
 					current_slot = (current_slot - 1 + inventory.size()) % inventory.size()
+					var current_item = inventory[current_slot]
 					_update_equipped_item()
-					emit_signal("inv_high", (current_slot + 1) % inventory.size(), current_slot)
+					if(current_item):
+						emit_signal("inv_high", (current_slot + 1) % inventory.size(), current_slot, current_item.type)
+					else:
+						emit_signal("inv_high", (current_slot + 1) % inventory.size(), current_slot, "")
 				if inventory[currIdx] == null:
 					is_holding = false
 				else:
@@ -241,15 +251,15 @@ func _physics_process(delta: float) -> void:
 					score += val
 					print(score)
 					var msg: String
-					var popup_instance = popup_scene.instantiate()
 					if(val == 0):
 						msg = "Please deposit a scrap"
 						popup_instance.popup_text = msg
+						popup_instance.pop_up()
 						
 					else:
 						msg = "Scrap value " + str(val)
 						popup_instance.popup_text = msg
-						add_child(popup_instance)
+						popup_instance.pop_up()
 						emit_signal("value_changed", val)
 						emit_signal("change_ui", current_slot, "empty")
 						endGame()
