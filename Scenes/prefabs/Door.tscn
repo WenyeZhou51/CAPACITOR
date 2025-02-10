@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://c07usi2nurnmb"]
+[gd_scene load_steps=7 format=3 uid="uid://c07usi2nurnmb"]
 
 [ext_resource type="Script" path="res://Door.gd" id="1_mhw3v"]
 [ext_resource type="Texture2D" uid="uid://ilqrfm647tau" path="res://textures/door_texture/metal_plate_diff_4k.png" id="2_mmx8h"]
+[ext_resource type="AudioStream" uid="uid://cf0rnighggcb3" path="res://audio/dooropen.wav" id="3_npyq0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qu4yt"]
 size = Vector3(3.55519, 7.26033, 0.195801)
@@ -28,3 +29,6 @@ shape = SubResource("BoxShape3D_qu4yt")
 transform = Transform3D(3.61872, 0, 0, 0, 7.70258, 0, 0, 0, 0.229475, 1.87461, 3.88735, 0)
 material_overlay = SubResource("StandardMaterial3D_8m1fv")
 mesh = SubResource("BoxMesh_hhxqg")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_npyq0")

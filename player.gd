@@ -18,6 +18,7 @@ signal inv_high(pI, cI)
 @export var interaction_area: Area3D
 @export var interact_label: Label
 @export var texture_rect: TextureRect
+@export var animation_player: AnimationPlayer
 @export var bypass_material: ShaderMaterial
 @export var min_vignette_intensity: float = 0.0
 @export var max_vignette_intensity: float = 1.0
@@ -37,6 +38,7 @@ var max_health: float = 100.0
 var crt_shader_material: ShaderMaterial
 var inv_size: int = 0
 var currIdx: int
+var is_jumping: bool = false
 
 var inventory := [null, null, null, null]
 var current_slot := 0
@@ -169,10 +171,17 @@ func _physics_process(delta: float) -> void:
 		return
 	if not is_on_floor():
 		velocity += GRAVITY_FORCE * delta
+	else:
+		if is_jumping:
+			animation_player.play("player_anim/jump_end")
+			is_jumping = false
 
 	# Handle jumping
 	if Input.is_action_just_pressed("Jump") and is_on_floor():
 		velocity.y = JUMP_FORCE
+		animation_player.play("player_anim/jump_start")
+		animation_player.speed_scale = 1.0
+		is_jumping = true
 
 	# Handle sprinting input
 	if Input.is_action_pressed("Sprint"):
@@ -287,9 +296,20 @@ func _physics_process(delta: float) -> void:
 	if move_direction != Vector3.ZERO:
 		velocity.x = move_direction.x * movement_speed
 		velocity.z = move_direction.z * movement_speed
+		# Play walk or run animation based on movement speed
+		if is_running:
+			animation_player.play("player_anim/walk")
+			animation_player.speed_scale = 2.0
+		else:
+			animation_player.play("player_anim/walk")
+			animation_player.speed_scale = 1.0
 	else:
 		velocity.x = move_toward(velocity.x, 0, movement_speed * delta)
 		velocity.z = move_toward(velocity.z, 0, movement_speed * delta)
+		# Play idle animation when not moving
+		if not is_jumping:
+			animation_player.play("player_anim/idle")
+			animation_player.speed_scale = 1.0
 
 	# Update stamina bar value smoothly
 	if stamina_bar:

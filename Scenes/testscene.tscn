@@ -17,7 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://cisl75a2ha5p8" path="res://rooms/corridor_1.tscn" id="9_svjm5"]
 [ext_resource type="Script" path="res://Scenes/GameManager.gd" id="10_2bpfs"]
 [ext_resource type="AudioStream" uid="uid://bc2qvfrbnwvn6" path="res://audio/demoLevel.wav" id="11_wadk3"]
-[ext_resource type="PackedScene" path="res://imgs/inv_slot_ui.tscn" id="11_yg2qu"]
+[ext_resource type="PackedScene" uid="uid://cli3ed0vm0drp" path="res://imgs/inv_slot_ui.tscn" id="11_yg2qu"]
 [ext_resource type="PackedScene" uid="uid://dhmtymlk3gb34" path="res://Scenes/prefabs/items/flashlight.tscn" id="13_1s1s2"]
 [ext_resource type="Shader" path="res://shaders/bayer.gdshader" id="14_hrlu7"]
 [ext_resource type="PackedScene" uid="uid://cjdanhbr7qd50" path="res://Scenes/prefabs/items/scrap1.tscn" id="14_q11nm"]
@@ -92,6 +92,7 @@ max_distance = 3967.43
 script = ExtResource("9_76pp2")
 
 [node name="TextureRect" parent="UI" index="2"]
+z_index = 10
 texture = SubResource("ViewportTexture_0to3f")
 
 [node name="Label" type="Label" parent="UI"]

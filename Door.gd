@@ -21,6 +21,8 @@ func interact(player_global_transform: Transform3D) -> void:
 	if current_tween != null:
 		# If the door is currently animating, ignore interactions until finished
 		return
+		
+	$AudioStreamPlayer3D.play()
 
 	if is_open:
 		# Door is open, so close it by rotating back to original rotation

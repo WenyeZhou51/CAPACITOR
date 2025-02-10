@@ -1,6 +1,7 @@
 extends Pickapable  # Inherits from base class
 
 @onready var light: SpotLight3D = $Model/FlashLight
+@export var flashlight_sound: AudioStreamPlayer
 
 # Keep existing light-specific logic from flash_light.gd lines 3-28
 var light_strength: float = 1.5
@@ -19,3 +20,4 @@ func _process(delta: float) -> void:
 func use(player: Node) -> void:
 	print("flash being used")
 	light.visible = !light.visible
+	flashlight_sound.play()

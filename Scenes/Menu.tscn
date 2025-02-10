@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://q202lrglap61"]
+[gd_scene load_steps=5 format=3 uid="uid://q202lrglap61"]
 
 [ext_resource type="Script" path="res://Scenes/menu.gd" id="1_hqwk4"]
 [ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_r4oa5"]
+[ext_resource type="Material" uid="uid://bl6bvg6m8lab0" path="res://shaders/crt_shader.tres" id="3_2a30w"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_16gj8"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -54,6 +57,23 @@ text = "QUIT"
 layout_mode = 2
 theme_override_font_sizes/font_size = 90
 text = "MULTIPLAYER"
+
+[node name="CRTEffect" type="TextureRect" parent="MarginContainer/TextureRect"]
+z_index = 10
+material = ExtResource("3_2a30w")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -755.0
+offset_top = -320.0
+offset_right = -5.0
+offset_bottom = -320.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("ViewportTexture_16gj8")
+expand_mode = 2
 
 [connection signal="button_down" from="MarginContainer/TextureRect/VBoxContainer/Start" to="." method="_on_start_button_down"]
 [connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Start" to="." method="_on_start_pressed"]

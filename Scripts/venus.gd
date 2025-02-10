@@ -20,6 +20,8 @@ var local_velocity: Vector3 = Vector3.ZERO
 var is_walking: bool = false
 var nav_ready: bool = false
 
+var has_seen_player: bool = false
+
 func _ready() -> void:
 	randomize()
 
@@ -68,6 +70,13 @@ func _physics_process(delta: float) -> void:
 
 	# Always chase the player
 	chase_player()
+	
+	# Check line of sight and play scare sound once
+	if has_line_of_sight() and not has_seen_player:
+		print("Boo!")
+		has_seen_player = true
+		$ScareSound.play()  # Play the scare sound
+		print("Scare sound played!")
 
 	velocity = local_velocity
 	move_and_slide()
@@ -137,5 +146,17 @@ func _on_timer_timeout() -> void:
 	var dist = global_transform.origin.distance_to(player.global_transform.origin)
 	if dist < attack_radius:
 		player.take_damage(attack_damage)
-		$AudioStreamPlayer3D.play()
+		$AttackSound.play()
 		print("ATTACKING!!")
+
+func has_line_of_sight() -> bool:
+	var space_state = get_world_3d().direct_space_state
+	var start_pos = global_transform.origin
+	var end_pos = player.global_transform.origin
+	var query = PhysicsRayQueryParameters3D.create(start_pos, end_pos)
+	query.collide_with_areas = true  # Ensures ray can hit both areas and bodies
+
+	var result = space_state.intersect_ray(query)
+
+	# If there's no obstruction or only the player is hit, return true
+	return result.is_empty() or result.collider == player

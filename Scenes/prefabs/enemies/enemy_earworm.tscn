@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://dm8q140i8u3ih"]
+
+[ext_resource type="Script" path="res://Scripts/earworm.gd" id="1_f56b5"]
+[ext_resource type="AudioStream" uid="uid://da17n5pms24y4" path="res://audio/earworm.wav" id="2_oy6hs"]
+[ext_resource type="ArrayMesh" uid="uid://bdl82ffs83t8i" path="res://Scenes/prefabs/enemies/earworm_0203172223_texture_obj/earworm_0203172223_texture.obj" id="3_tcul8"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rphe8"]
+
+[node name="Earworm" type="Node3D"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -0.0270424, 9.53674e-07, 0.0158653)
+collision_layer = 0
+safe_margin = 0.1
+script = ExtResource("1_f56b5")
+chase_speed = 1.0
+turn_speed = 1.0
+attack_radius = 1.0
+attack_damage = 1.0
+debug_visual_colors = true
+animation_speed = 5.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(4.9563, 0, 0, 0, 8.13981, 0, 0, 0, 2.173, 0.69717, 8.05099, 0)
+shape = SubResource("CapsuleShape3D_rphe8")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="CharacterBody3D"]
+
+[node name="AttackTimer" type="Timer" parent="CharacterBody3D"]
+autostart = true
+
+[node name="AttackSound" type="AudioStreamPlayer3D" parent="CharacterBody3D"]
+transform = Transform3D(-5, 0, -4.37114e-07, 0, 5, 0, 4.37114e-07, 0, -5, 0, 15.0893, 0)
+stream = ExtResource("2_oy6hs")
+volume_db = 5.0
+
+[node name="Earworm0203172223Texture" type="MeshInstance3D" parent="CharacterBody3D"]
+transform = Transform3D(-5, 0, -4.37114e-07, 0, 5, 0, 4.37114e-07, 0, -5, 0, 4.46103, 0)
+mesh = ExtResource("3_tcul8")
+
+[connection signal="timeout" from="CharacterBody3D/AttackTimer" to="CharacterBody3D" method="_on_timer_timeout"]

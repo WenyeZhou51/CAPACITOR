@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bjjrllm15flh4"]
+[gd_scene load_steps=6 format=3 uid="uid://bjjrllm15flh4"]
 
 [ext_resource type="PackedScene" uid="uid://be2r833svd7bu" path="res://Assets/Venus.glb" id="1_eopk2"]
 [ext_resource type="Script" path="res://Scripts/venus.gd" id="2_4grln"]
 [ext_resource type="AudioStream" uid="uid://dgoy501pik4vb" path="res://audio/venusAttack.wav" id="3_uhqb2"]
+[ext_resource type="AudioStream" uid="uid://cwoeeot163gmg" path="res://audio/excited horror sound.wav" id="4_jejc0"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_33x1u"]
 radius = 3.0
@@ -145,9 +146,15 @@ shape = SubResource("CapsuleShape3D_33x1u")
 [node name="AttackTimer" type="Timer" parent="CharacterBody3D"]
 autostart = true
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="CharacterBody3D"]
+[node name="AttackSound" type="AudioStreamPlayer3D" parent="CharacterBody3D"]
 transform = Transform3D(-5, 0, -4.37114e-07, 0, 5, 0, 4.37114e-07, 0, -5, 0, 15.0893, 0)
 stream = ExtResource("3_uhqb2")
+
+[node name="ScareSound" type="AudioStreamPlayer" parent="CharacterBody3D"]
+stream = ExtResource("4_jejc0")
+volume_db = 5.0
+
+[node name="RayCast3D" type="RayCast3D" parent="CharacterBody3D"]
 
 [connection signal="timeout" from="CharacterBody3D/AttackTimer" to="CharacterBody3D" method="_on_timer_timeout"]
 
