@@ -5,6 +5,8 @@
 [ext_resource type="AudioStream" uid="uid://dgoy501pik4vb" path="res://audio/venusAttack.wav" id="3_uhqb2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_33x1u"]
+radius = 3.0
+height = 15.0
 
 [node name="enemy_venus" type="Node3D"]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, -0.106848, 0)
