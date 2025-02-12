@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://c8y6hkpnlip1g"]
+[gd_scene load_steps=32 format=3 uid="uid://c8y6hkpnlip1g"]
 
 [ext_resource type="Script" path="res://Scenes/testscene.gd" id="1_v17iy"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://cjdanhbr7qd50" path="res://Scenes/prefabs/items/scrap1.tscn" id="14_q11nm"]
 [ext_resource type="PackedScene" uid="uid://bwoto031wapot" path="res://Scenes/pause_menu.tscn" id="20_chau2"]
 [ext_resource type="Script" path="res://Scenes/electricity_manager.gd" id="22_fg5vs"]
+[ext_resource type="PackedScene" uid="uid://c1ys3d3anbwdu" path="res://Scenes/Spawn Points/player_spawn_point.tscn" id="24_gf8n3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_binvk"]
 sky_top_color = Color(0.0101014, 0.0122771, 0.0165181, 1)
@@ -151,21 +152,24 @@ dungeon_generator_path = NodePath("DungeonGenerator3D")
 script = ExtResource("6_s8vmo")
 room_scenes = Array[PackedScene]([ExtResource("7_fiwcu"), ExtResource("8_osxs0"), ExtResource("7_d3uit")])
 corridor_room_scene = ExtResource("9_svjm5")
+dungeon_size = Vector3i(10, 5, 10)
 junctions = 30
+room_separation_force = 3.0
 max_retries = 3
 max_safe_iterations = 500
-corridor_cost_multiplier = 0.05
-room_cost_multiplier = 0.3
-room_cost_at_end_for_required_doors = 3.0
+heuristic_scale = 3.0
+corridor_cost_multiplier = 2.5
+room_cost_multiplier = 0.05
+room_cost_at_end_for_required_doors = 1.0
 
 [node name="start_room" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("8_n1yd6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 45, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 20, 0)
 
 [node name="Flashlight" parent="." instance=ExtResource("13_1s1s2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.9189, 41.9601, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.9189, 16.0335, 0)
 
 [node name="scrap1" parent="." instance=ExtResource("14_q11nm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.7764, 41.603, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.7764, 16.997, 0)
 
 [node name="Shader" type="MeshInstance3D" parent="."]
 extra_cull_margin = 16384.0
@@ -178,6 +182,7 @@ surface_material_override/0 = SubResource("ShaderMaterial_xnko0")
 script = ExtResource("22_fg5vs")
 
 [node name="players" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.2383, 18.234, -4.81146)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://Scenes/player.tscn")
@@ -190,7 +195,10 @@ _spawnable_scenes = PackedStringArray("res://Scenes/prefabs/items/scrap1.tscn", 
 spawn_path = NodePath("../items")
 
 [node name="enemy_venus" parent="." instance=ExtResource("7_gmf4o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.0563, 40.3143, 0.985395)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.0563, 16.069, 0.985395)
+
+[node name="Player Spawn Point" parent="." instance=ExtResource("24_gf8n3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.3085, 19.1879, 1.94595)
 
 [connection signal="bake_finished" from="NavigationRegion3D" to="GameManager" method="_on_navigation_region_3d_bake_finished"]
 [connection signal="done_generating" from="NavigationRegion3D/DungeonGenerator3D" to="NavigationRegion3D" method="on_dungeon_done_generating"]

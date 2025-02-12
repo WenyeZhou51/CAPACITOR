@@ -83,7 +83,7 @@ func _ready():
 		camera.current = false
 		print("Remote player: camera disabled.")
 		
-	global_position = Vector3(40, 45, 0)
+
 	
 
 func _input(event: InputEvent) -> void:

@@ -20,10 +20,18 @@ func _add_player_to_game(id: int):
 	print_debug("Player instance created")
 	player_instance.name = str(id)
 	
-	var spawn_position = Vector3(40, 45, 0)
+	var spawn_position = Vector3(0, 0, 0)
 	_players_spawn_node.add_child(player_instance, true)
 	print_debug("Player added to scene tree")
-	player_instance.global_position = Vector3(40, 45, 0)
+	var spawn_points = get_tree().get_nodes_in_group("player_spawn_point")
+	if spawn_points.size() > 0:
+		spawn_position = spawn_points[0].global_transform.origin
+		print("spawning at spawnpoint")
+		print("spawn position", spawn_position)
+		
+	else:
+		spawn_position = Vector3(37, 16, 0) # Fallback
+		print("player spawn not found")
 	
 	print_debug ("submitted name to ui for setup " + player_instance.name)
 	if (not id == 1):

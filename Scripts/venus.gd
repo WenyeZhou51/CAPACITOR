@@ -184,6 +184,8 @@ func handle_animation() -> void:
 
 
 func _on_timer_timeout() -> void:
+	if not is_active:  # Add this check
+		return
 	#print("\n[ATTACK] Timer timeout")
 	if !is_instance_valid(player):
 		#print("[ATTACK] !!! Invalid player !!!")

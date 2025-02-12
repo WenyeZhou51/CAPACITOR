@@ -33,6 +33,7 @@ var stage : BuildStage = BuildStage.NOT_STARTED :
 @export var junctions : int = 5
 var junction_count : int = 0
 
+@export var room_separation_force : float = 2.0
 #////////////////////////////////////////
 ## Voxel scale/size in world units. Controls the standardized 1x1x1 room size of the dungeon.
 ## This should match the voxel scale on each of your rooms.voxel_scale

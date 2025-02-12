@@ -272,15 +272,14 @@ func get_doors() -> Array:
 
 func push_away_from_and_stay_within_bounds(other_room : DungeonRoom3D) -> void:
 	var diff := other_room.virtual_transform.origin - self.virtual_transform.origin
-	var move := Vector3i(
-		-1 if diff.x > 0 else 1,
+	var move := Vector3(
+		(-1 if diff.x > 0 else 1) * dungeon_generator.room_separation_force,
 		0,
-		-1 if diff.z > 0 else 1)
+		(-1 if diff.z > 0 else 1) * dungeon_generator.room_separation_force)
 	var dpos = get_grid_aabbi(true)
 	var able_to_move = dpos.translated(move).push_within(dungeon_generator.get_grid_aabbi(), true).position - dpos.position
 	if able_to_move.x != 0 or able_to_move.z != 0:
-		set_position_by_grid_pos(get_grid_pos() + able_to_move)
-
+		set_position_by_grid_pos(get_grid_pos() + Vector3i(able_to_move)) # Removed .round()
 func overlaps_room(other_room : DungeonRoom3D) -> bool:
 	var aabbis = { self: self.get_grid_aabbi(false), other_room: other_room.get_grid_aabbi(false) }
 	if aabbis[self].intersects(aabbis[other_room]): return true

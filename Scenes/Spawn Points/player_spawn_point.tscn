@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1ys3d3anbwdu"]
+
+[ext_resource type="Script" path="res://Scenes/Spawn Points/player_spawn_point.gd" id="1_xcoab"]
+
+[node name="Player Spawn Point" type="Node3D"]
+script = ExtResource("1_xcoab")
