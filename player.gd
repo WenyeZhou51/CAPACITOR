@@ -4,7 +4,7 @@ extends CharacterBody3D
 const WALK_SPEED = 3.5  # Default walking speed
 const RUN_SPEED = 8.0  # Sprinting speed
 const JUMP_FORCE = 6.5  # Force applied for jumping
-const STAMINA_DRAIN_RATE = 0.3  # Rate at which stamina drains while sprinting
+const STAMINA_DRAIN_RATE = 0.01  #should be 0.3. for debug 0.01 Rate at which stamina drains while sprinting
 const STAMINA_REGEN_RATE = 0.2  # Rate at which stamina regenerates while not sprinting
 const GRAVITY_FORCE = Vector3.DOWN * 9.8 * 2  # Gravity vector
 const STAMINA_THRESHOLD = 0.5  # Buffer threshold for stamina management

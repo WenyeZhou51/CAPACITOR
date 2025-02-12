@@ -20,6 +20,11 @@ var is_walking: bool = false
 var nav_ready: bool = false
 var has_seen_player: bool = false
 var is_active: bool = false 
+var path_update_cooldown = 0.5
+var path_update_timer = 0.0
+var los_cooldown = 0.5
+var los_timer = 0.0
+var los
 
 func _ready() -> void:
 	print("[VENUS] _ready() called")
@@ -27,7 +32,7 @@ func _ready() -> void:
 	
 	#delay timer
 	var timer = Timer.new()
-	timer.wait_time = randf_range(10, 20)
+	timer.wait_time = randf_range(1, 2)#should be 10, 20
 	timer.one_shot = true
 	timer.timeout.connect(_on_activation_timeout)
 	add_child(timer)
@@ -100,10 +105,14 @@ func _physics_process(delta: float) -> void:
 		local_velocity.y = max(local_velocity.y, 0)
 		#print("[FLOOR] Velocity clamped to: ", local_velocity.y)
 	
-	chase_player()
+	chase_player(delta)
 	
 	# Line of sight debug
-	var los = has_line_of_sight()
+	
+	los_timer += delta
+	if los_timer >= los_cooldown:
+		los = has_line_of_sight()
+		los_timer = 0.0
 	#print("[VISION] Line of Sight: ", los, 
 		#" | Has Seen Player: ", has_seen_player)
 	if los and not has_seen_player:
@@ -122,12 +131,13 @@ func _physics_process(delta: float) -> void:
 	handle_animation()
 	
 
-func chase_player() -> void:
-	if agent:
-		var target_pos = player.global_transform.origin
-		#print("[CHASE] Updating target to: ", target_pos)
-		agent.target_position = target_pos
-		update_path_following(chase_speed)
+
+func chase_player(delta: float) -> void:
+	path_update_timer += delta
+	if path_update_timer >= path_update_cooldown:
+		agent.target_position = player.global_transform.origin
+		update_path_following(chase_speed)  # Missing this call
+		path_update_timer = 0.0
 
 func update_path_following(speed: float) -> void:
 	#print("[PATH] Navigation finished: ", agent.is_navigation_finished())
