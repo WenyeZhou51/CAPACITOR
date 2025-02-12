@@ -189,6 +189,9 @@ spawn_path = NodePath("../players")
 _spawnable_scenes = PackedStringArray("res://Scenes/prefabs/items/scrap1.tscn", "res://Scenes/prefabs/items/scrap2.tscn", "res://Scenes/prefabs/items/scrap3.tscn", "res://Scenes/prefabs/Door.tscn", "res://Scenes/prefabs/items/coolant.tscn", "res://Scenes/prefabs/enemies/enemy_earworm.tscn", "res://Scenes/prefabs/enemies/enemy_venus.tscn")
 spawn_path = NodePath("../items")
 
+[node name="enemy_venus" parent="." instance=ExtResource("7_gmf4o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.0563, 40.8922, 0.985395)
+
 [connection signal="bake_finished" from="NavigationRegion3D" to="GameManager" method="_on_navigation_region_3d_bake_finished"]
 [connection signal="done_generating" from="NavigationRegion3D/DungeonGenerator3D" to="NavigationRegion3D" method="on_dungeon_done_generating"]
 

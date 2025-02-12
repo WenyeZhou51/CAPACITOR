@@ -6,11 +6,11 @@
 [ext_resource type="AudioStream" uid="uid://cwoeeot163gmg" path="res://audio/excited horror sound.wav" id="4_jejc0"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_33x1u"]
-radius = 2.7
-height = 15.0
+radius = 0.6
+height = 3.5
 
 [node name="enemy_venus" type="Node3D"]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, -0.106848, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.106848, 0)
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
 safe_margin = 0.1
@@ -20,7 +20,7 @@ attack_damage = 20.0
 animation_speed = 5.0
 
 [node name="Venus" parent="CharacterBody3D" instance=ExtResource("1_eopk2")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 15.0893, 0)
+transform = Transform3D(-0.2, 0, -3.01992e-08, 0, 0.2, 0, 3.01992e-08, 0, -0.2, 0, 3.19863, 0)
 
 [node name="Skeleton3D" parent="CharacterBody3D/Venus/rig" index="0"]
 bones/0/position = Vector3(0, 0, -3.6738)
@@ -138,7 +138,7 @@ bones/152/position = Vector3(-5.31432, 4.26546, 7.273)
 speed_scale = 3.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.280547, 8.05099, -0.0453901)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0287771, 1.77753, 0.143532)
 shape = SubResource("CapsuleShape3D_33x1u")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="CharacterBody3D"]
