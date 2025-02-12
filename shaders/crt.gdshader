@@ -25,6 +25,7 @@ shader_type canvas_item;
 uniform sampler2D SCREEN_TEXTURE: hint_screen_texture;
 
 uniform vec2 resolution = vec2(320.0, 180.0);
+uniform vec4 tint_color : source_color = vec4(0.0);
 
 uniform float scan_line_amount :hint_range(0.0, 1.0) = 1.0;
 uniform float warp_amount :hint_range(0.0, 5.0) = 0.1;
@@ -108,6 +109,7 @@ vec3 Tri(vec2 pos){
 		vec3 scanlines = a * wa + b * wb + c * wc;
 		clr = mix(clr, scanlines, scan_line_amount);
 	}
+	
 	return clr;
 }
 
@@ -178,6 +180,9 @@ void fragment(){
 	clr *= 1.0 + scan_line_amount * 0.6 + line * 3.0 + grille_amount * 2.0;
 	if(vignette_amount > 0.0)clr *= vignette(pos);
 
-	COLOR.rgb = clr;
+	COLOR.rgb = mix(clr,tint_color.rgb,tint_color.a);
+
+	
+	
 	COLOR.a = 1.0;
 }

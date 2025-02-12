@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=4 uid="uid://c6gmwiknceior"]
+[gd_scene load_steps=31 format=4 uid="uid://c6gmwiknceior"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_t55gw"]
 [ext_resource type="PackedScene" uid="uid://dltoljaoknl4w" path="res://Scenes/Spawn Points/enemy_spawn_point.tscn" id="2_4g2rj"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cdf8lpjxddsvr" path="res://Scenes/prefabs/enemy_marker.tscn" id="8_ximhl"]
 [ext_resource type="PackedScene" uid="uid://bh18kskaruq62" path="res://Scenes/prefabs/scrap_marker.tscn" id="9_me5js"]
 [ext_resource type="Texture2D" uid="uid://c4p4wywhawnay" path="res://textures/medival_brick_wall_stair/medieval_red_brick_diff_4k.png" id="10_xdpoc"]
+[ext_resource type="PackedScene" uid="uid://dvleiqfmloahr" path="res://Scenes/prefabs/coolant_marker.tscn" id="11_1qmm7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vf8wn"]
 albedo_texture = ExtResource("2_kijdn")
@@ -255,7 +256,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2061, -4.5, -0.157276)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.1689, -4.5, 0.476883)
 
 [node name="EnemyMarker" parent="." instance=ExtResource("8_ximhl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.94309, -3.76611, 1.3705)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.63969, -4.38524, 1.3705)
 
 [node name="ScrapMarker" parent="." instance=ExtResource("9_me5js")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.04342, -3.60794, 4.09733)
@@ -351,3 +352,6 @@ sides = 3
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.59005, 0, 3.17264)
 shape = SubResource("CylinderShape3D_jtttq")
+
+[node name="ScrapMarker3" parent="." instance=ExtResource("11_1qmm7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.302974, -1.90525, -8.62099)

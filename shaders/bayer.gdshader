@@ -46,4 +46,6 @@ void fragment() {
     final_color = pow(final_color, vec3(1.0 / gamma));
 
     ALBEDO = final_color;
+	
+	
 }

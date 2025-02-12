@@ -42,63 +42,61 @@ func _ready() -> void:
 	
 	# Player detection debug
 	var players = get_tree().get_nodes_in_group("players")
-	print("[VENUS] Found ", players.size(), " players in group")
+	#print("[VENUS] Found ", players.size(), " players in group")
 	if players.size() > 0:
 		player = players[0] as CharacterBody3D
-		print("[VENUS] Player assigned: ", player, " | Position: ", player.global_transform.origin)
-	else:
-		print("[VENUS] !!! NO PLAYER FOUND !!!")
+		#print("[VENUS] Player assigned: ", player, " | Position: ", player.global_transform.origin)
+
 	
 	# Animation debug
 	if animation_player:
 		animation_player.speed_scale = chase_animation_speed
-		print("[VENUS] Animation speed set to: ", chase_animation_speed)
-	else:
-		print("[VENUS] !!! No AnimationPlayer found !!!")
+		#print("[VENUS] Animation speed set to: ", chase_animation_speed)
+
 	
 	if agent:
 		agent.target_position = global_transform.origin
-		print("[VENUS] Initial target position: ", agent.target_position)
+		#print("[VENUS] Initial target position: ", agent.target_position)
 		call_deferred("set_initial_position")
 
 func set_initial_position() -> void:
 	if agent:
 		agent.target_position = global_transform.origin
 		nav_ready = true
-		print("[VENUS] Navigation ready | Position: ", agent.target_position, 
-			" | Nav Ready: ", nav_ready, 
-			" | Global Position: ", global_transform.origin)
+		#print("[VENUS] Navigation ready | Position: ", agent.target_position, 
+		#	" | Nav Ready: ", nav_ready, 
+		#	" | Global Position: ", global_transform.origin)
 
 func _physics_process(delta: float) -> void:
-	print("\n[VENUS] _physics_process() | Delta: ", delta)
-	print("[STATE] Nav Ready: ", nav_ready, 
-		" | Player Valid: ", player != null, 
-		" | Velocity: ", local_velocity)
+	#print("\n[VENUS] _physics_process() | Delta: ", delta)
+	#print("[STATE] Nav Ready: ", nav_ready, 
+	#	" | Player Valid: ", player != null, 
+		#" | Velocity: ", local_velocity)
 	
 	if not nav_ready or player == null:
-		print("[ERROR] Skipping physics - Nav Ready: ", nav_ready, " | Player: ", player)
+		#print("[ERROR] Skipping physics - Nav Ready: ", nav_ready, " | Player: ", player)
 		return
 	
 	# Gravity system debug
 	var pre_gravity_y = local_velocity.y
 	local_velocity.y -= gravity * delta
-	print("[GRAVITY] Applied: ", gravity * delta, 
-		" | Pre: ", pre_gravity_y, 
-		" | Post: ", local_velocity.y, 
-		" | On Floor: ", is_on_floor())
+	#print("[GRAVITY] Applied: ", gravity * delta, 
+		#" | Pre: ", pre_gravity_y, 
+	#	" | Post: ", local_velocity.y, 
+	#	" | On Floor: ", is_on_floor())
 	
 	if is_on_floor():
 		local_velocity.y = max(local_velocity.y, 0)
-		print("[FLOOR] Velocity clamped to: ", local_velocity.y)
+		#print("[FLOOR] Velocity clamped to: ", local_velocity.y)
 	
 	chase_player()
 	
 	# Line of sight debug
 	var los = has_line_of_sight()
-	print("[VISION] Line of Sight: ", los, 
-		" | Has Seen Player: ", has_seen_player)
+	#print("[VISION] Line of Sight: ", los, 
+		#" | Has Seen Player: ", has_seen_player)
 	if los and not has_seen_player:
-		print("[VISION] !!! FIRST PLAYER DETECTION !!!")
+		#print("[VISION] !!! FIRST PLAYER DETECTION !!!")
 		has_seen_player = true
 	
 	# Movement debug
@@ -106,24 +104,22 @@ func _physics_process(delta: float) -> void:
 	velocity = local_velocity
 	move_and_slide()
 	local_velocity = velocity
-	print("[MOVEMENT] Pre: ", pre_move_velocity, 
-		" | Post: ", local_velocity, 
-		" | Slide Count: ", get_slide_collision_count())
+	#print("[MOVEMENT] Pre: ", pre_move_velocity, 
+		#" | Post: ", local_velocity, 
+	#	" | Slide Count: ", get_slide_collision_count())
 	
 	handle_animation()
 	
-	if debug_visual_colors:
-		_update_debug_color()
 
 func chase_player() -> void:
 	if agent:
 		var target_pos = player.global_transform.origin
-		print("[CHASE] Updating target to: ", target_pos)
+		#print("[CHASE] Updating target to: ", target_pos)
 		agent.target_position = target_pos
 		update_path_following(chase_speed)
 
 func update_path_following(speed: float) -> void:
-	print("[PATH] Navigation finished: ", agent.is_navigation_finished())
+	#print("[PATH] Navigation finished: ", agent.is_navigation_finished())
 	
 	if not agent.is_navigation_finished():
 		var next_pos = agent.get_next_path_position()
@@ -132,81 +128,75 @@ func update_path_following(speed: float) -> void:
 		var offset_2d = Vector3(offset_3d.x, 0, offset_3d.z)
 		var offset_length = offset_2d.length()
 		
-		print("[PATH] Next Position: ", next_pos, 
-			" | Current Position: ", current_pos, 
-			" | Offset 2D: ", offset_2d, 
-			" | Length: ", offset_length)
+		#print("[PATH] Next Position: ", next_pos, 
+		#	" | Current Position: ", current_pos, 
+			#" | Offset 2D: ", offset_2d, 
+		#	" | Length: ", offset_length)
 		
 		if offset_length > 0.01:
 			var direction = offset_2d.normalized()
-			print("[MOVEMENT] Direction: ", direction, " | Speed: ", speed)
+			#print("[MOVEMENT] Direction: ", direction, " | Speed: ", speed)
 			
 			var old_y = local_velocity.y
 			local_velocity = direction * speed
 			local_velocity.y = old_y
-			print("[VELOCITY] New Velocity: ", local_velocity)
+			#print("[VELOCITY] New Velocity: ", local_velocity)
 			
 			var look_target = global_transform.origin + direction
-			print("[ROTATION] Looking at: ", look_target)
+			#print("[ROTATION] Looking at: ", look_target)
 			look_at(look_target, Vector3.UP)
 		else:
-			print("[PATH] Reached waypoint - Zeroing velocity")
+			#print("[PATH] Reached waypoint - Zeroing velocity")
 			local_velocity = Vector3.ZERO
-	else:
-		print("[PATH] !!! Navigation finished - No path !!!")
 
 func handle_animation() -> void:
 	var horizontal_speed = Vector2(local_velocity.x, local_velocity.z).length()
 	var should_walk = horizontal_speed > 0.1
 	
-	print("[ANIMATION] Horizontal Speed: ", horizontal_speed, 
-		" | Should Walk: ", should_walk, 
-		" | Current State: ", is_walking)
+	#print("[ANIMATION] Horizontal Speed: ", horizontal_speed, 
+		#" | Should Walk: ", should_walk, 
+		#" | Current State: ", is_walking)
 	
 	if should_walk and not is_walking:
-		print("[ANIMATION] Starting walk animation")
+		#print("[ANIMATION] Starting walk animation")
 		is_walking = true
 		if animation_player:
-			print("[ANIMATION] Playing 'Walking'")
+			#print("[ANIMATION] Playing 'Walking'")
 			animation_player.play("Walking")
-		else:
-			print("[ANIMATION] !!! No AnimationPlayer !!!")
+
 	elif not should_walk and is_walking:
-		print("[ANIMATION] Stopping animation")
+		#print("[ANIMATION] Stopping animation")
 		is_walking = false
 		if animation_player:
 			animation_player.stop()
 
-func _update_debug_color():
-	print("[DEBUG] Updating visual color")
-	# Existing implementation remains
+
 
 func _on_timer_timeout() -> void:
-	print("\n[ATTACK] Timer timeout")
+	#print("\n[ATTACK] Timer timeout")
 	if !is_instance_valid(player):
-		print("[ATTACK] !!! Invalid player !!!")
+		#print("[ATTACK] !!! Invalid player !!!")
 		return
 	
 	var dist = global_transform.origin.distance_to(player.global_transform.origin)
-	print("[ATTACK] Distance: ", dist, " | Radius: ", attack_radius)
+	#print("[ATTACK] Distance: ", dist, " | Radius: ", attack_radius)
 	
 	if dist < attack_radius:
-		print("[ATTACK] !!! Hitting player !!!")
+		#print("[ATTACK] !!! Hitting player !!!")
 		player.take_damage(attack_damage)
-	else:
-		print("[ATTACK] Player out of range")
+
 
 func has_line_of_sight() -> bool:
 	var start_pos = global_transform.origin
 	var end_pos = player.global_transform.origin
-	print("[VISION] LOS Check: ", start_pos, " -> ", end_pos)
+	#print("[VISION] LOS Check: ", start_pos, " -> ", end_pos)
 	
 	var query = PhysicsRayQueryParameters3D.create(start_pos, end_pos)
 	query.collide_with_areas = true
 	var result = get_world_3d().direct_space_state.intersect_ray(query)
 	
-	print("[VISION] LOS Result: ", result.get("collider"), 
-		" | Empty: ", result.is_empty(), 
-		" | Player Hit: ", result.collider == player)
+	#print("[VISION] LOS Result: ", result.get("collider"), 
+	#	" | Empty: ", result.is_empty(), 
+	#	" | Player Hit: ", result.collider == player)
 	
 	return result.is_empty() or result.collider == player

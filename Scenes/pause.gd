@@ -9,13 +9,19 @@ func _ready() -> void:
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
 	self.hide()
 func _input(event):
-	if get_tree().paused || (get_node("Player") && get_node("Player").using_console):
+	# Get all players in the 'players' group (defined in player.gd)
+	var players = get_tree().get_nodes_in_group("players")
+	var using_console = false
+	
+	# Check if any player is using console
+	if players.size() > 0:
+		for player in players:
+			if player.has_method("is_using_console") && player.using_console:
+				using_console = true
+				break
+	
+	if get_tree().paused || using_console:
 		return
-	if event.is_action_pressed("Pause"):
-		if get_tree().paused:
-			resume_game()
-		else:
-			pause_game()
 
 func pause_game() -> void:
 	self.show()

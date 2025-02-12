@@ -1,11 +1,11 @@
 extends CharacterBody3D
 
 # Constants
-const WALK_SPEED = 3.0  # Default walking speed
-const RUN_SPEED = 6.0  # Sprinting speed
+const WALK_SPEED = 3.5  # Default walking speed
+const RUN_SPEED = 8.0  # Sprinting speed
 const JUMP_FORCE = 6.5  # Force applied for jumping
-const STAMINA_DRAIN_RATE = 0.01  # Rate at which stamina drains while sprinting
-const STAMINA_REGEN_RATE = 0.5  # Rate at which stamina regenerates while not sprinting
+const STAMINA_DRAIN_RATE = 0.3  # Rate at which stamina drains while sprinting
+const STAMINA_REGEN_RATE = 0.2  # Rate at which stamina regenerates while not sprinting
 const GRAVITY_FORCE = Vector3.DOWN * 9.8 * 2  # Gravity vector
 const STAMINA_THRESHOLD = 0.5  # Buffer threshold for stamina management
 
@@ -381,6 +381,13 @@ func take_damage(amount: int):
 		
 	print("Player took damage: ", amount)
 	current_health -= amount
+	
+	# Flash effect
+	if is_multiplayer_authority():
+		var damage_tint = Color(1, 0, 0, 0.3)
+		var tween = create_tween()
+		crt_shader_material.set_shader_parameter("tint_color", damage_tint)
+		tween.tween_property(crt_shader_material, "shader_parameter/tint_color", Color(0, 0, 0, 0), 0.3)
 	
 	# Start invincibility period
 	is_invincible = true
