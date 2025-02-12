@@ -19,10 +19,19 @@ var local_velocity: Vector3 = Vector3.ZERO
 var is_walking: bool = false
 var nav_ready: bool = false
 var has_seen_player: bool = false
+var is_active: bool = false 
 
 func _ready() -> void:
 	print("[VENUS] _ready() called")
 	randomize()
+	
+	#delay timer
+	var timer = Timer.new()
+	timer.wait_time = randf_range(10, 20)
+	timer.one_shot = true
+	timer.timeout.connect(_on_activation_timeout)
+	add_child(timer)
+	timer.start()
 	
 	# Node initialization debug
 	animation_player = get_node("Venus/AnimationPlayer")
@@ -72,6 +81,8 @@ func _physics_process(delta: float) -> void:
 	#print("[STATE] Nav Ready: ", nav_ready, 
 	#	" | Player Valid: ", player != null, 
 		#" | Velocity: ", local_velocity)
+	if not is_active:
+		return
 	
 	if not nav_ready or player == null:
 		#print("[ERROR] Skipping physics - Nav Ready: ", nav_ready, " | Player: ", player)
@@ -184,6 +195,7 @@ func _on_timer_timeout() -> void:
 	if dist < attack_radius:
 		#print("[ATTACK] !!! Hitting player !!!")
 		player.take_damage(attack_damage)
+		$AttackSound.play()
 
 
 func has_line_of_sight() -> bool:
@@ -200,3 +212,7 @@ func has_line_of_sight() -> bool:
 	#	" | Player Hit: ", result.collider == player)
 	
 	return result.is_empty() or result.collider == player
+
+func _on_activation_timeout() -> void:
+	is_active = true
+	print("[VENUS] Activation timer finished - Starting chase behavior")
