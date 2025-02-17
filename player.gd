@@ -151,10 +151,7 @@ func toggle_console() -> void:
 		_update_equipped_item()
 		# Reset camera to follow head directly
 		camera.global_transform = $Head.global_transform
-		
-		
 
-		
 func _update_equipped_item() -> void:
 	"""
 	Equip (visually attach) whatever item is in `current_slot`, 
