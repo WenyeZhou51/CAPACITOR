@@ -8,15 +8,20 @@ func _ready() -> void:
 	pass
 
 func drop(player: CharacterBody3D, drop_position: Vector3 = Vector3.ZERO, drop_direction: Vector3 = Vector3.FORWARD) -> void:
+	
+	if (not MultiplayerManager.multiplayer.is_server()):
+		self.get_parent().remove_child(self)
+		return
 	# 1) Get the reference to the player's 'ItemSocket'
 	var item_socket = player.get_node("Head/ItemSocket") # Adjust path as needed
-
+	var items_node = player.get_tree().get_root().get_node("Level/items")
 	# 2) Re-parent this object back to the world or a specific drop parent
 	if self.get_parent() == item_socket:
-		
 		var world = get_tree().current_scene # You can adjust this to a specific node if needed
 		item_socket.remove_child(self)
-		world.add_child(self)
+		var itemspawner = player.get_tree().get_current_scene().get_node("ItemSpawner")
+		itemspawner.spawn(self)
+		return
 		
 		# 3) Set the drop position relative to the player or item socket
 		# For example, position it in front of the player
@@ -25,12 +30,11 @@ func drop(player: CharacterBody3D, drop_position: Vector3 = Vector3.ZERO, drop_d
 		
 		# 4) Enable physics behavior by converting back to RigidBody3D
 		if self is StaticBody3D:
-			convert_staticbody_to_rigidbody(self)
-
-func convert_staticbody_to_rigidbody(static_body: StaticBody3D):
+			convert_staticbody_to_rigidbody(player, self)
+func convert_staticbody_to_rigidbody(player, static_body: StaticBody3D):
 	# Get the parent node
-	var parent = static_body.get_parent()
 	
+	var parent = player.get_tree().get_current_scene().get_node("ItemSpawner")
 	pick_script = load("res://Scripts/pickupable.gd")
 	
 	# Create a new RigidBody3D
@@ -48,8 +52,8 @@ func convert_staticbody_to_rigidbody(static_body: StaticBody3D):
 	
 	# Replace the StaticBody3D with the RigidBody3D in the scene tree
 	parent.remove_child(static_body)
-	parent.add_child(rigidbody)
-	rigidbody.owner = parent.owner  # Set the correct owner for saving in scenes
+	parent.spawn(rigidbody)
+	rigidbody.owner = parent  # Set the correct owner for saving in scenes
 	
 	
 	# Restore collision layers and masks if necessary

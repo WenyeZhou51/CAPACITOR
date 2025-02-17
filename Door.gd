@@ -16,8 +16,7 @@ func _ready():
 	original_rotation_y = rotation.y
 	target_angle_y = original_rotation_y
 	
-@rpc("any_peer")
-func interact(player_global_transform: Transform3D) -> void:
+func interact(player: Player) -> void:
 	if current_tween != null:
 		# If the door is currently animating, ignore interactions until finished
 		return
@@ -34,7 +33,7 @@ func interact(player_global_transform: Transform3D) -> void:
 		var door_global_transform = global_transform
 		var door_forward = door_global_transform.basis.z.normalized()
 		var door_position = door_global_transform.origin
-		var player_position = player_global_transform.origin
+		var player_position = player.global_transform.origin
 		var dir_to_player = (player_position - door_position).normalized()
 
 		var dot = door_forward.dot(dir_to_player)

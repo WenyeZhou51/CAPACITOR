@@ -1,11 +1,15 @@
 class_name Pickapable extends RigidBody3D
 
-
 var drop_script
 @export var Price: int
 @export var type: String
 
-func interact(player: CharacterBody3D) -> StaticBody3D:
+func interact(player: Player) -> void:
+	if (player.inv_size == 4):
+		var item_socket = player.get_node("Head/ItemSocket")
+		var curr_item = item_socket.get_child(0)
+		curr_item.drop(player)
+
 #	 1) Get the reference to the player's 'ItemSocket'
 	var item_socket = player.get_node("Head/ItemSocket") # Adjust path as needed
 	var static_obj: StaticBody3D
@@ -28,7 +32,24 @@ func interact(player: CharacterBody3D) -> StaticBody3D:
 	self.transform = Transform3D()
 	
 	# 5) Disable physics behavior (e.g., gravity, rigid body movement)
-	return convert_rigidbody_to_staticbody(self)
+	var static_candidate = convert_rigidbody_to_staticbody(self)
+	
+	if (player.inv_size == 4):
+		if (str(player.get_tree().get_multiplayer().get_unique_id()) == player.name):
+			GameState.change_ui.emit(player.current_slot, static_candidate.type)
+		player.inventory[player.current_slot] = static_candidate
+	
+	if (player.inv_size < 4):
+		for i in range(player.inventory.size()):
+			if player.inventory[i] == null:
+				player.inventory[i] = static_candidate
+				player.inv_high.emit(player.current_slot, i)
+				player.current_slot = i
+				player.inv_size += 1
+				if (str(player.get_tree().get_multiplayer().get_unique_id()) == player.name):
+					GameState.change_ui.emit(player.current_slot, static_candidate.type)
+				break
+		player.is_holding = true
 
 func convert_rigidbody_to_staticbody(rigidbody: RigidBody3D) -> StaticBody3D:
 	drop_script = load("res://Scenes/prefabs/items/drop_item.gd")

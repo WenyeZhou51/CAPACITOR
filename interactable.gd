@@ -1,5 +1,7 @@
 # interactable.gd
 extends Node
 
+class_name Interactable
+
 func interact():
-	print("Interacted with", self.name)
+	push_error("Must Override Interactable")

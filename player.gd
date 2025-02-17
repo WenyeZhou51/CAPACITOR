@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+class_name Player
+
 # Constants
 const WALK_SPEED = 3.5  # Default walking speed
 const RUN_SPEED = 8.0  # Sprinting speed
@@ -33,7 +35,7 @@ var current_stamina: float = 1.0 + STAMINA_THRESHOLD  # Current stamina level
 var is_running: bool = false  # Whether the player is sprinting
 var movement_speed: float = WALK_SPEED  # Current movement speed
 var is_holding: bool = false # Whether the player is holding an intem
-@export var current_health: float = 100.0 #### MUST HAVE EXPORT FOR SYNCING
+@export var current_health: float = 10000.0 #### MUST HAVE EXPORT FOR SYNCING
 var max_health: float = 100.0
 var crt_shader_material: ShaderMaterial
 var inv_size: int = 0
@@ -63,7 +65,7 @@ func _ready():
 	interact_label = get_node("/root/Level/UI/InteractLabel")
 	texture_rect = get_node("/root/Level/UI/TextureRect")
 	crt_shader_material = texture_rect.material
-	var msg = "Collect a total of " + str(MultiplayerManager.quota)
+	var msg = "Collect a total of " + str(GameState.get_quota())
 	popup_instance = popup_scene.instantiate()
 	popup_instance.popup_text = msg
 	add_child(popup_instance)
@@ -103,8 +105,7 @@ func _input(event: InputEvent) -> void:
 			var current_item = inventory[current_slot]
 			print(current_item)
 			if current_item and current_item.type == "flash":
-				var light = current_item.get_node("Model").get_node("FlashLight")
-				light.visible = !light.visible
+				MultiplayerRequest.request_flash_toggle(current_item.name)
 		if event is InputEventMouseButton:
 			if event.pressed:
 				## Check if user scrolled up (4) or down (5)
@@ -255,10 +256,7 @@ func _physics_process(delta: float) -> void:
 			if candidate and candidate.has_method("interact"):
 				interact_label.visible = true
 				if Input.is_action_just_pressed("Interact") and candidate.is_in_group("doors"):
-					if multiplayer.is_server():
-						candidate.interact(global_transform)
-					else:
-						candidate.interact.rpc_id(1, global_transform)
+					MultiplayerRequest.request_item_interact(candidate.name)
 				elif Input.is_action_just_pressed("Interact") and candidate.is_in_group("generator"):
 					if(candidate.interact(self) == 1):
 						inventory[current_slot] = null
@@ -269,7 +267,7 @@ func _physics_process(delta: float) -> void:
 					var val = candidate.interact(self)
 					inventory[current_slot] = null
 					inv_size -= 1
-					MultiplayerManager.request_score_update(val)
+					MultiplayerRequest.request_team_score_update(val)
 					print(score)
 					var msg: String
 					if(val == 0):
@@ -281,28 +279,11 @@ func _physics_process(delta: float) -> void:
 						msg = "Scrap value " + str(val)
 						popup_instance.popup_text = msg
 						popup_instance.pop_up()
-						emit_signal("value_changed", val)
 						emit_signal("change_ui", current_slot, "empty")
-						endGame()
+
 					#inventory[current_slot] = null
-				elif Input.is_action_just_pressed("Interact") and inv_size == 4:
-					var item_socket = self.get_node("Head/ItemSocket")
-					var curr_item = item_socket.get_child(0)
-					curr_item.drop(self)
-					var static_candidate = candidate.interact(self)
-					emit_signal("change_ui", current_slot, static_candidate.type)
-					inventory[current_slot] = static_candidate
 				elif Input.is_action_just_pressed("Interact"):
-					var static_candidate = candidate.interact(self)
-					for i in range(inventory.size()):
-						if inventory[i] == null:
-							inventory[i] = static_candidate
-							emit_signal("inv_high", current_slot, i)
-							current_slot = i
-							inv_size += 1
-							emit_signal("change_ui", current_slot, static_candidate.type)
-							break
-					is_holding = true
+					MultiplayerRequest.request_item_interact(candidate.name)
 			else:
 				if closest_object.is_in_group("console_collider") and near_console:
 					interact_label.visible = true
@@ -314,13 +295,7 @@ func _physics_process(delta: float) -> void:
 		interact_label.visible = false
 	
 	if Input.is_action_just_pressed("Drop") and is_holding:
-		var item_socket = self.get_node("Head/ItemSocket")
-		var curr_item = item_socket.get_child(0)
-		curr_item.drop(self)
-		inventory[current_slot] = null
-		emit_signal("change_ui", current_slot, "empty")
-		inv_size -= 1
-		is_holding = false
+		MultiplayerRequest.request_item_drop(self.name)
 	
 	# Clamp stamina to valid range
 	current_stamina = clamp(current_stamina, 0.0, 1.5)

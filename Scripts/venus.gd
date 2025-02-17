@@ -2,14 +2,14 @@ extends CharacterBody3D
 
 # Existing exports
 @export var gravity: float = 9.8
-@export var chase_speed: float = 6.0
-@export var turn_speed: float = 2.0
-@export var attack_radius: float = 3.0
-@export var attack_damage: float = 10.0
-@export var attack_cooldown: float = 1.0
+@export var chase_speed: float = 0.0 # originally 6. 0 for dbg
+@export var turn_speed: float = 2.0 * 0
+@export var attack_radius: float = 0.0 # originally 3
+@export var attack_damage: float = 10.0 * 0
+@export var attack_cooldown: float = 1.0 * 0
 @export var debug_visual_colors: bool = false
-@export var animation_speed: float = 8.0
-@export var chase_animation_speed: float = 16.0
+@export var animation_speed: float = 8.0 * 0
+@export var chase_animation_speed: float = 16.0  * 0
 
 # State variables
 var player: CharacterBody3D
@@ -82,6 +82,7 @@ func set_initial_position() -> void:
 		#	" | Global Position: ", global_transform.origin)
 
 func _physics_process(delta: float) -> void:
+	return
 	#print("\n[VENUS] _physics_process() | Delta: ", delta)
 	#print("[STATE] Nav Ready: ", nav_ready, 
 	#	" | Player Valid: ", player != null, 

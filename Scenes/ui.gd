@@ -12,9 +12,9 @@ func setup_player(name: String):
 	player = get_parent().get_node("players/" + name)
 	if (not player == null):
 		print_debug("player " + name + " found in ui")
-	label.text = str(MultiplayerManager.quota)
-	MultiplayerManager.team_score_changed.connect(on_value_changed)
-	player.change_ui.connect(on_change_ui)
+	label.text = str(GameState.get_quota())
+	GameState.team_score_changed.connect(on_value_changed)
+	GameState.change_ui.connect(on_change_ui)
 	player.inv_high.connect(update_highlight)
 	var first = grid_container.get_child(0)
 	first.self_modulate = Color(1,1,1,1)
@@ -25,7 +25,7 @@ func _ready():
 
 func on_value_changed(val: int):
 	#print("signal recieved")
-	label.text = str(MultiplayerManager.quota - val)
+	label.text = str(GameState.get_quota() - val)
 	
 func swap_UI(idx: int, new_scene: PackedScene):
 	var old_child = grid_container.get_child(idx)

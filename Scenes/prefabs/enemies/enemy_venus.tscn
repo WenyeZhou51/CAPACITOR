@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bjjrllm15flh4"]
+[gd_scene load_steps=7 format=3 uid="uid://bjjrllm15flh4"]
 
 [ext_resource type="PackedScene" uid="uid://be2r833svd7bu" path="res://Assets/Venus.glb" id="1_eopk2"]
 [ext_resource type="Script" path="res://Scripts/venus.gd" id="2_4grln"]
@@ -8,6 +8,14 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_33x1u"]
 radius = 0.6
 height = 3.5
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_81kcf"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [node name="enemy_venus" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.106848, 0)
@@ -156,6 +164,9 @@ stream = ExtResource("4_jejc0")
 volume_db = 5.0
 
 [node name="RayCast3D" type="RayCast3D" parent="CharacterBody3D"]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_81kcf")
 
 [connection signal="timeout" from="CharacterBody3D/AttackTimer" to="CharacterBody3D" method="_on_timer_timeout"]
 

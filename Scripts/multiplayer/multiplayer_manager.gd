@@ -2,31 +2,6 @@ extends Node
 
 ##### GAME VARS AND LOGIC
 var map_seed = 1
-var quota = 100
-var team_score = 0
-
-signal team_score_changed
-signal end_game
-
-func request_score_update(update_value: int):
-	print_debug("score update request val: "+ str(update_value))
-	update_team_score.rpc_id(1, update_value)
-
-@rpc("any_peer", "call_local")
-func update_team_score(update_value: int):
-	if not multiplayer.is_server(): return
-	print_debug("host recieved update score request")
-	team_score += update_value
-	set_team_score.rpc(team_score)
-
-@rpc("authority", "call_local")
-func set_team_score(score: int):
-	print_debug("client " + str(multiplayer.get_unique_id()) + " got set new score from host")
-	team_score = score
-	if (team_score >= quota):
-		get_tree().change_scene_to_file("res://Scenes/win.tscn")
-		return
-	team_score_changed.emit(team_score)
 
 ##### MULTIPLAYER VARS AND LOGIC
 const SERVER_PORT = 8080
