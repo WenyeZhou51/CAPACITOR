@@ -22,7 +22,7 @@ func _ready():
 	add_to_group("generator")
 
 
-func interact(player: CharacterBody3D) -> int:
+func interact(player: Player) -> int:
 	var item_socket = player.get_node("Head/ItemSocket")
 	
 	# Check if player is holding an item
@@ -39,6 +39,11 @@ func interact(player: CharacterBody3D) -> int:
 			update_heat_bar_color()
 			print("is coolant")
 			
+			player.inventory[player.current_slot] = null
+			player.inv_size -= 1
+			player.is_holding = false
+			if (player.name == str(player.get_tree().get_multiplayer().get_unique_id())):
+				GameState.change_ui.emit(player.current_slot, "empty")
 			return 1  # Return 0 since this isn't a cash value interaction
 	print("not coolant")
 	return 0  # Return 0 for no interaction

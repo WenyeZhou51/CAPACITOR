@@ -258,13 +258,13 @@ func _physics_process(delta: float) -> void:
 				if Input.is_action_just_pressed("Interact") and candidate.is_in_group("doors"):
 					MultiplayerRequest.request_item_interact(candidate.name)
 				elif Input.is_action_just_pressed("Interact") and candidate.is_in_group("generator"):
-					if(candidate.interact(self) == 1):
-						inventory[current_slot] = null
-						inv_size -= 1
-						is_holding = false
-						emit_signal("change_ui", current_slot, "empty")
+					MultiplayerRequest.request_item_interact(candidate.name)
 				elif Input.is_action_just_pressed("Interact") and candidate.is_in_group("cash"):
 					var val = candidate.interact(self)
+					# TODO
+					# move all below inside candidate interact ?... or two rpc..., 
+					# not everything can be pickupable, (alt, make pickubale an importable script,
+					# then make classes for each different item, scrap1, scrap2... etc)
 					inventory[current_slot] = null
 					inv_size -= 1
 					MultiplayerRequest.request_team_score_update(val)
