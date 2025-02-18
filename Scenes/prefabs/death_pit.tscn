@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://dx6wapklcexpr"]
+
+[ext_resource type="Script" path="res://Scenes/prefabs/death_pit.gd" id="1_snq4u"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o0q3d"]
+size = Vector3(10, 10, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_spdmk"]
+cull_mode = 2
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5vqn4"]
+material = SubResource("StandardMaterial3D_spdmk")
+size = Vector3(10, 10, 10)
+
+[node name="Death Pit" type="Area3D"]
+collision_mask = 2
+script = ExtResource("1_snq4u")
+
+[node name="Deadly Collider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0336084, 0, 0)
+shape = SubResource("BoxShape3D_o0q3d")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_5vqn4")

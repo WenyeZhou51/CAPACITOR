@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://fm1ccoc80rb1"]
+
+[ext_resource type="Script" path="res://console folder/command_module.gd" id="1_vnasv"]
+
+[node name="CommandModule" type="Node"]
+script = ExtResource("1_vnasv")

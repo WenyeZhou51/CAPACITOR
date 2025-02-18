@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bdl82ffs83t8i"
+path="res://.godot/imported/earworm_0203172223_texture.obj-d4a621f902b07cf13c4a0bba2a6464f1.mesh"
+
+[deps]
+
+files=["res://.godot/imported/earworm_0203172223_texture.obj-d4a621f902b07cf13c4a0bba2a6464f1.mesh"]
+
+source_file="res://Scenes/prefabs/enemies/earworm_0203172223_texture_obj/earworm_0203172223_texture.obj"
+dest_files=["res://.godot/imported/earworm_0203172223_texture.obj-d4a621f902b07cf13c4a0bba2a6464f1.mesh", "res://.godot/imported/earworm_0203172223_texture.obj-d4a621f902b07cf13c4a0bba2a6464f1.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

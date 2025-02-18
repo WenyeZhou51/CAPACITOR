@@ -1,0 +1,68 @@
+[gd_scene load_steps=7 format=3 uid="uid://bbngvevf00m03"]
+
+[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_ofnv1"]
+[ext_resource type="Texture2D" uid="uid://c1d5kcr4f1c5l" path="res://textures/worn_plank/worn_planks_diff_4k.png" id="2_r1iyd"]
+[ext_resource type="PackedScene" uid="uid://bh18kskaruq62" path="res://Scenes/prefabs/scrap_marker.tscn" id="4_cted2"]
+[ext_resource type="PackedScene" uid="uid://dx6wapklcexpr" path="res://Scenes/prefabs/death_pit.tscn" id="4_v06ob"]
+[ext_resource type="PackedScene" uid="uid://cdf8lpjxddsvr" path="res://Scenes/prefabs/enemy_marker.tscn" id="5_mr7rt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_clbh1"]
+albedo_texture = ExtResource("2_r1iyd")
+
+[node name="jump room" type="Node3D"]
+script = ExtResource("1_ofnv1")
+size_in_voxels = Vector3i(3, 3, 2)
+min_count = 5
+max_count = 10
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.147551, 0.139895, 0.271381)
+material_override = SubResource("StandardMaterial3D_clbh1")
+use_collision = true
+size = Vector3(30.0236, 29.6001, 20.6426)
+
+[node name="Roomcut" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.405382, 2.37101, -0.606539)
+operation = 2
+size = Vector3(26.8613, 13.8383, 17.7738)
+
+[node name="Roomcut2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.94883, -7.00914, -0.569633)
+operation = 2
+size = Vector3(13.6938, 14.9229, 17.7527)
+
+[node name="DOOR2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, -0.5, -5)
+operation = 2
+size = Vector3(2.5, 8, 6)
+
+[node name="DOOR3" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, -0.5, -5)
+operation = 2
+size = Vector3(2.5, 8, 6)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.142751, -5.82253, 7.89343)
+size = Vector3(3.4375, 2.82587, 1)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.24009, -5.82253, 7.89343)
+size = Vector3(3.4375, 2.82587, 1)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.903599, -6.83049, -9.22979)
+size = Vector3(3.4375, 2.82587, 1)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41742, -6.80828, -9.22979)
+size = Vector3(3.4375, 2.82587, 1)
+
+[node name="ScrapMarker" parent="." instance=ExtResource("4_cted2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.2383, -2.38248, 2.97899)
+
+[node name="Death Pit" parent="." instance=ExtResource("4_v06ob")]
+transform = Transform3D(1.75592, 0, 0, 0, 0.422178, 0, 0, 0, 1.82174, 1.30523, -12.2617, 0)
+damage_per_second = 100.0
+
+[node name="EnemyMarker" parent="." instance=ExtResource("5_mr7rt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.08423, -3.3715, 1.96911)

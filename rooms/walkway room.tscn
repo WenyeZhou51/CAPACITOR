@@ -1,0 +1,126 @@
+[gd_scene load_steps=13 format=3 uid="uid://bnpre7ijy5lla"]
+
+[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_h2gxi"]
+[ext_resource type="Texture2D" uid="uid://by5uq1e85ul0w" path="res://textures/metal_start_room_door/rusty_metal_grid_diff_4k.png" id="2_wamtb"]
+[ext_resource type="Texture2D" uid="uid://ilqrfm647tau" path="res://textures/door_texture/metal_plate_diff_4k.png" id="3_gpmvc"]
+[ext_resource type="PackedScene" uid="uid://bh18kskaruq62" path="res://Scenes/prefabs/scrap_marker.tscn" id="4_ed6b1"]
+[ext_resource type="PackedScene" uid="uid://cdf8lpjxddsvr" path="res://Scenes/prefabs/enemy_marker.tscn" id="5_cwaqq"]
+[ext_resource type="PackedScene" uid="uid://cvwdeshjlru0d" path="res://objectmodels3/fence.glb" id="7_sac8x"]
+[ext_resource type="PackedScene" uid="uid://cvvhr51m3d3cb" path="res://objectmodels/cardboard_box_01_4k/cardboard_box_01_4k.gltf" id="8_hby6o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_clbh1"]
+albedo_texture = ExtResource("2_wamtb")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dt84r"]
+render_priority = 5
+albedo_texture = ExtResource("3_gpmvc")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2x7q0"]
+albedo_texture = ExtResource("3_gpmvc")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sxrgw"]
+size = Vector3(1, 0.8, 1.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7jkqr"]
+size = Vector3(4, 2.5, 0.1)
+
+[node name="walkway room" type="Node3D"]
+script = ExtResource("1_h2gxi")
+size_in_voxels = Vector3i(2, 2, 2)
+max_count = 4
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00342763, 0.0274777, 0.0945449)
+material_override = SubResource("StandardMaterial3D_clbh1")
+use_collision = true
+size = Vector3(19.9753, 19.6621, 19.7977)
+
+[node name="Roomcut" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0910292, 5.16415, -0.5802)
+operation = 2
+size = Vector3(18.6145, 8.25201, 16.282)
+
+[node name="Roomcut2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0910292, 0.112663, 3.62513)
+operation = 2
+size = Vector3(18.6145, 18.355, 7.87135)
+
+[node name="DOOR2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, 5, -5)
+operation = 2
+size = Vector3(1, 8, 6)
+
+[node name="DOOR3" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 5, -5)
+operation = 2
+size = Vector3(1, 8, 6)
+
+[node name="DOOR7" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, -5, 5)
+material_override = SubResource("StandardMaterial3D_dt84r")
+operation = 2
+size = Vector3(1, 8, 6)
+material = SubResource("StandardMaterial3D_2x7q0")
+
+[node name="DOOR8" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, -5, 5)
+material_override = SubResource("StandardMaterial3D_dt84r")
+operation = 2
+size = Vector3(1, 8, 6)
+material = SubResource("StandardMaterial3D_2x7q0")
+
+[node name="ScrapMarker" parent="." instance=ExtResource("4_ed6b1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.158, -8.25199, 2.97899)
+
+[node name="EnemyMarker" parent="." instance=ExtResource("5_cwaqq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.94354, 5.31474, -3.2097)
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.86096, 5.71432, -4.31147)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D3"]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -0.792816, -3.98604, -3.51793)
+shape = SubResource("BoxShape3D_sxrgw")
+
+[node name="cardboard_box_01_4k3" parent="StaticBody3D3" instance=ExtResource("8_hby6o")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -0.792816, -4.63362, -3.28409)
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="."]
+transform = Transform3D(0.210274, 0.599824, -0.772008, -0.308564, 0.790018, 0.529773, 0.927671, 0.126817, 0.351204, -2.14826, 6.90792, -5.07705)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D4"]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -0.792816, -3.98604, -3.51793)
+shape = SubResource("BoxShape3D_sxrgw")
+
+[node name="cardboard_box_01_4k3" parent="StaticBody3D4" instance=ExtResource("8_hby6o")]
+transform = Transform3D(3, -2.98023e-08, 1.19209e-07, -2.98023e-08, 3, 1.78814e-07, 0, -1.19209e-07, 3, -0.806479, -4.6726, -3.23393)
+
+[node name="Fence" type="StaticBody3D" parent="."]
+transform = Transform3D(0.999958, 0.00858691, 0.00326367, -0.00858689, 0.999963, -1.85838e-05, -0.00326371, -9.44117e-06, 0.999995, 7.55803, 3.34645, -3.68624)
+
+[node name="fence2" parent="Fence" instance=ExtResource("7_sac8x")]
+transform = Transform3D(4, 0, 0, 0, 5, 0, 0, 0, 8, -1.94923, -2.30884, 3.39733)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Fence"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.94189, -1.05709, 3.38158)
+shape = SubResource("BoxShape3D_7jkqr")
+
+[node name="Fence2" type="StaticBody3D" parent="."]
+transform = Transform3D(0.999958, 0.00858691, 0.00326367, -0.00858689, 0.999963, -1.85838e-05, -0.00326371, -9.44117e-06, 0.999995, 1.47823, 3.34645, -3.68624)
+
+[node name="fence2" parent="Fence2" instance=ExtResource("7_sac8x")]
+transform = Transform3D(4, 0, 0, 0, 5, 0, 0, 0, 8, -1.94923, -2.30884, 3.39733)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Fence2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.94189, -1.05709, 3.38158)
+shape = SubResource("BoxShape3D_7jkqr")
+
+[node name="Fence3" type="StaticBody3D" parent="."]
+transform = Transform3D(0.999958, 0.00858691, 0.00326367, -0.00858689, 0.999963, -1.85838e-05, -0.00326371, -9.44117e-06, 0.999995, -4.58891, 3.34645, -3.68624)
+
+[node name="fence2" parent="Fence3" instance=ExtResource("7_sac8x")]
+transform = Transform3D(4, 0, 0, 0, 5, 0, 0, 0, 8, -1.94923, -2.30884, 3.39733)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Fence3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.94189, -1.05709, 3.38158)
+shape = SubResource("BoxShape3D_7jkqr")
