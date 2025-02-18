@@ -9,6 +9,7 @@ func _ready() -> void:
 
 func drop(player: CharacterBody3D, drop_position: Vector3 = Vector3.ZERO, drop_direction: Vector3 = Vector3.FORWARD) -> void:
 	
+<<<<<<< HEAD
 	if (not MultiplayerManager.multiplayer.is_server()):
 		self.get_parent().remove_child(self)
 		return
@@ -21,6 +22,16 @@ func drop(player: CharacterBody3D, drop_position: Vector3 = Vector3.ZERO, drop_d
 		item_socket.remove_child(self)
 		world.add_child(self)
 		return
+=======
+	# 1) Get the reference to the player's 'ItemSocket'
+	var item_socket = player.get_node("Head/ItemSocket") # Adjust path as needed
+	var items_node = player.get_tree().get_root().get_node("Level/items")
+	var world = get_tree().current_scene
+	# 2) Re-parent this object back to the world or a specific drop parent
+	if self.get_parent() == item_socket:
+		#var world = get_tree().current_scene # You can adjust this to a specific node if needed
+		item_socket.remove_child(self)
+>>>>>>> master
 		
 		# 3) Set the drop position relative to the player or item socket
 		# For example, position it in front of the player
@@ -29,15 +40,30 @@ func drop(player: CharacterBody3D, drop_position: Vector3 = Vector3.ZERO, drop_d
 		
 		# 4) Enable physics behavior by converting back to RigidBody3D
 		if self is StaticBody3D:
+<<<<<<< HEAD
 			convert_staticbody_to_rigidbody(self)
 func convert_staticbody_to_rigidbody(static_body: StaticBody3D):
 	# Get the parent node
 	
+=======
+			convert_staticbody_to_rigidbody(self, world)
+			world.add_child(self)
+
+func convert_staticbody_to_rigidbody(static_body: StaticBody3D, world: Node3D):
+	# Get the parent node
+	
+	var path = "res://Scenes/prefabs/items/" + str(static_body.type) + ".tscn"
+	print("path is, ", path)
+>>>>>>> master
 	var parent = static_body.get_parent()
 	pick_script = load("res://Scripts/pickupable.gd")
 	
 	# Create a new RigidBody3D
+<<<<<<< HEAD
 	var scene = preload("res://Scenes/prefabs/items/scrap1.tscn")
+=======
+	var scene = load(path)
+>>>>>>> master
 	var rigidbody = scene.instantiate()
 	rigidbody.name = static_body.name  # Retain the same name for clarity
 	
@@ -51,9 +77,13 @@ func convert_staticbody_to_rigidbody(static_body: StaticBody3D):
 		child.owner = rigidbody  # Ensure the new owner is set for proper scene management
 	
 	# Replace the StaticBody3D with the RigidBody3D in the scene tree
+<<<<<<< HEAD
 	parent.remove_child(static_body)
 	var itemspawner = parent.get_tree().get_current_scene().get_node("ItemSpawner")
 	itemspawner.add_child(rigidbody)
+=======
+	#parent.remove_child(static_body)
+>>>>>>> master
 	rigidbody.owner = parent  # Set the correct owner for saving in scenes
 	
 	
@@ -64,5 +94,11 @@ func convert_staticbody_to_rigidbody(static_body: StaticBody3D):
 	rigidbody.set_script(pick_script)
 	rigidbody.Price = static_body.Price
 	rigidbody.type = static_body.type
+<<<<<<< HEAD
+=======
+	
+	var items_node = world.get_node("items")
+	items_node.add_child(rigidbody)
+>>>>>>> master
 	# Optionally free the old StaticBody3D to clean up memory
 	static_body.queue_free()

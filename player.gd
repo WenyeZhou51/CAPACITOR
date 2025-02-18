@@ -125,7 +125,11 @@ func _input(event: InputEvent) -> void:
 						emit_signal("inv_high", (current_slot + 1) % inventory.size(), current_slot, current_item.type)
 					else:
 						emit_signal("inv_high", (current_slot + 1) % inventory.size(), current_slot, "")
+<<<<<<< HEAD
 				if inventory[currIdx] == null:
+=======
+				if inventory[current_slot] == null:
+>>>>>>> master
 					is_holding = false
 				else:
 					is_holding = true
@@ -163,6 +167,13 @@ func _update_equipped_item() -> void:
 		old_item = item_socket.get_child(0)
 	var new_item = inventory[current_slot]
 	if old_item:
+<<<<<<< HEAD
+=======
+		if(old_item.type == "flash"):
+			var light_node = old_item.get_node("Model/FlashLight")
+			if light_node and light_node is Light3D:
+				light_node.visible = false
+>>>>>>> master
 		item_socket.remove_child(old_item)
 		var container = get_node("InventoryContainer")
 		if container:
@@ -172,6 +183,13 @@ func _update_equipped_item() -> void:
 	if new_item:
 		if new_item.get_parent():
 			new_item.get_parent().remove_child(new_item)
+<<<<<<< HEAD
+=======
+		if(new_item.type == "flash"):
+			var light_node = new_item.get_node("Model/FlashLight")
+			if light_node and light_node is Light3D:
+				light_node.visible = true
+>>>>>>> master
 		item_socket.add_child(new_item)
 		new_item.transform = Transform3D()
 
@@ -252,6 +270,7 @@ func _physics_process(delta: float) -> void:
 			
 			if candidate and candidate.has_method("interact"):
 				interact_label.visible = true
+<<<<<<< HEAD
 				if Input.is_action_just_pressed("Interact") and candidate.is_in_group("doors"):
 					MultiplayerRequest.request_item_interact(candidate.name)
 				elif Input.is_action_just_pressed("Interact") and candidate.is_in_group("generator"):
@@ -280,6 +299,9 @@ func _physics_process(delta: float) -> void:
 
 					#inventory[current_slot] = null
 				elif Input.is_action_just_pressed("Interact"):
+=======
+				if Input.is_action_just_pressed("Interact"):
+>>>>>>> master
 					MultiplayerRequest.request_item_interact(candidate.name)
 			else:
 				if closest_object.is_in_group("console_collider") and near_console:

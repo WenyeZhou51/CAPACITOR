@@ -57,7 +57,11 @@ collision_layer = 8
 collision_mask = 5
 script = ExtResource("1_srse0")
 Price = 100
+<<<<<<< HEAD
 type = "scrap"
+=======
+type = "scrap1"
+>>>>>>> master
 
 [node name="brass_vase_03" type="MeshInstance3D" parent="."]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)

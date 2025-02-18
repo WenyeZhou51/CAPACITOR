@@ -17,6 +17,13 @@ func interact(player: Player) -> void:
 	if item_socket.get_child_count() > 0:
 		var old_item = item_socket.get_child(0)
 		item_socket.remove_child(old_item)
+<<<<<<< HEAD
+=======
+		if(old_item.type == "flash"):
+			var light_node = old_item.get_node("Model/FlashLight")
+			if light_node and light_node is Light3D:
+				light_node.visible = false
+>>>>>>> master
 		var container = player.get_node("InventoryContainer")
 		if container:
 			container.add_child(old_item)
@@ -36,6 +43,10 @@ func interact(player: Player) -> void:
 	
 	if (player.inv_size == 4):
 		if (str(player.get_tree().get_multiplayer().get_unique_id()) == player.name):
+<<<<<<< HEAD
+=======
+			print("ui test", static_candidate.type)
+>>>>>>> master
 			GameState.change_ui.emit(player.current_slot, static_candidate.type)
 		player.inventory[player.current_slot] = static_candidate
 	
@@ -47,6 +58,10 @@ func interact(player: Player) -> void:
 				player.current_slot = i
 				player.inv_size += 1
 				if (str(player.get_tree().get_multiplayer().get_unique_id()) == player.name):
+<<<<<<< HEAD
+=======
+					print("ui test", static_candidate.type)
+>>>>>>> master
 					GameState.change_ui.emit(player.current_slot, static_candidate.type)
 				break
 		player.is_holding = true

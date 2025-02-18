@@ -44,7 +44,11 @@ func on_change_ui(idx: int, item: String):
 	if(item == "empty"):
 		new_scene = load("res://imgs/inv_slot_ui.tscn")
 		show_text("")
+<<<<<<< HEAD
 	elif(item == "flash"):
+=======
+	elif(item == "flashlight"):
+>>>>>>> master
 		new_scene = load("res://imgs/flash_slot.tscn")
 		show_text(item)
 	elif(item == "coolant"):

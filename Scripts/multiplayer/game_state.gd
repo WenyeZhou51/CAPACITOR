@@ -1,6 +1,10 @@
 extends Node
 
+<<<<<<< HEAD
 var _quota = 100
+=======
+var _quota = 400
+>>>>>>> master
 var _team_score = 0
 
 signal team_score_changed

@@ -6129,7 +6129,11 @@ animation_player = NodePath("AnimationPlayer")
 shape = SubResource("CapsuleShape3D_ehc7k")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+<<<<<<< HEAD
 transform = Transform3D(1, 6.83048e-05, 0.000979942, -6.56254e-05, 0.999996, -0.00274421, -0.000980125, 0.00274414, 0.999996, 0, 0, 0)
+=======
+transform = Transform3D(1, 6.83148e-05, 0.000979941, -6.56254e-05, 0.999996, -0.00274421, -0.000980125, 0.00274414, 0.999996, 0, 0, 0)
+>>>>>>> master
 visible = false
 mesh = SubResource("CapsuleMesh_e3cpc")
 script = SubResource("GDScript_g5nqg")
@@ -6508,7 +6512,11 @@ mesh = SubResource("ArrayMesh_lsacc")
 skin = SubResource("Skin_hj5lm")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="rig/Skeleton3D"]
+<<<<<<< HEAD
 transform = Transform3D(-0.707544, -0.232117, -0.66746, 0.284335, -0.958197, 0.0318139, -0.646943, -0.167273, 0.743965, -0.0660124, 0.204029, 0.0102943)
+=======
+transform = Transform3D(-0.707544, -0.232117, -0.667461, 0.284335, -0.958197, 0.0318137, -0.646943, -0.167273, 0.743965, -0.0660124, 0.204029, 0.0102944)
+>>>>>>> master
 bone_name = "arm_right_top"
 bone_idx = 8
 

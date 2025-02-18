@@ -7,8 +7,17 @@ func propogate_team_score_update(val: int):
 	
 @rpc("authority", "call_local")
 func propogate_item_interact(player_name: String, item_name: String):
+<<<<<<< HEAD
 	var item = get_tree().get_root().get_node("Level/items/" + item_name)
 	var player = get_tree().get_root().get_node("Level/players/" + player_name)
+=======
+		
+	var item = get_tree().get_root().get_node("Level/items/" + item_name)
+	var player = get_tree().get_root().get_node("Level/players/" + player_name)
+	if(item_name == "planter_box_01_4k"):
+		item = get_tree().get_root().get_node("Level/NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D2/planter_box_01_4k")
+	print("interacting with", item)
+>>>>>>> master
 	
 	if (not item):
 		print_debug("could not find item " + item_name)
