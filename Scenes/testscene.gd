@@ -9,6 +9,8 @@ func _ready() -> void:
 	_players_spawn_node = get_tree().get_current_scene().get_node("players")
 	for id in MultiplayerManager.players.keys():
 		print_debug("spawning player " + str(id))
+		MultiplayerManager.player_count += 1
+		GameState.alive_count += 1
 		_add_player_to_game(MultiplayerManager.players[id].id)
 
 func _add_player_to_game(id: int):

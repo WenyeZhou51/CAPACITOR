@@ -35,7 +35,7 @@ var current_stamina: float = 1.0 + STAMINA_THRESHOLD  # Current stamina level
 var is_running: bool = false  # Whether the player is sprinting
 var movement_speed: float = WALK_SPEED  # Current movement speed
 var is_holding: bool = false # Whether the player is holding an intem
-@export var current_health: float = 10000.0 #### MUST HAVE EXPORT FOR SYNCING
+@export var current_health: float = 10.0 #### MUST HAVE EXPORT FOR SYNCING
 var max_health: float = 100.0
 var crt_shader_material: ShaderMaterial
 var inv_size: int = 0
@@ -56,6 +56,7 @@ var console_window: Control = null
 var camera_locked: bool = false
 var camera_target: Vector3
 var popup_instance: Node
+var dead = false
 @onready var camera: Camera3D = $Head/Camera3D
 
 func _ready():
@@ -184,6 +185,7 @@ func _update_equipped_item() -> void:
 		new_item.transform = Transform3D()
 
 func _physics_process(delta: float) -> void:
+	if (dead): return
 	if not is_multiplayer_authority(): return
 	if camera_locked and console_window:
 		var console_root = console_window.get_parent().get_parent()
@@ -273,7 +275,7 @@ func _physics_process(delta: float) -> void:
 		interact_label.visible = false
 	
 	if Input.is_action_just_pressed("Drop") and is_holding:
-		MultiplayerRequest.request_item_drop(self.name)
+		MultiplayerRequest.request_item_drop()
 	
 	# Clamp stamina to valid range
 	current_stamina = clamp(current_stamina, 0.0, 1.5)
@@ -348,7 +350,8 @@ func take_damage(amount: int):
 	
 	if current_health <= 0:
 		current_health = 0
-		get_tree().change_scene_to_file("res://Scenes/Gameover.tscn")
+		MultiplayerRequest.request_player_dead();
+		
 	else:
 		update_health_indicator()
 

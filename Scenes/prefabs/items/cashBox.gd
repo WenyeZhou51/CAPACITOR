@@ -22,7 +22,7 @@ func interact(player: CharacterBody3D):
 	
 	player.inventory[player.current_slot] = null
 	player.inv_size -= 1
-	MultiplayerRequest.request_team_score_update(value)
+	GameState.set_team_score(GameState.get_team_score() + value);
 	var msg: String
 	if(value == 0):
 		msg = "Please deposit a scrap"

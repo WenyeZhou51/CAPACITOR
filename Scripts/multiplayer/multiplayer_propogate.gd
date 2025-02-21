@@ -36,3 +36,10 @@ func propogate_item_drop(player_name: String):
 		GameState.change_ui.emit(player.current_slot, "empty")
 	player.inv_size -= 1
 	player.is_holding = false
+
+@rpc("authority", "call_local")
+func propogate_player_dead(player_name: String):
+	var player: Player = get_tree().get_root().get_node("Level/players/" + player_name)
+	player.dead = true;
+	GameState.reduce_alive_count();
+	GameState.check_game_end();

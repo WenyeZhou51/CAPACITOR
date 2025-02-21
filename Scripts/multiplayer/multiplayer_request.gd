@@ -10,5 +10,8 @@ func request_item_interact(item_name: String):
 func request_flash_toggle(item_name: String):
 	MultiplayerConfirm.confirm_flash_toggle.rpc_id(1, item_name)
 
-func request_item_drop(player_name: String):
-	MultiplayerConfirm.confirm_item_drop.rpc_id(1, player_name)
+func request_item_drop():
+	MultiplayerConfirm.confirm_item_drop.rpc_id(1)
+
+func request_player_dead():
+	MultiplayerConfirm.confirm_player_dead.rpc_id(1)

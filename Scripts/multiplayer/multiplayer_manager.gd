@@ -10,6 +10,7 @@ var SERVER_IP = "127.0.0.1"
 const DEBUG = true  # Toggle debug logging
 
 var players = {}
+var player_count = 0 # updated in testscene gd
 
 var player_info = {
 	"id": 0
