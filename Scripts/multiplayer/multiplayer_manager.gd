@@ -10,7 +10,7 @@ var SERVER_IP = "127.0.0.1"
 const DEBUG = true  # Toggle debug logging
 
 var players = {}
-var player_count = 0 # updated in testscene gd
+var player_count = 1
 
 var player_info = {
 	"id": 0
@@ -64,11 +64,13 @@ func _on_peer_connected(id: int):
 			"id": id
 		}
 		players[id] = this_player_info
-	set_map_seed.rpc_id(id, map_seed)
+	player_count += 1;
+	set_map_seed_and_player_count.rpc(map_seed, player_count)
 	
 @rpc("authority")
-func set_map_seed(new: int):
+func set_map_seed_and_player_count(new: int, count: int):
 	map_seed = new
+	player_count = count;
 		
 func _on_peer_disconnected(id: int):
 	debug_log("Peer disconnected with ID: " + str(id))

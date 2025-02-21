@@ -6114,9 +6114,6 @@ properties/2/replication_mode = 1
 properties/3/path = NodePath(".:up_direction")
 properties/3/spawn = true
 properties/3/replication_mode = 1
-properties/4/path = NodePath(".:current_health")
-properties/4/spawn = true
-properties/4/replication_mode = 1
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("interaction_area", "animation_player")]
 collision_layer = 2
@@ -6508,7 +6505,7 @@ mesh = SubResource("ArrayMesh_lsacc")
 skin = SubResource("Skin_hj5lm")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="rig/Skeleton3D"]
-transform = Transform3D(-0.707544, -0.232117, -0.667461, 0.284335, -0.958197, 0.0318137, -0.646943, -0.167273, 0.743965, -0.0660124, 0.204029, 0.0102944)
+transform = Transform3D(-0.707544, -0.232117, -0.66746, 0.284335, -0.958197, 0.0318139, -0.646943, -0.167273, 0.743965, -0.0660124, 0.204029, 0.0102943)
 bone_name = "arm_right_top"
 bone_idx = 8
 

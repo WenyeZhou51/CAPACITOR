@@ -330,6 +330,10 @@ func update_health_indicator():
 		crt_shader_material.set("shader_param/scan_line_amount", scan_line_amount)
 
 func take_damage(amount: int):
+	if (name != str(multiplayer.get_unique_id())):
+		return
+	if (dead): return
+	dead = true
 	# If player is invincible, ignore the damage
 	if is_invincible:
 		return

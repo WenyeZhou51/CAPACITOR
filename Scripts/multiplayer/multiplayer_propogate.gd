@@ -40,6 +40,7 @@ func propogate_item_drop(player_name: String):
 @rpc("authority", "call_local")
 func propogate_player_dead(player_name: String):
 	var player: Player = get_tree().get_root().get_node("Level/players/" + player_name)
+	print_debug("PLAYER DEAD ", player_name, multiplayer.get_unique_id(), GameState.alive_count)
 	player.dead = true;
 	GameState.reduce_alive_count();
 	GameState.check_game_end();
