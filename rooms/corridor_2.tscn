@@ -1,13 +1,10 @@
-[gd_scene load_steps=20 format=4 uid="uid://cisl75a2ha5p8"]
+[gd_scene load_steps=14 format=4 uid="uid://bbrqul6xiyvqp"]
 
-[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_stnse"]
-[ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="2_mqn3y"]
-[ext_resource type="PackedScene" uid="uid://0ij7ac5rnuij" path="res://objectmodels/treasure_chest_4k/treasure_chest_4k.gltf" id="3_1dvcf"]
-[ext_resource type="Texture2D" uid="uid://br7ytuv2yx7ok" path="res://objectmodels/lightbulb_01_4k/textures/lightbulb_01_diff_4k.jpg" id="4_70ca0"]
-[ext_resource type="Texture2D" uid="uid://blaopph8lu8hh" path="res://objectmodels/lightbulb_01_4k/textures/lightbulb_01_alpha_4k.png" id="5_y7w2v"]
-[ext_resource type="PackedScene" uid="uid://rpy0m4novqme" path="res://objectmodels3/barrel/detail_barrel.glb" id="6_vs6md"]
-[ext_resource type="Texture2D" uid="uid://d248n30v1rcw1" path="res://objectmodels3/bricks_a/detail-bricks-type-a.png" id="7_u1nq6"]
-[ext_resource type="ArrayMesh" uid="uid://c7ouyxu4g67jv" path="res://objectmodels3/bricks_a/detail-bricks-type-a.obj" id="8_s8mx6"]
+[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_585my"]
+[ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="2_w638j"]
+[ext_resource type="PackedScene" uid="uid://0ij7ac5rnuij" path="res://objectmodels/treasure_chest_4k/treasure_chest_4k.gltf" id="3_1ss6y"]
+[ext_resource type="Texture2D" uid="uid://br7ytuv2yx7ok" path="res://objectmodels/lightbulb_01_4k/textures/lightbulb_01_diff_4k.jpg" id="4_joev3"]
+[ext_resource type="Texture2D" uid="uid://blaopph8lu8hh" path="res://objectmodels/lightbulb_01_4k/textures/lightbulb_01_alpha_4k.png" id="5_qdolm"]
 
 [sub_resource type="GDScript" id="GDScript_1tv7g"]
 resource_name = "corridor"
@@ -26,7 +23,7 @@ func remove_unused_doors():
 "
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wj10s"]
-albedo_texture = ExtResource("2_mqn3y")
+albedo_texture = ExtResource("2_w638j")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3gfgy"]
 size = Vector3(1, 0.9, 0.7)
@@ -35,7 +32,7 @@ size = Vector3(1, 0.9, 0.7)
 resource_name = "lightbulb_01_glass"
 transparency = 4
 cull_mode = 2
-albedo_texture = ExtResource("4_70ca0")
+albedo_texture = ExtResource("4_joev3")
 metallic = 1.0
 metallic_texture_channel = 2
 roughness_texture_channel = 1
@@ -47,7 +44,7 @@ normal_enabled = true
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r2f71"]
 resource_name = "lightbulb_01_base"
 cull_mode = 2
-albedo_texture = ExtResource("4_70ca0")
+albedo_texture = ExtResource("4_joev3")
 metallic = 1.0
 metallic_texture_channel = 2
 roughness_texture_channel = 1
@@ -114,21 +111,10 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_bmk2f")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xb3it"]
-albedo_texture = ExtResource("5_y7w2v")
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_478uw"]
-height = 1.7
-radius = 0.65
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mge2l"]
-albedo_texture = ExtResource("7_u1nq6")
-uv1_scale = Vector3(3, 3, 3)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_okdhr"]
-size = Vector3(1, 0.38, 0.5)
+albedo_texture = ExtResource("5_qdolm")
 
 [node name="corridor_1" type="Node3D"]
-script = ExtResource("1_stnse")
+script = ExtResource("1_585my")
 
 [node name="RemoveUnusedDoors" type="Node" parent="."]
 script = SubResource("GDScript_1tv7g")
@@ -173,7 +159,7 @@ size = Vector3(1, 8, 6)
 transform = Transform3D(1.10556, 0, 1.01377, 0, 1.5, 0, -1.01377, 0, 1.10556, -3.28841, -4.09822, -2.86033)
 shape = SubResource("BoxShape3D_3gfgy")
 
-[node name="treasure_chest_4k" parent="StaticBody3D" instance=ExtResource("3_1dvcf")]
+[node name="treasure_chest_4k" parent="StaticBody3D" instance=ExtResource("3_1ss6y")]
 transform = Transform3D(1.10556, 0, 1.01377, 0, 1.5, 0, -1.01377, 0, 1.10556, -3.2994, -4.49088, -2.90962)
 
 [node name="lightbulb_01_4k" type="Node3D" parent="StaticBody3D"]
@@ -194,39 +180,5 @@ light_energy = 1.5
 spot_range = 35.527
 spot_attenuation = 1.15
 spot_angle = 40.2
-
-[node name="StaticBody3D2" type="StaticBody3D" parent="."]
-
-[node name="detail_barrel2" parent="StaticBody3D2" instance=ExtResource("6_vs6md")]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -2.8565, -4.4571, 2.51497)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8728, -3.65983, 2.54069)
-shape = SubResource("CylinderShape3D_478uw")
-
-[node name="StaticBody3D3" type="StaticBody3D" parent="."]
-
-[node name="Detail-bricks-type-a" type="MeshInstance3D" parent="StaticBody3D3"]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 2.13684, -4.5, 1.8426)
-material_override = SubResource("StandardMaterial3D_mge2l")
-mesh = ExtResource("8_s8mx6")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D3"]
-transform = Transform3D(0.547286, 0, 0.836946, 0, 1, 0, -0.836946, 0, 0.547286, 2.11887, -4.31367, 1.73219)
-shape = SubResource("BoxShape3D_okdhr")
-
-[node name="StaticBody3D4" type="StaticBody3D" parent="."]
-transform = Transform3D(1.41951, 0, 0.484761, 0, 1.5, 0, -0.484761, 0, 1.41951, -2.40734, 2.28092, -0.175573)
-
-[node name="Detail-bricks-type-a" type="MeshInstance3D" parent="StaticBody3D4"]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 2.13684, -4.5, 1.8426)
-material_override = SubResource("StandardMaterial3D_mge2l")
-mesh = ExtResource("8_s8mx6")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D4"]
-transform = Transform3D(0.547286, 0, 0.836946, 0, 1, 0, -0.836946, 0, 0.547286, 2.11887, -4.31367, 1.73219)
-shape = SubResource("BoxShape3D_okdhr")
 
 [connection signal="dungeon_done_generating" from="." to="RemoveUnusedDoors" method="remove_unused_doors"]

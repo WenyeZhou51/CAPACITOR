@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cdf8lpjxddsvr" path="res://Scenes/prefabs/enemy_marker.tscn" id="8_ximhl"]
 [ext_resource type="PackedScene" uid="uid://bh18kskaruq62" path="res://Scenes/prefabs/scrap_marker.tscn" id="9_me5js"]
 [ext_resource type="Texture2D" uid="uid://c4p4wywhawnay" path="res://textures/medival_brick_wall_stair/medieval_red_brick_diff_4k.png" id="10_xdpoc"]
-[ext_resource type="PackedScene" uid="uid://dvleiqfmloahr" path="res://Scenes/prefabs/coolant_marker.tscn" id="11_1qmm7"]
+[ext_resource type="PackedScene" path="res://Scenes/prefabs/coolant_marker.tscn" id="11_1qmm7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vf8wn"]
 albedo_texture = ExtResource("2_kijdn")
@@ -220,6 +220,7 @@ height = 9.0
 radius = 1.0
 
 [node name="medium_room" type="Node3D"]
+transform = Transform3D(0.94387, 0, 0.330317, 0, 1, 0, -0.330317, 0, 0.94387, -4.50384, 0, 0)
 script = ExtResource("1_t55gw")
 size_in_voxels = Vector3i(3, 1, 2)
 min_count = 6
@@ -330,14 +331,14 @@ shape = SubResource("CylinderShape3D_2uuk2")
 [node name="StaticBody3D5" type="StaticBody3D" parent="."]
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="StaticBody3D5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00069958, -0.332223)
+transform = Transform3D(0.939842, 0, 0.34161, 0, 1, 0, -0.34161, 0, 0.939842, 0, -0.00069958, -0.332223)
 material_override = SubResource("StandardMaterial3D_puqfv")
 radius = 1.0
 height = 9.0
 sides = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0100091, 0, -0.270306)
+transform = Transform3D(0.988393, 0, 0.151916, 0, 1, 0, -0.151916, 0, 0.988393, 0.0100093, 0, -0.270306)
 shape = SubResource("CylinderShape3D_5uvlw")
 
 [node name="StaticBody3D6" type="StaticBody3D" parent="."]

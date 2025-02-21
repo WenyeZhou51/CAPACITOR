@@ -230,6 +230,7 @@ shape = SubResource("BoxShape3D_sm83o")
 transform = Transform3D(-0.221315, 1.98601, -0.0824735, 0.364504, 0.122126, 1.96271, 1.95401, 0.202158, -0.375467, -0.561575, -3.9762, -4.80737)
 
 [node name="StaticBody3D6" type="StaticBody3D" parent="."]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -3.16658, 1.80133)
 
 [node name="Node3D" type="CSGCylinder3D" parent="StaticBody3D6"]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, -3.94207, 2.88146)
@@ -238,5 +239,44 @@ radius = 0.3
 height = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.9437, 2.8748)
+shape = SubResource("CylinderShape3D_0mqk3")
+
+[node name="StaticBody3D7" type="StaticBody3D" parent="."]
+transform = Transform3D(0.000486931, -0.3, 0, 0.3, 0.000486931, 0, 0, 0, 0.3, -8.0312, -3.60146, -6.52457)
+
+[node name="Node3D" type="CSGCylinder3D" parent="StaticBody3D7"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, -3.94207, 2.88146)
+material_override = SubResource("StandardMaterial3D_1tv8l")
+radius = 0.3
+height = 0.1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.9437, 2.8748)
+shape = SubResource("CylinderShape3D_0mqk3")
+
+[node name="StaticBody3D9" type="StaticBody3D" parent="."]
+transform = Transform3D(0.000346194, -0.213291, -0.210966, 0.3, 0.000486931, -3.41108e-11, 0.00034242, -0.210966, 0.213291, -8.73854, -3.60146, -3.53074)
+
+[node name="Node3D" type="CSGCylinder3D" parent="StaticBody3D9"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, -3.94207, 2.88146)
+material_override = SubResource("StandardMaterial3D_1tv8l")
+radius = 0.3
+height = 0.1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.9437, 2.8748)
+shape = SubResource("CylinderShape3D_0mqk3")
+
+[node name="StaticBody3D8" type="StaticBody3D" parent="."]
+transform = Transform3D(0.00039977, -0.2463, -0.171279, 0.3, 0.000486931, 0, 0.000278003, -0.171278, 0.2463, -8.76489, -3.60146, -8.05817)
+
+[node name="Node3D" type="CSGCylinder3D" parent="StaticBody3D8"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, -3.94207, 2.88146)
+material_override = SubResource("StandardMaterial3D_1tv8l")
+radius = 0.3
+height = 0.1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D8"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.9437, 2.8748)
 shape = SubResource("CylinderShape3D_0mqk3")
