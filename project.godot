@@ -22,6 +22,7 @@ GameState="*res://Scripts/multiplayer/game_state.gd"
 MultiplayerConfirm="*res://Scripts/multiplayer/multiplayer_confirm.gd"
 MultiplayerPropogate="*res://Scripts/multiplayer/multiplayer_propogate.gd"
 MultiplayerRequest="*res://Scripts/multiplayer/multiplayer_request.gd"
+EarwormManager="*res://Scripts/earworm_manager.gd"
 
 [display]
 

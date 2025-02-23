@@ -215,7 +215,9 @@ func _physics_process(delta: float) -> void:
 		velocity += GRAVITY_FORCE * delta
 	else:
 		if is_jumping:
+			# TODO: add a sound effect here
 			animation_player.play("player_anim/jump_end")
+			EarwormManager.emit_sound(global_position)
 			is_jumping = false
 
 	# Handle jumping

@@ -5,9 +5,9 @@ extends Node
 @export var num_scrap_to_spawn: int = 5
 @export var num_coolant_to_spawn: int = 9
 @export var door_scene: PackedScene
-@export var enemy_scene: PackedScene
-@export var min_spawn_time: float = 15.0
-@export var max_spawn_time: float = 30.0
+@export var enemy_scenes: Array[PackedScene]
+@export var min_spawn_time: float = 1 # 15.0
+@export var max_spawn_time: float = 1 # 30.0
 @export var max_enemies: int = 10  # Maximum allowed simultaneous enemies
 var current_enemies: int = 0       # Track current enemy count
 "num_scrap_to_spawn"
@@ -32,8 +32,8 @@ func spawn_enemy():
 	if current_enemies >= max_enemies:
 		return  # Don't spawn if we're at capacity
 		
-	if not enemy_scene:
-		push_warning("No enemy scene configured in GameManager")
+	if not enemy_scenes:
+		push_warning("No enemy scenes configured in GameManager")
 		return
 		
 	var enemy_markers = get_tree().get_nodes_in_group("enemy_marker")
@@ -45,8 +45,8 @@ func spawn_enemy():
 	# Pick a random marker
 	var random_marker = enemy_markers[randi() % enemy_markers.size()]
 	
-	# Instance the enemy
-	var enemy_instance = enemy_scene.instantiate()
+	# Instance a random enemy from enemy list
+	var enemy_instance = enemy_scenes[randi() % enemy_scenes.size()].instantiate()
 	items_node.add_child(enemy_instance, true)
 	enemy_instance.global_position = random_marker.global_position
 	current_enemies += 1
