@@ -35,10 +35,16 @@ offset_right = 1610.0
 offset_bottom = 1004.0
 
 [node name="Start" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 0.843137)
 theme_override_font_sizes/font_size = 90
 text = "START"
+
+[node name="Multiplayer" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 90
+text = "MULTIPLAYER"
 
 [node name="Options" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
 layout_mode = 2
@@ -50,13 +56,8 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 90
 text = "QUIT"
 
-[node name="Multiplayer" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 90
-text = "MULTIPLAYER"
-
 [connection signal="button_down" from="MarginContainer/TextureRect/VBoxContainer/Start" to="." method="_on_start_button_down"]
 [connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Multiplayer" to="." method="_on_multiplayer_pressed"]
 [connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
-[connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Multiplayer" to="." method="_on_multiplayer_pressed"]

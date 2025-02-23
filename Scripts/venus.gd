@@ -13,7 +13,7 @@ extends CharacterBody3D
 
 # State variables
 var player: CharacterBody3D
-var animation_player: AnimationPlayer
+#var animation_player: AnimationPlayer
 var agent: NavigationAgent3D
 var local_velocity: Vector3 = Vector3.ZERO
 var is_walking: bool = false
@@ -39,9 +39,9 @@ func _ready() -> void:
 	timer.start()
 	
 	# Node initialization debug
-	animation_player = get_node("Venus/AnimationPlayer")
+	#animation_player = get_node("Venus/AnimationPlayer")
 	agent = get_node("NavigationAgent3D")
-	print("[VENUS] Nodes initialized - AnimationPlayer: ", animation_player, " | Agent: ", agent)
+	#print("[VENUS] Nodes initialized - AnimationPlayer: ", animation_player, " | Agent: ", agent)
 	
 	await get_tree().physics_frame
 	print("[VENUS] Physics frame awaited")
@@ -63,8 +63,8 @@ func _ready() -> void:
 
 	
 	# Animation debug
-	if animation_player:
-		animation_player.speed_scale = chase_animation_speed
+	#if animation_player:
+		#animation_player.speed_scale = chase_animation_speed
 		#print("[VENUS] Animation speed set to: ", chase_animation_speed)
 
 	
@@ -182,15 +182,15 @@ func handle_animation() -> void:
 	if should_walk and not is_walking:
 		#print("[ANIMATION] Starting walk animation")
 		is_walking = true
-		if animation_player:
-			#print("[ANIMATION] Playing 'Walking'")
-			animation_player.play("Walking")
+		#if animation_player:
+			##print("[ANIMATION] Playing 'Walking'")
+			#animation_player.play("Walking")
 
 	elif not should_walk and is_walking:
 		#print("[ANIMATION] Stopping animation")
 		is_walking = false
-		if animation_player:
-			animation_player.stop()
+		#if animation_player:
+			#animation_player.stop()
 
 
 
