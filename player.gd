@@ -28,6 +28,8 @@ signal inv_high(pI, cI, name)
 @export var max_noise_amount: float = 0.13
 @export var min_scan_line_amount: float = 0.5
 @export var max_scan_line_amount: float = 1.0
+@export var player_mesh: GeometryInstance3D
+@export var player_colors = [Color.RED, Color.BLUE] # , Color.WHITE, Color.GREEN, Color.YELLOW
 
 @export var quota: int = 600 ## REPLACE WITH MULT MANAGER QUOTA
 
@@ -87,7 +89,14 @@ func _ready():
 		print("Remote player: camera disabled.")
 		
 
-	
+func set_color(idx: int) -> void:
+	print("Materials: ", player_mesh.get_surface_override_material_count())
+	#var material = player_mesh.get_surface_override_material(1)
+	#material.albedo_color = player_colors[idx]
+	#player_mesh.set_surface_override_material(1, material)
+	var player_color = player_colors[idx % len(player_colors)]
+	print("Color set to ", player_color)
+	player_mesh.material_override.albedo_color = player_color
 
 func _input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return
@@ -360,6 +369,9 @@ func take_damage(amount: int):
 		
 	else:
 		update_health_indicator()
+		
+func death_effect():
+	animation_player.play("player_anim/die")
 
 func end_invincibility() -> void:
 	is_invincible = false
