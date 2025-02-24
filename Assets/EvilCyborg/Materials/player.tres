@@ -4,10 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bbl64k3jsj0e2" path="res://Assets/EvilCyborg/Textures/BossNormalMap.png" id="2_t7kj1"]
 
 [resource]
-<<<<<<< HEAD
-=======
 albedo_color = Color(0.946135, 0.799295, 0.836935, 1)
->>>>>>> master
 albedo_texture = ExtResource("1_82yfr")
 normal_enabled = true
 normal_texture = ExtResource("2_t7kj1")

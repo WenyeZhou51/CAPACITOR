@@ -63,13 +63,10 @@ func convert_staticbody_to_rigidbody(static_body: StaticBody3D, world: Node3D):
 	rigidbody.Price = static_body.Price
 	rigidbody.type = static_body.type
 	
-<<<<<<< HEAD
-=======
 	var mesh_instance = static_body.get_node_or_null("MeshInstance3D")
 	if mesh_instance:
 		mesh_instance.visible = true
 	
->>>>>>> master
 	var items_node = world.get_node("items")
 	items_node.add_child(rigidbody)
 	# Optionally free the old StaticBody3D to clean up memory

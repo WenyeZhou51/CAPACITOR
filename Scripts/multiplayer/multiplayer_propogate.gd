@@ -12,10 +12,7 @@ func propogate_item_interact(player_name: String, item_name: String):
 	var player = get_tree().get_root().get_node("Level/players/" + player_name)
 	if(item_name == "planter_box_01_4k"):
 		item = get_tree().get_root().get_node("Level/NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D2/planter_box_01_4k")
-<<<<<<< HEAD
-=======
 	print("interacting with", item)
->>>>>>> master
 	
 	if (not item):
 		print_debug("could not find item " + item_name)
@@ -23,10 +20,6 @@ func propogate_item_interact(player_name: String, item_name: String):
 	item.interact(player)
 
 @rpc("authority", "call_local")
-<<<<<<< HEAD
-func propogate_flash_toggle(item_name: String):
-	var item = get_tree().get_current_scene().find_child(item_name, true)
-=======
 func propagate_current_slot(player_id: int, new_slot: int):
 	var player = get_tree().get_root().get_node("Level/players/" + str(player_id))
 	if player:
@@ -72,7 +65,6 @@ func changeHolding(player_name: String):
 func propogate_flash_toggle(player_name: String, item_name: String):
 	var player = get_tree().get_root().get_node("Level/players/" + player_name)
 	var item = player.get_node("Head/ItemSocket").get_child(0)
->>>>>>> master
 	var light = item.get_node("Model").get_node("FlashLight")
 	light.visible = !light.visible
 
@@ -87,25 +79,15 @@ func propogate_item_drop(player_name: String):
 		GameState.change_ui.emit(player.current_slot, "empty")
 	player.inv_size -= 1
 	player.is_holding = false
-<<<<<<< HEAD
-	
-	# Add sound emission for dropping scrap with radius 20
-	EarwormManager.emit_sound(player.global_position, 20.0)
-=======
->>>>>>> master
 
 @rpc("authority", "call_local")
 func propogate_player_dead(player_name: String):
 	var player: Player = get_tree().get_root().get_node("Level/players/" + player_name)
 	print_debug("PLAYER DEAD ", player_name, multiplayer.get_unique_id(), GameState.alive_count)
-<<<<<<< HEAD
-	player.dead = true;
-=======
 	if player.dead:
 		return
 	
 	player.dead = true;
 	player.death_effect()
->>>>>>> master
 	GameState.reduce_alive_count();
 	GameState.check_game_end();

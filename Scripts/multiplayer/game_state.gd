@@ -7,10 +7,7 @@ var alive_count = 0
 signal team_score_changed
 signal end_game
 signal change_ui
-<<<<<<< HEAD
-=======
 signal inv_high
->>>>>>> master
 
 func get_quota() -> int:
 	return _quota

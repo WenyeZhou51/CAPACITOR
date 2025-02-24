@@ -40,10 +40,7 @@ func interact(player: Player) -> void:
 	
 	if (player.inv_size == 4):
 		if (str(player.get_tree().get_multiplayer().get_unique_id()) == player.name):
-<<<<<<< HEAD
 			print("ui test", static_candidate.type)
-=======
->>>>>>> master
 			GameState.change_ui.emit(player.current_slot, static_candidate.type)
 		player.inventory[player.current_slot] = static_candidate
 	
@@ -51,18 +48,10 @@ func interact(player: Player) -> void:
 		for i in range(player.inventory.size()):
 			if player.inventory[i] == null:
 				player.inventory[i] = static_candidate
-<<<<<<< HEAD
-				player.inv_high.emit(player.current_slot, i)
-				player.current_slot = i
-				player.inv_size += 1
-				if (str(player.get_tree().get_multiplayer().get_unique_id()) == player.name):
-					print("ui test", static_candidate.type)
-=======
 				player.inv_high.emit(player.current_slot, i, "name")
 				player.current_slot = i
 				player.inv_size += 1
 				if (str(player.get_tree().get_multiplayer().get_unique_id()) == player.name):
->>>>>>> master
 					GameState.change_ui.emit(player.current_slot, static_candidate.type)
 				break
 		player.is_holding = true
@@ -95,12 +84,9 @@ func convert_rigidbody_to_staticbody(rigidbody: RigidBody3D) -> StaticBody3D:
 	static_body.set_script(drop_script)
 	static_body.Price = rigidbody.Price
 	static_body.type = rigidbody.type
-<<<<<<< HEAD
-=======
 	var mesh_instance = static_body.get_node_or_null("MeshInstance3D")
 	if mesh_instance:
 		mesh_instance.visible = false
->>>>>>> master
 	# Optionally free the old RigidBody3D to clean up memory
 	rigidbody.queue_free()
 	

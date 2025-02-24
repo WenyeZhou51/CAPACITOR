@@ -19,11 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://dm8q140i8u3ih" path="res://Scenes/prefabs/enemies/enemy_earworm.tscn" id="9_vw5pj"]
 [ext_resource type="Script" path="res://Scenes/GameManager.gd" id="10_2bpfs"]
 [ext_resource type="AudioStream" uid="uid://bc2qvfrbnwvn6" path="res://audio/demoLevel.wav" id="11_wadk3"]
-<<<<<<< HEAD
-[ext_resource type="PackedScene" path="res://imgs/inv_slot_ui.tscn" id="11_yg2qu"]
-=======
 [ext_resource type="PackedScene" uid="uid://cli3ed0vm0drp" path="res://imgs/inv_slot_ui.tscn" id="11_yg2qu"]
->>>>>>> master
 [ext_resource type="PackedScene" uid="uid://dhmtymlk3gb34" path="res://Scenes/prefabs/items/flashlight.tscn" id="13_1s1s2"]
 [ext_resource type="Shader" path="res://shaders/bayer.gdshader" id="14_hrlu7"]
 [ext_resource type="PackedScene" uid="uid://cjdanhbr7qd50" path="res://Scenes/prefabs/items/scrap1.tscn" id="14_q11nm"]
@@ -178,12 +174,6 @@ room_cost_at_end_for_required_doors = 1.0
 [node name="start_room" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("8_n1yd6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 20, 0)
 
-<<<<<<< HEAD
-[node name="Earworm" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("9_vw5pj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.1159, 15.5, 0.766098)
-
-=======
->>>>>>> master
 [node name="Shader" type="MeshInstance3D" parent="."]
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_rdfmn")

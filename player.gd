@@ -10,10 +10,6 @@ const STAMINA_DRAIN_RATE = 0.01  #should be 0.3. for debug 0.01 Rate at which st
 const STAMINA_REGEN_RATE = 0.2  # Rate at which stamina regenerates while not sprinting
 const GRAVITY_FORCE = Vector3.DOWN * 9.8 * 2  # Gravity vector
 const STAMINA_THRESHOLD = 0.5  # Buffer threshold for stamina management
-<<<<<<< HEAD
-const SPRINT_SOUND_INTERVAL = 0.1  # Sound emission interval while sprinting
-=======
->>>>>>> master
 
 signal value_changed(new_value)
 signal change_ui(idx, type)
@@ -32,11 +28,8 @@ signal inv_high(pI, cI, name)
 @export var max_noise_amount: float = 0.13
 @export var min_scan_line_amount: float = 0.5
 @export var max_scan_line_amount: float = 1.0
-<<<<<<< HEAD
-=======
 @export var player_mesh: GeometryInstance3D
 @export var player_colors = [Color.RED, Color.BLUE] # , Color.WHITE, Color.GREEN, Color.YELLOW
->>>>>>> master
 
 @export var quota: int = 600 ## REPLACE WITH MULT MANAGER QUOTA
 
@@ -68,11 +61,6 @@ var popup_instance: Node
 var dead = false
 @onready var camera: Camera3D = $Head/Camera3D
 
-<<<<<<< HEAD
-var sprint_sound_timer: float = 0.0
-
-=======
->>>>>>> master
 func _ready():
 	set_multiplayer_authority(str(name).to_int())
 	add_to_group("players")
@@ -80,11 +68,7 @@ func _ready():
 	interact_label = get_node("/root/Level/UI/InteractLabel")
 	texture_rect = get_node("/root/Level/UI/TextureRect")
 	crt_shader_material = texture_rect.material
-<<<<<<< HEAD
-	var msg = "Collect a total of " + str(GameState.get_quota())
-=======
 	var msg = "Collect a total scrap value of: " + str(GameState.get_quota())
->>>>>>> master
 	popup_instance = popup_scene.instantiate()
 	popup_instance.popup_text = msg
 	add_child(popup_instance)
@@ -104,10 +88,6 @@ func _ready():
 		camera.current = false
 		print("Remote player: camera disabled.")
 		
-<<<<<<< HEAD
-
-	
-=======
 func set_color(idx: int) -> void:
 	#print("Materials: ", player_mesh.get_surface_override_material_count())
 	#var material = player_mesh.get_surface_override_material(1)
@@ -116,7 +96,6 @@ func set_color(idx: int) -> void:
 	var player_color = player_colors[idx % len(player_colors)]
 	print("Color set to ", player_color)
 	player_mesh.material_override.albedo_color = player_color
->>>>>>> master
 
 func _input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return
@@ -133,40 +112,25 @@ func _input(event: InputEvent) -> void:
 	else:
 		if event.is_action_pressed("Use"):
 			var current_item = inventory[current_slot]
-<<<<<<< HEAD
-			print(current_item)
-			if current_item and current_item.type == "flash":
-=======
 			if current_item and current_item.type == "flashlight":
->>>>>>> master
 				MultiplayerRequest.request_flash_toggle(current_item.name)
 		if event is InputEventMouseButton:
 			if event.pressed:
 				## Check if user scrolled up (4) or down (5)
 				if event.button_index == 4:
 					current_slot = (current_slot + 1) % inventory.size()
-<<<<<<< HEAD
-					var current_item = inventory[current_slot]
-					_update_equipped_item()
-=======
 					MultiplayerRequest.update_current_slot.rpc_id(1, current_slot)
 					var current_item = inventory[current_slot]
 					MultiplayerRequest.changeHolding()
->>>>>>> master
 					if(current_item):
 						emit_signal("inv_high", (current_slot - 1 + inventory.size()) % inventory.size(), current_slot, current_item.type)
 					else:
 						emit_signal("inv_high", (current_slot - 1 + inventory.size()) % inventory.size(), current_slot, "")
 				elif event.button_index == 5:  # Scroll wheel down
 					current_slot = (current_slot - 1 + inventory.size()) % inventory.size()
-<<<<<<< HEAD
-					var current_item = inventory[current_slot]
-					_update_equipped_item()
-=======
 					MultiplayerRequest.update_current_slot.rpc_id(1, current_slot)
 					var current_item = inventory[current_slot]
 					MultiplayerRequest.changeHolding()
->>>>>>> master
 					if(current_item):
 						emit_signal("inv_high", (current_slot + 1) % inventory.size(), current_slot, current_item.type)
 					else:
@@ -185,11 +149,7 @@ func toggle_console() -> void:
 		#clear crt shader effect completely
 		texture_rect.visible = false
 		camera_locked = true
-<<<<<<< HEAD
-		_update_equipped_item()
-=======
 		MultiplayerRequest.changeHolding()
->>>>>>> master
 
 		print("shader disabled")
 	else:
@@ -198,48 +158,10 @@ func toggle_console() -> void:
 		texture_rect.visible = true
 		update_health_indicator()
 		camera_locked = false
-<<<<<<< HEAD
-		_update_equipped_item()
-		# Reset camera to follow head directly
-		camera.global_transform = $Head.global_transform
-
-func _update_equipped_item() -> void:
-	"""
-	Equip (visually attach) whatever item is in `current_slot`, 
-	and unequip any previously equipped item.
-	"""
-	var item_socket = get_node("Head/ItemSocket")
-	var old_item = null
-	if(item_socket.get_child_count() > 0):
-		old_item = item_socket.get_child(0)
-	var new_item = inventory[current_slot]
-	if old_item:
-		if(old_item.type == "flash"):
-			var light_node = old_item.get_node("Model/FlashLight")
-			if light_node and light_node is Light3D:
-				light_node.visible = false
-		item_socket.remove_child(old_item)
-		var container = get_node("InventoryContainer")
-		if container:
-			container.add_child(old_item)  # Store the old item safely in the inventory container
-		else:
-			print("InventoryContainer not found. Old item may not be stored correctly.")
-	if new_item:
-		if new_item.get_parent():
-			new_item.get_parent().remove_child(new_item)
-		if(new_item.type == "flash"):
-			var light_node = new_item.get_node("Model/FlashLight")
-			if light_node and light_node is Light3D:
-				light_node.visible = true
-		item_socket.add_child(new_item)
-		new_item.transform = Transform3D()
-
-=======
 		MultiplayerRequest.changeHolding()
 		# Reset camera to follow head directly
 		camera.global_transform = $Head.global_transform
 
->>>>>>> master
 func _physics_process(delta: float) -> void:
 	if (dead): return
 	if not is_multiplayer_authority(): return
@@ -271,13 +193,7 @@ func _physics_process(delta: float) -> void:
 		velocity += GRAVITY_FORCE * delta
 	else:
 		if is_jumping:
-<<<<<<< HEAD
-			# TODO: add a sound effect here
 			animation_player.play("player_anim/jump_end")
-			EarwormManager.emit_sound(global_position, 15.0)
-=======
-			animation_player.play("player_anim/jump_end")
->>>>>>> master
 			is_jumping = false
 
 	# Handle jumping
@@ -294,15 +210,6 @@ func _physics_process(delta: float) -> void:
 		elif is_running and current_stamina > 0:
 			movement_speed = RUN_SPEED
 			current_stamina -= STAMINA_DRAIN_RATE * delta
-<<<<<<< HEAD
-			# Emit running sound more frequently
-			sprint_sound_timer += delta
-			if sprint_sound_timer >= SPRINT_SOUND_INTERVAL:
-				sprint_sound_timer = 0.0
-				# Changed radius from 10.0 to 20.0
-				EarwormManager.emit_sound(global_position, 20.0)
-=======
->>>>>>> master
 		else:
 			is_running = false
 			movement_speed = WALK_SPEED
@@ -347,10 +254,6 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("Drop") and is_holding:
 		MultiplayerRequest.request_item_drop()
-<<<<<<< HEAD
-		EarwormManager.emit_sound(global_position, 25.0)
-=======
->>>>>>> master
 	
 	# Clamp stamina to valid range
 	current_stamina = clamp(current_stamina, 0.0, 1.5)
@@ -404,15 +307,7 @@ func update_health_indicator():
 		crt_shader_material.set("shader_param/noise_amount", noise_amount)
 		crt_shader_material.set("shader_param/scan_line_amount", scan_line_amount)
 
-<<<<<<< HEAD
-func take_damage(amount: float):
-	if (name != str(multiplayer.get_unique_id())):
-		return
-	if (dead): return
-	dead = true
-=======
 func take_damage(amount: int):
->>>>>>> master
 	# If player is invincible, ignore the damage
 	if is_invincible:
 		return
@@ -437,25 +332,15 @@ func take_damage(amount: int):
 		
 	else:
 		update_health_indicator()
-<<<<<<< HEAD
-	
-	# Reset movement-critical states
-	camera_locked = false
-	using_console = false
-=======
 
 func death_effect():
 	animation_player.play("player_anim/die")
->>>>>>> master
 
 func end_invincibility() -> void:
 	is_invincible = false
 func _on_invincibility_timer_timeout():
 	is_invincible = false
-<<<<<<< HEAD
 
 func apply_knockback(force: Vector3):
 	velocity += force
 	move_and_slide()
-=======
->>>>>>> master

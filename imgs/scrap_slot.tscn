@@ -2,21 +2,12 @@
 
 [ext_resource type="Texture2D" uid="uid://cuv75j6t84l6k" path="res://imgs/Screenshot 2025-02-02 155009.png" id="1_y2djm"]
 
-<<<<<<< HEAD
-[node name="scrap_slot" type="Panel"]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(100, 100)
-offset_top = -1.0
-offset_right = 99.0
-offset_bottom = 91.0
-=======
 [node name="scrap_slot" type="ColorRect"]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(100, 100)
 offset_top = -1.0
 offset_right = 100.0
 offset_bottom = 99.0
->>>>>>> master
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(49.6611, 45.9693)

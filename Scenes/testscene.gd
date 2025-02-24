@@ -20,10 +20,7 @@ func _add_player_to_game(id: int):
 	var player_instance = multiplayer_scene.instantiate()
 	print_debug("Player instance created")
 	player_instance.name = str(id)
-<<<<<<< HEAD
-=======
 	player_instance.set_color(id)
->>>>>>> master
 	
 	var spawn_position = Vector3(0, 0, 0)
 	_players_spawn_node.add_child(player_instance, true)

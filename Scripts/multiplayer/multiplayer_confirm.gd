@@ -9,12 +9,6 @@ func confirm_team_score_update(val: int):
 func confirm_item_interact(item_name: String):
 	var player_name = str(multiplayer.get_remote_sender_id());
 	MultiplayerPropogate.propogate_item_interact.rpc(player_name, item_name)
-<<<<<<< HEAD
-
-@rpc("any_peer", "call_local")
-func confirm_flash_toggle(item_name: String):
-	MultiplayerPropogate.propogate_flash_toggle.rpc(item_name)
-=======
 	
 @rpc("any_peer", "call_local")
 func confirm_flash_toggle(item_name: String):
@@ -33,7 +27,6 @@ func confirm_current_slot(new_slot: int):
 	if player:
 		player.current_slot = new_slot
 		MultiplayerPropogate.propagate_current_slot.rpc(sender_id, new_slot)
->>>>>>> master
 
 @rpc("any_peer", "call_local")
 func confirm_item_drop():
