@@ -1,0 +1,212 @@
+[gd_scene load_steps=35 format=3 uid="uid://c8y6hkpnlip1g"]
+
+[ext_resource type="Script" path="res://Scenes/testscene.gd" id="1_v17iy"]
+[ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
+[ext_resource type="PackedScene" uid="uid://dt2qtx8apgmb0" path="res://Scenes/prefabs/items/scrap2.tscn" id="4_occg4"]
+[ext_resource type="PackedScene" uid="uid://5vmsy0mgcrox" path="res://Scenes/prefabs/items/scrap3.tscn" id="5_kvhlf"]
+[ext_resource type="PackedScene" uid="uid://cbn467wek4y8o" path="res://Scenes/prefabs/items/coolant.tscn" id="5_p0nx2"]
+[ext_resource type="Script" path="res://Scenes/navigation_region_3d.gd" id="6_jds6y"]
+[ext_resource type="PackedScene" uid="uid://c07usi2nurnmb" path="res://Scenes/prefabs/Door.tscn" id="6_rrefc"]
+[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonGenerator3D.gd" id="6_s8vmo"]
+[ext_resource type="PackedScene" uid="uid://7pskmagldtnr" path="res://rooms/stair_1.tscn" id="7_d3uit"]
+[ext_resource type="PackedScene" uid="uid://ch0yrvh1wr6nv" path="res://rooms/small_room_1.tscn" id="7_fiwcu"]
+[ext_resource type="PackedScene" uid="uid://btqev772fc7bl" path="res://rooms/start_room.tscn" id="8_n1yd6"]
+[ext_resource type="PackedScene" uid="uid://c6gmwiknceior" path="res://rooms/medium_room.tscn" id="8_osxs0"]
+[ext_resource type="Script" path="res://Scenes/ui.gd" id="9_76pp2"]
+[ext_resource type="PackedScene" uid="uid://bjjrllm15flh4" path="res://Scenes/prefabs/enemies/enemy_venus.tscn" id="9_js7c2"]
+[ext_resource type="PackedScene" uid="uid://cisl75a2ha5p8" path="res://rooms/corridor_1.tscn" id="9_svjm5"]
+[ext_resource type="Script" path="res://Scripts/earworm_manager.gd" id="9_t504a"]
+[ext_resource type="PackedScene" uid="uid://dm8q140i8u3ih" path="res://Scenes/prefabs/enemies/enemy_earworm.tscn" id="9_vw5pj"]
+[ext_resource type="Script" path="res://Scenes/GameManager.gd" id="10_2bpfs"]
+[ext_resource type="AudioStream" uid="uid://bc2qvfrbnwvn6" path="res://audio/demoLevel.wav" id="11_wadk3"]
+[ext_resource type="PackedScene" uid="uid://cli3ed0vm0drp" path="res://imgs/inv_slot_ui.tscn" id="11_yg2qu"]
+[ext_resource type="PackedScene" uid="uid://dhmtymlk3gb34" path="res://Scenes/prefabs/items/flashlight.tscn" id="13_1s1s2"]
+[ext_resource type="Shader" path="res://shaders/bayer.gdshader" id="14_hrlu7"]
+[ext_resource type="PackedScene" uid="uid://cjdanhbr7qd50" path="res://Scenes/prefabs/items/scrap1.tscn" id="14_q11nm"]
+[ext_resource type="PackedScene" uid="uid://bi3tstfh1x606" path="res://rooms/small_room_2.tscn" id="19_o6rck"]
+[ext_resource type="PackedScene" uid="uid://bwoto031wapot" path="res://Scenes/pause_menu.tscn" id="20_chau2"]
+[ext_resource type="Script" path="res://Scenes/electricity_manager.gd" id="22_fg5vs"]
+[ext_resource type="PackedScene" uid="uid://c1ys3d3anbwdu" path="res://Scenes/Spawn Points/player_spawn_point.tscn" id="24_gf8n3"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_binvk"]
+sky_top_color = Color(0.0101014, 0.0122771, 0.0165181, 1)
+sky_horizon_color = Color(0.125647, 0.134531, 0.143464, 1)
+ground_bottom_color = Color(0.0348853, 0.0173383, 0.0137201, 1)
+ground_horizon_color = Color(0.0509804, 0.0235294, 0.027451, 1)
+
+[sub_resource type="Sky" id="Sky_mema1"]
+sky_material = SubResource("ProceduralSkyMaterial_binvk")
+
+[sub_resource type="Environment" id="Environment_0737e"]
+background_mode = 5
+background_energy_multiplier = 16.0
+sky = SubResource("Sky_mema1")
+tonemap_mode = 3
+sdfgi_enabled = true
+glow_enabled = true
+volumetric_fog_density = 0.1
+volumetric_fog_albedo = Color(0.984314, 1, 1, 1)
+volumetric_fog_emission = Color(0.0196078, 0, 0, 1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_0to3f"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_t4gef"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_rdfmn"]
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xnko0"]
+render_priority = 0
+shader = ExtResource("14_hrlu7")
+shader_parameter/levels = 8
+shader_parameter/brightness = 1.5
+shader_parameter/gamma = 0.8
+shader_parameter/posterization_strength = 0.8
+shader_parameter/dark_preservation = 0.05
+shader_parameter/highlight_preservation = 0.1
+
+[node name="Level" type="Node3D"]
+script = ExtResource("1_v17iy")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0737e")
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("10_2bpfs")
+scrap_scenes = Array[PackedScene]([ExtResource("14_q11nm"), ExtResource("4_occg4"), ExtResource("5_kvhlf")])
+coolant_scene = ExtResource("5_p0nx2")
+door_scene = ExtResource("6_rrefc")
+enemy_scenes = Array[PackedScene]([ExtResource("9_vw5pj"), ExtResource("9_js7c2")])
+max_enemies = 25
+
+[node name="EarwormManager" type="Node" parent="."]
+script = ExtResource("9_t504a")
+
+[node name="GlobalAudio" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.6726, 39.7102, 2.79768)
+stream = ExtResource("11_wadk3")
+attenuation_model = 3
+autoplay = true
+max_distance = 3967.43
+
+[node name="UI" parent="." instance=ExtResource("2_j6u47")]
+script = ExtResource("9_76pp2")
+
+[node name="TextureRect" parent="UI" index="2"]
+z_index = 10
+texture = SubResource("ViewportTexture_0to3f")
+
+[node name="Label" type="Label" parent="UI"]
+z_index = 20
+layout_mode = 0
+offset_left = 178.0
+offset_top = 34.0
+offset_right = 580.0
+offset_bottom = 97.0
+theme_override_font_sizes/font_size = 45
+text = "Remaining Quota: "
+
+[node name="Label2" type="Label" parent="UI"]
+z_index = 20
+layout_mode = 0
+offset_left = 590.0
+offset_top = 35.0
+offset_right = 667.0
+offset_bottom = 98.0
+theme_override_font_sizes/font_size = 45
+text = "666"
+
+[node name="Label3" type="Label" parent="UI"]
+z_index = 20
+layout_mode = 0
+offset_left = 170.0
+offset_top = 179.0
+offset_right = 390.0
+offset_bottom = 292.0
+theme_override_font_sizes/font_size = 40
+
+[node name="ninepatch" type="NinePatchRect" parent="UI"]
+z_index = 20
+layout_mode = 0
+offset_left = 200.0
+offset_top = 300.0
+offset_right = 240.0
+offset_bottom = 340.0
+
+[node name="GridContainer" type="GridContainer" parent="UI/ninepatch"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Inv_slot_UI" parent="UI/ninepatch/GridContainer" instance=ExtResource("11_yg2qu")]
+layout_mode = 2
+
+[node name="Inv_slot_UI2" parent="UI/ninepatch/GridContainer" instance=ExtResource("11_yg2qu")]
+layout_mode = 2
+
+[node name="Inv_slot_UI3" parent="UI/ninepatch/GridContainer" instance=ExtResource("11_yg2qu")]
+layout_mode = 2
+
+[node name="Inv_slot_UI4" parent="UI/ninepatch/GridContainer" instance=ExtResource("11_yg2qu")]
+layout_mode = 2
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_t4gef")
+script = ExtResource("6_jds6y")
+bake_delay_frames = 1
+dungeon_generator_path = NodePath("DungeonGenerator3D")
+
+[node name="DungeonGenerator3D" type="Node3D" parent="NavigationRegion3D"]
+script = ExtResource("6_s8vmo")
+room_scenes = Array[PackedScene]([ExtResource("7_fiwcu"), ExtResource("8_osxs0"), ExtResource("7_d3uit"), ExtResource("19_o6rck")])
+corridor_room_scene = ExtResource("9_svjm5")
+dungeon_size = Vector3i(10, 5, 10)
+junctions = 30
+room_separation_force = 3.0
+max_retries = 20
+max_safe_iterations = 500
+heuristic_scale = 3.0
+corridor_cost_multiplier = 2.5
+room_cost_multiplier = 0.05
+room_cost_at_end_for_required_doors = 1.0
+
+[node name="start_room" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("8_n1yd6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 20, 0)
+
+[node name="Shader" type="MeshInstance3D" parent="."]
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_rdfmn")
+surface_material_override/0 = SubResource("ShaderMaterial_xnko0")
+
+[node name="PauseMenu" parent="." instance=ExtResource("20_chau2")]
+
+[node name="Electricity Manager" type="Node" parent="."]
+script = ExtResource("22_fg5vs")
+
+[node name="players" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.2383, 18.234, -4.81146)
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/player.tscn")
+spawn_path = NodePath("../players")
+
+[node name="items" type="Node3D" parent="."]
+
+[node name="Flashlight" parent="items" instance=ExtResource("13_1s1s2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.9189, 16.0335, 0)
+
+[node name="scrap1" parent="items" instance=ExtResource("14_q11nm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.7764, 16.997, 0)
+
+[node name="ItemSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/prefabs/items/scrap1.tscn", "res://Scenes/prefabs/items/scrap2.tscn", "res://Scenes/prefabs/items/scrap3.tscn", "res://Scenes/prefabs/Door.tscn", "res://Scenes/prefabs/items/coolant.tscn", "res://Scenes/prefabs/enemies/enemy_earworm.tscn", "res://Scenes/prefabs/enemies/enemy_venus.tscn")
+spawn_path = NodePath("../items")
+
+[node name="Player Spawn Point" parent="." instance=ExtResource("24_gf8n3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.3085, 19.1879, 1.94595)
+
+[connection signal="bake_finished" from="NavigationRegion3D" to="GameManager" method="_on_navigation_region_3d_bake_finished"]
+[connection signal="done_generating" from="NavigationRegion3D/DungeonGenerator3D" to="NavigationRegion3D" method="on_dungeon_done_generating"]
+
+[editable path="UI"]

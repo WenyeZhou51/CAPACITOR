@@ -1,0 +1,50 @@
+[gd_scene load_steps=3 format=3 uid="uid://6vdrcukrj72y"]
+
+[ext_resource type="Texture2D" uid="uid://cuh28gw618cnn" path="res://imgs/Screenshot 2025-01-27 000706.png" id="1_ke4gh"]
+[ext_resource type="Script" path="res://Scenes/gameover.gd" id="1_vasx5"]
+
+[node name="Win" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vasx5")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 2.0
+offset_right = 1934.0
+offset_bottom = 1092.0
+texture = ExtResource("1_ke4gh")
+
+[node name="Label" type="Label" parent="TextureRect"]
+layout_mode = 0
+offset_left = 783.0
+offset_top = 412.0
+offset_right = 1272.0
+offset_bottom = 536.0
+theme_override_font_sizes/font_size = 90
+text = "Congrats!"
+
+[node name="Button" type="Button" parent="TextureRect"]
+layout_mode = 0
+offset_left = 848.0
+offset_top = 685.0
+offset_right = 1128.0
+offset_bottom = 762.0
+theme_override_font_sizes/font_size = 30
+text = "Main Menu"
+
+[node name="Label2" type="Label" parent="TextureRect"]
+layout_mode = 0
+offset_left = 839.0
+offset_top = 567.0
+offset_right = 1190.0
+offset_bottom = 602.0
+theme_override_font_sizes/font_size = 25
+text = "You have met the quota!"
+
+[connection signal="pressed" from="TextureRect/Button" to="." method="_on_button_pressed"]

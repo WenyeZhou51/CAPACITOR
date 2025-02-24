@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://d0cckbs00lcwj"]
+
+[ext_resource type="Texture2D" uid="uid://fp2cvcgnc45c" path="res://Assets/EvilCyborg/Textures/BossDiffuse.tga" id="1_82yfr"]
+[ext_resource type="Texture2D" uid="uid://bbl64k3jsj0e2" path="res://Assets/EvilCyborg/Textures/BossNormalMap.png" id="2_t7kj1"]
+
+[resource]
+albedo_color = Color(0.946135, 0.799295, 0.836935, 1)
+albedo_texture = ExtResource("1_82yfr")
+normal_enabled = true
+normal_texture = ExtResource("2_t7kj1")

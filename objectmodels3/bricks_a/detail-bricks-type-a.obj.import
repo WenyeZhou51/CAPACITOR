@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://c7ouyxu4g67jv"
+path="res://.godot/imported/detail-bricks-type-a.obj-da430fcb391054d5605f7f09dcf0c1d0.mesh"
+
+[deps]
+
+files=["res://.godot/imported/detail-bricks-type-a.obj-da430fcb391054d5605f7f09dcf0c1d0.mesh"]
+
+source_file="res://objectmodels3/bricks_a/detail-bricks-type-a.obj"
+dest_files=["res://.godot/imported/detail-bricks-type-a.obj-da430fcb391054d5605f7f09dcf0c1d0.mesh", "res://.godot/imported/detail-bricks-type-a.obj-da430fcb391054d5605f7f09dcf0c1d0.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

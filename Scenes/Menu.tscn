@@ -1,0 +1,63 @@
+[gd_scene load_steps=3 format=3 uid="uid://q202lrglap61"]
+
+[ext_resource type="Script" path="res://Scenes/menu.gd" id="1_hqwk4"]
+[ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_r4oa5"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1059.0
+offset_top = -380.0
+offset_right = -1177.0
+offset_bottom = -458.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hqwk4")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_left = 755.0
+offset_top = 320.0
+offset_right = 825.0
+offset_bottom = 421.0
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+texture = ExtResource("2_r4oa5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TextureRect"]
+layout_mode = 2
+offset_left = 1000.0
+offset_top = 464.0
+offset_right = 1610.0
+offset_bottom = 1004.0
+
+[node name="Start" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 0.843137)
+theme_override_font_sizes/font_size = 90
+text = "START"
+
+[node name="Multiplayer" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 90
+text = "START"
+
+[node name="Options" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 90
+text = "OPTION"
+
+[node name="Quit" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 90
+text = "QUIT"
+
+[connection signal="button_down" from="MarginContainer/TextureRect/VBoxContainer/Start" to="." method="_on_start_button_down"]
+[connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Multiplayer" to="." method="_on_multiplayer_pressed"]
+[connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

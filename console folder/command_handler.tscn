@@ -1,0 +1,1 @@
+@export var camera_viewport_scene: PackedScene = preload("res://console folder/camera_viewport.tscn") 
