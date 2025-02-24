@@ -1,18 +1,36 @@
-[gd_scene load_steps=6 format=3 uid="uid://dbwtwvq2k2gpq"]
+[gd_scene load_steps=14 format=3 uid="uid://dbwtwvq2k2gpq"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_xoqw8"]
+[ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="2_lqk1b"]
 [ext_resource type="Texture2D" uid="uid://c1d5kcr4f1c5l" path="res://textures/worn_plank/worn_planks_diff_4k.png" id="2_n1ofg"]
 [ext_resource type="PackedScene" uid="uid://bh18kskaruq62" path="res://Scenes/prefabs/scrap_marker.tscn" id="3_u7iuu"]
 [ext_resource type="PackedScene" uid="uid://cdf8lpjxddsvr" path="res://Scenes/prefabs/enemy_marker.tscn" id="5_ax11a"]
+[ext_resource type="Texture2D" uid="uid://bh5yyxrcoxxub" path="res://objectmodels3/barrier_a/detail-barrier-strong-type-a.png" id="5_nmyyq"]
+[ext_resource type="ArrayMesh" uid="uid://dp4bg1b5ib2ua" path="res://objectmodels3/barrier_a/detail-barrier-type-a.obj" id="6_fqo04"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_clbh1"]
 albedo_texture = ExtResource("2_n1ofg")
 
-[node name="jump room" type="Node3D"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2qrec"]
+albedo_texture = ExtResource("5_nmyyq")
+uv1_scale = Vector3(7, 7, 7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mymrf"]
+size = Vector3(0.5, 1.8, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uw2oy"]
+albedo_texture = ExtResource("2_lqk1b")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f66lv"]
+albedo_texture = ExtResource("2_lqk1b")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xeqe2"]
+albedo_texture = ExtResource("2_lqk1b")
+
+[node name="jump_room_2" type="Node3D"]
 script = ExtResource("1_xoqw8")
 size_in_voxels = Vector3i(3, 3, 2)
-min_count = 4
-max_count = 6
+max_count = 4
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.147551, 0.139895, 0.271381)
@@ -48,12 +66,8 @@ size = Vector3(3.4375, 2.82587, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.24009, -5.82253, 7.89343)
 size = Vector3(3.4375, 2.82587, 1)
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.903599, -6.83049, -9.22979)
-size = Vector3(3.4375, 2.82587, 1)
-
 [node name="CSGBox3D3" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41742, -6.80828, -9.22979)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41742, -7.64902, -9.22979)
 size = Vector3(3.4375, 2.82587, 1)
 
 [node name="ScrapMarker" parent="." instance=ExtResource("3_u7iuu")]
@@ -61,3 +75,105 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.2383, -2.38248, 2.97899)
 
 [node name="EnemyMarker" parent="." instance=ExtResource("5_ax11a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.08423, -3.93995, 1.96911)
+
+[node name="barrier_1" type="StaticBody3D" parent="."]
+
+[node name="Detail-barrier-type-a" type="MeshInstance3D" parent="barrier_1"]
+transform = Transform3D(0.110221, 0, -3.99848, 0, 4, 0, 3.99848, 0, 0.110221, 10.2591, -4.39015, 4.84519)
+material_override = SubResource("StandardMaterial3D_2qrec")
+mesh = ExtResource("6_fqo04")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="barrier_1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.2043, -3.50886, 4.78242)
+shape = SubResource("BoxShape3D_mymrf")
+
+[node name="barrier_2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.72699)
+
+[node name="Detail-barrier-type-a" type="MeshInstance3D" parent="barrier_2"]
+transform = Transform3D(0.110221, 0, -3.99848, 0, 4, 0, 3.99848, 0, 0.110221, 10.2591, -4.39015, 4.84519)
+material_override = SubResource("StandardMaterial3D_2qrec")
+mesh = ExtResource("6_fqo04")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="barrier_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.2043, -3.50886, 4.78242)
+shape = SubResource("BoxShape3D_mymrf")
+
+[node name="barrier_3" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.2534, 0, -8.72699)
+
+[node name="Detail-barrier-type-a" type="MeshInstance3D" parent="barrier_3"]
+transform = Transform3D(0.110221, 0, -3.99848, 0, 4, 0, 3.99848, 0, 0.110221, 10.2591, -4.39015, 4.84519)
+material_override = SubResource("StandardMaterial3D_2qrec")
+mesh = ExtResource("6_fqo04")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="barrier_3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.2043, -3.50886, 4.78242)
+shape = SubResource("BoxShape3D_mymrf")
+
+[node name="barrier_4" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.2534, 0, -5.23706)
+
+[node name="Detail-barrier-type-a" type="MeshInstance3D" parent="barrier_4"]
+transform = Transform3D(0.110221, 0, -3.99848, 0, 4, 0, 3.99848, 0, 0.110221, 10.2591, -4.39015, 4.84519)
+material_override = SubResource("StandardMaterial3D_2qrec")
+mesh = ExtResource("6_fqo04")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="barrier_4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.2043, -3.50886, 4.78242)
+shape = SubResource("BoxShape3D_mymrf")
+
+[node name="barrier_5" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.2534, 0, -1.86541)
+
+[node name="Detail-barrier-type-a" type="MeshInstance3D" parent="barrier_5"]
+transform = Transform3D(0.110221, 0, -3.99848, 0, 4, 0, 3.99848, 0, 0.110221, 10.2591, -4.39015, 4.84519)
+material_override = SubResource("StandardMaterial3D_2qrec")
+mesh = ExtResource("6_fqo04")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="barrier_5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.2043, -3.50886, 4.78242)
+shape = SubResource("BoxShape3D_mymrf")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+material_override = SubResource("StandardMaterial3D_uw2oy")
+
+[node name="step7" type="CSGBox3D" parent="CSGBox3D2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 7.30026, -4.89041, -7.48964)
+material_override = SubResource("StandardMaterial3D_f66lv")
+size = Vector3(3.4375, 2.82587, 1)
+
+[node name="step6" type="CSGBox3D" parent="CSGBox3D2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 3.01783, -4.89041, -7.48964)
+material_override = SubResource("StandardMaterial3D_f66lv")
+size = Vector3(3.4375, 2.82587, 1)
+
+[node name="step5" type="CSGBox3D" parent="CSGBox3D2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 3.01783, -4.89041, -3.74223)
+material_override = SubResource("StandardMaterial3D_f66lv")
+size = Vector3(3.4375, 2.82587, 1)
+
+[node name="step3" type="CSGBox3D" parent="CSGBox3D2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 3.01783, -4.89041, 4.40102)
+material_override = SubResource("StandardMaterial3D_f66lv")
+size = Vector3(3.4375, 2.82587, 1)
+
+[node name="step4" type="CSGBox3D" parent="CSGBox3D2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 3.01783, -4.89041, 0.233834)
+material_override = SubResource("StandardMaterial3D_f66lv")
+size = Vector3(3.4375, 2.82587, 1)
+
+[node name="step2" type="CSGBox3D" parent="CSGBox3D2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1.29672, -4.89041, 4.40102)
+material_override = SubResource("StandardMaterial3D_f66lv")
+size = Vector3(3.4375, 2.82587, 1)
+
+[node name="step1" type="CSGBox3D" parent="CSGBox3D2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -5.88806, -4.89041, 4.40102)
+material_override = SubResource("StandardMaterial3D_xeqe2")
+size = Vector3(3.4375, 2.82587, 1)
