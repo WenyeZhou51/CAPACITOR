@@ -2,8 +2,15 @@
 
 [ext_resource type="Texture2D" uid="uid://cl0t71t7msrfx" path="res://imgs/Screenshot 2025-02-07 133347.png" id="1_unsoa"]
 
+<<<<<<< HEAD
 [node name="CoolantSlot" type="Panel"]
 custom_minimum_size = Vector2(100, 100)
+=======
+[node name="CoolantSlot" type="ColorRect"]
+custom_minimum_size = Vector2(100, 100)
+offset_right = 100.0
+offset_bottom = 100.0
+>>>>>>> master
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(50, 49)

@@ -56,9 +56,15 @@ func on_change_ui(idx: int, item: String):
 	swap_UI(idx, new_scene)
 
 func update_highlight(previous_idx: int, curr_idx: int, name: String):
+<<<<<<< HEAD
 	show_text(name)
 	if(previous_idx == curr_idx):
 		return  # No need to update if selection hasn't changed
+=======
+	if(previous_idx == curr_idx):
+		return  # No need to update if selection hasn't changed
+	print("checkpoint")
+>>>>>>> master
 	var old_child = grid_container.get_child(previous_idx)
 	old_child.self_modulate = Color(0, 0, 0, 0)
 	

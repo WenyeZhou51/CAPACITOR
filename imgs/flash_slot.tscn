@@ -2,11 +2,19 @@
 
 [ext_resource type="Texture2D" uid="uid://djpcv0t74ktiu" path="res://imgs/Screenshot 2025-02-02 155509.png" id="1_l015x"]
 
+<<<<<<< HEAD
 [node name="flash_slot" type="Panel"]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(100, 100)
 offset_right = 99.0
 offset_bottom = 92.0
+=======
+[node name="flash_slot" type="ColorRect"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(100, 100)
+offset_right = 100.0
+offset_bottom = 100.0
+>>>>>>> master
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(50, 46)

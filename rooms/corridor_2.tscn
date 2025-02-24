@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 [gd_scene load_steps=14 format=4 uid="uid://bbrqul6xiyvqp"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_585my"]
 [ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="2_w638j"]
 [ext_resource type="PackedScene" uid="uid://0ij7ac5rnuij" path="res://objectmodels/treasure_chest_4k/treasure_chest_4k.gltf" id="3_1ss6y"]
+=======
+[gd_scene load_steps=13 format=4 uid="uid://bbrqul6xiyvqp"]
+
+[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_585my"]
+[ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="2_w638j"]
+>>>>>>> master
 [ext_resource type="Texture2D" uid="uid://br7ytuv2yx7ok" path="res://objectmodels/lightbulb_01_4k/textures/lightbulb_01_diff_4k.jpg" id="4_joev3"]
 [ext_resource type="Texture2D" uid="uid://blaopph8lu8hh" path="res://objectmodels/lightbulb_01_4k/textures/lightbulb_01_alpha_4k.png" id="5_qdolm"]
 
@@ -159,9 +166,12 @@ size = Vector3(1, 8, 6)
 transform = Transform3D(1.10556, 0, 1.01377, 0, 1.5, 0, -1.01377, 0, 1.10556, -3.28841, -4.09822, -2.86033)
 shape = SubResource("BoxShape3D_3gfgy")
 
+<<<<<<< HEAD
 [node name="treasure_chest_4k" parent="StaticBody3D" instance=ExtResource("3_1ss6y")]
 transform = Transform3D(1.10556, 0, 1.01377, 0, 1.5, 0, -1.01377, 0, 1.10556, -3.2994, -4.49088, -2.90962)
 
+=======
+>>>>>>> master
 [node name="lightbulb_01_4k" type="Node3D" parent="StaticBody3D"]
 transform = Transform3D(5, 0, 0, 0, -4.99688, 0.176504, 0, -0.176504, -4.99688, -1.9279, 1.76506, -1.3719)
 
