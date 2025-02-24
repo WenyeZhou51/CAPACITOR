@@ -1,6 +1,6 @@
 extends Node
 
-signal sound_made(position: Vector2, intensity: float)
+signal sound_made(position: Vector3, radius: float)
 
 var _instance = null
 static func get_instance() -> Node:
@@ -10,5 +10,5 @@ static func get_instance() -> Node:
 #func emit_sound(position: Vector3, intensity: float):
 	#emit_signal("sound_made", position, intensity)
 
-func emit_sound(position: Vector3):
-	emit_signal("sound_made", position)
+func emit_sound(position: Vector3, radius: float):
+	emit_signal("sound_made", position, radius)

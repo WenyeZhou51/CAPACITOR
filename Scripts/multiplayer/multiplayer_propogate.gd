@@ -12,7 +12,6 @@ func propogate_item_interact(player_name: String, item_name: String):
 	var player = get_tree().get_root().get_node("Level/players/" + player_name)
 	if(item_name == "planter_box_01_4k"):
 		item = get_tree().get_root().get_node("Level/NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D2/planter_box_01_4k")
-	print("interacting with", item)
 	
 	if (not item):
 		print_debug("could not find item " + item_name)
@@ -36,6 +35,9 @@ func propogate_item_drop(player_name: String):
 		GameState.change_ui.emit(player.current_slot, "empty")
 	player.inv_size -= 1
 	player.is_holding = false
+	
+	# Add sound emission for dropping scrap with radius 20
+	EarwormManager.emit_sound(player.global_position, 20.0)
 
 @rpc("authority", "call_local")
 func propogate_player_dead(player_name: String):

@@ -73,7 +73,7 @@ material = SubResource("StandardMaterial3D_2x7q0")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.158, -8.25199, 2.97899)
 
 [node name="EnemyMarker" parent="." instance=ExtResource("5_cwaqq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.94354, 5.31474, -3.2097)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.17047, 1.15417, -3.2097)
 
 [node name="StaticBody3D3" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.86096, 5.71432, -4.31147)

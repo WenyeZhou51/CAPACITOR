@@ -169,7 +169,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.158, -4.05346, -0.734)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.55075, -4.05346, 5.00157)
 
 [node name="EnemyMarker" parent="." instance=ExtResource("4_akcky")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.271934, -2.03378, -7.5449)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.271934, -4.49796, -7.5449)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 

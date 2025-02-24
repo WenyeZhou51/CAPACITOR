@@ -4,6 +4,7 @@ extends Node
 # Add these variables at the top
 @export var item_scenes: Array[PackedScene] = []
 @export var console_spawn_point: NodePath
+@export var camera_viewport_scene: PackedScene
 
 func _ready() -> void:
 	get_parent().add_command_module($Console)
@@ -51,4 +52,38 @@ func on_command_query(console: Node, args: Array):
 		console.push_message("[%s]: %s" % [subject.capitalize(), knowledge_base[subject]])
 	else:
 		console.push_message("Subject '%s' not found in database" % subject)
+	
+func on_command_cam(console: Node, args: Array):
+	var target_name = args[0]
+	var players = get_tree().get_nodes_in_group("players")
+	
+	# Find target player
+	var target_player = null
+	for player in players:
+		if player.name == target_name:
+			target_player = player
+			break
+	
+	if not target_player:
+		console.push_message("Error: Player not found - " + target_name)
+		return
+		
+	# Get the console root node and screen mesh
+	var console_root = console.get_parent().get_parent()
+	var console_screen = console_root.get_node("CSGBox3D/MeshInstance3D")
+	
+	# Get or create viewport container
+	var viewport_container = console.get_node_or_null("CameraViewport")
+	if viewport_container:
+		viewport_container.queue_free()
+	
+	viewport_container = camera_viewport_scene.instantiate()
+	
+	# Add viewport to the console's SubViewport node
+	console_root.get_node("SubViewport").add_child(viewport_container)
+	
+	# Set target player
+	viewport_container.set_target(target_player)
+	console.push_message("Now viewing: " + target_name)
+
 	

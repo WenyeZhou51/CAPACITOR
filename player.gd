@@ -10,6 +10,7 @@ const STAMINA_DRAIN_RATE = 0.01  #should be 0.3. for debug 0.01 Rate at which st
 const STAMINA_REGEN_RATE = 0.2  # Rate at which stamina regenerates while not sprinting
 const GRAVITY_FORCE = Vector3.DOWN * 9.8 * 2  # Gravity vector
 const STAMINA_THRESHOLD = 0.5  # Buffer threshold for stamina management
+const SPRINT_SOUND_INTERVAL = 0.1  # Sound emission interval while sprinting
 
 signal value_changed(new_value)
 signal change_ui(idx, type)
@@ -58,6 +59,8 @@ var camera_target: Vector3
 var popup_instance: Node
 var dead = false
 @onready var camera: Camera3D = $Head/Camera3D
+
+var sprint_sound_timer: float = 0.0
 
 func _ready():
 	set_multiplayer_authority(str(name).to_int())
@@ -217,7 +220,7 @@ func _physics_process(delta: float) -> void:
 		if is_jumping:
 			# TODO: add a sound effect here
 			animation_player.play("player_anim/jump_end")
-			EarwormManager.emit_sound(global_position)
+			EarwormManager.emit_sound(global_position, 15.0)
 			is_jumping = false
 
 	# Handle jumping
@@ -234,6 +237,12 @@ func _physics_process(delta: float) -> void:
 		elif is_running and current_stamina > 0:
 			movement_speed = RUN_SPEED
 			current_stamina -= STAMINA_DRAIN_RATE * delta
+			# Emit running sound more frequently
+			sprint_sound_timer += delta
+			if sprint_sound_timer >= SPRINT_SOUND_INTERVAL:
+				sprint_sound_timer = 0.0
+				# Changed radius from 10.0 to 20.0
+				EarwormManager.emit_sound(global_position, 20.0)
 		else:
 			is_running = false
 			movement_speed = WALK_SPEED
@@ -278,6 +287,7 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("Drop") and is_holding:
 		MultiplayerRequest.request_item_drop()
+		EarwormManager.emit_sound(global_position, 25.0)
 	
 	# Clamp stamina to valid range
 	current_stamina = clamp(current_stamina, 0.0, 1.5)
@@ -331,7 +341,7 @@ func update_health_indicator():
 		crt_shader_material.set("shader_param/noise_amount", noise_amount)
 		crt_shader_material.set("shader_param/scan_line_amount", scan_line_amount)
 
-func take_damage(amount: int):
+func take_damage(amount: float):
 	if (name != str(multiplayer.get_unique_id())):
 		return
 	if (dead): return
@@ -360,8 +370,16 @@ func take_damage(amount: int):
 		
 	else:
 		update_health_indicator()
+	
+	# Reset movement-critical states
+	camera_locked = false
+	using_console = false
 
 func end_invincibility() -> void:
 	is_invincible = false
 func _on_invincibility_timer_timeout():
 	is_invincible = false
+
+func apply_knockback(force: Vector3):
+	velocity += force
+	move_and_slide()

@@ -22,6 +22,7 @@ func interact(player: Player) -> void:
 		return
 		
 	$AudioStreamPlayer3D.play()
+	EarwormManager.emit_sound(global_position, 20.0)
 
 	if is_open:
 		# Door is open, so close it by rotating back to original rotation

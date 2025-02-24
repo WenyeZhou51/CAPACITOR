@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://da17n5pms24y4"
-path="res://.godot/imported/earworm.wav-93a30f628afd64d049683db6b4b634c0.sample"
+path="res://.godot/imported/earworm_walk.wav-96a6a3d6890321b3f52cafd622656037.sample"
 
 [deps]
 
-source_file="res://audio/earworm.wav"
-dest_files=["res://.godot/imported/earworm.wav-93a30f628afd64d049683db6b4b634c0.sample"]
+source_file="res://audio/earworm_walk.wav"
+dest_files=["res://.godot/imported/earworm_walk.wav-96a6a3d6890321b3f52cafd622656037.sample"]
 
 [params]
 

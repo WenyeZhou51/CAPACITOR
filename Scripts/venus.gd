@@ -32,7 +32,7 @@ func _ready() -> void:
 	
 	#delay timer
 	var timer = Timer.new()
-	timer.wait_time = randf_range(1, 2)#should be 10, 20
+	timer.wait_time = randf_range(20, 40)#should be 20, 40
 	timer.one_shot = true
 	timer.timeout.connect(_on_activation_timeout)
 	add_child(timer)

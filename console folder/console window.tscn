@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dyh3eimlu8tsw"]
+[gd_scene load_steps=8 format=3 uid="uid://dyh3eimlu8tsw"]
 
 [ext_resource type="Theme" uid="uid://dhcd01rwmgxmh" path="res://console folder/console window.tres" id="1_kmvp1"]
 [ext_resource type="Script" path="res://console folder/console_window.gd" id="2_o5gw3"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dhmtymlk3gb34" path="res://Scenes/prefabs/items/flashlight.tscn" id="4_5beyu"]
 [ext_resource type="PackedScene" uid="uid://fm1ccoc80rb1" path="res://console folder/command module.tscn" id="4_eha8a"]
 [ext_resource type="PackedScene" uid="uid://c8puf845qrx4l" path="res://console folder/command.tscn" id="5_lrrlt"]
+[ext_resource type="PackedScene" uid="uid://dtwwr3j6ysf4x" path="res://console folder/camera_viewport.tscn" id="camera_viewport_scene"]
 
 [node name="ConsoleWindow" type="PanelContainer"]
 anchors_preset = 15
@@ -40,6 +41,7 @@ caret_blink = true
 [node name="command handler" type="Node" parent="."]
 script = ExtResource("3_rvhqg")
 item_scenes = Array[PackedScene]([ExtResource("4_5beyu")])
+camera_viewport_scene = ExtResource("camera_viewport_scene")
 
 [node name="Console" parent="command handler" instance=ExtResource("4_eha8a")]
 unique_name_in_owner = true
@@ -51,5 +53,10 @@ help = "Clear screen"
 argument_names = Array[String](["Item", "Amount"])
 argument_types = Array[int]([2, 1])
 help = "Purchase equipment"
+
+[node name="cam" parent="command handler/Console" instance=ExtResource("5_lrrlt")]
+argument_names = Array[String](["player_name"])
+argument_types = Array[int]([2])
+help = "View surroundings of target player"
 
 [connection signal="text_submitted" from="VBoxContainer/InputBar" to="." method="_on_input_bar_text_submitted"]
