@@ -464,7 +464,8 @@ class StairRoomInfo:
 		for door in room_instance.get_doors_cached():
 			if not door.local_pos.y in door_y_positions:
 				door_y_positions.push_back(door.local_pos.y)
-		door_y_positions.sort()
+		# Use the dungeon generator's RNG
+		door_y_positions.sort_custom(func(a, b): return inst.dungeon_generator.rng.randf() > 0.5)
 		stair_gaps_dict = {}
 		for i in range(0, len(door_y_positions)):
 			for j in range(i+1, len(door_y_positions)):

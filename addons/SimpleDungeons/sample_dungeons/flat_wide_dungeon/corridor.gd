@@ -7,10 +7,10 @@ func _ready():
 	dungeon_done_generating.connect(remove_unused_doors_and_walls)
 
 func remove_unused_doors_and_walls():
-	if RandomNumberGenerator.new().randf_range(0,10) > 2.5: $Models/F_WALL/torch_001.queue_free()
-	if RandomNumberGenerator.new().randf_range(0,10) > 2.5: $Models/B_WALL/torch_001.queue_free()
-	if RandomNumberGenerator.new().randf_range(0,10) > 2.5: $Models/R_WALL/torch_001.queue_free()
-	if RandomNumberGenerator.new().randf_range(0,10) > 2.5: $Models/L_WALL/torch_001.queue_free()
+	if dungeon_generator.rng.randf_range(0,10) > 2.5: $Models/F_WALL/torch_001.queue_free()
+	if dungeon_generator.rng.randf_range(0,10) > 2.5: $Models/B_WALL/torch_001.queue_free()
+	if dungeon_generator.rng.randf_range(0,10) > 2.5: $Models/R_WALL/torch_001.queue_free()
+	if dungeon_generator.rng.randf_range(0,10) > 2.5: $Models/L_WALL/torch_001.queue_free()
 	
 	if get_door_by_node($"CSGBox3D/DOOR?_F_CUT").get_room_leads_to() != null: $Models/F_WALL.queue_free()
 	else: $Models/F_WALL.visible = true
