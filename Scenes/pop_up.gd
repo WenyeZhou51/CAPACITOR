@@ -4,7 +4,6 @@ extends Control
 @export var popup_text: String = "Default Text"  # Text to display in the popup
 
 
-
 func pop_up():
 	var label = get_node("Label")
 	label.text = popup_text

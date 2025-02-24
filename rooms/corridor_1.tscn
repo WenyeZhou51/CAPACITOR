@@ -128,6 +128,8 @@ size = Vector3(1, 0.38, 0.5)
 
 [node name="corridor_1" type="Node3D"]
 script = ExtResource("1_stnse")
+min_count = 5
+max_count = 15
 
 [node name="RemoveUnusedDoors" type="Node" parent="."]
 script = SubResource("GDScript_1tv7g")
@@ -211,6 +213,7 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D3"]
 transform = Transform3D(0.547286, 0, 0.836946, 0, 1, 0, -0.836946, 0, 0.547286, 2.11887, -4.31367, 1.73219)
 shape = SubResource("BoxShape3D_okdhr")
+disabled = true
 
 [node name="StaticBody3D4" type="StaticBody3D" parent="."]
 transform = Transform3D(1.41951, 0, 0.484761, 0, 1.5, 0, -0.484761, 0, 1.41951, -2.40734, 2.28092, -0.175573)
@@ -224,5 +227,6 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D4"]
 transform = Transform3D(0.547286, 0, 0.836946, 0, 1, 0, -0.836946, 0, 0.547286, 2.11887, -4.31367, 1.73219)
 shape = SubResource("BoxShape3D_okdhr")
+disabled = true
 
 [connection signal="dungeon_done_generating" from="." to="RemoveUnusedDoors" method="remove_unused_doors"]

@@ -91,7 +91,7 @@ radius = 0.7
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.973332)
 script = ExtResource("1_cv6ik")
 size_in_voxels = Vector3i(2, 2, 1)
-max_count = 15
+max_count = 12
 is_stair_room = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]

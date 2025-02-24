@@ -23,6 +23,7 @@ func _process(delta: float) -> void:
 
 func bake_custom_navigation_mesh() -> void:
 	var dungeon_generator = get_node(dungeon_generator_path)
+	
 	if dungeon_generator == null:
 		push_warning("[WARNING] Dungeon generator node not found. Cannot bake navmesh.")
 		return

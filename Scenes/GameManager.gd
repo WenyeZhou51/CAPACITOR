@@ -58,6 +58,7 @@ func spawn_enemy():
 func _on_enemy_destroyed():
 	current_enemies = max(0, current_enemies - 1)
 	print("enemy destroyed (", current_enemies, "/", max_enemies, ")")
+	
 func _on_spawn_timer_timeout():
 	if not multiplayer.is_server(): return
 	spawn_enemy()
@@ -91,7 +92,6 @@ func spawn_scrap():
 		scrap_instance.global_position = scrap_markers[i].global_position
 
 
-
 func spawn_coolant():
 	# Get all scrap markers in the scene
 	var coolant_scene = preload("res://Scenes/prefabs/items/coolant.tscn")
@@ -117,7 +117,6 @@ func spawn_coolant():
 		# Add it to the scene and set its position to the marker's position
 		items_node.add_child(coolant_instance, true)
 		coolant_instance.global_position = coolant_markers[i].global_position
-
 
 
 func spawn_doors():

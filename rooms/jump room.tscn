@@ -13,7 +13,7 @@ albedo_texture = ExtResource("2_r1iyd")
 script = ExtResource("1_ofnv1")
 size_in_voxels = Vector3i(3, 3, 2)
 min_count = 4
-max_count = 8
+max_count = 6
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.147551, 0.139895, 0.271381)

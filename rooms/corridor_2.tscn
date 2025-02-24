@@ -114,6 +114,8 @@ albedo_texture = ExtResource("5_qdolm")
 
 [node name="corridor_1" type="Node3D"]
 script = ExtResource("1_585my")
+min_count = 5
+max_count = 15
 
 [node name="RemoveUnusedDoors" type="Node" parent="."]
 script = SubResource("GDScript_1tv7g")
