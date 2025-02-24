@@ -1,6 +1,5 @@
 extends Node
 
-
 func get_system_ip() -> String:
 	var addresses = IP.get_local_addresses()
 	for addr in addresses:
@@ -11,22 +10,36 @@ func get_system_ip() -> String:
 	return ""
 
 func _ready() -> void:
-	pass
+	MultiplayerManager.host_msg.connect(hostMessage)
+	$MarginContainer/VBoxContainer/HBoxContainer/START.hide()
 	
 func _on_host_button_pressed() -> void:
+	
+	$MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2.hide()
+	$MarginContainer/VBoxContainer/HBoxContainer/START.show()
 	var ip = get_system_ip()
-	var hostField = $MarginContainer/HBoxContainer/VBoxContainer/Label
+	var hostField = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Label
 	if (ip != ""):
 		hostField.text = ip
 	else:
 		hostField.text = "ERROR HOSTING"
 	MultiplayerManager.host_game()
 	
+func hostMessage(msg: String):
+	var hostLog = $MarginContainer/VBoxContainer/HBoxContainer2/hostlog
+	if (!hostLog):
+		print_debug("ERROR NO HOSTLOG")
+	var cur = hostLog.text
+	hostLog.text = cur + '\n' + msg
+	
+	
 func _on_join_button_pressed() -> void:
-	var input = $MarginContainer/HBoxContainer/VBoxContainer2/ip_input
+	$MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer.hide()
+	var input = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/ip_input
 	MultiplayerManager.SERVER_IP = input.text
 	MultiplayerManager.join_game()
 	print_debug("JOIN PRESSED")
+	hostMessage("Joined as player " + str(multiplayer.get_unique_id()))
 	
 	# TODO : CALL MULT MANAGER JOIN GAME WITH IP AS THIS, THEN SEE THAT NO ERROR, ADD A NAME FIELD
 	# TODO : MERGE
