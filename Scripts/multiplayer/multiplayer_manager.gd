@@ -1,5 +1,7 @@
 extends Node
 
+signal host_msg
+
 ##### GAME VARS AND LOGIC
 var map_seed = 1
 
@@ -20,6 +22,7 @@ func debug_log(message: String) -> void:
 	if DEBUG:
 		print("[MultiplayerManager][%d] %s" % [Time.get_ticks_msec(), message])
 func host_game():
+	host_msg.emit("Hosting game...")
 	debug_log("Starting host initialization")
 	var server_peer = ENetMultiplayerPeer.new()
 	var error = server_peer.create_server(SERVER_PORT, 4)  # Max 4 players
@@ -38,6 +41,8 @@ func host_game():
 	# set map seed
 	randomize()
 	map_seed = randi()
+	
+	host_msg.emit("Success! Share IP for others to join")
 	
 func join_game():
 	debug_log("Starting client initialization")
@@ -66,6 +71,8 @@ func _on_peer_connected(id: int):
 		players[id] = this_player_info
 	player_count += 1;
 	set_map_seed_and_player_count.rpc(map_seed, player_count)
+	if multiplayer.is_server():
+		host_msg.emit("Client " + str(id) + " joined successfully!")
 	
 @rpc("authority")
 func set_map_seed_and_player_count(new: int, count: int):
