@@ -11,7 +11,7 @@
 [ext_resource type="Script" path="res://Scenes/prefabs/items/cashBox.gd" id="7_lf1au"]
 [ext_resource type="PackedScene" uid="uid://yd6lu668s2rd" path="res://objectmodels/korean_public_payphone_01_4k/korean_public_payphone_01_4k.gltf" id="8_hof4i"]
 [ext_resource type="PackedScene" uid="uid://bcot47xqk0oe3" path="res://Scenes/generator.tscn" id="9_3lovi"]
-[ext_resource type="PackedScene" path="res://Scenes/prefabs/coolant_marker.tscn" id="10_ytvcr"]
+[ext_resource type="PackedScene" uid="uid://dvleiqfmloahr" path="res://Scenes/prefabs/coolant_marker.tscn" id="10_ytvcr"]
 [ext_resource type="PackedScene" uid="uid://xcj3me4ww2u2" path="res://console folder/console.tscn" id="11_s0eup"]
 [ext_resource type="PackedScene" uid="uid://cvwdeshjlru0d" path="res://objectmodels3/fence/fence.glb" id="14_qbpxr"]
 [ext_resource type="PackedScene" uid="uid://dhmtymlk3gb34" path="res://Scenes/prefabs/items/flashlight.tscn" id="16_cihow"]

@@ -85,6 +85,7 @@ const DEBUG_NAV = true
 const DEBUG_PATH = true
 const DEBUG_WANDER = true
 const DEBUG_STATE = true
+const DEBUG_PHYSICS = true  # New debug category for physics/collision issues
 
 # Add these constants near other wander-related constants
 const MIN_WANDER_INTERVAL: float = 4.0  # Minimum time before picking new wander point
@@ -160,6 +161,14 @@ func _physics_process(delta: float) -> void:
 	if not is_active or not nav_ready:
 		return
 	
+	# ADDED: Debug physics state before any changes
+	print("[PHYSICS DEBUG] Before Physics | Position Y: ", global_position.y, 
+		" | Velocity Y: ", velocity.y,
+		" | Local Velocity Y: ", local_velocity.y)
+	print("[COLLISION DEBUG] Floor: ", is_on_floor(), 
+		" | Wall: ", is_on_wall(), 
+		" | Ceiling: ", is_on_ceiling())
+	
 	# Add this near the start of _physics_process to check for player collision
 	if player and is_instance_valid(player):
 		var dist = global_position.distance_to(player.global_position)
@@ -177,10 +186,19 @@ func _physics_process(delta: float) -> void:
 			can_attack = true
 			attack_timer = 0.0
 	
-	# Apply gravity
-	local_velocity.y -= gravity * delta
-	if is_on_floor():
-		local_velocity.y = max(local_velocity.y, 0)
+	# MODIFIED: Strengthen gravity to keep the earworm grounded
+	# Only allow downward movement (falling), never upward movement
+	if not is_on_floor():
+		# Apply stronger gravity to keep it grounded
+		velocity.y -= gravity * 3.0 * delta  # Triple gravity for faster grounding
+		print("[GRAVITY DEBUG] Applying gravity: ", gravity * 3.0 * delta, 
+			" | New Velocity Y: ", velocity.y)
+		# Restrict upward velocity
+		if velocity.y > 0:
+			velocity.y = 0  # Never allow upward movement
+	else:
+		velocity.y = 0  # Reset vertical velocity when on floor
+		print("[GRAVITY DEBUG] On floor, resetting Y velocity to 0")
 	
 	# Update path timer
 	path_timer += delta
@@ -225,15 +243,53 @@ func _physics_process(delta: float) -> void:
 				else:
 					update_path_following(chase_speed * WANDER_SPEED_MULTIPLIER)
 
-	# Fix the velocity application
-	velocity.x = local_velocity.x
-	velocity.z = local_velocity.z
-	# Keep the y component separate for gravity
+	# ADDED: Debug before move_and_slide
+	print("[PHYSICS DEBUG] Before move_and_slide | Position: ", global_position, 
+		" | Velocity: ", velocity)
+	
+	# Apply movement
 	move_and_slide()
-	# Update local_velocity with only the xz components
-	local_velocity.x = velocity.x
-	local_velocity.z = velocity.z
+	
+	# ADDED: Debug after move_and_slide
+	print("[PHYSICS DEBUG] After move_and_slide | Position: ", global_position, 
+		" | Velocity: ", velocity,
+		" | Floor: ", is_on_floor(),
+		" | Wall: ", is_on_wall())
+	print("[COLLISION DEBUG] Collider Count: ", get_slide_collision_count())
+	
+	# Log all collisions in this frame
+	for i in range(get_slide_collision_count()):
+		var collision = get_slide_collision(i)
+		print("[COLLISION DEBUG] Collision ", i, 
+			" | Normal: ", collision.get_normal(),
+			" | Collider: ", collision.get_collider().name if collision.get_collider() else "None")
+	
+	# MODIFIED: Force the earworm to stay grounded after movement
+	# Apply a snap to the ground after moving to prevent any floating
+	if not is_on_floor():
+		# Add a small downward position adjustment to help stay grounded
+		var snap_vector = Vector3(0, -0.1, 0)
+		global_position += snap_vector
+		print("[GROUNDING DEBUG] Applied snap to ground: ", snap_vector)
+	
+	# Reset horizontal components if not moving
+	if abs(local_velocity.x) < 0.1 and abs(local_velocity.z) < 0.1:
+		velocity.x = 0
+		velocity.z = 0
+	
+	# IMPORTANT: Always zero out upward velocity to prevent any jumping
+	if velocity.y > 0:
+		velocity.y = 0
+	
+	# Update local_velocity with current velocity for next frame
+	local_velocity = velocity
+	
+	# ADDED: Debug final state
+	print("[PHYSICS DEBUG] End of Frame | Position Y: ", global_position.y, 
+		" | Velocity Y: ", velocity.y,
+		" | On Floor: ", is_on_floor())
 
+	# Restore the original state debug print
 	print("[STATE DEBUG] Time Without Sounds: ", time_without_sounds,
 		  " | Is Investigating: ", is_investigating_sound,
 		  " | Is Wandering: ", is_wandering,
@@ -244,13 +300,34 @@ func update_path_following(speed: float) -> void:
 		var next_pos = agent.get_next_path_position()
 		var current_pos = global_transform.origin
 		var offset_3d = next_pos - current_pos
-		var offset_2d = Vector3(offset_3d.x, 0, offset_3d.z)
-		var offset_length = offset_2d.length()
+		
+		# ADDED: Debug raw navigation target
+		print("[NAV POSITION DEBUG] Current Y: ", current_pos.y,
+			" | Target Y: ", next_pos.y,
+			" | Y Difference: ", next_pos.y - current_pos.y)
+		
+		# MODIFIED: Explicitly ignore Y component for movement calculation
+		# This ensures the earworm only moves horizontally, letting physics handle slopes
+		var direction = Vector3(offset_3d.x, 0, offset_3d.z).normalized()
+		var offset_length = Vector3(offset_3d.x, 0, offset_3d.z).length()
 		
 		# Lower the threshold significantly
 		if offset_length > 0.05:  # Changed from 0.5 to 0.05
-			var direction = offset_2d.normalized()
-			local_velocity = direction * speed
+			# Only set X and Z components, NEVER set Y velocity for navigation
+			velocity.x = direction.x * speed
+			velocity.z = direction.z * speed
+			
+			# IMPORTANT: Never allow navigation to cause vertical movement
+			# Y velocity is handled exclusively by gravity and floor detection
+			
+			# ADDED: Debug navigation velocity changes
+			print("[NAV VELOCITY DEBUG] Setting velocity from nav | X: ", velocity.x, 
+				" | Z: ", velocity.z, 
+				" | Y unchanged: ", velocity.y)
+			
+			# Store horizontal movement in local_velocity
+			local_velocity.x = direction.x * speed
+			local_velocity.z = direction.z * speed
 			
 			# Play walk sound when moving
 			if not walk_sound.playing:
@@ -262,7 +339,11 @@ func update_path_following(speed: float) -> void:
 			# Increase turn_speed for smoother rotation
 			transform = transform.interpolate_with(target_transform, get_process_delta_time() * turn_speed * 3.0)
 		else:
-			local_velocity = Vector3.ZERO
+			# Only zero out horizontal movement
+			velocity.x = 0
+			velocity.z = 0
+			local_velocity.x = 0
+			local_velocity.z = 0
 			walk_sound.stop()
 
 		print("[PATH DEBUG] Offset Length: ", offset_length,
@@ -302,6 +383,11 @@ func wander() -> void:
 	if not nav_ready:
 		return
 	
+	# ADDED: Debug wander entry
+	print("[WANDER DEBUG] Starting wander | Current position Y: ", global_position.y,
+		" | On Floor: ", is_on_floor(),
+		" | Current Velocity Y: ", velocity.y)
+	
 	# Clear all other states first
 	is_investigating_sound = false
 	current_sound.clear()
@@ -322,11 +408,22 @@ func wander() -> void:
 		var random_radius = randf_range(MIN_WANDER_DISTANCE, MAX_WANDER_DISTANCE)
 		var offset = Vector3(
 			cos(random_angle) * random_radius,
-			0,
+			0,  # Keep Y at 0 to avoid vertical issues
 			sin(random_angle) * random_radius
 		)
 		
-		current_wander_target = global_position + offset
+		# MODIFIED: Use current Y position for wander target to stay at same height
+		current_wander_target = Vector3(
+			global_position.x + offset.x,
+			global_position.y,  # Keep exact same Y position
+			global_position.z + offset.z
+		)
+		
+		# ADDED: Debug wander target
+		print("[WANDER DEBUG] Potential target | Y: ", current_wander_target.y,
+			" | Original Y: ", global_position.y,
+			" | Difference: ", current_wander_target.y - global_position.y)
+		
 		agent.target_position = current_wander_target
 		
 		# Wait a frame to let the navigation system update
@@ -342,6 +439,10 @@ func wander() -> void:
 			debug_log("WANDER", "Invalid wander target, attempt " + str(attempts))
 	
 	if valid_position:
+		# ADDED: Debug final wander target
+		print("[WANDER DEBUG] Final valid target | Y: ", current_wander_target.y,
+			" | Distance: ", global_position.distance_to(current_wander_target))
+		
 		# Target is already set, just start moving
 		time_without_sounds = 0.0
 		update_path_following(chase_speed * WANDER_SPEED_MULTIPLIER)
@@ -391,3 +492,11 @@ func has_line_of_sight() -> bool:
 	)
 	var result = space.intersect_ray(query)
 	return result.is_empty() or result.collider == player
+
+# Add near other collision-related functions
+func _on_navigation_finished() -> void:
+	# ADDED: Debug navigation completion
+	print("[NAV DEBUG] Navigation finished | Position Y: ", global_position.y,
+		" | On Floor: ", is_on_floor(), 
+		" | Target Y: ", agent.target_position.y if agent else "No agent",
+		" | Y Difference: ", (agent.target_position.y - global_position.y) if agent else "N/A")

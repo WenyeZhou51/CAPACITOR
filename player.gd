@@ -61,6 +61,13 @@ var popup_instance: Node
 var dead = false
 @onready var camera: Camera3D = $Head/Camera3D
 
+# Sound players
+var sprint_sound_player: AudioStreamPlayer
+var drop_item_sound_player: AudioStreamPlayer
+var flashlight_sound_player: AudioStreamPlayer
+var cashin_sound_player: AudioStreamPlayer
+var was_running: bool = false # Track previous running state
+
 func _ready():
 	set_multiplayer_authority(str(name).to_int())
 	add_to_group("players")
@@ -79,6 +86,9 @@ func _ready():
 	invincibility_timer.timeout.connect(_on_invincibility_timer_timeout)
 	add_child(invincibility_timer)
 	
+	# Setup sound players
+	setup_sound_players()
+	
 	print("multiplayer authority " + str(get_multiplayer_authority()))
 	
 	if is_multiplayer_authority():
@@ -87,7 +97,65 @@ func _ready():
 	else:
 		camera.current = false
 		print("Remote player: camera disabled.")
+
+func setup_sound_players():
+	# Setup sprint sound player
+	sprint_sound_player = AudioStreamPlayer.new()
+	var sprint_sound = load("res://audio/player run.wav")
+	if sprint_sound:
+		sprint_sound_player.stream = sprint_sound
+		sprint_sound_player.volume_db = -1.0
+		sprint_sound_player.bus = "SFX"
+		add_child(sprint_sound_player)
+	else:
+		print("Warning: Could not load sprint sound")
+	
+	# Setup drop item sound player - wrapped in try/catch to prevent level generation failure
+	drop_item_sound_player = AudioStreamPlayer.new()
+	
+	# Use a deferred call to load the drop sound to avoid blocking level generation
+	call_deferred("_load_drop_sound")
+	
+	# Setup flashlight toggle sound player
+	flashlight_sound_player = AudioStreamPlayer.new()
+	var flashlight_sound = load("res://audio/flashlight switch.wav")
+	if flashlight_sound:
+		flashlight_sound_player.stream = flashlight_sound
+		flashlight_sound_player.volume_db = -3.0
+		flashlight_sound_player.bus = "SFX"
+		add_child(flashlight_sound_player)
+	else:
+		print("Warning: Could not load flashlight toggle sound")
 		
+	# Setup cash-in sound player
+	cashin_sound_player = AudioStreamPlayer.new()
+	var cashin_sound = load("res://audio/cashin sound.wav")
+	if cashin_sound:
+		cashin_sound_player.stream = cashin_sound
+		cashin_sound_player.volume_db = -2.0
+		cashin_sound_player.bus = "SFX"
+		add_child(cashin_sound_player)
+	else:
+		print("Warning: Could not load cash-in sound")
+
+func _load_drop_sound():
+	# Try to load the drop sound file, but don't crash if it fails
+	var drop_sound = null
+	
+	# Use FileAccess to check if the file exists first
+	if FileAccess.file_exists("res://audio/dropitemsound.wav"):
+		drop_sound = load("res://audio/dropitemsound.wav")
+		
+	if drop_sound:
+		drop_item_sound_player.stream = drop_sound
+		drop_item_sound_player.volume_db = -5.0
+		drop_item_sound_player.bus = "SFX"
+		add_child(drop_item_sound_player)
+	else:
+		print("Warning: Could not load drop item sound, but continuing anyway")
+		# Create a dummy sound player to avoid null reference errors
+		add_child(drop_item_sound_player)
+
 func set_color(idx: int) -> void:
 	#print("Materials: ", player_mesh.get_surface_override_material_count())
 	#var material = player_mesh.get_surface_override_material(1)
@@ -114,6 +182,9 @@ func _input(event: InputEvent) -> void:
 			var current_item = inventory[current_slot]
 			if current_item and current_item.type == "flashlight":
 				MultiplayerRequest.request_flash_toggle(current_item.name)
+				# Play flashlight toggle sound
+				if flashlight_sound_player and is_multiplayer_authority():
+					flashlight_sound_player.play()
 		if event is InputEventMouseButton:
 			if event.pressed:
 				## Check if user scrolled up (4) or down (5)
@@ -254,6 +325,9 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("Drop") and is_holding:
 		MultiplayerRequest.request_item_drop()
+		# Play drop item sound
+		if drop_item_sound_player and is_multiplayer_authority():
+			drop_item_sound_player.play()
 	
 	# Clamp stamina to valid range
 	current_stamina = clamp(current_stamina, 0.0, 1.5)
@@ -269,9 +343,18 @@ func _physics_process(delta: float) -> void:
 		if is_running:
 			animation_player.play("player_anim/walk")
 			animation_player.speed_scale = 2.0
+			
+			# Handle sprint sound
+			if is_multiplayer_authority() and sprint_sound_player:
+				if not sprint_sound_player.playing:
+					sprint_sound_player.play()
 		else:
 			animation_player.play("player_anim/walk")
 			animation_player.speed_scale = 1.0
+			
+			# Stop sprint sound if it was playing
+			if is_multiplayer_authority() and sprint_sound_player and sprint_sound_player.playing:
+				sprint_sound_player.stop()
 	else:
 		velocity.x = move_toward(velocity.x, 0, movement_speed * delta)
 		velocity.z = move_toward(velocity.z, 0, movement_speed * delta)
@@ -279,6 +362,10 @@ func _physics_process(delta: float) -> void:
 		if not is_jumping:
 			animation_player.play("player_anim/idle")
 			animation_player.speed_scale = 1.0
+			
+		# Stop sprint sound if it was playing
+		if is_multiplayer_authority() and sprint_sound_player and sprint_sound_player.playing:
+			sprint_sound_player.stop()
 
 	# Update stamina bar value smoothly
 	if stamina_bar:
@@ -344,3 +431,8 @@ func _on_invincibility_timer_timeout():
 func apply_knockback(force: Vector3):
 	velocity += force
 	move_and_slide()
+
+# Add a function to play the cash-in sound that can be called from cashBox.gd
+func play_cashin_sound():
+	if cashin_sound_player and is_multiplayer_authority():
+		cashin_sound_player.play()

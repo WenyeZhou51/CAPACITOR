@@ -35,3 +35,7 @@ func interact(player: CharacterBody3D):
 		GameState.change_ui.emit(player.current_slot, "empty")
 		player.inv_size -= 1
 		player.is_holding = false
+		
+		# Play cash-in sound when successfully depositing a scrap item
+		if player.has_method("play_cashin_sound"):
+			player.play_cashin_sound()
