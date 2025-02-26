@@ -68,6 +68,8 @@ var flashlight_sound_player: AudioStreamPlayer
 var cashin_sound_player: AudioStreamPlayer
 var was_running: bool = false # Track previous running state
 
+var sound_emitter: Node
+
 func _ready():
 	set_multiplayer_authority(str(name).to_int())
 	add_to_group("players")
@@ -86,8 +88,17 @@ func _ready():
 	invincibility_timer.timeout.connect(_on_invincibility_timer_timeout)
 	add_child(invincibility_timer)
 	
-	# Setup sound players
+	# Set up sound emitter
+	sound_emitter = $SoundEmitter if has_node("SoundEmitter") else null
+	if not sound_emitter:
+		sound_emitter = Node.new()
+		sound_emitter.set_script(load("res://Scripts/player_sound_emitter.gd"))
+		sound_emitter.name = "SoundEmitter"
+		add_child(sound_emitter)
+	
 	setup_sound_players()
+	if not is_multiplayer_authority():
+		$Head/Camera3D.current = false
 	
 	print("multiplayer authority " + str(get_multiplayer_authority()))
 	
@@ -278,6 +289,8 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("Sprint"):
 		if not is_running and current_stamina > STAMINA_THRESHOLD / 2:
 			is_running = true
+			if sound_emitter:
+				sound_emitter._on_player_action("sprint")
 		elif is_running and current_stamina > 0:
 			movement_speed = RUN_SPEED
 			current_stamina -= STAMINA_DRAIN_RATE * delta
@@ -313,6 +326,9 @@ func _physics_process(delta: float) -> void:
 				interact_label.visible = true
 				if Input.is_action_just_pressed("Interact"):
 					MultiplayerRequest.request_item_interact(candidate.name)
+					# Check if this is a door and emit sound
+					if candidate.is_in_group("doors") and sound_emitter:
+						sound_emitter._on_player_action("door")
 			else:
 				if closest_object.is_in_group("console_collider") and near_console:
 					interact_label.visible = true
@@ -328,6 +344,9 @@ func _physics_process(delta: float) -> void:
 		# Play drop item sound
 		if drop_item_sound_player and is_multiplayer_authority():
 			drop_item_sound_player.play()
+			# Emit sound for earworm
+			if sound_emitter:
+				sound_emitter._on_player_action("drop")
 	
 	# Clamp stamina to valid range
 	current_stamina = clamp(current_stamina, 0.0, 1.5)

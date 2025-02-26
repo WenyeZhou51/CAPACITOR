@@ -157,19 +157,10 @@ func set_initial_position() -> void:
 		#	" | Global Position: ", global_transform.origin)
 
 func _physics_process(delta: float) -> void:
-	print("Active:", is_active, " | Nav Ready:", nav_ready)
 	if not is_active or not nav_ready:
 		return
 	
-	# ADDED: Debug physics state before any changes
-	print("[PHYSICS DEBUG] Before Physics | Position Y: ", global_position.y, 
-		" | Velocity Y: ", velocity.y,
-		" | Local Velocity Y: ", local_velocity.y)
-	print("[COLLISION DEBUG] Floor: ", is_on_floor(), 
-		" | Wall: ", is_on_wall(), 
-		" | Ceiling: ", is_on_ceiling())
-	
-	# Add this near the start of _physics_process to check for player collision
+	# Handle attack if close to player
 	if player and is_instance_valid(player):
 		var dist = global_position.distance_to(player.global_position)
 		if dist < attack_radius and can_attack:
@@ -179,35 +170,29 @@ func _physics_process(delta: float) -> void:
 	if alert_sound_cooldown > 0:
 		alert_sound_cooldown -= delta
 	
-	# Update timers
+	# Update attack cooldown
 	if not can_attack:
 		attack_timer += delta
 		if attack_timer >= attack_interval:
 			can_attack = true
 			attack_timer = 0.0
 	
-	# MODIFIED: Strengthen gravity to keep the earworm grounded
-	# Only allow downward movement (falling), never upward movement
+	# Apply gravity
 	if not is_on_floor():
-		# Apply stronger gravity to keep it grounded
-		velocity.y -= gravity * 3.0 * delta  # Triple gravity for faster grounding
-		print("[GRAVITY DEBUG] Applying gravity: ", gravity * 3.0 * delta, 
-			" | New Velocity Y: ", velocity.y)
-		# Restrict upward velocity
+		velocity.y -= gravity * delta
 		if velocity.y > 0:
 			velocity.y = 0  # Never allow upward movement
 	else:
 		velocity.y = 0  # Reset vertical velocity when on floor
-		print("[GRAVITY DEBUG] On floor, resetting Y velocity to 0")
 	
 	# Update path timer
 	path_timer += delta
 	if path_timer >= path_update_interval:
 		path_timer = 0.0
 		
-		# If we have a sound and aren't already investigating it
-		if not current_sound.is_empty() and not is_investigating_sound:
-			print("heard sound")
+		# If we have a sound, prioritize it
+		if not current_sound.is_empty():
+			print("[EARWORM] Following sound at: ", current_sound["position"])
 			current_sound_target = current_sound["position"]
 			agent.target_position = current_sound_target
 			is_investigating_sound = true
@@ -215,85 +200,44 @@ func _physics_process(delta: float) -> void:
 			time_without_sounds = 0.0
 			update_path_following(chase_speed)
 		else:
-			# Only handle non-wandering state
-			if not is_wandering:
-				time_without_sounds += path_update_interval
-				
-				if time_without_sounds >= WANDER_START_DELAY:
-					wander()
-				elif is_investigating_sound:
-					# Add navigation check before path following
-					if agent.is_navigation_finished():
-						is_investigating_sound = false
-						current_sound.clear()
-					else:
-						update_path_following(chase_speed)
-				else:
-					# Full state reset
-					is_investigating_sound = false
-					current_sound.clear()
-					is_wandering = false  # Add explicit wandering reset
-
-			# Add wandering state maintenance
-			else:
-				# Check if it's time to pick a new wander target
+			# Update time without sounds
+			time_without_sounds += path_update_interval
+			
+			# If we're investigating a sound location but reached it
+			if is_investigating_sound and agent.is_navigation_finished():
+				print("[EARWORM] Finished investigating sound, switching to wander")
+				is_investigating_sound = false
+				current_sound.clear()  # Clear the current sound to prevent re-investigation
+				time_without_sounds = WANDER_START_DELAY  # Force wander state to start
+			
+			# Count down next wander time if we're wandering
+			if is_wandering:
 				next_wander_time -= delta
-				if next_wander_time <= 0 or agent.is_navigation_finished():
-					wander()  # Get new wander target
+				print("[EARWORM] Next wander in: ", next_wander_time)
+			
+			# If enough time has passed without sounds, start wandering
+			if time_without_sounds >= WANDER_START_DELAY:
+				if not is_wandering or agent.is_navigation_finished() or next_wander_time <= 0:
+					wander()
 				else:
 					update_path_following(chase_speed * WANDER_SPEED_MULTIPLIER)
-
-	# ADDED: Debug before move_and_slide
-	print("[PHYSICS DEBUG] Before move_and_slide | Position: ", global_position, 
-		" | Velocity: ", velocity)
+			# Continue investigating current sound if we're still on it
+			elif is_investigating_sound:
+				update_path_following(chase_speed)
 	
-	# Apply movement
+	# Move using physics
 	move_and_slide()
 	
-	# ADDED: Debug after move_and_slide
-	print("[PHYSICS DEBUG] After move_and_slide | Position: ", global_position, 
-		" | Velocity: ", velocity,
-		" | Floor: ", is_on_floor(),
-		" | Wall: ", is_on_wall())
-	print("[COLLISION DEBUG] Collider Count: ", get_slide_collision_count())
-	
-	# Log all collisions in this frame
-	for i in range(get_slide_collision_count()):
-		var collision = get_slide_collision(i)
-		print("[COLLISION DEBUG] Collision ", i, 
-			" | Normal: ", collision.get_normal(),
-			" | Collider: ", collision.get_collider().name if collision.get_collider() else "None")
-	
-	# MODIFIED: Force the earworm to stay grounded after movement
-	# Apply a snap to the ground after moving to prevent any floating
-	if not is_on_floor():
-		# Add a small downward position adjustment to help stay grounded
-		var snap_vector = Vector3(0, -0.1, 0)
-		global_position += snap_vector
-		print("[GROUNDING DEBUG] Applied snap to ground: ", snap_vector)
-	
-	# Reset horizontal components if not moving
-	if abs(local_velocity.x) < 0.1 and abs(local_velocity.z) < 0.1:
+	# Reset horizontal velocity if not moving
+	if abs(velocity.x) < 0.1 and abs(velocity.z) < 0.1:
 		velocity.x = 0
 		velocity.z = 0
 	
-	# IMPORTANT: Always zero out upward velocity to prevent any jumping
-	if velocity.y > 0:
-		velocity.y = 0
-	
-	# Update local_velocity with current velocity for next frame
-	local_velocity = velocity
-	
-	# ADDED: Debug final state
-	print("[PHYSICS DEBUG] End of Frame | Position Y: ", global_position.y, 
-		" | Velocity Y: ", velocity.y,
-		" | On Floor: ", is_on_floor())
-
-	# Restore the original state debug print
-	print("[STATE DEBUG] Time Without Sounds: ", time_without_sounds,
-		  " | Is Investigating: ", is_investigating_sound,
-		  " | Is Wandering: ", is_wandering,
-		  " | Has Sound: ", not current_sound.is_empty())
+	# Debug logs
+	print("[EARWORM] State: ", 
+		"Investigating" if is_investigating_sound else 
+		"Wandering" if is_wandering else "Idle",
+		" | Has Sound: ", not current_sound.is_empty())
 
 func update_path_following(speed: float) -> void:
 	if not agent.is_navigation_finished():
@@ -333,11 +277,16 @@ func update_path_following(speed: float) -> void:
 			if not walk_sound.playing:
 				walk_sound.play()
 			
-			# Improved rotation logic
+			# FIXED: Only rotate, don't affect position with transform interpolation
+			# Create a new basis for rotation only
 			var target_basis = Basis().looking_at(direction)
-			var target_transform = Transform3D(target_basis, global_position)
-			# Increase turn_speed for smoother rotation
-			transform = transform.interpolate_with(target_transform, get_process_delta_time() * turn_speed * 3.0)
+			
+			# Keep current position but use new rotation
+			var current_transform = transform
+			var target_transform = Transform3D(target_basis, current_transform.origin)
+			
+			# Apply only the rotation component
+			transform.basis = transform.basis.slerp(target_transform.basis, get_process_delta_time() * turn_speed * 3.0)
 		else:
 			# Only zero out horizontal movement
 			velocity.x = 0
@@ -358,12 +307,14 @@ func update_path_following(speed: float) -> void:
 
 func _on_sound_made(sound_position: Vector3, radius: float):
 	var distance = global_position.distance_to(sound_position)
+	print("[EARWORM] Sound detected - Position: ", sound_position, " | Radius: ", radius, " | Distance: ", distance)
 	
 	if distance <= radius:
 		is_wandering = false  # Reset wandering state when hearing a sound
 		wander_timer = 0.0
 		# Play alert sound when hearing something (with cooldown)
 		if alert_sound and not alert_sound.playing and alert_sound_cooldown <= 0:
+			print("[EARWORM] Alert sound playing - detected noise")
 			alert_sound.play()
 			alert_sound_cooldown = ALERT_SOUND_INTERVAL
 		
@@ -374,6 +325,15 @@ func _on_sound_made(sound_position: Vector3, radius: float):
 			"position": sound_position,
 			"distance": distance
 		}
+		
+		# Set the target position immediately
+		if agent and nav_ready:
+			current_sound_target = sound_position
+			agent.target_position = current_sound_target
+			is_investigating_sound = true
+			print("[EARWORM] Investigating sound at: ", current_sound_target)
+	else:
+		print("[EARWORM] Sound too far away to hear: ", distance, " > ", radius)
 
 func _on_activation_timeout() -> void:
 	is_active = true
@@ -383,79 +343,38 @@ func wander() -> void:
 	if not nav_ready:
 		return
 	
-	# ADDED: Debug wander entry
-	print("[WANDER DEBUG] Starting wander | Current position Y: ", global_position.y,
-		" | On Floor: ", is_on_floor(),
-		" | Current Velocity Y: ", velocity.y)
+	print("[EARWORM] Selecting new wander target")
 	
-	# Clear all other states first
+	# Clear all other states
 	is_investigating_sound = false
 	current_sound.clear()
 	
-	# Set next wander time whether entering wander state or picking new target
+	# Set wander state
+	is_wandering = true
+	
+	# Set next wander time
 	next_wander_time = randf_range(MIN_WANDER_INTERVAL, MAX_WANDER_INTERVAL)
+	print("[EARWORM] Next wander target in: ", next_wander_time, " seconds")
 	
-	if not is_wandering:
-		debug_log("WANDER", "Entering wander state")
-		is_wandering = true
+	# Generate a random direction
+	var random_direction = Vector3(
+		randf_range(-1.0, 1.0),
+		0.0,  # Keep on same Y level
+		randf_range(-1.0, 1.0)
+	).normalized()
 	
-	# Try to find a valid wander position (max 5 attempts)
-	var valid_position = false
-	var attempts = 0
-	while not valid_position and attempts < 5:
-		# Generate random point within distance range
-		var random_angle = randf() * PI * 2
-		var random_radius = randf_range(MIN_WANDER_DISTANCE, MAX_WANDER_DISTANCE)
-		var offset = Vector3(
-			cos(random_angle) * random_radius,
-			0,  # Keep Y at 0 to avoid vertical issues
-			sin(random_angle) * random_radius
-		)
-		
-		# MODIFIED: Use current Y position for wander target to stay at same height
-		current_wander_target = Vector3(
-			global_position.x + offset.x,
-			global_position.y,  # Keep exact same Y position
-			global_position.z + offset.z
-		)
-		
-		# ADDED: Debug wander target
-		print("[WANDER DEBUG] Potential target | Y: ", current_wander_target.y,
-			" | Original Y: ", global_position.y,
-			" | Difference: ", current_wander_target.y - global_position.y)
-		
-		agent.target_position = current_wander_target
-		
-		# Wait a frame to let the navigation system update
-		await get_tree().physics_frame
-		
-		# Check if point is navigable
-		if agent.is_target_reachable():
-			valid_position = true
-			debug_log("WANDER", "Found valid wander target at: " + str(current_wander_target) + 
-					 " | Next change in: " + str(next_wander_time) + " seconds")
-		else:
-			attempts += 1
-			debug_log("WANDER", "Invalid wander target, attempt " + str(attempts))
+	# Generate a random distance
+	var random_distance = randf_range(MIN_WANDER_DISTANCE, MAX_WANDER_DISTANCE)
 	
-	if valid_position:
-		# ADDED: Debug final wander target
-		print("[WANDER DEBUG] Final valid target | Y: ", current_wander_target.y,
-			" | Distance: ", global_position.distance_to(current_wander_target))
-		
-		# Target is already set, just start moving
-		time_without_sounds = 0.0
-		update_path_following(chase_speed * WANDER_SPEED_MULTIPLIER)
-	else:
-		# If no valid position found, stay in place briefly before trying again
-		debug_log("WANDER", "No valid wander target found, will retry in 2 seconds")
-		is_wandering = true  # Stay in wandering state
-		current_wander_target = global_position
-		agent.target_position = current_wander_target
-		next_wander_time = 2.0  # Try again in 2 seconds
+	# Calculate new target position
+	current_wander_target = global_position + (random_direction * random_distance)
 	
-	# Stop walk sound when starting new wander
-	walk_sound.stop()
+	# Set the navigation target
+	agent.target_position = current_wander_target
+	print("[EARWORM] New wander target set: ", current_wander_target, " (", random_distance, " units away)")
+	
+	# Start moving toward the target
+	update_path_following(chase_speed * WANDER_SPEED_MULTIPLIER)
 
 func attack_player() -> void:
 	if not player or not is_instance_valid(player) or not can_attack:
@@ -463,6 +382,8 @@ func attack_player() -> void:
 		
 	var dist = global_position.distance_to(player.global_position)
 	if dist < attack_radius and has_line_of_sight():
+		print("[EARWORM] Attacking player - accidentally found them!")
+		
 		# Set attack cooldown
 		can_attack = false
 		attack_timer = 0.0
@@ -474,7 +395,13 @@ func attack_player() -> void:
 		
 		# Apply damage and play sound
 		player.take_damage(attack_damage)
-		attack_sound.play()
+		if attack_sound:
+			attack_sound.play()
+			
+		# Important: DON'T change the navigation target to the player
+		# This ensures we don't track the player after attacking
+		# We only attack when we "accidentally" find the player while 
+		# following sounds or wandering
 
 # Add near the top with other constants
 const ATTACK_DAMAGE: float = 100.0
