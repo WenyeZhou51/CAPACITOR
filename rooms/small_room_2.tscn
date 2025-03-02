@@ -144,13 +144,13 @@ radius = 3.0
 script = ExtResource("1_6ehsm")
 size_in_voxels = Vector3i(2, 1, 2)
 min_count = 4
-max_count = 8
+max_count = 6
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00342763, -0.00274992, -0.00186777)
 material_override = SubResource("StandardMaterial3D_y0qck")
 use_collision = true
-size = Vector3(19.9753, 10, 19.9905)
+size = Vector3(20, 10, 20)
 
 [node name="Roomcut" type="CSGBox3D" parent="CSGBox3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0910292, 0, -0.5802)

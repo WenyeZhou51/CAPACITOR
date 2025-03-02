@@ -32,7 +32,7 @@ layout_mode = 2
 offset_left = 1000.0
 offset_top = 464.0
 offset_right = 1610.0
-offset_bottom = 1004.0
+offset_bottom = 1090.0
 
 [node name="Start" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
 visible = false
@@ -45,6 +45,11 @@ text = "START"
 layout_mode = 2
 theme_override_font_sizes/font_size = 90
 text = "START"
+
+[node name="Tutorial" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 90
+text = "TUTORIAL"
 
 [node name="Options" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
 layout_mode = 2
@@ -59,5 +64,6 @@ text = "QUIT"
 [connection signal="button_down" from="MarginContainer/TextureRect/VBoxContainer/Start" to="." method="_on_start_button_down"]
 [connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Multiplayer" to="." method="_on_multiplayer_pressed"]
+[connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Tutorial" to="." method="_on_tutorial_pressed"]
 [connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
