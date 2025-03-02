@@ -1,0 +1,204 @@
+[gd_scene load_steps=8 format=3 uid="uid://dd7itu3e2both"]
+
+[ext_resource type="Script" path="res://head.gd" id="1_jmy54"]
+
+[sub_resource type="GDScript" id="GDScript_aks8u"]
+script/source = "extends CharacterBody3D
+
+# Constants
+const WALK_SPEED = 3.0  # Default walking speed
+const RUN_SPEED = 6.0  # Sprinting speed
+const JUMP_FORCE = 4.5  # Force applied for jumping
+const STAMINA_DRAIN_RATE = 0.01  # Rate at which stamina drains while sprinting
+const STAMINA_REGEN_RATE = 0.5  # Rate at which stamina regenerates while not sprinting
+const GRAVITY_FORCE = Vector3.DOWN * 9.8  # Gravity vector
+const STAMINA_THRESHOLD = 0.5  # Buffer threshold for stamina management
+
+# Variables
+@export var stamina_bar: VSlider  # Reference to the stamina UI slider
+@export var interaction_area: Area3D
+@export var interact_label: Label
+@export var alive: bool
+var current_stamina: float = 1.0 + STAMINA_THRESHOLD  # Current stamina level
+var is_running: bool = false  # Whether the player is sprinting
+var movement_speed: float = WALK_SPEED  # Current movement speed
+var is_holding: bool = false # Whether the player is holding an intem
+
+@onready var cam = $Head/Camera3D
+#@onready var synchronizer = $MultiplayerSynchronizer
+
+@export var player_id := 1:
+	set(id):
+		player_id = id
+
+
+#func _enter_tree() -> void:
+	#set_multiplayer_authority(name.to_int())
+
+func _ready():
+	add_to_group(\"players\")
+	alive = true
+	# Check if this node's player_id matches our local peer's unique ID
+	if get_tree().get_multiplayer().get_unique_id() == player_id:
+		cam.current = true
+	else:
+		cam.current = false
+	#synchronizer.set_multiplayer_authority(str(name).to_int())
+	
+func _physics_process(delta: float) -> void:
+	if (not is_multiplayer_authority()):
+		return
+		
+	#print(\"POS \", global_position, \"   \" , str(name))
+	
+	# Apply gravity if not on the floor
+	if not is_on_floor():
+		velocity += GRAVITY_FORCE * delta
+
+	# Handle jumping
+	if Input.is_action_just_pressed(\"Jump\") and is_on_floor():
+		velocity.y = JUMP_FORCE
+
+	# Handle sprinting input
+	if Input.is_action_pressed(\"Sprint\"):
+		if not is_running and current_stamina > STAMINA_THRESHOLD / 2:
+			is_running = true
+		elif is_running and current_stamina > 0:
+			movement_speed = RUN_SPEED
+			current_stamina -= STAMINA_DRAIN_RATE * delta
+		else:
+			is_running = false
+			movement_speed = WALK_SPEED
+	else:
+		is_running = false
+		movement_speed = WALK_SPEED
+		current_stamina += STAMINA_REGEN_RATE * delta
+
+	# Get the interaction area
+	var overlapping_bodies = interaction_area.get_overlapping_bodies()
+	
+	if overlapping_bodies.size() > 0:
+		var closest_object = null
+		var closest_distance = INF
+		var camera_position = $Head/Camera3D.global_position
+		
+		for body in overlapping_bodies:
+			var distance = camera_position.distance_to(body.global_position)
+			if distance < closest_distance:
+				closest_distance = distance
+				closest_object = body
+		
+		if closest_object:
+			var candidate = closest_object
+			while candidate and not candidate.has_method(\"interact\"):
+				candidate = candidate.get_parent()
+			
+			if candidate and candidate.has_method(\"interact\"):
+				if interact_label:
+					interact_label.visible = true
+				if Input.is_action_just_pressed(\"Interact\") and candidate.is_in_group(\"doors\"):
+					candidate.interact(global_transform)
+				elif Input.is_action_just_pressed(\"Interact\") and is_holding:
+					var item_socket = self.get_node(\"Head/ItemSocket\")
+					var curr_item = item_socket.get_child(0)
+					curr_item.drop(self)
+					candidate.interact(self)
+				elif Input.is_action_just_pressed(\"Interact\"):
+					candidate.interact(self)
+					is_holding = true
+			elif interact_label:
+				interact_label.visible = false
+	elif interact_label:
+		interact_label.visible = false
+
+	if Input.is_action_just_pressed(\"Drop\") and is_holding:
+		var item_socket = self.get_node(\"Head/ItemSocket\")
+		var curr_item = item_socket.get_child(0)
+		curr_item.drop(self)
+		is_holding = false
+	
+	# Clamp stamina to valid range
+	current_stamina = clamp(current_stamina, 0.0, 1.5)
+
+	# Get input direction and calculate movement
+	var input_vector: Vector2 = Input.get_vector(\"Left\", \"Right\", \"Forward\", \"Back\")
+	var move_direction: Vector3 = (transform.basis * Vector3(input_vector.x, 0, input_vector.y)).normalized()
+
+	if move_direction != Vector3.ZERO:
+		velocity.x = move_direction.x * movement_speed
+		velocity.z = move_direction.z * movement_speed
+	else:
+		velocity.x = move_toward(velocity.x, 0, movement_speed * delta)
+		velocity.z = move_toward(velocity.z, 0, movement_speed * delta)
+
+	# Update stamina bar value smoothly
+	if stamina_bar:
+		stamina_bar.value = lerp(stamina_bar.value, current_stamina - STAMINA_THRESHOLD / 2, 0.1)
+
+	# Move the character
+	move_and_slide()
+"
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mexlt"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_eygxh"]
+radial_segments = 14
+
+[sub_resource type="GDScript" id="GDScript_lalar"]
+script/source = "extends MeshInstance3D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta: float) -> void:
+	pass
+	
+"
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_0ulvj"]
+radius = 0.4
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_x4s86"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:transform")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="MultiplayerPlayer" type="CharacterBody3D" node_paths=PackedStringArray("interaction_area")]
+script = SubResource("GDScript_aks8u")
+interaction_area = NodePath("Head/Camera3D/Area3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_mexlt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 6.83048e-05, 0.000979942, -6.56254e-05, 0.999996, -0.00274421, -0.000980125, 0.00274414, 0.999996, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_eygxh")
+script = SubResource("GDScript_lalar")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.594024, -0.288516)
+script = ExtResource("1_jmy54")
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00714731, -0.011718, -0.0147273)
+current = true
+
+[node name="Area3D" type="Area3D" parent="Head/Camera3D"]
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Head/Camera3D/Area3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.0264817, -0.256173, -0.788406)
+shape = SubResource("CylinderShape3D_0ulvj")
+
+[node name="ItemSocket" type="Node3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.317, -0.495, -0.5)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_x4s86")
