@@ -80,6 +80,7 @@ func propogate_item_drop(player_name: String):
 	player.inv_size -= 1
 	player.is_holding = false
 
+
 @rpc("authority", "call_local")
 func propogate_player_dead(player_name: String):
 	var player: Player = get_tree().get_root().get_node("Level/players/" + player_name)

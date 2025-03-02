@@ -18,6 +18,7 @@ const STAMINA_THRESHOLD = 0.5  # Buffer threshold for stamina management
 @export var stamina_bar: VSlider  # Reference to the stamina UI slider
 @export var interaction_area: Area3D
 @export var interact_label: Label
+@export var alive: bool
 var current_stamina: float = 1.0 + STAMINA_THRESHOLD  # Current stamina level
 var is_running: bool = false  # Whether the player is sprinting
 var movement_speed: float = WALK_SPEED  # Current movement speed
@@ -36,7 +37,7 @@ var is_holding: bool = false # Whether the player is holding an intem
 
 func _ready():
 	add_to_group(\"players\")
-	
+	alive = true
 	# Check if this node's player_id matches our local peer's unique ID
 	if get_tree().get_multiplayer().get_unique_id() == player_id:
 		cam.current = true

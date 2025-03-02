@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bjjrllm15flh4"]
+[gd_scene load_steps=8 format=3 uid="uid://bjjrllm15flh4"]
 
 [ext_resource type="PackedScene" uid="uid://be2r833svd7bu" path="res://Assets/Venus.glb" id="1_eopk2"]
 [ext_resource type="Script" path="res://Scripts/venus.gd" id="2_4grln"]
@@ -8,6 +8,9 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_33x1u"]
 radius = 0.6
 height = 3.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_65130"]
+size = Vector3(0.950935, 0.729492, 0.89508)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_81kcf"]
 properties/0/path = NodePath(".:position")
@@ -20,13 +23,14 @@ properties/1/replication_mode = 1
 [node name="enemy_venus" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.106848, 0)
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("detection_area")]
 safe_margin = 0.1
 script = ExtResource("2_4grln")
 chase_speed = 4.0
 attack_damage = 20.0
 animation_speed = 4.0
 chase_animation_speed = 8.0
+detection_area = NodePath("Area3D")
 
 [node name="Venus" parent="CharacterBody3D" instance=ExtResource("1_eopk2")]
 transform = Transform3D(-0.2, 0, -3.01992e-08, 0, 0.2, 0, 3.01992e-08, 0, -0.2, 0, 3.19863, 0)
@@ -164,6 +168,13 @@ stream = ExtResource("4_jejc0")
 volume_db = 5.0
 
 [node name="RayCast3D" type="RayCast3D" parent="CharacterBody3D"]
+
+[node name="Area3D" type="Area3D" parent="CharacterBody3D"]
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/Area3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0.109891, 2.21473, 0.241022)
+shape = SubResource("BoxShape3D_65130")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_81kcf")

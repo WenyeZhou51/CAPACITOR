@@ -32,7 +32,7 @@ layout_mode = 2
 offset_left = 1000.0
 offset_top = 464.0
 offset_right = 1610.0
-offset_bottom = 1090.0
+offset_bottom = 1004.0
 
 [node name="Start" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
 visible = false
@@ -48,6 +48,7 @@ text = "START"
 
 [node name="Tutorial" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 0.843137)
 theme_override_font_sizes/font_size = 90
 text = "TUTORIAL"
 

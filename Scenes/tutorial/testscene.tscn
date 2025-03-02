@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://bma4lsyvrgvw5"]
+[gd_scene load_steps=37 format=3 uid="uid://b0ogfy3qfh5d3"]
 
 [ext_resource type="Script" path="res://Scenes/testscene.gd" id="1_v17iy"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
@@ -25,7 +25,6 @@
 [ext_resource type="PackedScene" uid="uid://cjdanhbr7qd50" path="res://Scenes/prefabs/items/scrap1.tscn" id="14_q11nm"]
 [ext_resource type="PackedScene" uid="uid://bi3tstfh1x606" path="res://rooms/small_room_2.tscn" id="19_o6rck"]
 [ext_resource type="PackedScene" uid="uid://bwoto031wapot" path="res://Scenes/pause_menu.tscn" id="20_chau2"]
-[ext_resource type="Script" path="res://Scenes/electricity_manager.gd" id="22_fg5vs"]
 [ext_resource type="PackedScene" uid="uid://drfh7y8sxcgn0" path="res://rooms/medium_room_2.tscn" id="23_xnoos"]
 [ext_resource type="PackedScene" uid="uid://c1ys3d3anbwdu" path="res://Scenes/Spawn Points/player_spawn_point.tscn" id="24_gf8n3"]
 [ext_resource type="PackedScene" uid="uid://c4lvx2bce1ryx" path="res://rooms/junction.tscn" id="24_nrufq"]
@@ -161,69 +160,6 @@ layout_mode = 2
 navigation_mesh = SubResource("NavigationMesh_t4gef")
 
 [node name="DGTutorial2" type="Node3D" parent="Tutorial2"]
-script = ExtResource("6_s8vmo")
-room_scenes = Array[PackedScene]([ExtResource("7_d3uit"), ExtResource("7_fiwcu"), ExtResource("19_o6rck"), ExtResource("8_osxs0"), ExtResource("23_xnoos")])
-corridor_room_scene = ExtResource("9_svjm5")
-dungeon_size = Vector3i(10, 5, 10)
-junctions = 30
-room_separation_force = 3.0
-max_retries = 20
-max_safe_iterations = 500
-heuristic_scale = 3.0
-corridor_cost_multiplier = 2.5
-room_cost_multiplier = 0.05
-room_cost_at_end_for_required_doors = 1.0
-
-[node name="medium_room" parent="Tutorial2/DGTutorial2" instance=ExtResource("23_xnoos")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -35, 10, 10)
-
-[node name="start_room" parent="Tutorial2/DGTutorial2" instance=ExtResource("8_n1yd6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 20, 0)
-
-[node name="stair_1" parent="Tutorial2/DGTutorial2" instance=ExtResource("7_d3uit")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -10, 15, -5)
-
-[node name="corridor_1" parent="Tutorial2/DGTutorial2" instance=ExtResource("9_svjm5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, -5)
-
-[node name="corridor_2" parent="Tutorial2/DGTutorial2" instance=ExtResource("9_svjm5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, -15)
-
-[node name="corridor_3" parent="Tutorial2/DGTutorial2" instance=ExtResource("9_svjm5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, -25)
-
-[node name="small_room_1" parent="Tutorial2/DGTutorial2" instance=ExtResource("7_fiwcu")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -10, 20, -20)
-
-[node name="junction" parent="Tutorial2/DGTutorial2" instance=ExtResource("24_nrufq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 20, -25)
-
-[node name="corridor_4" parent="Tutorial2/DGTutorial2" instance=ExtResource("25_8g2gc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, -35)
-
-[node name="corridor_5" parent="Tutorial2/DGTutorial2" instance=ExtResource("25_8g2gc")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 20, -35)
-
-[node name="junction2" parent="Tutorial2/DGTutorial2" instance=ExtResource("24_nrufq")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 25, 20, -5)
-
-[node name="junction3" parent="Tutorial2/DGTutorial2" instance=ExtResource("24_nrufq")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 20, -5)
-
-[node name="junction4" parent="Tutorial2/DGTutorial2" instance=ExtResource("24_nrufq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, 5)
-
-[node name="junction5" parent="Tutorial2/DGTutorial2" instance=ExtResource("24_nrufq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, 15)
-
-[node name="corridor_6" parent="Tutorial2/DGTutorial2" instance=ExtResource("25_8g2gc")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 15, 20, -15)
-
-[node name="corridor_7" parent="Tutorial2/DGTutorial2" instance=ExtResource("25_8g2gc")]
-transform = Transform3D(-0.00944211, 0, 0.999955, 0, 1, 0, -0.999955, 0, -0.00944211, 5, 20, 25)
-
-[node name="small_room_2" parent="Tutorial2/DGTutorial2" instance=ExtResource("19_o6rck")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 20, 30)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_t4gef")
@@ -238,7 +174,7 @@ corridor_room_scene = ExtResource("9_svjm5")
 dungeon_size = Vector3i(10, 5, 10)
 junctions = 30
 room_separation_force = 3.0
-max_retries = 25
+max_retries = 0
 max_safe_iterations = 500
 heuristic_scale = 3.0
 corridor_cost_multiplier = 2.5
@@ -248,15 +184,76 @@ room_cost_at_end_for_required_doors = 1.0
 [node name="start_room" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("8_n1yd6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 20, 0)
 
+[node name="medium_room" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("23_xnoos")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -35, 10, 10)
+script = null
+
+[node name="stair_1" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("7_d3uit")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -10, 15, -5)
+script = null
+
+[node name="corridor_1" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, -5)
+script = null
+
+[node name="corridor_2" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, -15)
+script = null
+
+[node name="corridor_3" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("9_svjm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, -25)
+script = null
+
+[node name="small_room_1" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("7_fiwcu")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -10, 20, -20)
+script = null
+
+[node name="junction" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("24_nrufq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 20, -25)
+script = null
+
+[node name="corridor_4" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("25_8g2gc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, -35)
+script = null
+
+[node name="corridor_5" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("25_8g2gc")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 20, -35)
+script = null
+
+[node name="junction2" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("24_nrufq")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 25, 20, -5)
+script = null
+
+[node name="junction3" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("24_nrufq")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 20, -5)
+script = null
+
+[node name="junction4" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("24_nrufq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, 5)
+script = null
+
+[node name="junction5" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("24_nrufq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, 15)
+script = null
+
+[node name="corridor_6" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("25_8g2gc")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 15, 20, -15)
+script = null
+
+[node name="corridor_7" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("25_8g2gc")]
+transform = Transform3D(-0.00944211, 0, 0.999955, 0, 1, 0, -0.999955, 0, -0.00944211, 5, 20, 25)
+script = null
+
+[node name="small_room_2" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("19_o6rck")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 20, 30)
+script = null
+
 [node name="Shader" type="MeshInstance3D" parent="."]
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_rdfmn")
 surface_material_override/0 = SubResource("ShaderMaterial_xnko0")
 
 [node name="PauseMenu" parent="." instance=ExtResource("20_chau2")]
-
-[node name="Electricity Manager" type="Node" parent="."]
-script = ExtResource("22_fg5vs")
 
 [node name="players" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.2383, 18.234, -4.81146)
@@ -270,9 +267,6 @@ spawn_path = NodePath("../players")
 [node name="Flashlight" parent="items" instance=ExtResource("13_1s1s2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.9189, 16.0335, 0)
 
-[node name="scrap1" parent="items" instance=ExtResource("14_q11nm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.7764, 16.997, 0)
-
 [node name="ItemSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://Scenes/prefabs/items/scrap1.tscn", "res://Scenes/prefabs/items/scrap2.tscn", "res://Scenes/prefabs/items/scrap3.tscn", "res://Scenes/prefabs/Door.tscn", "res://Scenes/prefabs/items/coolant.tscn", "res://Scenes/prefabs/enemies/enemy_earworm.tscn", "res://Scenes/prefabs/enemies/enemy_venus.tscn")
 spawn_path = NodePath("../items")
@@ -280,11 +274,7 @@ spawn_path = NodePath("../items")
 [node name="Player Spawn Point" parent="." instance=ExtResource("24_gf8n3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.3085, 19.1879, 1.94595)
 
-[node name="Earworm" parent="." instance=ExtResource("9_vw5pj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.6886, 15.8977, -0.201984)
-
 [connection signal="bake_finished" from="Tutorial2" to="GameManager" method="_on_navigation_region_3d_bake_finished"]
-[connection signal="done_generating" from="Tutorial2/DGTutorial2" to="Tutorial2" method="on_dungeon_done_generating"]
 [connection signal="bake_finished" from="NavigationRegion3D" to="GameManager" method="_on_navigation_region_3d_bake_finished"]
 [connection signal="done_generating" from="NavigationRegion3D/DungeonGenerator3D" to="NavigationRegion3D" method="on_dungeon_done_generating"]
 

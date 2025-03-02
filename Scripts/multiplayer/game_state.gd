@@ -4,6 +4,8 @@ var _quota = 400
 var _team_score = 0
 var alive_count = 0
 
+var players = {}
+
 signal team_score_changed
 signal end_game
 signal change_ui
@@ -17,6 +19,8 @@ func set_quota(val: int) -> void:
 	
 func get_team_score() -> int:
 	return _team_score
+
+#func playerUpdate()
 
 func set_team_score(val: int) -> void:
 	_team_score = val

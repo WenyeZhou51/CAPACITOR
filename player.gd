@@ -30,6 +30,7 @@ signal inv_high(pI, cI, name)
 @export var max_scan_line_amount: float = 1.0
 @export var player_mesh: GeometryInstance3D
 @export var player_colors = [Color.RED, Color.BLUE] # , Color.WHITE, Color.GREEN, Color.YELLOW
+@export var alive: bool
 
 @export var quota: int = 600 ## REPLACE WITH MULT MANAGER QUOTA
 
@@ -73,6 +74,7 @@ var sound_emitter: Node
 func _ready():
 	set_multiplayer_authority(str(name).to_int())
 	add_to_group("players")
+	alive = true
 	stamina_bar = get_node("/root/Level/UI/SprintSlider")
 	interact_label = get_node("/root/Level/UI/InteractLabel")
 	texture_rect = get_node("/root/Level/UI/TextureRect")
@@ -245,7 +247,8 @@ func toggle_console() -> void:
 		camera.global_transform = $Head.global_transform
 
 func _physics_process(delta: float) -> void:
-	if (dead): return
+	if (dead): 
+		return
 	if not is_multiplayer_authority(): return
 	if camera_locked and console_window:
 		var console_root = console_window.get_parent().get_parent()
@@ -435,9 +438,9 @@ func take_damage(amount: int):
 	if current_health <= 0:
 		current_health = 0
 		MultiplayerRequest.request_player_dead();
-		
 	else:
 		update_health_indicator()
+
 
 func death_effect():
 	animation_player.play("player_anim/die")

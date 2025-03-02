@@ -13,6 +13,7 @@ const DEBUG = true  # Toggle debug logging
 
 var players = {}
 var player_count = 1
+var map: String
 
 var player_info = {
 	"id": 0
@@ -56,10 +57,13 @@ func join_game():
 
 func start_game():
 	begin_game_logic.rpc(0)
-	
+
+func switch_map(url: String):
+	map = url
+
 @rpc("any_peer", "call_local")
 func begin_game_logic(seed: int):
-	get_tree().change_scene_to_file("res://Scenes/testscene.tscn")
+	get_tree().change_scene_to_file(map)
 
 func _on_peer_connected(id: int):
 	debug_log("Peer connected with ID: " + str(id))

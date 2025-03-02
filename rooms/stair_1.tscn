@@ -98,7 +98,7 @@ is_stair_room = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0634308, 0.0057373, 0)
 material_override = SubResource("StandardMaterial3D_rgyku")
 use_collision = true
-size = Vector3(20, 20, 10)
+size = Vector3(20.1451, 19.8645, 10)
 
 [node name="Roomcut" type="CSGBox3D" parent="CSGBox3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0929151, -0.139685, 0.000453949)

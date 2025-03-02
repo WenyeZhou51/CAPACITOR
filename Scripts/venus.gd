@@ -10,16 +10,18 @@ extends CharacterBody3D
 @export var debug_visual_colors: bool = false
 @export var animation_speed: float = 8.0
 @export var chase_animation_speed: float = 16.0
+@export var detection_area: Area3D
 
 # State variables
 var player: CharacterBody3D
-#var animation_player: AnimationPlayer
+var animation_player: AnimationPlayer
 var agent: NavigationAgent3D
 var local_velocity: Vector3 = Vector3.ZERO
 var is_walking: bool = false
 var nav_ready: bool = false
 var has_seen_player: bool = false
-var is_active: bool = false 
+# OVER HERE!!!!!!
+var is_active: bool = true
 var path_update_cooldown = 0.5
 var path_update_timer = 0.0
 var los_cooldown = 0.5
@@ -39,7 +41,7 @@ func _ready() -> void:
 	timer.start()
 	
 	# Node initialization debug
-	#animation_player = get_node("Venus/AnimationPlayer")
+	animation_player = get_node("Venus/AnimationPlayer")
 	agent = get_node("NavigationAgent3D")
 	#print("[VENUS] Nodes initialized - AnimationPlayer: ", animation_player, " | Agent: ", agent)
 	
@@ -57,8 +59,9 @@ func _ready() -> void:
 	# Player detection debug
 	var players = get_tree().get_nodes_in_group("players")
 	#print("[VENUS] Found ", players.size(), " players in group")
-	if players.size() > 0:
-		player = players[0] as CharacterBody3D
+	#if players.size() > 0:
+		#player = players[0] as CharacterBody3D
+		#print("fucking saus, ", players[1])
 		#print("[VENUS] Player assigned: ", player, " | Position: ", player.global_transform.origin)
 
 	
@@ -90,7 +93,7 @@ func _physics_process(delta: float) -> void:
 	if not is_active:
 		return
 	
-	if not nav_ready or player == null:
+	if not nav_ready:
 		#print("[ERROR] Skipping physics - Nav Ready: ", nav_ready, " | Player: ", player)
 		return
 	
@@ -106,30 +109,32 @@ func _physics_process(delta: float) -> void:
 		local_velocity.y = max(local_velocity.y, 0)
 		#print("[FLOOR] Velocity clamped to: ", local_velocity.y)
 	
-	chase_player(delta)
+	
+	#chase_player(delta)
 	
 	# Line of sight debug
 	
-	los_timer += delta
-	if los_timer >= los_cooldown:
-		los = has_line_of_sight()
-		los_timer = 0.0
-	#print("[VISION] Line of Sight: ", los, 
-		#" | Has Seen Player: ", has_seen_player)
-	if los and not has_seen_player:
-		#print("[VISION] !!! FIRST PLAYER DETECTION !!!")
-		has_seen_player = true
+	# If no player has been seen, check for line-of-sight
+	if not has_seen_player:
+		var spotted = has_line_of_sight()
+		if spotted:
+			has_seen_player = true
+			# Assign the detected player so that chase functions know whom to follow.
+			player = spotted
 	
-	# Movement debug
-	var pre_move_velocity = velocity
-	velocity = local_velocity
-	move_and_slide()
-	local_velocity = velocity
-	#print("[MOVEMENT] Pre: ", pre_move_velocity, 
-		#" | Post: ", local_velocity, 
-	#	" | Slide Count: ", get_slide_collision_count())
-	
-	handle_animation()
+	# If a player has been spotted, start chasing them.
+	if has_seen_player:
+		chase_player(delta)
+		# Movement debug
+		var pre_move_velocity = velocity
+		velocity = local_velocity
+		move_and_slide()
+		local_velocity = velocity
+		#print("[MOVEMENT] Pre: ", pre_move_velocity, 
+			#" | Post: ", local_velocity, 
+		#	" | Slide Count: ", get_slide_collision_count())
+		
+		handle_animation()
 	
 
 
@@ -182,15 +187,15 @@ func handle_animation() -> void:
 	if should_walk and not is_walking:
 		#print("[ANIMATION] Starting walk animation")
 		is_walking = true
-		#if animation_player:
+		if animation_player:
 			##print("[ANIMATION] Playing 'Walking'")
-			#animation_player.play("Walking")
+			animation_player.play("Walking")
 
 	elif not should_walk and is_walking:
 		#print("[ANIMATION] Stopping animation")
 		is_walking = false
-		#if animation_player:
-			#animation_player.stop()
+		if animation_player:
+			animation_player.stop()
 
 
 
@@ -211,20 +216,17 @@ func _on_timer_timeout() -> void:
 		$AttackSound.play()
 
 
-func has_line_of_sight() -> bool:
-	var start_pos = global_transform.origin
-	var end_pos = player.global_transform.origin
-	#print("[VISION] LOS Check: ", start_pos, " -> ", end_pos)
-	
-	var query = PhysicsRayQueryParameters3D.create(start_pos, end_pos)
-	query.collide_with_areas = true
-	var result = get_world_3d().direct_space_state.intersect_ray(query)
+func has_line_of_sight() -> CharacterBody3D:
+	var overlapping_bodies = detection_area.get_overlapping_bodies()
 	
 	#print("[VISION] LOS Result: ", result.get("collider"), 
 	#	" | Empty: ", result.is_empty(), 
 	#	" | Player Hit: ", result.collider == player)
+	for body in overlapping_bodies:
+		if body.is_in_group("players") and body.alive:
+			return body
+	return null
 	
-	return result.is_empty() or result.collider == player
 
 func _on_activation_timeout() -> void:
 	is_active = true
