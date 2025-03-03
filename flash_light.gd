@@ -1,6 +1,6 @@
 extends Pickapable  # Inherits from base class
 
-class_name Flashlight
+class_name Flashlight_Class
 
 @onready var light: SpotLight3D = $Model/FlashLight
 @export var flashlight_sound: AudioStreamPlayer

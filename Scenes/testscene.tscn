@@ -26,7 +26,7 @@
 [ext_resource type="PackedScene" uid="uid://bi3tstfh1x606" path="res://rooms/small_room_2.tscn" id="19_o6rck"]
 [ext_resource type="PackedScene" uid="uid://bwoto031wapot" path="res://Scenes/pause_menu.tscn" id="20_chau2"]
 [ext_resource type="Script" path="res://Scenes/electricity_manager.gd" id="22_fg5vs"]
-[ext_resource type="PackedScene" uid="uid://c1ys3d3anbwdu" path="res://Scenes/Spawn Points/player_spawn_point.tscn" id="24_gf8n3"]
+[ext_resource type="PackedScene" path="res://Scenes/Spawn Points/player_spawn_point.tscn" id="24_gf8n3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_binvk"]
 sky_top_color = Color(0.0101014, 0.0122771, 0.0165181, 1)

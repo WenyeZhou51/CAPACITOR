@@ -490,10 +490,10 @@ func set_inv_slot(new: int):
 		old_item = item_socket.get_child(0)
 	var new_item = inventory[current_slot]
 	if old_item:
-		#if(old_item.type == "flashlight"):
-			#var light_node = old_item.get_node("Model/FlashLight")
-			#if light_node and light_node is Light3D:
-				#(old_item as Flashlight).turn_off()
+		if(old_item.type == "flashlight"):
+			var light_node = old_item.get_node("Model/FlashLight")
+			if light_node and light_node is Light3D:
+				light_node.visible = false
 		item_socket.remove_child(old_item)
 		var mesh_instance = old_item.get_node_or_null("MeshInstance3D")
 		if mesh_instance:
@@ -510,9 +510,9 @@ func set_inv_slot(new: int):
 		if mesh_instance:
 			mesh_instance.visible = true
 		item_socket.add_child(new_item)
-		#if(new_item.type == "flashlight"):
-			#var light_node = new_item.get_node("Model/FlashLight")
-			#if light_node and light_node is Light3D:
-				#(new_item as Flashlight).turn_on()
+		if(new_item.type == "flashlight"):
+			var light_node = new_item.get_node("Model/FlashLight")
+			if light_node and light_node is Light3D:
+				light_node.visible = true
 		new_item.transform = Transform3D()
 	curSlotUpdating = false
