@@ -36,7 +36,7 @@ max_count = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.147551, 0.139895, 0.271381)
 material_override = SubResource("StandardMaterial3D_clbh1")
 use_collision = true
-size = Vector3(30.0236, 29.6001, 20.6426)
+size = Vector3(30, 30, 20)
 
 [node name="Roomcut" type="CSGBox3D" parent="CSGBox3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.405382, 2.37101, -0.606539)

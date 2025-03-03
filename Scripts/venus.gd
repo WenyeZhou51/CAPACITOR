@@ -219,7 +219,7 @@ func _on_timer_timeout() -> void:
 	
 	if dist < attack_radius:
 		#print("[ATTACK] !!! Hitting player !!!")
-		player.take_damage(attack_damage)
+		player.init_take_damage(attack_damage)
 		$AttackSound.play()
 
 
