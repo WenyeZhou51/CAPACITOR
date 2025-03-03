@@ -14,7 +14,7 @@ const STAMINA_THRESHOLD = 0.5  # Buffer threshold for stamina management
 signal value_changed(new_value)
 signal change_ui(idx, type)
 signal inv_high(pI, cI, name)
-
+var curSlotUpdating = false
 # Variables
 @export var stamina_bar: VSlider  # Reference to the stamina UI slider
 @export var interaction_area: Area3D
@@ -177,7 +177,7 @@ func set_color(idx: int) -> void:
 	player_mesh.material_override.albedo_color = player_color
 
 func _input(event: InputEvent) -> void:
-	if not is_multiplayer_authority(): return
+	if not client_is_this_player(): return
 	if using_console:
 		if event.is_action_pressed("Pause"):
 			print("console toggled off")
@@ -198,29 +198,23 @@ func _input(event: InputEvent) -> void:
 					flashlight_sound_player.play()
 		if event is InputEventMouseButton:
 			if event.pressed:
-				## Check if user scrolled up (4) or down (5)
-				if event.button_index == 4:
-					current_slot = (current_slot + 1) % inventory.size()
-					MultiplayerRequest.update_current_slot.rpc_id(1, current_slot)
-					var current_item = inventory[current_slot]
-					MultiplayerRequest.changeHolding()
-					if(current_item):
-						emit_signal("inv_high", (current_slot - 1 + inventory.size()) % inventory.size(), current_slot, current_item.type)
-					else:
-						emit_signal("inv_high", (current_slot - 1 + inventory.size()) % inventory.size(), current_slot, "")
-				elif event.button_index == 5:  # Scroll wheel down
-					current_slot = (current_slot - 1 + inventory.size()) % inventory.size()
-					MultiplayerRequest.update_current_slot.rpc_id(1, current_slot)
-					var current_item = inventory[current_slot]
-					MultiplayerRequest.changeHolding()
-					if(current_item):
-						emit_signal("inv_high", (current_slot + 1) % inventory.size(), current_slot, current_item.type)
-					else:
-						emit_signal("inv_high", (current_slot + 1) % inventory.size(), current_slot, "")
-				if inventory[current_slot] == null:
-					is_holding = false
-				else:
-					is_holding = true
+				check_inv_slot_change(event)
+				
+func check_inv_slot_change(event: InputEventMouseButton):
+	if curSlotUpdating: return
+	## Check if user scrolled up (4) or down (5)
+	if event.button_index == 4:
+		current_slot = (current_slot + 1) % inventory.size()
+		curSlotUpdating = true
+		MultiplayerRequest.update_current_slot_idx(current_slot)
+		
+	elif event.button_index == 5:  # Scroll wheel down
+		current_slot = (current_slot - 1 + inventory.size()) % inventory.size()
+		curSlotUpdating = true
+		MultiplayerRequest.update_current_slot_idx(current_slot)
+		
+		
+	
 #helper for console
 func toggle_console() -> void:
 	using_console = !using_console
@@ -414,34 +408,44 @@ func update_health_indicator():
 		crt_shader_material.set("shader_param/noise_amount", noise_amount)
 		crt_shader_material.set("shader_param/scan_line_amount", scan_line_amount)
 
-func take_damage(amount: int):
-	# If player is invincible, ignore the damage
-	if not is_multiplayer_authority():
-		return
 
+func init_take_damage(amount: int):
+	if not multiplayer.is_server(): return
+	if dead: return
 	if is_invincible:
 		return
 		
 	print("Player took damage: ", amount)
-	current_health -= amount
+	var new_health = current_health - amount
 	
-	# Flash effect
-	if is_multiplayer_authority():
-		var damage_tint = Color(1, 0, 0, 0.3)
-		var tween = create_tween()
-		crt_shader_material.set_shader_parameter("tint_color", damage_tint)
-		tween.tween_property(crt_shader_material, "shader_parameter/tint_color", Color(0, 0, 0, 0), 0.3)
+	MultiplayerPropogate.propogate_new_player_health.rpc(name, new_health)
 	
 	# Start invincibility period
 	is_invincible = true
 	invincibility_timer.start()
+		
+func set_health(new: int):
+	var hurt = new < current_health
+	current_health = new
+	if (current_health <= 0):
+		set_death(true)
+		return
 	
-	if current_health <= 0:
-		current_health = 0
-		MultiplayerRequest.request_player_dead();
-	else:
+	if hurt && client_is_this_player():
+		damage_taken_effect()
 		update_health_indicator()
+	
+func set_death(new: bool):
+	dead = new
+	if(dead):
+		death_effect()
+		GameState.reduce_alive_count()
 
+func damage_taken_effect():
+	var damage_tint = Color(1, 0, 0, 0.3)
+	var tween = create_tween()
+	crt_shader_material.set_shader_parameter("tint_color", damage_tint)
+	tween.tween_property(crt_shader_material, "shader_parameter/tint_color", Color(0, 0, 0, 0), 0.3)
 
 func death_effect():
 	animation_player.play("player_anim/die")
@@ -459,3 +463,50 @@ func apply_knockback(force: Vector3):
 func play_cashin_sound():
 	if cashin_sound_player and is_multiplayer_authority():
 		cashin_sound_player.play()
+
+func client_is_this_player() -> bool:
+	return name == str(multiplayer.get_unique_id())
+
+func set_inv_slot(new: int):
+	current_slot = new
+	var current_item = inventory[current_slot]
+	
+	var pre = -1 
+	if(current_item):
+		is_holding = true
+		emit_signal("inv_high", pre, current_slot, current_item.type)
+	else:
+		is_holding = false
+		emit_signal("inv_high", pre, current_slot, "")
+	var item_socket = get_node("Head/ItemSocket")
+	var old_item = null
+	if(item_socket.get_child_count() > 0):
+		old_item = item_socket.get_child(0)
+	var new_item = inventory[current_slot]
+	if old_item:
+		#if(old_item.type == "flashlight"):
+			#var light_node = old_item.get_node("Model/FlashLight")
+			#if light_node and light_node is Light3D:
+				#(old_item as Flashlight).turn_off()
+		item_socket.remove_child(old_item)
+		var mesh_instance = old_item.get_node_or_null("MeshInstance3D")
+		if mesh_instance:
+			mesh_instance.visible = false
+		var container = get_node("InventoryContainer")
+		if container:
+			container.add_child(old_item)  # Store the old item safely in the inventory container
+		else:
+			print("InventoryContainer not found. Old item may not be stored correctly.")
+	if new_item:
+		if new_item.get_parent():
+			new_item.get_parent().remove_child(new_item)
+		var mesh_instance = new_item.get_node_or_null("MeshInstance3D")
+		if mesh_instance:
+			mesh_instance.visible = true
+		item_socket.add_child(new_item)
+		#if(new_item.type == "flashlight"):
+			#var light_node = new_item.get_node("Model/FlashLight")
+			#if light_node and light_node is Light3D:
+				#(new_item as Flashlight).turn_on()
+		new_item.transform = Transform3D()
+	curSlotUpdating = false

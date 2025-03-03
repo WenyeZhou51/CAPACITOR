@@ -20,46 +20,10 @@ func propogate_item_interact(player_name: String, item_name: String):
 	item.interact(player)
 
 @rpc("authority", "call_local")
-func propagate_current_slot(player_id: int, new_slot: int):
-	var player = get_tree().get_root().get_node("Level/players/" + str(player_id))
-	if player:
-		player.current_slot = new_slot
-
-@rpc("authority", "call_local")
-func changeHolding(player_name: String):
-	var player = get_tree().get_root().get_node("Level/players/" + player_name)
-	var item_socket = player.get_node("Head/ItemSocket")
-	var old_item = null
-	if(item_socket.get_child_count() > 0):
-		old_item = item_socket.get_child(0)
-	var new_item = player.inventory[player.current_slot]
-	if old_item:
-		if(old_item.type == "flashlight"):
-			var light_node = old_item.get_node("Model/FlashLight")
-			if light_node and light_node is Light3D:
-				propogate_flash_toggle(player_name, old_item.name)
-		item_socket.remove_child(old_item)
-		var mesh_instance = old_item.get_node_or_null("MeshInstance3D")
-		if mesh_instance:
-			mesh_instance.visible = false
-		var container = player.get_node("InventoryContainer")
-		if container:
-			container.add_child(old_item)  # Store the old item safely in the inventory container
-		else:
-			print("InventoryContainer not found. Old item may not be stored correctly.")
-	if new_item:
-		if new_item.get_parent():
-			new_item.get_parent().remove_child(new_item)
-		var mesh_instance = new_item.get_node_or_null("MeshInstance3D")
-		if mesh_instance:
-			mesh_instance.visible = true
-		item_socket.add_child(new_item)
-		if(new_item.type == "flashlight"):
-			var light_node = new_item.get_node("Model/FlashLight")
-			if light_node and light_node is Light3D:
-				propogate_flash_toggle(player_name, new_item.name)
-		new_item.transform = Transform3D()
-
+func propagate_current_slot_idx(player_id: int, new_slot: int):
+	var player = GameState.get_player_node_by_name(str(player_id))
+	if !player: return
+	player.set_inv_slot(new_slot)
 
 @rpc("authority", "call_local")
 func propogate_flash_toggle(player_name: String, item_name: String):
@@ -82,13 +46,7 @@ func propogate_item_drop(player_name: String):
 
 
 @rpc("authority", "call_local")
-func propogate_player_dead(player_name: String):
-	var player: Player = get_tree().get_root().get_node("Level/players/" + player_name)
-	print_debug("PLAYER DEAD ", player_name, multiplayer.get_unique_id(), GameState.alive_count)
-	if player.dead:
-		return
-	
-	player.dead = true;
-	player.death_effect()
-	GameState.reduce_alive_count();
-	GameState.check_game_end();
+func propogate_new_player_health(player_name: String, health: int):
+	var player = GameState.get_player_node_by_name(player_name)
+	if !player: return
+	player.set_health(health)

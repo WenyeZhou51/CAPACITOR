@@ -59,8 +59,17 @@ func update_highlight(previous_idx: int, curr_idx: int, name: String):
 	if(previous_idx == curr_idx):
 		return  # No need to update if selection hasn't changed
 	print("checkpoint")
-	var old_child = grid_container.get_child(previous_idx)
-	old_child.self_modulate = Color(0, 0, 0, 0)
+	
+	if (previous_idx == -1):
+		var t1 = (curr_idx - 1 + 4) % 4
+		var t2 = (curr_idx + 1 + 4) % 4
+		var old_child = grid_container.get_child(t1)
+		var old_child2 = grid_container.get_child(t2)
+		old_child.self_modulate = Color(0, 0, 0, 0)
+		old_child2.self_modulate = Color(0, 0, 0, 0)
+	else:
+		var old_child = grid_container.get_child(previous_idx)
+		old_child.self_modulate = Color(0, 0, 0, 0)
 	
 	var curr_child = grid_container.get_child(curr_idx)
 	curr_child.self_modulate = Color(1,1,1,1)

@@ -34,3 +34,7 @@ func check_game_end() -> void:
 	
 func reduce_alive_count() -> void:
 	alive_count -= 1
+	check_game_end()
+	
+func get_player_node_by_name(name: String) -> Player:
+	return get_tree().get_root().get_node_or_null("Level/players/" + name)

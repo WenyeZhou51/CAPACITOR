@@ -34,6 +34,6 @@ func confirm_item_drop():
 	MultiplayerPropogate.propogate_item_drop.rpc(player_name)
 
 @rpc("any_peer", "call_local")
-func confirm_player_dead():
-	var player_name = str(multiplayer.get_remote_sender_id());
-	MultiplayerPropogate.propogate_player_dead.rpc(player_name)
+func confirm_current_slot_idx(idx: int):
+	var sender_id = multiplayer.get_remote_sender_id()
+	MultiplayerPropogate.propagate_current_slot_idx.rpc(sender_id, idx)
