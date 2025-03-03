@@ -27,7 +27,7 @@
 [ext_resource type="Shader" path="res://shaders/bayer.gdshader" id="26_6ylpr"]
 [ext_resource type="PackedScene" uid="uid://bwoto031wapot" path="res://Scenes/pause_menu.tscn" id="27_70cb4"]
 [ext_resource type="PackedScene" uid="uid://dhmtymlk3gb34" path="res://Scenes/prefabs/items/flashlight.tscn" id="28_tiy5o"]
-[ext_resource type="PackedScene" uid="uid://c1ys3d3anbwdu" path="res://Scenes/Spawn Points/player_spawn_point.tscn" id="29_cqaaa"]
+[ext_resource type="PackedScene" path="res://Scenes/Spawn Points/player_spawn_point.tscn" id="29_cqaaa"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_binvk"]
 sky_top_color = Color(0.0101014, 0.0122771, 0.0165181, 1)

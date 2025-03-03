@@ -24,7 +24,6 @@ var stage : BuildStage = BuildStage.NOT_STARTED :
 ## The corridor room is a special room scene which must be a 1x1x1 (in voxels) scene inheriting DungeonRoom which is used to connect all the placed rooms.
 @export var corridor_room_scene : PackedScene
 
-
 ## Dungeon grid size measured in voxel units, voxel size is chosen in the voxel_scale property.
 @export var dungeon_size := Vector3i(10,10,10) :
 	set(v):
@@ -134,9 +133,7 @@ func _ready():
 	add_debug_view_if_not_exist()
 	if Engine.is_editor_hint():
 		return
-		
 	generate(MultiplayerManager.map_seed)
-	
 func _process(delta):
 	if Engine.is_editor_hint():
 		# Debug view doesn't get added in Editor sometimes, like if you manually drag script on.
@@ -202,7 +199,6 @@ func generate(seed : int = int(generate_seed) if generate_seed.is_valid_int() el
 		room.ensure_doors_and_or_transform_cached_for_threads_and_virtualized_rooms()
 	
 	stage = BuildStage.PREPARING
-	
 	if not setup_room_instances_and_validate_before_generate():
 		_fail_generation("DungeonGenerator3D generation failed while setting up rooms.")
 		return
@@ -315,7 +311,6 @@ func _finalize_rooms(ready_callback = null) -> void:
 	room_instances = []
 	if corridor_room_instance and is_instance_valid(corridor_room_instance):
 		corridor_room_instance.queue_free()
-		
 	corridor_room_instance = null
 	if ready_callback is Callable:
 		if rooms_container.is_node_ready():
@@ -367,7 +362,6 @@ func _emit_failed_signal(): # So I can call_deferred
 var _rooms_placed : Array[DungeonRoom3D]
 var _custom_rand_rooms : Array[DungeonRoom3D]
 var _use_custom_rand_rooms := false
-
 func place_room_iteration(first_call_in_loop : bool) -> void:
 	if first_call_in_loop:
 		_rooms_placed = []
@@ -389,10 +383,8 @@ func place_room_iteration(first_call_in_loop : bool) -> void:
 					return
 	
 	var rand_room : DungeonRoom3D
-	
 	if _use_custom_rand_rooms:
 		rand_room = _custom_rand_rooms.pop_front()
-		
 	else:
 		if get_rooms_less_than_max_count(false).size() > 0:
 			rand_room = get_randomly_positioned_room()
@@ -415,7 +407,6 @@ func place_room_iteration(first_call_in_loop : bool) -> void:
 # Array [DungeonRoom3D, grid_pos_y] for where to place rooms
 var _stair_rooms_and_placements = []
 var _stair_rooms_placed_count = {}
-
 func place_stairs_iteration(first_call_in_loop : bool) -> void:
 	if first_call_in_loop:
 		_stair_rooms_placed_count = {}
@@ -436,7 +427,6 @@ func place_stairs_iteration(first_call_in_loop : bool) -> void:
 			y_pos,
 			rng.randi_range(0, dungeon_size.z - room.get_grid_aabbi(true).size.z)))
 		place_room(room)
-		
 	elif get_stair_rooms_from_instances().filter(func(s): return s.min_count > _stair_rooms_placed_count[s]).size() > 0:
 		var stairs_less_than_min = get_stair_rooms_from_instances().filter(func(s): return s.min_count > _stair_rooms_placed_count[s])
 		var room_original = stairs_less_than_min[rng.randi() % stairs_less_than_min.size()]
@@ -637,7 +627,6 @@ func separate_rooms_iteration(first_call_in_loop : bool) -> void:
 func force_all_doors_open(room: DungeonRoom3D) -> void:
 	for door in room.get_doors_cached():
 		door.optional = false
-		
 func create_junction(corridor_pos: Vector3i):
 	# Possible directions (assuming +X, -X, +Z, -Z)
 	var directions = [
@@ -662,7 +651,6 @@ func create_junction(corridor_pos: Vector3i):
 			# Carve a short corridor branch
 			if carve_corridor_branch(target, dir):
 				created_branches += 1
-				
 func carve_corridor_branch(start_pos: Vector3i, direction: Vector3i) -> bool:
 	var branch_length = rng.randi_range(2,4) # random short length
 	var current_pos = start_pos
@@ -679,7 +667,6 @@ func carve_corridor_branch(start_pos: Vector3i, direction: Vector3i) -> bool:
 		room.set_position_by_grid_pos(current_pos)
 		place_room(room)
 		_quick_corridors_check_dict[current_pos] = room
-		
 		current_pos += direction
 		created_any = true
 
@@ -830,7 +817,6 @@ func place_room(room : DungeonRoom3D) -> void:
 		rooms_container.add_child(room)
 	room.snap_room_to_dungeon_grid()
 
-
 ###################################
 ## INITIALIZE/CLEANUP GENERATION ##
 ###################################
@@ -907,16 +893,11 @@ func setup_room_instances_and_validate_before_generate() -> bool:
 			inst.ensure_doors_and_or_transform_cached_for_threads_and_virtualized_rooms()
 			inst_arr.append(inst as DungeonRoom3D)
 	room_instances = inst_arr
-	
 	corridor_room_instance = corridor_room_scene.instantiate() if corridor_room_scene else null
-	
-	var corridor_room_instances : Array[DungeonRoom3D] = []
-	
 	if corridor_room_instance:
 		#corridor_room_instance.dungeon_generator = self
 		corridor_room_instance.set("dungeon_generator", self)
 		#corridor_room_instance.ensure_doors_and_or_transform_cached_for_threads_and_virtualized_rooms()
-	
 	return validate_dungeon()
 
 ####################
@@ -983,13 +964,8 @@ func validate_dungeon(error_callback = null, warning_callback = null) -> bool:
 	var any_errors : = {"err": false} # So lambda closure captures
 	error_callback = (func(str): any_errors["err"] = true; error_callback.call(str))
 	
-	#if not corridor_room_scene:
-		#error_callback.call("No corridor room scene set. Add a 1x1x1 (in voxels) corridor room scene.")
-	
-	#if corridor_room_scene.is_empty():
-		#error_callback.call("No corridor room scenes set. Add at least one 1x1x1 (in voxels) corridor room scene.")
-
-	
+	if not corridor_room_scene:
+		error_callback.call("No corridor room scene set. Add a 1x1x1 (in voxels) corridor room scene.")
 	if room_scenes.size() == 0:
 		error_callback.call("No rooms added. Add DungeonRoom scenes to the room_scenes property.")
 	
