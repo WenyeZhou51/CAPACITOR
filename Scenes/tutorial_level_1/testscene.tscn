@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://b0ogfy3qfh5d3"]
+[gd_scene load_steps=36 format=3 uid="uid://b0ogfy3qfh5d3"]
 
 [ext_resource type="Script" path="res://Scenes/testscene.gd" id="1_mmvxi"]
 [ext_resource type="Script" path="res://Scenes/GameManager.gd" id="2_ooohi"]
@@ -19,7 +19,6 @@
 [ext_resource type="PackedScene" uid="uid://7pskmagldtnr" path="res://rooms/stair_1.tscn" id="17_fmsrp"]
 [ext_resource type="PackedScene" uid="uid://ch0yrvh1wr6nv" path="res://rooms/small_room_1.tscn" id="18_aprqh"]
 [ext_resource type="PackedScene" uid="uid://bi3tstfh1x606" path="res://rooms/small_room_2.tscn" id="19_42e8r"]
-[ext_resource type="PackedScene" uid="uid://c6gmwiknceior" path="res://rooms/medium_room.tscn" id="20_0mpm0"]
 [ext_resource type="PackedScene" uid="uid://cisl75a2ha5p8" path="res://rooms/corridor_1.tscn" id="21_paee8"]
 [ext_resource type="PackedScene" uid="uid://btqev772fc7bl" path="res://rooms/start_room.tscn" id="22_n42m7"]
 [ext_resource type="PackedScene" uid="uid://drfh7y8sxcgn0" path="res://rooms/medium_room_2.tscn" id="23_ht270"]
@@ -169,12 +168,11 @@ dungeon_generator_path = NodePath("DungeonGenerator3D")
 
 [node name="DungeonGenerator3D" type="Node3D" parent="NavigationRegion3D"]
 script = ExtResource("16_43yvh")
-room_scenes = Array[PackedScene]([ExtResource("17_fmsrp"), ExtResource("18_aprqh"), ExtResource("19_42e8r"), ExtResource("20_0mpm0")])
+room_scenes = Array[PackedScene]([ExtResource("17_fmsrp")])
 corridor_room_scene = ExtResource("21_paee8")
 dungeon_size = Vector3i(10, 5, 10)
 junctions = 30
 room_separation_force = 3.0
-max_retries = 0
 max_safe_iterations = 500
 heuristic_scale = 3.0
 corridor_cost_multiplier = 2.5
@@ -200,13 +198,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, -15)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, -25)
 
 [node name="small_room_1_1" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("18_aprqh")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -10, 20, -20)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -10, 20, -20)
 
 [node name="junction_2" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("24_5jxnn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 20, -25)
 
 [node name="junction_1" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("24_5jxnn")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 25, 20, -5)
+transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 25, 20, -5)
 
 [node name="corridor_4" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("25_wxt5g")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, -35)
@@ -217,7 +215,7 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 20
 script = null
 
 [node name="junction_3" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("24_5jxnn")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 20, -5)
+transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 15, 20, -5)
 
 [node name="junction_4" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("24_5jxnn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, 5)
@@ -226,7 +224,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, 5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, 15)
 
 [node name="corridor_2_1" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("25_wxt5g")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 15, 20, -15)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 15, 20, -15)
 
 [node name="corridor_2_2" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("25_wxt5g")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 20, 25)
@@ -265,3 +263,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.3085, 19.1879, 1.94595)
 [connection signal="done_generating" from="NavigationRegion3D/DungeonGenerator3D" to="NavigationRegion3D" method="on_dungeon_done_generating"]
 
 [editable path="UI"]
+[editable path="NavigationRegion3D/DungeonGenerator3D/stair_1"]
+[editable path="NavigationRegion3D/DungeonGenerator3D/small_room_2_1"]
