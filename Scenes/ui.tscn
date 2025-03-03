@@ -1,14 +1,13 @@
 [gd_scene load_steps=6 format=3 uid="uid://gin1s6t5p5jh"]
 
-[ext_resource type="Material" uid="uid://bl6bvg6m8lab0" path="res://shaders/crt_shader.tres" id="1_s6rhv"]
+[ext_resource type="Texture2D" uid="uid://cxhu56apij6g4" path="res://imgs/ux_corner.png" id="1_pfxds"]
+[ext_resource type="PackedScene" uid="uid://cli3ed0vm0drp" path="res://imgs/inv_slot_ui.tscn" id="2_lvx82"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_5inc3"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_r1nfe"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_05r3x"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_ysr43"]
 
 [node name="UI" type="Control"]
 layout_mode = 3
@@ -44,11 +43,96 @@ scale = Vector2(1.92, 1.92)
 text = "[E]"
 
 [node name="TextureRect" type="TextureRect" parent="."]
-material = ExtResource("1_s6rhv")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="itemHighlight" type="Node2D" parent="."]
+visible = false
+
+[node name="cornerTL" type="Sprite2D" parent="itemHighlight"]
+position = Vector2(628, 595)
+scale = Vector2(0.153333, 0.153333)
+texture = ExtResource("1_pfxds")
+
+[node name="cornerTR" type="Sprite2D" parent="itemHighlight"]
+position = Vector2(1323, 595)
+rotation = 1.5708
+scale = Vector2(0.153333, 0.153333)
+texture = ExtResource("1_pfxds")
+
+[node name="cornerBR" type="Sprite2D" parent="itemHighlight"]
+position = Vector2(1317, 757)
+rotation = -3.14159
+scale = Vector2(0.153333, 0.153333)
+texture = ExtResource("1_pfxds")
+
+[node name="cornerBL" type="Sprite2D" parent="itemHighlight"]
+position = Vector2(626, 757)
+rotation = 4.71239
+scale = Vector2(0.153333, 0.153333)
+texture = ExtResource("1_pfxds")
+
+[node name="Label" type="Label" parent="."]
+z_index = 20
+offset_left = 178.0
+offset_top = 34.0
+offset_right = 580.0
+offset_bottom = 97.0
+theme_override_font_sizes/font_size = 45
+text = "Remaining Quota: "
+
+[node name="Label2" type="Label" parent="."]
+z_index = 20
+offset_left = 590.0
+offset_top = 35.0
+offset_right = 667.0
+offset_bottom = 98.0
+theme_override_font_sizes/font_size = 45
+text = "666"
+
+[node name="Label3" type="Label" parent="."]
+z_index = 20
+offset_left = 170.0
+offset_top = 179.0
+offset_right = 390.0
+offset_bottom = 292.0
+theme_override_font_sizes/font_size = 40
+
+[node name="ninepatch" type="NinePatchRect" parent="."]
+z_index = 20
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("ViewportTexture_ysr43")
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="GridContainer" type="GridContainer" parent="ninepatch"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -412.0
+offset_top = -100.0
+grow_horizontal = 0
+grow_vertical = 0
+columns = 4
+
+[node name="Inv_slot_UI" parent="ninepatch/GridContainer" instance=ExtResource("2_lvx82")]
+layout_mode = 2
+
+[node name="Inv_slot_UI2" parent="ninepatch/GridContainer" instance=ExtResource("2_lvx82")]
+layout_mode = 2
+
+[node name="Inv_slot_UI3" parent="ninepatch/GridContainer" instance=ExtResource("2_lvx82")]
+layout_mode = 2
+
+[node name="Inv_slot_UI4" parent="ninepatch/GridContainer" instance=ExtResource("2_lvx82")]
+layout_mode = 2

@@ -1,8 +1,9 @@
-[gd_scene load_steps=35 format=4 uid="uid://btqev772fc7bl"]
+[gd_scene load_steps=36 format=4 uid="uid://btqev772fc7bl"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_pykbe"]
 [ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="3_e13x1"]
 [ext_resource type="PackedScene" uid="uid://ceswkthrcvfrj" path="res://objectmodels2/modern_ceiling_lamp_01_4k/modern_ceiling_lamp_01_4k.gltf" id="3_jqacc"]
+[ext_resource type="AudioStream" uid="uid://fntucm24lngf" path="res://audio/Infestation in the Control Room.mp3" id="3_swyrs"]
 [ext_resource type="PackedScene" uid="uid://3pcw2q81hvrs" path="res://objectmodels/utility_box_02_4k/utility_box_02_4k.gltf" id="4_2liu2"]
 [ext_resource type="Texture2D" uid="uid://dd75fl6rr2y7f" path="res://objectmodels/security_camera_02_4k/textures/security_camera_02_diff_4k.jpg" id="5_fsw4f"]
 [ext_resource type="PackedScene" uid="uid://chjq57h8xmpmb" path="res://objectmodels/utility_box_01_4k/utility_box_01_4k.gltf" id="6_m3clu"]
@@ -209,6 +210,11 @@ max_count = 1
 [node name="Console" parent="." instance=ExtResource("11_s0eup")]
 transform = Transform3D(3.85835, 0, 0, 0, 2.55677, 0, 0, 0, 3.08341, -4.02, -2.81254, -7.31016)
 use_collision = true
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Console"]
+stream = ExtResource("3_swyrs")
+autoplay = true
+parameters/looping = true
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_2up67")
