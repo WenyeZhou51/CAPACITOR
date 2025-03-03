@@ -184,33 +184,29 @@ room_cost_at_end_for_required_doors = 1.0
 [node name="start_room" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("8_n1yd6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 20, 0)
 
-[node name="medium_room" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("23_xnoos")]
+[node name="medium_room_2_1" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("23_xnoos")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -35, 10, 10)
-script = null
 
 [node name="stair_1" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("7_d3uit")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -10, 15, -5)
-script = null
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -10, 15, -5)
 
-[node name="corridor_1" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("9_svjm5")]
+[node name="corridor_1_1" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("9_svjm5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, -5)
-script = null
 
-[node name="corridor_2" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("9_svjm5")]
+[node name="corridor_1_2" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("9_svjm5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, -15)
-script = null
 
-[node name="corridor_3" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("9_svjm5")]
+[node name="corridor_1_3" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("9_svjm5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, -25)
-script = null
 
-[node name="small_room_1" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("7_fiwcu")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -10, 20, -20)
-script = null
+[node name="small_room_1_1" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("7_fiwcu")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -10, 20, -20)
 
-[node name="junction" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("24_nrufq")]
+[node name="junction_2" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("24_nrufq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 20, -25)
-script = null
+
+[node name="junction_1" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("24_nrufq")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 25, 20, -5)
 
 [node name="corridor_4" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("25_8g2gc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, -35)
@@ -220,33 +216,23 @@ script = null
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 20, -35)
 script = null
 
-[node name="junction2" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("24_nrufq")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 25, 20, -5)
-script = null
-
-[node name="junction3" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("24_nrufq")]
+[node name="junction_3" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("24_nrufq")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 20, -5)
-script = null
 
-[node name="junction4" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("24_nrufq")]
+[node name="junction_4" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("24_nrufq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, 5)
-script = null
 
-[node name="junction5" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("24_nrufq")]
+[node name="junction_5" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("24_nrufq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, 15)
-script = null
 
-[node name="corridor_6" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("25_8g2gc")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 15, 20, -15)
-script = null
+[node name="corridor_2_1" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("25_8g2gc")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 15, 20, -15)
 
-[node name="corridor_7" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("25_8g2gc")]
-transform = Transform3D(-0.00944211, 0, 0.999955, 0, 1, 0, -0.999955, 0, -0.00944211, 5, 20, 25)
-script = null
+[node name="corridor_2_2" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("25_8g2gc")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 20, 25)
 
-[node name="small_room_2" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("19_o6rck")]
+[node name="small_room_2_1" parent="NavigationRegion3D/DungeonGenerator3D" instance=ExtResource("19_o6rck")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 20, 30)
-script = null
 
 [node name="Shader" type="MeshInstance3D" parent="."]
 extra_cull_margin = 16384.0
