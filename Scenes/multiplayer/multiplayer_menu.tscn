@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://5uwouo5bc741"]
+[gd_scene load_steps=4 format=3 uid="uid://5uwouo5bc741"]
 
 [ext_resource type="Script" path="res://Scripts/multiplayer/menu.gd" id="1_fdfo8"]
 [ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_qbjsc"]
+[ext_resource type="AudioStream" uid="uid://fntucm24lngf" path="res://audio/Infestation in the Control Room.mp3" id="3_1fd8y"]
 
 [node name="multiplayer_menu" type="Control"]
 layout_mode = 3
@@ -83,6 +84,11 @@ theme_override_constants/separation = 0
 [node name="hostlog" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
+
+[node name="BgMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_1fd8y")
+autoplay = true
+parameters/looping = true
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/host_button" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/join_button" to="." method="_on_join_button_pressed"]

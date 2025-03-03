@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://ctwaw8niaod3"]
+[gd_scene load_steps=4 format=3 uid="uid://ctwaw8niaod3"]
 
 [ext_resource type="Script" path="res://Scenes/gameover.gd" id="1_fjpru"]
 [ext_resource type="Texture2D" uid="uid://cuh28gw618cnn" path="res://imgs/Screenshot 2025-01-27 000706.png" id="2_reyqj"]
+[ext_resource type="AudioStream" uid="uid://c2olbkk0cojpr" path="res://audio/Cage of the Cryptid.mp3" id="3_22l6x"]
 
 [node name="Gameover" type="Control"]
 layout_mode = 3
@@ -41,5 +42,10 @@ offset_right = 1125.0
 offset_bottom = 789.0
 theme_override_font_sizes/font_size = 30
 text = "Main Menu"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_22l6x")
+autoplay = true
+parameters/looping = true
 
 [connection signal="pressed" from="TextureRect/Button" to="." method="_on_button_pressed"]

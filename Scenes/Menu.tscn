@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://q202lrglap61"]
+[gd_scene load_steps=4 format=3 uid="uid://q202lrglap61"]
 
 [ext_resource type="Script" path="res://Scenes/menu.gd" id="1_hqwk4"]
 [ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_r4oa5"]
+[ext_resource type="AudioStream" uid="uid://c3ys5xfg3a0dn" path="res://audio/The Surreal Truth.mp3" id="3_47gn2"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -61,6 +62,11 @@ text = "OPTION"
 layout_mode = 2
 theme_override_font_sizes/font_size = 90
 text = "QUIT"
+
+[node name="BgMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_47gn2")
+autoplay = true
+parameters/looping = true
 
 [connection signal="button_down" from="MarginContainer/TextureRect/VBoxContainer/Start" to="." method="_on_start_button_down"]
 [connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Start" to="." method="_on_start_pressed"]

@@ -4,6 +4,8 @@ extends Control
 @onready var label: Label = $Label2  # Reference to the Label node
 @onready var player 
 @onready var grid_container = $ninepatch/GridContainer
+
+#@onready var corners: [Sprite] = $itemHighlight
 # var quota = 600 // REPLACED WITH QUOTA FROM MULT MANAGER
 
 @rpc("authority")

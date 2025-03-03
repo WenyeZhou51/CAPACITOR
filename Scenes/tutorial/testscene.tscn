@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://b0ogfy3qfh5d3"]
+[gd_scene load_steps=36 format=3 uid="uid://b0ogfy3qfh5d3"]
 
 [ext_resource type="Script" path="res://Scenes/testscene.gd" id="1_v17iy"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
@@ -19,7 +19,6 @@
 [ext_resource type="PackedScene" uid="uid://dm8q140i8u3ih" path="res://Scenes/prefabs/enemies/enemy_earworm.tscn" id="9_vw5pj"]
 [ext_resource type="Script" path="res://Scenes/GameManager.gd" id="10_2bpfs"]
 [ext_resource type="AudioStream" uid="uid://bc2qvfrbnwvn6" path="res://audio/demoLevel.wav" id="11_wadk3"]
-[ext_resource type="PackedScene" uid="uid://cli3ed0vm0drp" path="res://imgs/inv_slot_ui.tscn" id="11_yg2qu"]
 [ext_resource type="PackedScene" uid="uid://dhmtymlk3gb34" path="res://Scenes/prefabs/items/flashlight.tscn" id="13_1s1s2"]
 [ext_resource type="Shader" path="res://shaders/bayer.gdshader" id="14_hrlu7"]
 [ext_resource type="PackedScene" uid="uid://cjdanhbr7qd50" path="res://Scenes/prefabs/items/scrap1.tscn" id="14_q11nm"]
@@ -102,59 +101,33 @@ script = ExtResource("9_76pp2")
 z_index = 10
 texture = SubResource("ViewportTexture_0to3f")
 
-[node name="Label" type="Label" parent="UI"]
-z_index = 20
+[node name="Label" parent="UI" index="4"]
 layout_mode = 0
-offset_left = 178.0
-offset_top = 34.0
-offset_right = 580.0
-offset_bottom = 97.0
-theme_override_font_sizes/font_size = 45
-text = "Remaining Quota: "
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 402.0
+offset_bottom = 63.0
 
-[node name="Label2" type="Label" parent="UI"]
-z_index = 20
+[node name="Label2" parent="UI" index="5"]
 layout_mode = 0
-offset_left = 590.0
-offset_top = 35.0
-offset_right = 667.0
-offset_bottom = 98.0
-theme_override_font_sizes/font_size = 45
-text = "666"
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 77.0
+offset_bottom = 63.0
 
-[node name="Label3" type="Label" parent="UI"]
-z_index = 20
+[node name="Label3" parent="UI" index="6"]
 layout_mode = 0
-offset_left = 170.0
-offset_top = 179.0
-offset_right = 390.0
-offset_bottom = 292.0
-theme_override_font_sizes/font_size = 40
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 220.0
+offset_bottom = 113.0
 
-[node name="ninepatch" type="NinePatchRect" parent="UI"]
-z_index = 20
+[node name="ninepatch" parent="UI" index="7"]
 layout_mode = 0
-offset_left = 200.0
-offset_top = 300.0
-offset_right = 240.0
-offset_bottom = 340.0
-
-[node name="GridContainer" type="GridContainer" parent="UI/ninepatch"]
-layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
 offset_right = 40.0
 offset_bottom = 40.0
-
-[node name="Inv_slot_UI" parent="UI/ninepatch/GridContainer" instance=ExtResource("11_yg2qu")]
-layout_mode = 2
-
-[node name="Inv_slot_UI2" parent="UI/ninepatch/GridContainer" instance=ExtResource("11_yg2qu")]
-layout_mode = 2
-
-[node name="Inv_slot_UI3" parent="UI/ninepatch/GridContainer" instance=ExtResource("11_yg2qu")]
-layout_mode = 2
-
-[node name="Inv_slot_UI4" parent="UI/ninepatch/GridContainer" instance=ExtResource("11_yg2qu")]
-layout_mode = 2
 
 [node name="Tutorial2" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_t4gef")

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://fntucm24lngf"
+path="res://.godot/imported/Infestation in the Control Room.mp3-600d97af15180485d886797129e84e8a.mp3str"
+
+[deps]
+
+source_file="res://audio/Infestation in the Control Room.mp3"
+dest_files=["res://.godot/imported/Infestation in the Control Room.mp3-600d97af15180485d886797129e84e8a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
