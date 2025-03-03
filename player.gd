@@ -355,7 +355,7 @@ func _physics_process(delta: float) -> void:
 	# Get input direction and calculate movement
 	var input_vector: Vector2 = Input.get_vector("Left", "Right", "Forward", "Back")
 	var move_direction: Vector3 = (transform.basis * Vector3(input_vector.x, 0, input_vector.y)).normalized()
-
+	
 	if move_direction != Vector3.ZERO:
 		velocity.x = move_direction.x * movement_speed
 		velocity.z = move_direction.z * movement_speed
@@ -376,8 +376,8 @@ func _physics_process(delta: float) -> void:
 			if is_multiplayer_authority() and sprint_sound_player and sprint_sound_player.playing:
 				sprint_sound_player.stop()
 	else:
-		velocity.x = move_toward(velocity.x, 0, movement_speed * delta)
-		velocity.z = move_toward(velocity.z, 0, movement_speed * delta)
+		velocity.x = move_toward(velocity.x, 0, movement_speed * 1000)
+		velocity.z = move_toward(velocity.z, 0, movement_speed * 1000)
 		# Play idle animation when not moving
 		if not is_jumping:
 			animation_player.play("player_anim/idle")
