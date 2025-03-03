@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://c6p4c52jcwm6k"]
+
+[ext_resource type="Script" path="res://Scenes/prefabs/items/cashBox.gd" id="1_giuk8"]
+[ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="2_j48tt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5wakc"]
+albedo_texture = ExtResource("2_j48tt")
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_kb4wy"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_e40qs"]
+points = PackedVector3Array(0.5, 0.5, 0, 0.353465, 0.5, 0.353465, 0.5, -0.5, 0, 0.353465, 0.5, -0.353563, 0, 0.5, 0.5, 0.353465, -0.5, 0.353465, 0.353465, -0.5, -0.353563, 0, 0.5, -0.5, -0.353563, 0.5, 0.353465, 0, -0.5, 0.5, 0, -0.5, -0.5, -0.353563, 0.5, -0.353563, -0.5, 0.5, 0, -0.353563, -0.5, 0.353465, -0.353563, -0.5, -0.353563, -0.5, -0.5, 0)
+
+[node name="CashBox" type="StaticBody3D"]
+collision_mask = 5
+script = ExtResource("1_giuk8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_overlay = SubResource("StandardMaterial3D_5wakc")
+mesh = SubResource("TubeTrailMesh_kb4wy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_e40qs")

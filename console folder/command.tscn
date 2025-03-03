@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8puf845qrx4l"]
+
+[ext_resource type="Script" path="res://console folder/command.gd" id="1_wp5r6"]
+
+[node name="Command" type="Node"]
+script = ExtResource("1_wp5r6")
