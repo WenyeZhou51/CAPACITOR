@@ -124,6 +124,10 @@ func _physics_process(delta: float) -> void:
 	
 	# If a player has been spotted, start chasing them.
 	if has_seen_player:
+		if(player.dead):
+			print("successfully killed player")
+			has_seen_player = false
+			
 		chase_player(delta)
 		# Movement debug
 		var pre_move_velocity = velocity
@@ -139,6 +143,9 @@ func _physics_process(delta: float) -> void:
 
 
 func chase_player(delta: float) -> void:
+	if not is_instance_valid(player) or player.dead:
+		return
+	
 	path_update_timer += delta
 	if path_update_timer >= path_update_cooldown:
 		agent.target_position = player.global_transform.origin
@@ -203,7 +210,7 @@ func _on_timer_timeout() -> void:
 	if not is_active:  # Add this check
 		return
 	#print("\n[ATTACK] Timer timeout")
-	if !is_instance_valid(player):
+	if !is_instance_valid(player) or player.dead:
 		#print("[ATTACK] !!! Invalid player !!!")
 		return
 	
@@ -223,7 +230,7 @@ func has_line_of_sight() -> CharacterBody3D:
 	#	" | Empty: ", result.is_empty(), 
 	#	" | Player Hit: ", result.collider == player)
 	for body in overlapping_bodies:
-		if body.is_in_group("players") and body.alive:
+		if body.is_in_group("players") and !body.dead:
 			return body
 	return null
 	

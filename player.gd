@@ -30,7 +30,6 @@ signal inv_high(pI, cI, name)
 @export var max_scan_line_amount: float = 1.0
 @export var player_mesh: GeometryInstance3D
 @export var player_colors = [Color.RED, Color.BLUE] # , Color.WHITE, Color.GREEN, Color.YELLOW
-@export var alive: bool
 
 @export var quota: int = 600 ## REPLACE WITH MULT MANAGER QUOTA
 
@@ -74,7 +73,6 @@ var sound_emitter: Node
 func _ready():
 	set_multiplayer_authority(str(name).to_int())
 	add_to_group("players")
-	alive = true
 	stamina_bar = get_node("/root/Level/UI/SprintSlider")
 	interact_label = get_node("/root/Level/UI/InteractLabel")
 	texture_rect = get_node("/root/Level/UI/TextureRect")
@@ -418,6 +416,9 @@ func update_health_indicator():
 
 func take_damage(amount: int):
 	# If player is invincible, ignore the damage
+	if not is_multiplayer_authority():
+		return
+
 	if is_invincible:
 		return
 		
