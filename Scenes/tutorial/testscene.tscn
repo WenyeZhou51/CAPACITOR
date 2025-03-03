@@ -26,7 +26,7 @@
 [ext_resource type="PackedScene" uid="uid://bi3tstfh1x606" path="res://rooms/small_room_2.tscn" id="19_o6rck"]
 [ext_resource type="PackedScene" uid="uid://bwoto031wapot" path="res://Scenes/pause_menu.tscn" id="20_chau2"]
 [ext_resource type="PackedScene" uid="uid://drfh7y8sxcgn0" path="res://rooms/medium_room_2.tscn" id="23_xnoos"]
-[ext_resource type="PackedScene" path="res://Scenes/Spawn Points/player_spawn_point.tscn" id="24_gf8n3"]
+[ext_resource type="PackedScene" uid="uid://c1ys3d3anbwdu" path="res://Scenes/Spawn Points/player_spawn_point.tscn" id="24_gf8n3"]
 [ext_resource type="PackedScene" uid="uid://c4lvx2bce1ryx" path="res://rooms/junction.tscn" id="24_nrufq"]
 [ext_resource type="PackedScene" uid="uid://bbrqul6xiyvqp" path="res://rooms/corridor_2.tscn" id="25_8g2gc"]
 
