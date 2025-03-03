@@ -186,8 +186,14 @@ func _input(event: InputEvent) -> void:
 			
 		if console_window:
 			print("pushing input to console side")
-			console_window.get_parent().get_viewport().push_input(event)
-		get_viewport().set_input_as_handled()
+			# Special handling for mouse wheel events - always forward them without marking as handled in player
+			if event is InputEventMouseButton and (event.button_index == MOUSE_BUTTON_WHEEL_UP or event.button_index == MOUSE_BUTTON_WHEEL_DOWN):
+				console_window.get_parent().get_viewport().push_input(event)
+				# Don't mark as handled here to let the event propagate to the console's _unhandled_input
+			else:
+				console_window.get_parent().get_viewport().push_input(event)
+				get_viewport().set_input_as_handled()
+		return  # Return here to prevent inventory scrolling while console is open
 	else:
 		if event.is_action_pressed("Use"):
 			var current_item = inventory[current_slot]

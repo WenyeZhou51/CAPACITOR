@@ -86,4 +86,16 @@ func on_command_cam(console: Node, args: Array):
 	viewport_container.set_target(target_player)
 	console.push_message("Now viewing: " + target_name)
 
+func on_command_help(console: Node, args: Array):
+	var help_text = """Collect scrap and deposit in cash-box to reach quota. Deposite coolant in generator to prevent blackout.
+
+Controls:
+awsd - move
+space - jump
+e - interact
+q - drop
+shift - run
+Left mouse - toggle flashlight"""
+	console.push_message(help_text)
+
 	

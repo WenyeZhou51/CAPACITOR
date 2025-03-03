@@ -24,6 +24,8 @@ layout_mode = 2
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
 
 [node name="Display" type="RichTextLabel" parent="VBoxContainer/ScrollContainer"]
 layout_mode = 2
@@ -31,6 +33,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("1_kmvp1")
 bbcode_enabled = true
+fit_content = true
 scroll_following = true
 
 [node name="InputBar" type="LineEdit" parent="VBoxContainer"]
@@ -48,6 +51,9 @@ unique_name_in_owner = true
 
 [node name="clear" parent="command handler/Console" instance=ExtResource("5_lrrlt")]
 help = "Clear screen"
+
+[node name="help" parent="command handler/Console" instance=ExtResource("5_lrrlt")]
+help = "Display game controls and instructions"
 
 [node name="buy" parent="command handler/Console" instance=ExtResource("5_lrrlt")]
 argument_names = Array[String](["Item", "Amount"])
