@@ -2,11 +2,13 @@ extends PanelContainer
 
 @onready var input_bar: Control = $VBoxContainer/InputBar
 @onready var display: Control = $VBoxContainer/ScrollContainer/Display
+@onready var scroll_container: ScrollContainer = $VBoxContainer/ScrollContainer
 
 @export var message_buffer_limit: int = 100
 
 var message_buffer: PackedStringArray = PackedStringArray()
 var command_modules: Array = []
+
 func _ready():
 	focus_entered.connect(_on_focus)
 	mouse_entered.connect(_on_mouse_enter)
@@ -14,9 +16,20 @@ func _ready():
 func _on_focus():
 	$VBoxContainer/InputBar.grab_focus()
 
-
 func _on_mouse_enter():
 	$VBoxContainer/InputBar.grab_focus()
+
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			# Manually scroll up
+			scroll_container.scroll_vertical -= 30
+			get_viewport().set_input_as_handled()
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			# Manually scroll down
+			scroll_container.scroll_vertical += 30
+			get_viewport().set_input_as_handled()
+
 func add_command_module(module: CommandModule):
 	module.console = self
 	command_modules.push_back(module)
@@ -40,13 +53,16 @@ func clear_output():
 
 func _gui_input(event: InputEvent) -> void:
 	print("receiving gui input on console side")
+	# Skip processing for mouse wheel events to ensure they're handled by _unhandled_input
+	if event is InputEventMouseButton and (event.button_index == MOUSE_BUTTON_WHEEL_UP or event.button_index == MOUSE_BUTTON_WHEEL_DOWN):
+		return
+		
 	if visible and $VBoxContainer/InputBar.has_focus():
 		# Handle special keys and accept input
 		if event.is_action_pressed("ui_accept"):
 			accept_event()
 		elif event is InputEventKey:
 			accept_event()
-	# Remove the get_viewport().push_input(event) line completely
 
 func parse_input(input: String):
 	var tokenized = input.split(" ", false, 1)
