@@ -40,7 +40,7 @@ ground_horizon_color = Color(0.0509804, 0.0235294, 0.027451, 1)
 sky_material = SubResource("ProceduralSkyMaterial_binvk")
 
 [sub_resource type="Environment" id="Environment_0737e"]
-background_mode = 2
+background_mode = 5
 background_energy_multiplier = 16.0
 sky = SubResource("Sky_mema1")
 tonemap_mode = 3
