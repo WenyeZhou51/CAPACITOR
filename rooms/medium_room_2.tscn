@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://drfh7y8sxcgn0"]
+[gd_scene load_steps=23 format=4 uid="uid://drfh7y8sxcgn0"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_v4npy"]
 [ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="2_4gkwe"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://dadim805mug84" path="res://objectmodels/gallinera_table_4k/textures/gallinera_table_diff_4k.jpg" id="7_npiyy"]
 [ext_resource type="Texture2D" uid="uid://by5uq1e85ul0w" path="res://textures/metal_start_room_door/rusty_metal_grid_diff_4k.png" id="8_rrtoq"]
 [ext_resource type="PackedScene" uid="uid://dvleiqfmloahr" path="res://Scenes/prefabs/coolant_marker.tscn" id="11_4mw13"]
+[ext_resource type="PackedScene" uid="uid://rpy0m4novqme" path="res://objectmodels3/barrel/detail_barrel.glb" id="10_ho81g"]
+[ext_resource type="PackedScene" path="res://Scenes/prefabs/coolant_marker.tscn" id="11_4mw13"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vf8wn"]
 albedo_texture = ExtResource("2_4gkwe")
@@ -134,6 +136,10 @@ uv1_scale = Vector3(5, 5, 5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ohbh8"]
 size = Vector3(0.6, 9, 4.08167)
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_hemrk"]
+height = 2.3
+radius = 0.8
+
 [node name="medium_room" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.50384, 0, 0)
 script = ExtResource("1_v4npy")
@@ -209,5 +215,168 @@ sides = 4
 transform = Transform3D(0.992, 0, -0.126392, 0, 1, 0, 0.126392, 0, 0.992, -0.99784, 0, 4.03423)
 shape = SubResource("BoxShape3D_ohbh8")
 
+[node name="pillar2" type="StaticBody3D" parent="."]
+transform = Transform3D(-0.372356, 0, 0.928089, 0, 1, 0, -0.928089, 0, -0.372356, -6.95049, 0, 14.3557)
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="pillar2"]
+transform = Transform3D(0.496641, 0, -0.462868, 0, 1, 0, 0.0578585, 0, 3.97313, -1.03533, 0.0700073, 4.03614)
+material_override = SubResource("StandardMaterial3D_puqfv")
+height = 9.2
+sides = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="pillar2"]
+transform = Transform3D(0.992, 0, -0.126392, 0, 1, 0, 0.126392, 0, 0.992, -0.99784, 0, 4.03423)
+shape = SubResource("BoxShape3D_ohbh8")
+
+[node name="pillar3" type="StaticBody3D" parent="."]
+transform = Transform3D(-0.57047, 0, 0.821317, 0, 1, 0, -0.821317, 0, -0.57047, -2.91839, 0, 13.7983)
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="pillar3"]
+transform = Transform3D(0.496641, 0, -0.462868, 0, 1, 0, 0.0578585, 0, 3.97313, -1.03533, 0.0700073, 4.03614)
+material_override = SubResource("StandardMaterial3D_puqfv")
+height = 9.2
+sides = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="pillar3"]
+transform = Transform3D(0.992, 0, -0.126392, 0, 1, 0, 0.126392, 0, 0.992, -0.99784, 0, 4.03423)
+shape = SubResource("BoxShape3D_ohbh8")
+
+[node name="pillar4" type="StaticBody3D" parent="."]
+transform = Transform3D(-0.727389, 0, 0.686224, 0, 1, 0, -0.686224, 0, -0.727389, 0.836808, 0, 12.3428)
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="pillar4"]
+transform = Transform3D(0.496641, 0, -0.462868, 0, 1, 0, 0.0578585, 0, 3.97313, -1.03533, 0.0700073, 4.03614)
+material_override = SubResource("StandardMaterial3D_puqfv")
+height = 9.2
+sides = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="pillar4"]
+transform = Transform3D(0.992, 0, -0.126392, 0, 1, 0, 0.126392, 0, 0.992, -0.99784, 0, 4.03423)
+shape = SubResource("BoxShape3D_ohbh8")
+
+[node name="pillar5" type="StaticBody3D" parent="."]
+transform = Transform3D(-0.855454, 0, 0.517877, 0, 1, 0, -0.517877, 0, -0.855454, 4.15473, 0, 10.0528)
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="pillar5"]
+transform = Transform3D(0.496641, 0, -0.462868, 0, 1, 0, 0.0578585, 0, 3.97313, -1.03533, 0.0700073, 4.03614)
+material_override = SubResource("StandardMaterial3D_puqfv")
+height = 9.2
+sides = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="pillar5"]
+transform = Transform3D(0.992, 0, -0.126392, 0, 1, 0, 0.126392, 0, 0.992, -0.99784, 0, 4.03423)
+shape = SubResource("BoxShape3D_ohbh8")
+
+[node name="pillar6" type="StaticBody3D" parent="."]
+transform = Transform3D(0.746266, 0, -0.665646, 0, 1, 0, 0.665646, 0, 0.746266, -4.97937, 0, -6.68978)
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="pillar6"]
+transform = Transform3D(0.496641, 0, -0.462868, 0, 1, 0, 0.0578585, 0, 3.97313, -1.03533, 0.0700073, 4.03614)
+material_override = SubResource("StandardMaterial3D_puqfv")
+height = 9.2
+sides = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="pillar6"]
+transform = Transform3D(0.992, 0, -0.126392, 0, 1, 0, 0.126392, 0, 0.992, -0.99784, 0, 4.03423)
+shape = SubResource("BoxShape3D_ohbh8")
+
+[node name="pillar7" type="StaticBody3D" parent="."]
+transform = Transform3D(0.490173, 0, -0.871624, 0, 1, 0, 0.871624, 0, 0.490173, -1.02502, 0, -7.59436)
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="pillar7"]
+transform = Transform3D(0.496641, 0, -0.462868, 0, 1, 0, 0.0578585, 0, 3.97313, -1.03533, 0.0700073, 4.03614)
+material_override = SubResource("StandardMaterial3D_puqfv")
+height = 9.2
+sides = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="pillar7"]
+transform = Transform3D(0.992, 0, -0.126392, 0, 1, 0, 0.126392, 0, 0.992, -0.99784, 0, 4.03423)
+shape = SubResource("BoxShape3D_ohbh8")
+
+[node name="pillar8" type="StaticBody3D" parent="."]
+transform = Transform3D(0.276862, 0, -0.960908, 0, 1, 0, 0.960908, 0, 0.276862, 3.01089, 0, -7.72944)
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="pillar8"]
+transform = Transform3D(0.496641, 0, -0.462868, 0, 1, 0, 0.0578585, 0, 3.97313, -1.03533, 0.0700073, 4.03614)
+material_override = SubResource("StandardMaterial3D_puqfv")
+height = 9.2
+sides = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="pillar8"]
+transform = Transform3D(0.992, 0, -0.126392, 0, 1, 0, 0.126392, 0, 0.992, -0.99784, 0, 4.03423)
+shape = SubResource("BoxShape3D_ohbh8")
+
+[node name="pillar9" type="StaticBody3D" parent="."]
+transform = Transform3D(0.0801817, 0, -0.996779, 0, 1, 0, 0.996779, 0, 0.0801817, 6.98306, 0, -7.16856)
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="pillar9"]
+transform = Transform3D(0.496641, 0, -0.462868, 0, 1, 0, 0.0578585, 0, 3.97313, -1.03533, 0.0700073, 4.03614)
+material_override = SubResource("StandardMaterial3D_puqfv")
+height = 9.2
+sides = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="pillar9"]
+transform = Transform3D(0.992, 0, -0.126392, 0, 1, 0, 0.126392, 0, 0.992, -0.99784, 0, 4.03423)
+shape = SubResource("BoxShape3D_ohbh8")
+
 [node name="ScrapMarker3" parent="." instance=ExtResource("11_4mw13")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.302974, -1.90525, -8.62099)
+
+[node name="barrel_1" type="StaticBody3D" parent="."]
+
+[node name="detail_barrel2" parent="barrel_1" instance=ExtResource("10_ho81g")]
+transform = Transform3D(6, 0, 0, 0, 8, 0, 0, 0, 6, 2.63357, -4.46468, -4.22582)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="barrel_1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.61837, -3.3336, -4.19357)
+shape = SubResource("CylinderShape3D_hemrk")
+
+[node name="barrel_2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.42275, 0, 2.58926)
+
+[node name="detail_barrel2" parent="barrel_2" instance=ExtResource("10_ho81g")]
+transform = Transform3D(6, 0, 0, 0, 8, 0, 0, 0, 6, 2.63357, -4.46468, -4.22582)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="barrel_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.61837, -3.3336, -4.19357)
+shape = SubResource("CylinderShape3D_hemrk")
+
+[node name="barrel_3" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.42275, 0, 10.8844)
+
+[node name="detail_barrel2" parent="barrel_3" instance=ExtResource("10_ho81g")]
+transform = Transform3D(6, 0, 0, 0, 8, 0, 0, 0, 6, 2.63357, -4.46468, -4.22582)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="barrel_3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.61837, -3.3336, -4.19357)
+shape = SubResource("CylinderShape3D_hemrk")
+
+[node name="barrel_4" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.20888, 0, 12.092)
+
+[node name="detail_barrel2" parent="barrel_4" instance=ExtResource("10_ho81g")]
+transform = Transform3D(6, 0, 0, 0, 8, 0, 0, 0, 6, 2.63357, -4.46468, -4.22582)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="barrel_4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.61837, -3.3336, -4.19357)
+shape = SubResource("CylinderShape3D_hemrk")
+
+[node name="barrel_5" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.33248, 0, 9.99195)
+
+[node name="detail_barrel2" parent="barrel_5" instance=ExtResource("10_ho81g")]
+transform = Transform3D(6, 0, 0, 0, 8, 0, 0, 0, 6, 2.63357, -4.46468, -4.22582)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="barrel_5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.61837, -3.3336, -4.19357)
+shape = SubResource("CylinderShape3D_hemrk")
+
+[node name="barrel_6" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.3096, 0, 5.36888)
+
+[node name="detail_barrel2" parent="barrel_6" instance=ExtResource("10_ho81g")]
+transform = Transform3D(6, 0, 0, 0, 8, 0, 0, 0, 6, 2.63357, -4.46468, -4.22582)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="barrel_6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.61837, -3.3336, -4.19357)
+shape = SubResource("CylinderShape3D_hemrk")

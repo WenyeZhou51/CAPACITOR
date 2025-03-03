@@ -22,14 +22,17 @@ var player_info = {
 func debug_log(message: String) -> void:
 	if DEBUG:
 		print("[MultiplayerManager][%d] %s" % [Time.get_ticks_msec(), message])
+
 func host_game():
 	host_msg.emit("Hosting game...")
 	debug_log("Starting host initialization")
 	var server_peer = ENetMultiplayerPeer.new()
 	var error = server_peer.create_server(SERVER_PORT, 4)  # Max 4 players
+	
 	if error != OK:
 		debug_log("ERROR: Failed to create server: " + str(error))
 		return
+		
 	debug_log("Server created successfully on port " + str(SERVER_PORT))
 	multiplayer.multiplayer_peer = server_peer
 	# Connect multiplayer signals
@@ -49,9 +52,11 @@ func join_game():
 	debug_log("Starting client initialization")
 	var client_peer = ENetMultiplayerPeer.new()
 	var error = client_peer.create_client(SERVER_IP, SERVER_PORT)
+	
 	if error != OK:
 		debug_log("ERROR: Failed to create client: " + str(error))
 		return
+		
 	debug_log("Client created successfully, attempting connection to " + SERVER_IP)
 	multiplayer.multiplayer_peer = client_peer
 
