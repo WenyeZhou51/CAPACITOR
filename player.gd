@@ -73,10 +73,16 @@ var sound_emitter: Node
 func _ready():
 	set_multiplayer_authority(str(name).to_int())
 	add_to_group("players")
-	stamina_bar = get_node("/root/Level/UI/SprintSlider")
-	interact_label = get_node("/root/Level/UI/InteractLabel")
-	texture_rect = get_node("/root/Level/UI/TextureRect")
-	crt_shader_material = texture_rect.material
+	
+	# Find the UI node dynamically regardless of level name
+	var ui_node = find_ui_node()
+	if ui_node:
+		stamina_bar = ui_node.get_node("SprintSlider")
+		interact_label = ui_node.get_node("InteractLabel")
+		texture_rect = ui_node.get_node("TextureRect")
+		if texture_rect:
+			crt_shader_material = texture_rect.material
+	
 	var msg = "Collect a total scrap value of: " + str(GameState.get_quota())
 	popup_instance = popup_scene.instantiate()
 	popup_instance.popup_text = msg
@@ -326,7 +332,7 @@ func _physics_process(delta: float) -> void:
 			if candidate and candidate.has_method("interact"):
 				interact_label.visible = true
 				if Input.is_action_just_pressed("Interact"):
-					MultiplayerRequest.request_item_interact(candidate.name)
+					candidate.interact(self)
 					# Check if this is a door and emit sound
 					if candidate.is_in_group("doors") and sound_emitter:
 						sound_emitter._on_player_action("door")
@@ -516,3 +522,63 @@ func set_inv_slot(new: int):
 				light_node.visible = true
 		new_item.transform = Transform3D()
 	curSlotUpdating = false
+
+# Function to find the UI node dynamically
+func find_ui_node():
+	# Start from the root and find the level node (could be Level, Level1, Level2, etc.)
+	var root = get_tree().root
+	var level_node = null
+	
+	# First try to find a node that is the direct parent of a UI node
+	for i in range(root.get_child_count()):
+		var child = root.get_child(i)
+		if child.has_node("UI"):
+			return child.get_node("UI")
+	
+	# If not found, look for any UI node in the scene tree
+	var ui_nodes = get_tree().get_nodes_in_group("UI")
+	if ui_nodes.size() > 0:
+		return ui_nodes[0]
+	
+	# As a last resort, search all children of root for a UI node
+	for i in range(root.get_child_count()):
+		var child = root.get_child(i)
+		var ui = find_ui_in_children(child)
+		if ui:
+			return ui
+	
+	print("UI node not found in the scene tree")
+	return null
+
+# Helper function to recursively search for UI node
+func find_ui_in_children(node):
+	if node.name == "UI" and node is Control:
+		return node
+	
+	for i in range(node.get_child_count()):
+		var child = node.get_child(i)
+		var result = find_ui_in_children(child)
+		if result:
+			return result
+	
+	return null
+
+func update_inventory_ui():
+	# Assuming you have a reference to your inventory UI slots
+	for i in range(inventory.size()):
+		var slot = get_node("UI/Inventory/Slot" + str(i))
+		var sprite = slot.get_node("Sprite2D")  # Get the Sprite2D child
+		
+		# Create a new material with the shader
+		var material = ShaderMaterial.new()
+		material.shader = load("res://shaders/inventory_slot_shader.gdshader")
+		
+		# Apply the material to the sprite
+		sprite.material = material
+		
+		# Set texture based on item presence
+		if inventory[i]:
+			sprite.texture = inventory[i].icon_texture
+		else:
+			# Reset to default empty slot texture
+			sprite.texture = load("res://imgs/Screenshot 2025-01-27 000706.png")

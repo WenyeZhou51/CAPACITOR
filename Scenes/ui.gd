@@ -20,8 +20,26 @@ func setup_player(name: String):
 	first.self_modulate = Color(1,1,1,1)
 
 func _ready():
-	# Set the text of the label
-	pass
+	var geo_font = load("res://font/Geo-Regular.ttf")
+	
+	# Apply to all existing labels
+	for label in [
+		$Label,
+		$Label2, 
+		$Label3, 
+		$InteractLabel,
+		$TextureRect/Win/Label,
+		$TextureRect/Win/Label2,
+		$TextureRect/Win/Button
+	]:
+		if label is Label:
+			label.add_theme_font_override("font", geo_font)
+	
+	# Handle future labels
+	get_tree().node_added.connect(func(node):
+		if node is Label:
+			node.add_theme_font_override("font", geo_font)
+	)
 
 func on_value_changed(val: int):
 	#print("signal recieved")
@@ -34,10 +52,24 @@ func swap_UI(idx: int, new_scene: PackedScene):
 
 	var new_instance = new_scene.instantiate()
 	new_instance.self_modulate = Color(1,1,1,1)
+	
+	# Create a new shader material using the inventory_slot_shader
+	var shader_material = ShaderMaterial.new()
+	shader_material.shader = load("res://shaders/inventory_slot_shader.gdshader")
+	
+	# Apply the shader material to the Sprite2D in the slot
+	var sprite = new_instance.get_node("Sprite2D")
+	if sprite:
+		sprite.material = shader_material
 
 	# Add the new instance and move it to the correct index
 	grid_container.add_child(new_instance)
 	grid_container.move_child(new_instance, idx)
+
+	# Apply font to new instance if it has a label
+	var label = new_instance.get_node_or_null("Label")
+	if label:
+		label.add_theme_font_override("font", load("res://font/Geo.ttf"))
 
 func on_change_ui(idx: int, item: String):
 	var new_scene: PackedScene

@@ -31,5 +31,5 @@ func turn_off():
 
 func turn_on():
 	if not light.visible:
-		light.visible = false
+		light.visible = true
 		flashlight_sound.play()

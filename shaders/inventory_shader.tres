@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cnc2wrrrbqvcw"]
+
+[sub_resource type="Shader" id="Shader_iqnvs"]
+code = "shader_type canvas_item;
+
+// Shader code will be filled in later
+
+"
+
+[resource]
+shader = SubResource("Shader_iqnvs")

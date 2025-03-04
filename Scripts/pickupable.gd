@@ -5,19 +5,20 @@ var drop_script
 @export var type: String
 
 func interact(player: Player) -> void:
-	if (player.inv_size == 4):
-		var item_socket = player.get_node("Head/ItemSocket")
-		var curr_item = item_socket.get_child(0)
-		curr_item.drop(player)
+	# Remove this condition as it prevents pickup when inventory is not full
+	#if (player.inv_size == 4):
+	#	var item_socket = player.get_node("Head/ItemSocket")
+	#	var curr_item = item_socket.get_child(0)
+	#	curr_item.drop(player)
 
-#	 1) Get the reference to the player's 'ItemSocket'
+	# 1) Get the reference to the player's 'ItemSocket'
 	var item_socket = player.get_node("Head/ItemSocket") # Adjust path as needed
 	var static_obj: StaticBody3D
 	
 	if item_socket.get_child_count() > 0:
 		var old_item = item_socket.get_child(0)
 		item_socket.remove_child(old_item)
-		if(old_item.type == "flash"):
+		if(old_item.type == "flashlight"):
 			var light_node = old_item.get_node("Model/FlashLight")
 			if light_node and light_node is Light3D:
 				light_node.visible = false

@@ -27,9 +27,41 @@ func propagate_current_slot_idx(player_id: int, new_slot: int):
 
 @rpc("authority", "call_local")
 func propogate_flash_toggle(player_name: String, item_name: String):
-	var player = get_tree().get_root().get_node("Level/players/" + player_name)
-	var item = player.get_node("Head/ItemSocket").get_child(0)
-	var light = item.get_node("Model").get_node("FlashLight")
+	# Get the player node
+	var player = get_tree().get_root().get_node_or_null("Level/players/" + player_name)
+	if not player:
+		print("Error: Player not found: " + player_name)
+		return
+	
+	# Get the item socket
+	var item_socket = player.get_node_or_null("Head/ItemSocket")
+	if not item_socket:
+		print("Error: ItemSocket not found for player: " + player_name)
+		return
+	
+	# Check if there's an item in the socket
+	if item_socket.get_child_count() == 0:
+		print("Error: No item in ItemSocket for player: " + player_name)
+		return
+	
+	# Get the item and toggle the flashlight
+	var item = item_socket.get_child(0)
+	if not item:
+		print("Error: Failed to get item from ItemSocket")
+		return
+	
+	# Check if the item has the Model/FlashLight path
+	var model = item.get_node_or_null("Model")
+	if not model:
+		print("Error: Item has no Model node: " + item.name)
+		return
+	
+	var light = model.get_node_or_null("FlashLight")
+	if not light:
+		print("Error: Model has no FlashLight node: " + model.name)
+		return
+	
+	# Toggle the light
 	light.visible = !light.visible
 
 @rpc("authority", "call_local")

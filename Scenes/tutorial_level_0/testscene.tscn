@@ -67,7 +67,7 @@ shader_parameter/posterization_strength = 0.8
 shader_parameter/dark_preservation = 0.05
 shader_parameter/highlight_preservation = 0.1
 
-[node name="Level" type="Node3D"]
+[node name="Level3" type="Node3D"]
 script = ExtResource("1_v17iy")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -138,8 +138,11 @@ offset_bottom = 340.0
 
 [node name="GridContainer" type="GridContainer" parent="UI/ninepatch"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 582.0
+offset_top = 564.0
+offset_right = 994.0
+offset_bottom = 664.0
+columns = 4
 
 [node name="Inv_slot_UI" parent="UI/ninepatch/GridContainer" instance=ExtResource("11_yg2qu")]
 layout_mode = 2
