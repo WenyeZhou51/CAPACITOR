@@ -17,7 +17,10 @@ func setup_player(name: String):
 	GameState.change_ui.connect(on_change_ui)
 	player.inv_high.connect(update_highlight)
 	var first = grid_container.get_child(0)
-	first.self_modulate = Color(1,1,1,1)
+	if first.has_method("set_selected"):
+		first.set_selected(true)
+	else:
+		first.self_modulate = Color(1,1,1,1)
 
 func _ready():
 	var geo_font = load("res://font/Geo-Regular.ttf")
@@ -51,7 +54,8 @@ func swap_UI(idx: int, new_scene: PackedScene):
 	old_child.queue_free()
 
 	var new_instance = new_scene.instantiate()
-	new_instance.self_modulate = Color(1,1,1,1)
+	# We don't need to set self_modulate anymore since we're using Control nodes
+	# and handling highlighting through the Sprite2D scale
 	
 	# Create a new shader material using the inventory_slot_shader
 	var shader_material = ShaderMaterial.new()
@@ -97,14 +101,29 @@ func update_highlight(previous_idx: int, curr_idx: int, name: String):
 		var t2 = (curr_idx + 1 + 4) % 4
 		var old_child = grid_container.get_child(t1)
 		var old_child2 = grid_container.get_child(t2)
-		old_child.self_modulate = Color(0, 0, 0, 0)
-		old_child2.self_modulate = Color(0, 0, 0, 0)
+		
+		# Use set_selected method if available
+		if old_child.has_method("set_selected"):
+			old_child.set_selected(false)
+		else:
+			old_child.self_modulate = Color(0, 0, 0, 0)
+			
+		if old_child2.has_method("set_selected"):
+			old_child2.set_selected(false)
+		else:
+			old_child2.self_modulate = Color(0, 0, 0, 0)
 	else:
 		var old_child = grid_container.get_child(previous_idx)
-		old_child.self_modulate = Color(0, 0, 0, 0)
+		if old_child.has_method("set_selected"):
+			old_child.set_selected(false)
+		else:
+			old_child.self_modulate = Color(0, 0, 0, 0)
 	
 	var curr_child = grid_container.get_child(curr_idx)
-	curr_child.self_modulate = Color(1,1,1,1)
+	if curr_child.has_method("set_selected"):
+		curr_child.set_selected(true)
+	else:
+		curr_child.self_modulate = Color(1, 1, 1, 1)
 
 func show_text(popup_text: String):
 	var label = get_node("Label3")

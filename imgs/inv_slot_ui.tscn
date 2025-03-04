@@ -2,9 +2,10 @@
 
 [ext_resource type="Texture2D" uid="uid://cuh28gw618cnn" path="res://imgs/Screenshot 2025-01-27 000706.png" id="1_scsvd"]
 
-[node name="Inv_slot_UI" type="ColorRect"]
-self_modulate = Color(1, 1, 1, 0)
+[node name="Inv_slot_UI" type="Control"]
 custom_minimum_size = Vector2(100, 100)
+layout_mode = 3
+anchors_preset = 0
 offset_right = 101.0
 offset_bottom = 100.0
 

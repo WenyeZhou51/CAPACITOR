@@ -36,4 +36,12 @@ func confirm_item_drop():
 @rpc("any_peer", "call_local")
 func confirm_current_slot_idx(idx: int):
 	var sender_id = multiplayer.get_remote_sender_id()
+	var player_name = str(sender_id)
+	# Get the direct player reference and call set_inv_slot immediately for local player
+	var player = get_tree().get_root().find_child(player_name, true, false)
+	if player and player is Player:
+		# Update the slot directly for immediate local response
+		player.curSlotUpdating = false  # Reset this immediately to unblock further scrolling
+		player.set_inv_slot(idx)
+	# Also propagate to all clients to ensure synchronization
 	MultiplayerPropogate.propagate_current_slot_idx.rpc(sender_id, idx)

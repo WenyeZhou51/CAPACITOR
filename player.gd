@@ -219,11 +219,15 @@ func check_inv_slot_change(event: InputEventMouseButton):
 		current_slot = (current_slot + 1) % inventory.size()
 		curSlotUpdating = true
 		MultiplayerRequest.update_current_slot_idx(current_slot)
+		# Add a failsafe timeout to reset curSlotUpdating in case the network response is lost
+		get_tree().create_timer(0.5).timeout.connect(func(): curSlotUpdating = false)
 		
 	elif event.button_index == 5:  # Scroll wheel down
 		current_slot = (current_slot - 1 + inventory.size()) % inventory.size()
 		curSlotUpdating = true
 		MultiplayerRequest.update_current_slot_idx(current_slot)
+		# Add a failsafe timeout to reset curSlotUpdating in case the network response is lost
+		get_tree().create_timer(0.5).timeout.connect(func(): curSlotUpdating = false)
 		
 		
 	
@@ -347,13 +351,15 @@ func _physics_process(delta: float) -> void:
 		interact_label.visible = false
 	
 	if Input.is_action_just_pressed("Drop") and is_holding:
-		MultiplayerRequest.request_item_drop()
-		# Play drop item sound
-		if drop_item_sound_player and is_multiplayer_authority():
-			drop_item_sound_player.play()
-			# Emit sound for earworm
-			if sound_emitter:
-				sound_emitter._on_player_action("drop")
+		var current_item = inventory[current_slot]
+		if current_item != null:  # Only attempt to drop if there's an actual item
+			MultiplayerRequest.request_item_drop()
+			# Play drop item sound
+			if drop_item_sound_player and is_multiplayer_authority():
+				drop_item_sound_player.play()
+				# Emit sound for earworm
+				if sound_emitter:
+					sound_emitter._on_player_action("drop")
 	
 	# Clamp stamina to valid range
 	current_stamina = clamp(current_stamina, 0.0, 1.5)
@@ -480,47 +486,66 @@ func client_is_this_player() -> bool:
 	return name == str(multiplayer.get_unique_id())
 
 func set_inv_slot(new: int):
+	if new < 0 or new >= inventory.size():
+		print("ERROR: Invalid inventory slot index: ", new)
+		curSlotUpdating = false
+		return
+		
 	current_slot = new
 	var current_item = inventory[current_slot]
 	
-	var pre = -1 
-	if(current_item):
+	var pre = current_slot 
+	if current_item != null:
 		is_holding = true
 		emit_signal("inv_high", pre, current_slot, current_item.type)
 	else:
 		is_holding = false
 		emit_signal("inv_high", pre, current_slot, "")
+		
 	var item_socket = get_node("Head/ItemSocket")
+	if !item_socket:
+		print("ERROR: ItemSocket not found")
+		curSlotUpdating = false
+		return
+		
 	var old_item = null
-	if(item_socket.get_child_count() > 0):
+	if item_socket.get_child_count() > 0:
 		old_item = item_socket.get_child(0)
+		
 	var new_item = inventory[current_slot]
+	
+	# Handle old item
 	if old_item:
-		if(old_item.type == "flashlight"):
-			var light_node = old_item.get_node("Model/FlashLight")
+		if old_item.type == "flashlight":
+			var light_node = old_item.get_node_or_null("Model/FlashLight")
 			if light_node and light_node is Light3D:
 				light_node.visible = false
 		item_socket.remove_child(old_item)
 		var mesh_instance = old_item.get_node_or_null("MeshInstance3D")
 		if mesh_instance:
 			mesh_instance.visible = false
-		var container = get_node("InventoryContainer")
+		var container = get_node_or_null("InventoryContainer")
 		if container:
 			container.add_child(old_item)  # Store the old item safely in the inventory container
 		else:
 			print("InventoryContainer not found. Old item may not be stored correctly.")
+			
+	# Handle new item
 	if new_item:
-		if new_item.get_parent():
-			new_item.get_parent().remove_child(new_item)
+		var parent = new_item.get_parent()
+		if parent:
+			parent.remove_child(new_item)
 		var mesh_instance = new_item.get_node_or_null("MeshInstance3D")
 		if mesh_instance:
 			mesh_instance.visible = true
 		item_socket.add_child(new_item)
-		if(new_item.type == "flashlight"):
-			var light_node = new_item.get_node("Model/FlashLight")
+		if new_item.type == "flashlight":
+			var light_node = new_item.get_node_or_null("Model/FlashLight")
 			if light_node and light_node is Light3D:
 				light_node.visible = true
 		new_item.transform = Transform3D()
+		
+	# Always reset this flag at the end
 	curSlotUpdating = false
 
 # Function to find the UI node dynamically

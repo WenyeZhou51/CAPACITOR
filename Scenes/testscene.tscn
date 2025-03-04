@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://c8y6hkpnlip1g"]
+[gd_scene load_steps=34 format=3 uid="uid://c8y6hkpnlip1g"]
 
 [ext_resource type="Script" path="res://Scenes/testscene.gd" id="1_v17iy"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
@@ -12,7 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://ch0yrvh1wr6nv" path="res://rooms/small_room_1.tscn" id="7_fiwcu"]
 [ext_resource type="PackedScene" uid="uid://btqev772fc7bl" path="res://rooms/start_room.tscn" id="8_n1yd6"]
 [ext_resource type="PackedScene" uid="uid://c6gmwiknceior" path="res://rooms/medium_room.tscn" id="8_osxs0"]
-[ext_resource type="Script" path="res://Scenes/ui.gd" id="9_76pp2"]
 [ext_resource type="PackedScene" uid="uid://bjjrllm15flh4" path="res://Scenes/prefabs/enemies/enemy_venus.tscn" id="9_js7c2"]
 [ext_resource type="PackedScene" uid="uid://cisl75a2ha5p8" path="res://rooms/corridor_1.tscn" id="9_svjm5"]
 [ext_resource type="Script" path="res://Scripts/earworm_manager.gd" id="9_t504a"]
@@ -92,7 +91,9 @@ autoplay = true
 max_distance = 3967.43
 
 [node name="UI" parent="." instance=ExtResource("2_j6u47")]
-script = ExtResource("9_76pp2")
+
+[node name="SprintSlider" parent="UI" index="0"]
+self_modulate = Color(0.123473, 0.123473, 0.123473, 1)
 
 [node name="TextureRect" parent="UI" index="2"]
 z_index = 10

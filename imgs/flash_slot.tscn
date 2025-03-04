@@ -2,9 +2,10 @@
 
 [ext_resource type="Texture2D" uid="uid://djpcv0t74ktiu" path="res://imgs/Screenshot 2025-02-02 155509.png" id="1_l015x"]
 
-[node name="flash_slot" type="ColorRect"]
-self_modulate = Color(1, 1, 1, 0)
+[node name="flash_slot" type="Control"]
 custom_minimum_size = Vector2(100, 100)
+layout_mode = 3
+anchors_preset = 0
 offset_right = 100.0
 offset_bottom = 100.0
 
