@@ -17,12 +17,10 @@ func setup_player(name: String):
 	GameState.change_ui.connect(on_change_ui)
 	player.inv_high.connect(update_highlight)
 	var first = grid_container.get_child(0)
-	if first.has_method("set_selected"):
-		first.set_selected(true)
-	else:
-		first.self_modulate = Color(1,1,1,1)
+	first.self_modulate = Color(1,1,1,1)
 
 func _ready():
+	print("ui ready")
 	var geo_font = load("res://font/Geo-Regular.ttf")
 	
 	# Apply to all existing labels
@@ -92,6 +90,7 @@ func on_change_ui(idx: int, item: String):
 	swap_UI(idx, new_scene)
 
 func update_highlight(previous_idx: int, curr_idx: int, name: String):
+	return
 	if(previous_idx == curr_idx):
 		return  # No need to update if selection hasn't changed
 	print("checkpoint")

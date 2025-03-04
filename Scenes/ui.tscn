@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://gin1s6t5p5jh"]
+[gd_scene load_steps=9 format=3 uid="uid://gin1s6t5p5jh"]
 
 [ext_resource type="Shader" path="res://shaders/sprint_bar.gdshader" id="1_iyqh2"]
 [ext_resource type="Material" uid="uid://bl6bvg6m8lab0" path="res://shaders/crt_shader.tres" id="1_s6rhv"]
+[ext_resource type="Script" path="res://Scenes/ui.gd" id="3_0ypju"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xdbpj"]
 shader = ExtResource("1_iyqh2")
@@ -25,6 +26,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("3_0ypju")
 
 [node name="SprintSlider" type="VSlider" parent="."]
 self_modulate = Color(0.123473, 0.123473, 0.123473, 1)
