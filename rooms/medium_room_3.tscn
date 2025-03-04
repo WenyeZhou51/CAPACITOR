@@ -1,19 +1,19 @@
-[gd_scene load_steps=31 format=4 uid="uid://c6gmwiknceior"]
+[gd_scene load_steps=31 format=4 uid="uid://dwv8rqj6agqn5"]
 
-[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_t55gw"]
-[ext_resource type="PackedScene" uid="uid://dltoljaoknl4w" path="res://Scenes/Spawn Points/enemy_spawn_point.tscn" id="2_4g2rj"]
-[ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="2_kijdn"]
-[ext_resource type="PackedScene" uid="uid://dbjqr81kyo0m3" path="res://Scenes/Spawn Points/loot_spawn_point.tscn" id="3_8virv"]
-[ext_resource type="Texture2D" uid="uid://dadim805mug84" path="res://objectmodels/gallinera_table_4k/textures/gallinera_table_diff_4k.jpg" id="5_0l231"]
-[ext_resource type="Texture2D" uid="uid://d3mlc4gaky4cn" path="res://objectmodels/wooden_stool_02_4k/textures/wooden_stool_02_diff_4k.jpg" id="6_yr32h"]
-[ext_resource type="Texture2D" uid="uid://c1d5kcr4f1c5l" path="res://textures/worn_plank/worn_planks_diff_4k.png" id="7_ba2kl"]
-[ext_resource type="PackedScene" uid="uid://cdf8lpjxddsvr" path="res://Scenes/prefabs/enemy_marker.tscn" id="8_ximhl"]
-[ext_resource type="PackedScene" uid="uid://bh18kskaruq62" path="res://Scenes/prefabs/scrap_marker.tscn" id="9_me5js"]
-[ext_resource type="Texture2D" uid="uid://c4p4wywhawnay" path="res://textures/medival_brick_wall_stair/medieval_red_brick_diff_4k.png" id="10_xdpoc"]
-[ext_resource type="PackedScene" path="res://Scenes/prefabs/coolant_marker.tscn" id="11_1qmm7"]
+[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_d2x58"]
+[ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="2_071qg"]
+[ext_resource type="PackedScene" uid="uid://dltoljaoknl4w" path="res://Scenes/Spawn Points/enemy_spawn_point.tscn" id="3_6ewql"]
+[ext_resource type="PackedScene" uid="uid://dbjqr81kyo0m3" path="res://Scenes/Spawn Points/loot_spawn_point.tscn" id="4_0rgqh"]
+[ext_resource type="PackedScene" uid="uid://cdf8lpjxddsvr" path="res://Scenes/prefabs/enemy_marker.tscn" id="5_03lq7"]
+[ext_resource type="PackedScene" uid="uid://bh18kskaruq62" path="res://Scenes/prefabs/scrap_marker.tscn" id="6_caihj"]
+[ext_resource type="Texture2D" uid="uid://dadim805mug84" path="res://objectmodels/gallinera_table_4k/textures/gallinera_table_diff_4k.jpg" id="7_7hol5"]
+[ext_resource type="Texture2D" uid="uid://c1d5kcr4f1c5l" path="res://textures/worn_plank/worn_planks_diff_4k.png" id="8_gcfcg"]
+[ext_resource type="Texture2D" uid="uid://d3mlc4gaky4cn" path="res://objectmodels/wooden_stool_02_4k/textures/wooden_stool_02_diff_4k.jpg" id="9_0436f"]
+[ext_resource type="Texture2D" uid="uid://c4p4wywhawnay" path="res://textures/medival_brick_wall_stair/medieval_red_brick_diff_4k.png" id="10_gqp43"]
+[ext_resource type="PackedScene" path="res://Scenes/prefabs/coolant_marker.tscn" id="11_8fmvl"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vf8wn"]
-albedo_texture = ExtResource("2_kijdn")
+albedo_texture = ExtResource("2_071qg")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vxp15"]
 size = Vector3(1.2, 0.7, 0.8)
@@ -21,7 +21,7 @@ size = Vector3(1.2, 0.7, 0.8)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b67du"]
 resource_name = "gallinera_table"
 cull_mode = 2
-albedo_texture = ExtResource("5_0l231")
+albedo_texture = ExtResource("7_7hol5")
 metallic_texture_channel = 2
 roughness_texture_channel = 1
 normal_enabled = true
@@ -132,12 +132,12 @@ shadow_mesh = SubResource("ArrayMesh_1gya3")
 size = Vector3(1.2, 0.9, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u8ri0"]
-albedo_texture = ExtResource("7_ba2kl")
+albedo_texture = ExtResource("8_gcfcg")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_66of8"]
 resource_name = "wooden_stool_02"
 cull_mode = 2
-albedo_texture = ExtResource("6_yr32h")
+albedo_texture = ExtResource("9_0436f")
 metallic_texture_channel = 2
 roughness_texture_channel = 1
 normal_enabled = true
@@ -204,7 +204,7 @@ shadow_mesh = SubResource("ArrayMesh_d3pj2")
 size = Vector3(1.25, 0.9, 0.9)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_puqfv"]
-albedo_texture = ExtResource("10_xdpoc")
+albedo_texture = ExtResource("10_gqp43")
 uv1_scale = Vector3(3, 3, 3)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_2uuk2"]
@@ -221,7 +221,7 @@ radius = 1.0
 
 [node name="medium_room" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-script = ExtResource("1_t55gw")
+script = ExtResource("1_d2x58")
 size_in_voxels = Vector3i(3, 1, 2)
 min_count = 4
 max_count = 6
@@ -242,27 +242,32 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.5, -0.5, 5)
 operation = 2
 size = Vector3(1, 8, 6)
 
+[node name="DOOR7" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.6272, -0.5, 5)
+operation = 2
+size = Vector3(1, 8, 6)
+
 [node name="DOOR5" type="CSGBox3D" parent="CSGBox3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10, -0.5, -9.5)
 operation = 2
 size = Vector3(1, 8, 6)
 
-[node name="Enemy Spawn Point" parent="." instance=ExtResource("2_4g2rj")]
+[node name="Enemy Spawn Point" parent="." instance=ExtResource("3_6ewql")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.73723, -5.17634, -8.84273)
 
-[node name="Loot Spawn Point" parent="." instance=ExtResource("3_8virv")]
+[node name="Loot Spawn Point" parent="." instance=ExtResource("4_0rgqh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2061, -4.5, -0.157276)
 
-[node name="Loot Spawn Point2" parent="." instance=ExtResource("3_8virv")]
+[node name="Loot Spawn Point2" parent="." instance=ExtResource("4_0rgqh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.1689, -4.5, 0.476883)
 
-[node name="EnemyMarker" parent="." instance=ExtResource("8_ximhl")]
+[node name="EnemyMarker" parent="." instance=ExtResource("5_03lq7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.63969, -4.38524, 1.3705)
 
-[node name="ScrapMarker" parent="." instance=ExtResource("9_me5js")]
+[node name="ScrapMarker" parent="." instance=ExtResource("6_caihj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.04342, -3.60794, 4.09733)
 
-[node name="ScrapMarker2" parent="." instance=ExtResource("9_me5js")]
+[node name="ScrapMarker2" parent="." instance=ExtResource("6_caihj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.3205, -3.05135, -6.7034)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
@@ -354,5 +359,5 @@ sides = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.59005, 0, 3.17264)
 shape = SubResource("CylinderShape3D_jtttq")
 
-[node name="ScrapMarker3" parent="." instance=ExtResource("11_1qmm7")]
+[node name="ScrapMarker3" parent="." instance=ExtResource("11_8fmvl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.302974, -1.90525, -8.62099)
