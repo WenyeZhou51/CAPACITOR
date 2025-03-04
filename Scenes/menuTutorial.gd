@@ -34,3 +34,8 @@ func _on_medium_pressed() -> void:
 func _on_hard_pressed() -> void:
 	MultiplayerManager.switch_map("res://Scenes/tutorial_level_2/testscene.tscn")
 	get_tree().change_scene_to_file("res://Scenes/multiplayer/multiplayer_menu.tscn")
+
+
+func _on_pro_pressed() -> void:
+	MultiplayerManager.switch_map("res://Scenes/tutorial_level_3/testscene.tscn")
+	get_tree().change_scene_to_file("res://Scenes/multiplayer/multiplayer_menu.tscn")

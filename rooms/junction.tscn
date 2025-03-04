@@ -222,4 +222,14 @@ skeleton = NodePath("")
 transform = Transform3D(0.788322, 0, -0.615263, 0, 1, 0, 0.615263, 0, 0.788322, 2.58456, -0.371299, -2.97736)
 shape = SubResource("BoxShape3D_v82kq")
 
+[node name="Lights" type="Node3D" parent="."]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(-0.639719, -0.768601, 0.00354422, 0.00753409, -0.00165962, 0.99997, -0.768572, 0.639727, 0.0068524, 0, 4.11261, 0)
+light_color = Color(0.718075, 0.453229, 0.952444, 1)
+light_energy = 3.5
+spot_range = 35.527
+spot_attenuation = 1.15
+spot_angle = 40.2
+
 [connection signal="dungeon_done_generating" from="." to="RemoveUnusedDoors" method="remove_unused_doors"]

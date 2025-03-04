@@ -52,12 +52,12 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 90
 text = "HARD"
 
-[node name="Back" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
+[node name="Pro" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 90
-text = "BACK"
+text = "PRO"
 
 [connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Easy" to="." method="_on_easy_pressed"]
 [connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Medium" to="." method="_on_medium_pressed"]
 [connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Hard" to="." method="_on_hard_pressed"]
-[connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Back" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Pro" to="." method="_on_pro_pressed"]
