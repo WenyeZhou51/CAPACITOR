@@ -1,7 +1,8 @@
-[gd_scene load_steps=35 format=3 uid="uid://c8y6hkpnlip1g"]
+[gd_scene load_steps=36 format=3 uid="uid://c8y6hkpnlip1g"]
 
 [ext_resource type="Script" path="res://Scenes/testscene.gd" id="1_v17iy"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
+[ext_resource type="FontFile" uid="uid://djxmwln40ig66" path="res://fonts/Geo-Regular.ttf" id="3_geo_font"]
 [ext_resource type="PackedScene" uid="uid://dt2qtx8apgmb0" path="res://Scenes/prefabs/items/scrap2.tscn" id="4_occg4"]
 [ext_resource type="PackedScene" uid="uid://5vmsy0mgcrox" path="res://Scenes/prefabs/items/scrap3.tscn" id="5_kvhlf"]
 [ext_resource type="PackedScene" uid="uid://cbn467wek4y8o" path="res://Scenes/prefabs/items/coolant.tscn" id="5_p0nx2"]
@@ -105,8 +106,20 @@ offset_left = 178.0
 offset_top = 34.0
 offset_right = 580.0
 offset_bottom = 97.0
+theme_override_fonts/font = ExtResource("3_geo_font")
 theme_override_font_sizes/font_size = 45
 text = "Remaining Quota: "
+
+[node name="Label4" type="Label" parent="UI"]
+z_index = 20
+layout_mode = 0
+offset_left = 1642.0
+offset_top = 189.0
+offset_right = 2044.0
+offset_bottom = 252.0
+theme_override_fonts/font = ExtResource("3_geo_font")
+theme_override_font_sizes/font_size = 45
+text = "Stamina"
 
 [node name="Label2" type="Label" parent="UI"]
 z_index = 20
@@ -115,6 +128,7 @@ offset_left = 590.0
 offset_top = 35.0
 offset_right = 667.0
 offset_bottom = 98.0
+theme_override_fonts/font = ExtResource("3_geo_font")
 theme_override_font_sizes/font_size = 45
 text = "666"
 
@@ -125,6 +139,7 @@ offset_left = 170.0
 offset_top = 179.0
 offset_right = 390.0
 offset_bottom = 292.0
+theme_override_fonts/font = ExtResource("3_geo_font")
 theme_override_font_sizes/font_size = 40
 
 [node name="ninepatch" type="NinePatchRect" parent="UI"]

@@ -1,6 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://gin1s6t5p5jh"]
+[gd_scene load_steps=8 format=3 uid="uid://gin1s6t5p5jh"]
 
+[ext_resource type="Shader" path="res://Scenes/sprint_2.gdshader" id="1_dffqv"]
 [ext_resource type="Material" uid="uid://bl6bvg6m8lab0" path="res://shaders/crt_shader.tres" id="1_s6rhv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jnuav"]
+shader = ExtResource("1_dffqv")
+shader_parameter/scanline_color = Color(1, 1, 1, 0.5)
+shader_parameter/scanline_spacing = 4.0
+shader_parameter/scanline_width = 0.5
+shader_parameter/edge_softness = 0.25
 
 [sub_resource type="ImageTexture" id="ImageTexture_5inc3"]
 
@@ -19,6 +27,8 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SprintSlider" type="VSlider" parent="."]
+z_index = 20
+material = SubResource("ShaderMaterial_jnuav")
 layout_mode = 0
 offset_left = 1635.0
 offset_top = 318.0
@@ -35,6 +45,7 @@ editable = false
 scrollable = false
 
 [node name="InteractLabel" type="Label" parent="."]
+z_index = 20
 layout_mode = 0
 offset_left = 998.0
 offset_top = 525.0
