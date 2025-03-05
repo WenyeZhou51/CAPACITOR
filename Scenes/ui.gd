@@ -16,12 +16,26 @@ func setup_player(name: String):
 	GameState.team_score_changed.connect(on_value_changed)
 	GameState.change_ui.connect(on_change_ui)
 	player.inv_high.connect(update_highlight)
+	
+	# Initialize the first slot's highlight
 	var first = grid_container.get_child(0)
-	first.self_modulate = Color(1,1,1,1)
+	var highlight = first.get_node("Highlight overlay")
+	highlight.visible = true
 
 func _ready():
 	# Set the text of the label
-	pass
+	
+	# Make all highlight overlays invisible initially
+	for i in range(grid_container.get_child_count()):
+		var slot = grid_container.get_child(i)
+		if slot.has_node("Highlight overlay"):
+			var highlight = slot.get_node("Highlight overlay")
+			highlight.visible = false
+			highlight.scale = Vector2(100, 100) / highlight.texture.get_size()
+		
+		if slot.has_node("slot sprite"):
+			var sprite = slot.get_node("slot sprite")
+			sprite.scale = Vector2(100, 100) / sprite.texture.get_size()
 
 func on_value_changed(val: int):
 	#print("signal recieved")
@@ -38,22 +52,34 @@ func swap_UI(idx: int, new_scene: PackedScene):
 	# Add the new instance and move it to the correct index
 	grid_container.add_child(new_instance)
 	grid_container.move_child(new_instance, idx)
-
 func on_change_ui(idx: int, item: String):
-	var new_scene: PackedScene
+	# Changed to swapping the texture of the inventory slot instead
+	var slot = grid_container.get_child(idx)
+	var sprite = slot.get_node("slot sprite")
+	var newTexture: Texture2D
+	#var new_scene: PackedScene
 	if(item == "empty"):
-		new_scene = load("res://imgs/inv_slot_ui.tscn")
+		newTexture = load("res://imgs/Slot.png")
+		sprite.texture = newTexture
 		show_text("")
 	elif(item == "flashlight"):
-		new_scene = load("res://imgs/flash_slot.tscn")
+		newTexture = load("res://imgs/Flash.png")
+		sprite.texture = newTexture
 		show_text(item)
 	elif(item == "coolant"):
-		new_scene = load("res://imgs/coolant_slot.tscn")
+		newTexture = load("res://imgs/Coolant.png")
+		sprite.texture = newTexture
 		show_text(item)
 	else:
-		new_scene = load("res://imgs/scrap_slot.tscn")
+		newTexture = load("res://imgs/Scrap.png")
+		sprite.texture = newTexture
 		show_text(item)
-	swap_UI(idx, new_scene)
+	
+	# Set the sprite size to 100x100 pixels
+	sprite.scale = Vector2(100, 100) / sprite.texture.get_size()
+		
+	# change UI has been disabled for now
+	#swap_UI(idx, new_scene)
 
 func update_highlight(previous_idx: int, curr_idx: int, name: String):
 	if(previous_idx == curr_idx):
@@ -65,14 +91,21 @@ func update_highlight(previous_idx: int, curr_idx: int, name: String):
 		var t2 = (curr_idx + 1 + 4) % 4
 		var old_child = grid_container.get_child(t1)
 		var old_child2 = grid_container.get_child(t2)
-		old_child.self_modulate = Color(0, 0, 0, 0)
-		old_child2.self_modulate = Color(0, 0, 0, 0)
+		
+		# Only hide the highlight overlays, not the entire slot
+		old_child.get_node("Highlight overlay").visible = false
+		old_child2.get_node("Highlight overlay").visible = false
 	else:
 		var old_child = grid_container.get_child(previous_idx)
-		old_child.self_modulate = Color(0, 0, 0, 0)
+		
+		# Only hide the highlight overlay, not the entire slot
+		old_child.get_node("Highlight overlay").visible = false
 	
 	var curr_child = grid_container.get_child(curr_idx)
-	curr_child.self_modulate = Color(1,1,1,1)
+	
+	# Make highlight overlay visible for current selection
+	var highlight = curr_child.get_node("Highlight overlay")
+	highlight.visible = true
 
 func show_text(popup_text: String):
 	var label = get_node("Label3")

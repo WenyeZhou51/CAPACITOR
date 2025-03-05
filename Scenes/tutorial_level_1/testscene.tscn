@@ -13,7 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://bc2qvfrbnwvn6" path="res://audio/demoLevel.wav" id="11_0bkou"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="12_bg0dx"]
 [ext_resource type="Script" path="res://Scenes/ui.gd" id="13_ugbvm"]
-[ext_resource type="PackedScene" uid="uid://cli3ed0vm0drp" path="res://imgs/inv_slot_ui.tscn" id="14_us5u4"]
+[ext_resource type="PackedScene" uid="uid://b7u6fnuv64hfv" path="res://imgs/inv_slot_ui.tscn" id="14_us5u4"]
 [ext_resource type="Script" path="res://Scenes/navigation_region_3d.gd" id="15_05s8m"]
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonGenerator3D.gd" id="16_43yvh"]
 [ext_resource type="PackedScene" uid="uid://7pskmagldtnr" path="res://rooms/stair_1.tscn" id="17_fmsrp"]
@@ -27,7 +27,7 @@
 [ext_resource type="Shader" path="res://shaders/bayer.gdshader" id="26_6ylpr"]
 [ext_resource type="PackedScene" uid="uid://bwoto031wapot" path="res://Scenes/pause_menu.tscn" id="27_70cb4"]
 [ext_resource type="PackedScene" uid="uid://dhmtymlk3gb34" path="res://Scenes/prefabs/items/flashlight.tscn" id="28_tiy5o"]
-[ext_resource type="PackedScene" path="res://Scenes/Spawn Points/player_spawn_point.tscn" id="29_cqaaa"]
+[ext_resource type="PackedScene" uid="uid://c1ys3d3anbwdu" path="res://Scenes/Spawn Points/player_spawn_point.tscn" id="29_cqaaa"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_binvk"]
 sky_top_color = Color(0.0101014, 0.0122771, 0.0165181, 1)
@@ -140,8 +140,12 @@ offset_bottom = 340.0
 
 [node name="GridContainer" type="GridContainer" parent="UI/ninepatch"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 240.0
+offset_top = 480.0
+offset_right = 652.0
+offset_bottom = 580.0
+theme_override_constants/h_separation = 200
+columns = 4
 
 [node name="Inv_slot_UI" parent="UI/ninepatch/GridContainer" instance=ExtResource("14_us5u4")]
 layout_mode = 2

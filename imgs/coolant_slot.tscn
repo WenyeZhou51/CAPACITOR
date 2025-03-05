@@ -1,13 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://cdt7xr181laxx"]
+[gd_scene load_steps=3 format=3 uid="uid://jicu03md3nj3"]
 
-[ext_resource type="Texture2D" uid="uid://cl0t71t7msrfx" path="res://imgs/Screenshot 2025-02-07 133347.png" id="1_unsoa"]
+[ext_resource type="Texture2D" uid="uid://bxeiq7xbk1s4y" path="res://imgs/Coolant.png" id="1_e8pre"]
+[ext_resource type="Texture2D" uid="uid://blun8addsee0y" path="res://imgs/Slot.png" id="2_iurh6"]
 
-[node name="CoolantSlot" type="ColorRect"]
+[node name="CoolantSlot" type="Control"]
 custom_minimum_size = Vector2(100, 100)
+layout_mode = 3
+anchors_preset = 0
 offset_right = 100.0
 offset_bottom = 100.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(50, 49)
 scale = Vector2(0.236911, 0.234887)
-texture = ExtResource("1_unsoa")
+texture = ExtResource("1_e8pre")
+
+[node name="slotimage" type="Sprite2D" parent="."]
+position = Vector2(50, 49)
+scale = Vector2(0.236911, 0.234887)
+texture = ExtResource("2_iurh6")

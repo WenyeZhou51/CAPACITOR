@@ -19,14 +19,14 @@
 [ext_resource type="PackedScene" uid="uid://dm8q140i8u3ih" path="res://Scenes/prefabs/enemies/enemy_earworm.tscn" id="9_vw5pj"]
 [ext_resource type="Script" path="res://Scenes/GameManager.gd" id="10_2bpfs"]
 [ext_resource type="AudioStream" uid="uid://bc2qvfrbnwvn6" path="res://audio/demoLevel.wav" id="11_wadk3"]
-[ext_resource type="PackedScene" uid="uid://cli3ed0vm0drp" path="res://imgs/inv_slot_ui.tscn" id="11_yg2qu"]
+[ext_resource type="PackedScene" uid="uid://b7u6fnuv64hfv" path="res://imgs/inv_slot_ui.tscn" id="11_yg2qu"]
 [ext_resource type="PackedScene" uid="uid://dhmtymlk3gb34" path="res://Scenes/prefabs/items/flashlight.tscn" id="13_1s1s2"]
 [ext_resource type="Shader" path="res://shaders/bayer.gdshader" id="14_hrlu7"]
 [ext_resource type="PackedScene" uid="uid://cjdanhbr7qd50" path="res://Scenes/prefabs/items/scrap1.tscn" id="14_q11nm"]
 [ext_resource type="PackedScene" uid="uid://bi3tstfh1x606" path="res://rooms/small_room_2.tscn" id="19_o6rck"]
 [ext_resource type="PackedScene" uid="uid://bwoto031wapot" path="res://Scenes/pause_menu.tscn" id="20_chau2"]
 [ext_resource type="Script" path="res://Scenes/electricity_manager.gd" id="22_fg5vs"]
-[ext_resource type="PackedScene" path="res://Scenes/Spawn Points/player_spawn_point.tscn" id="24_gf8n3"]
+[ext_resource type="PackedScene" uid="uid://c1ys3d3anbwdu" path="res://Scenes/Spawn Points/player_spawn_point.tscn" id="24_gf8n3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_binvk"]
 sky_top_color = Color(0.0101014, 0.0122771, 0.0165181, 1)
@@ -137,8 +137,12 @@ offset_bottom = 340.0
 
 [node name="GridContainer" type="GridContainer" parent="UI/ninepatch"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 240.0
+offset_top = 480.0
+offset_right = 1240.0
+offset_bottom = 580.0
+theme_override_constants/h_separation = 200
+columns = 4
 
 [node name="Inv_slot_UI" parent="UI/ninepatch/GridContainer" instance=ExtResource("11_yg2qu")]
 layout_mode = 2

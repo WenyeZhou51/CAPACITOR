@@ -1,10 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://cfemcxw5ucmot"]
+[gd_scene load_steps=3 format=3 uid="uid://601jvkb5v5ou"]
 
-[ext_resource type="Texture2D" uid="uid://cuv75j6t84l6k" path="res://imgs/Screenshot 2025-02-02 155009.png" id="1_y2djm"]
+[ext_resource type="Texture2D" uid="uid://bmufo8a6yxuil" path="res://imgs/Scrap.png" id="1_ifhim"]
+[ext_resource type="Texture2D" uid="uid://blun8addsee0y" path="res://imgs/Slot.png" id="2_lgay3"]
 
-[node name="scrap_slot" type="ColorRect"]
+[node name="scrap_slot" type="Control"]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(100, 100)
+layout_mode = 3
+anchors_preset = 0
 offset_top = -1.0
 offset_right = 100.0
 offset_bottom = 99.0
@@ -12,4 +15,9 @@ offset_bottom = 99.0
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(49.6611, 45.9693)
 scale = Vector2(0.467043, 0.448066)
-texture = ExtResource("1_y2djm")
+texture = ExtResource("1_ifhim")
+
+[node name="slotimage" type="Sprite2D" parent="."]
+position = Vector2(49, 46)
+scale = Vector2(0.305955, 0.303342)
+texture = ExtResource("2_lgay3")
