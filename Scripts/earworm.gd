@@ -23,7 +23,6 @@ var agent: NavigationAgent3D
 var local_velocity: Vector3 = Vector3.ZERO
 var is_walking: bool = false
 var nav_ready: bool = false
-#var has_seen_player: bool = false
 var is_active: bool = false 
 var path_update_cooldown = 0.5
 var path_update_timer = 0.0
@@ -44,6 +43,11 @@ var path_timer: float = 0.0
 @onready var walk_sound = $WalkSound
 @onready var alert_sound = $AlertSound
 @onready var attack_sound = $AttackSound
+@onready var earworm_model = $EarwormModel
+
+# Animation variables
+var animation_name: String = ""
+var is_animation_playing: bool = false
 
 # Add these variables near the top with other state variables
 var investigation_timer: float = 0.0
@@ -118,8 +122,9 @@ func _ready() -> void:
 	timer.start()
 	
 	# Node initialization debug
-	#animation_player = get_node("Venus/AnimationPlayer")
-	agent = get_node("NavigationAgent3D")
+	# Get the AnimationPlayer from the FBX model
+	animation_player = earworm_model.get_node("AnimationPlayer")
+	agent = $NavigationAgent3D
 	print("[👂🪱] Nodes initialized - AnimationPlayer: ", animation_player, " | Agent: ", agent)
 	
 	await get_tree().physics_frame
@@ -135,30 +140,43 @@ func _ready() -> void:
 	
 	# Player detection debug
 	var players = get_tree().get_nodes_in_group("players")
-	#print("[VENUS] Found ", players.size(), " players in group")
 	if players.size() > 0:
 		player = players[0] as CharacterBody3D
-		#print("[VENUS] Player assigned: ", player, " | Position: ", player.global_transform.origin)
 
 	if agent:
 		agent.target_position = global_transform.origin
-		#print("[VENUS] Initial target position: ", agent.target_position)
 		call_deferred("set_initial_position")
 
 	# Connect collision signal
 	connect("body_entered", _on_collision)
+	
+	# Start playing animation immediately and continuously
+	if animation_player:
+		# Get the first animation from the animation player
+		var animations = animation_player.get_animation_list()
+		print("[EARWORM] Available animations: ", animations)
+		if animations.size() > 0:
+			animation_name = animations[0]  # Use the first available animation
+			animation_player.play(animation_name)
+			animation_player.set_speed_scale(1.0)
+			is_animation_playing = true
+			print("[EARWORM] Started playing animation: ", animation_name)
+		else:
+			print("[EARWORM] No animations found in the animation player")
 
 func set_initial_position() -> void:
 	if agent:
 		agent.target_position = global_transform.origin
 		nav_ready = true
-		#print("[VENUS] Navigation ready | Position: ", agent.target_position, 
-		#	" | Nav Ready: ", nav_ready, 
-		#	" | Global Position: ", global_transform.origin)
 
 func _physics_process(delta: float) -> void:
 	if not is_active or not nav_ready:
 		return
+	
+	# Ensure animation is always playing
+	if animation_player and not animation_player.is_playing() and animation_name != "":
+		animation_player.play(animation_name)
+		is_animation_playing = true
 	
 	# Handle attack if close to player
 	if player and is_instance_valid(player):
@@ -277,16 +295,16 @@ func update_path_following(speed: float) -> void:
 			if not walk_sound.playing:
 				walk_sound.play()
 			
-			# FIXED: Only rotate, don't affect position with transform interpolation
-			# Create a new basis for rotation only
-			var target_basis = Basis().looking_at(direction)
-			
-			# Keep current position but use new rotation
-			var current_transform = transform
-			var target_transform = Transform3D(target_basis, current_transform.origin)
-			
-			# Apply only the rotation component
-			transform.basis = transform.basis.slerp(target_transform.basis, get_process_delta_time() * turn_speed * 3.0)
+			# Make the earworm face the direction it's moving
+			if direction != Vector3.ZERO:
+				var look_at_pos = global_position + direction
+				# Only rotate around Y axis
+				look_at_pos.y = global_position.y
+				look_at(look_at_pos)
+				
+				# Apply smooth rotation
+				var target_basis = transform.basis
+				transform.basis = transform.basis.slerp(target_basis, turn_speed * get_process_delta_time())
 		else:
 			# Only zero out horizontal movement
 			velocity.x = 0
@@ -387,11 +405,6 @@ func attack_player() -> void:
 		# Set attack cooldown
 		can_attack = false
 		attack_timer = 0.0
-		
-		# Play attack animation if we have one
-		if animation_player and animation_player.has_animation("Attack"):
-			animation_player.stop()  # Stop any current animation
-			animation_player.play("Attack")
 		
 		# Apply damage and play sound
 		player.take_damage(attack_damage)
