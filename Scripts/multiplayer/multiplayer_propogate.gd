@@ -24,7 +24,12 @@ func propagate_current_slot_idx(player_id: int, new_slot: int):
 	var player = GameState.get_player_node_by_name(str(player_id))
 	if !player: return
 	player.set_inv_slot(new_slot)
-
+@rpc("authority", "call_local")
+func changeHolding(player_name: String):
+	var player = get_tree().get_root().get_node("Level/players/" + player_name)
+	if !player: return
+	player.is_holding = !player.is_holding
+	# Add any additional logic needed for changing the holding state
 @rpc("authority", "call_local")
 func propogate_flash_toggle(player_name: String, item_name: String):
 	var player = get_tree().get_root().get_node("Level/players/" + player_name)
