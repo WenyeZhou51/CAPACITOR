@@ -8,7 +8,7 @@ extends StaticBody3D
 
 @export var heat_level: float = 0.0
 @export var heat_increase_rate: float = 1.0  # Heat units increased per second
-@export var max_heat: float = 5.0
+@export var max_heat: float = 100.0
 
 var time_accumulator: float = 0.0
 const HEAT_UPDATE_INTERVAL: float = 1.0  # Update heat every second

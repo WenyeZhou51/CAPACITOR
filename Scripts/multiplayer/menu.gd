@@ -4,7 +4,6 @@ extends Node
 @onready var audio_player = $Click  # Reference the AudioStreamPlayer
 @onready var audio_player2 = $ReadySound  # Reference the AudioStreamPlayer
 
-
 func get_system_ip() -> String:
 	var addresses = IP.get_local_addresses()
 	for addr in addresses:

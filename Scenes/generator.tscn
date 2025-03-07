@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://bcot47xqk0oe3"]
+[gd_scene load_steps=15 format=3 uid="uid://bcot47xqk0oe3"]
 
 [ext_resource type="Texture2D" uid="uid://dd75fl6rr2y7f" path="res://objectmodels/security_camera_02_4k/textures/security_camera_02_diff_4k.jpg" id="1_7313i"]
 [ext_resource type="Script" path="res://Scenes/generator.gd" id="1_rux7k"]
+[ext_resource type="AudioStream" uid="uid://c6dtuyhvan30w" path="res://audio/music/Final Captain&#039;s Log.mp3" id="3_q6ex6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_86pa1"]
 albedo_texture = ExtResource("1_7313i")
@@ -113,3 +114,9 @@ text = "Electricity Level"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0421456, 1.09213, 0.0336108)
 shape = SubResource("CylinderShape3D_8cyl3")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_q6ex6")
+volume_db = -8.0
+autoplay = true
+parameters/looping = true
