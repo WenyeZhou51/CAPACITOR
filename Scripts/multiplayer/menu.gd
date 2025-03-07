@@ -1,5 +1,10 @@
 extends Node
 
+@onready var music_player = $Music  # Reference the AudioStreamPlayer
+@onready var audio_player = $Click  # Reference the AudioStreamPlayer
+@onready var audio_player2 = $ReadySound  # Reference the AudioStreamPlayer
+
+
 func get_system_ip() -> String:
 	var addresses = IP.get_local_addresses()
 	for addr in addresses:
@@ -12,9 +17,10 @@ func get_system_ip() -> String:
 func _ready() -> void:
 	MultiplayerManager.host_msg.connect(hostMessage)
 	$MarginContainer/VBoxContainer/HBoxContainer/START.hide()
+	music_player.play(5000)
 	
 func _on_host_button_pressed() -> void:
-	
+	audio_player.play()
 	$MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2.hide()
 	$MarginContainer/VBoxContainer/HBoxContainer/START.show()
 	var ip = get_system_ip()
@@ -34,6 +40,7 @@ func hostMessage(msg: String):
 	
 	
 func _on_join_button_pressed() -> void:
+	audio_player.play()
 	$MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer.hide()
 	var input = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/ip_input
 	MultiplayerManager.SERVER_IP = input.text
@@ -46,4 +53,5 @@ func _on_join_button_pressed() -> void:
 
 
 func _on_button_pressed() -> void:
+	audio_player2.play()
 	MultiplayerManager.start_game()

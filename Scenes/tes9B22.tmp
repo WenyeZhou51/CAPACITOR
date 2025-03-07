@@ -100,12 +100,12 @@ spawn_path = NodePath("../players")
 [node name="UI" parent="." instance=ExtResource("2_j6u47")]
 script = ExtResource("9_76pp2")
 
-[node name="TextureRect" parent="UI" index="2"]
-z_index = 10
-texture = SubResource("ViewportTexture_0to3f")
-
 [node name="HeatWarning" parent="UI" instance=ExtResource("14_pij1p")]
 layout_mode = 1
+
+[node name="TextureRect" parent="UI" index="3"]
+z_index = 10
+texture = SubResource("ViewportTexture_0to3f")
 
 [node name="Label" type="Label" parent="UI"]
 z_index = 20

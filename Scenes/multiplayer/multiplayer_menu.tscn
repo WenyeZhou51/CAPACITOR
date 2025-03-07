@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://5uwouo5bc741"]
+[gd_scene load_steps=6 format=3 uid="uid://5uwouo5bc741"]
 
 [ext_resource type="Script" path="res://Scripts/multiplayer/menu.gd" id="1_fdfo8"]
 [ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_qbjsc"]
+[ext_resource type="AudioStream" uid="uid://d22qi14tfxepk" path="res://audio/music/The Surreal Truth.mp3" id="3_1hk1t"]
+[ext_resource type="AudioStream" uid="uid://d21tn6mxl1rmc" path="res://audio/click_sounds/Click_Electronic_03.mp3" id="4_4mrq0"]
+[ext_resource type="AudioStream" uid="uid://dnlpuyc3v0evl" path="res://audio/click_sounds/Click_Electronic_00.mp3" id="5_1wpe8"]
 
 [node name="multiplayer_menu" type="Control"]
 layout_mode = 3
@@ -83,6 +86,17 @@ theme_override_constants/separation = 0
 [node name="hostlog" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_1hk1t")
+autoplay = true
+parameters/looping = true
+
+[node name="Click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_4mrq0")
+
+[node name="ReadySound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_1wpe8")
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/host_button" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/join_button" to="." method="_on_join_button_pressed"]

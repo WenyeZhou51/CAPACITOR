@@ -9,6 +9,7 @@ func _ready() -> void:
 	# Ensure the pause menu also continues processing during pause
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
 	self.hide()
+	
 func _input(event):
 	var sender_id = get_tree().get_multiplayer().get_unique_id()
 	var player = get_tree().get_root().get_node("Level/players/" + str(sender_id))

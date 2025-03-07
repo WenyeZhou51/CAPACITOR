@@ -1,0 +1,117 @@
+[gd_scene load_steps=8 format=3 uid="uid://dvvij8thoys1x"]
+
+[ext_resource type="Script" path="res://Scenes/heat_warning.gd" id="1_m7tw1"]
+[ext_resource type="FontFile" uid="uid://djxmwln40ig66" path="res://fonts/Geo-Regular.ttf" id="2_eg56m"]
+[ext_resource type="Texture2D" uid="uid://7ctql0xx4jnj" path="res://Scenes/jaldsfadfu.png" id="3_grn4h"]
+[ext_resource type="AudioStream" uid="uid://wr637iixbsyk" path="res://audio/alarm.ogg" id="4_jj2ak"]
+
+[sub_resource type="Animation" id="Animation_w15b5"]
+resource_name = "alert_flash"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 0.4),
+"transitions": PackedFloat32Array(1, 0.406126),
+"update": 0,
+"values": [Color(1, 0, 0, 0.160784), Color(1, 0.294118, 0, 0.396078)]
+}
+
+[sub_resource type="Animation" id="Animation_pwm84"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0, 0, 0.160784)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e1tke"]
+_data = {
+"RESET": SubResource("Animation_pwm84"),
+"alert_flash": SubResource("Animation_w15b5")
+}
+
+[node name="HeatWarning" type="Control" node_paths=PackedStringArray("visual_warning", "audio_player")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_m7tw1")
+visual_warning = NodePath("VisualWarning")
+audio_player = NodePath("AudioStreamPlayer")
+
+[node name="VisualWarning" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="VisualWarning"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -457.0
+offset_right = -3.0
+offset_bottom = 337.0
+grow_horizontal = 0
+texture = ExtResource("3_grn4h")
+expand_mode = 3
+
+[node name="Label" type="Label" parent="VisualWarning"]
+z_index = 20
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -555.0
+offset_top = -157.5
+offset_right = 555.0
+offset_bottom = 157.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_eg56m")
+theme_override_font_sizes/font_size = 100
+text = "BOILER AT 80% TEMPERATURE
+
+ADD COOLANT ASAP!"
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="VisualWarning"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0, 0, 0.160784)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="VisualWarning/ColorRect"]
+libraries = {
+"": SubResource("AnimationLibrary_e1tke")
+}
+autoplay = "alert_flash"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_jj2ak")

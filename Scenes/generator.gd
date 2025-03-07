@@ -4,10 +4,11 @@ extends StaticBody3D
 @export var heat_bar: ProgressBar
 @export var energy_bar: ProgressBar
 @onready var electricity_manager = get_node("/root/Level/Electricity Manager")
+@onready var heat_warning = get_node("/root/Level/UI/HeatWarning")
 
 @export var heat_level: float = 0.0
 @export var heat_increase_rate: float = 1.0  # Heat units increased per second
-@export var max_heat: float = 100.0
+@export var max_heat: float = 5.0
 
 var time_accumulator: float = 0.0
 const HEAT_UPDATE_INTERVAL: float = 1.0  # Update heat every second
@@ -16,11 +17,13 @@ const HEAT_UPDATE_INTERVAL: float = 1.0  # Update heat every second
 const COLD_COLOR := Color(0.2, 0.8, 0.2)  # Green
 const HOT_COLOR := Color(0.8, 0.2, 0.2)   # Red
 
+signal heat_danger
+var player_notified: bool = false
+
 func _ready():
 	# Set up initial heat bar style
 	update_heat_bar_color()
 	add_to_group("generator")
-
 
 func interact(player: Player) -> int:
 	var item_socket = player.get_node("Head/ItemSocket")
@@ -38,6 +41,9 @@ func interact(player: Player) -> int:
 			heat_level = max(heat_level - 40.0, 0.0)
 			update_heat_bar_color()
 			print("is coolant")
+			
+			if heat_level < 0.8 * max_heat:
+				player_notified = false
 			
 			player.inventory[player.current_slot] = null
 			player.inv_size -= 1
@@ -62,6 +68,12 @@ func _process(delta):
 		if heat_bar:
 			heat_bar.value = heat_level
 			update_heat_bar_color()
+			
+		if heat_level > 0.8 * max_heat and not player_notified:
+			# SEND ALARM TO PLAYERS
+			#heat_danger.emit()
+			heat_warning.warn_player()
+			player_notified = true
 
 	# Update the energy bar from the electricity manager
 	if electricity_manager and energy_bar:
