@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://btmgiq233knap"]
+[gd_scene load_steps=4 format=3 uid="uid://btmgiq233knap"]
 
 [ext_resource type="Script" path="res://Scenes/tutorial_level_0/tutorial_0.gd" id="1_nueqr"]
+[ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_asyja"]
 [ext_resource type="FontFile" uid="uid://djxmwln40ig66" path="res://fonts/Geo-Regular.ttf" id="2_yvnqr"]
 
 [node name="Level0Complete" type="Control"]
@@ -18,25 +19,29 @@ script = ExtResource("1_nueqr")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -295.0
+offset_top = -107.0
+offset_right = 2255.0
+offset_bottom = 3193.0
+texture = ExtResource("2_asyja")
 
 [node name="Label" type="Label" parent="TextureRect"]
 layout_mode = 0
-offset_left = 692.0
-offset_top = 347.0
-offset_right = 1459.0
-offset_bottom = 471.0
+offset_left = 881.0
+offset_top = 484.0
+offset_right = 1648.0
+offset_bottom = 608.0
 theme_override_fonts/font = ExtResource("2_yvnqr")
 theme_override_font_sizes/font_size = 90
-text = "Stage 0 Complete!"
+text = "Phase 1 Complete!"
+horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="TextureRect"]
 layout_mode = 0
-offset_left = 607.0
-offset_top = 524.0
-offset_right = 1447.0
-offset_bottom = 678.0
+offset_left = 848.0
+offset_top = 658.0
+offset_right = 1688.0
+offset_bottom = 812.0
 theme_override_fonts/font = ExtResource("2_yvnqr")
 theme_override_font_sizes/font_size = 50
 text = "Good job meeting the quota!
@@ -45,20 +50,21 @@ horizontal_alignment = 1
 
 [node name="Next" type="Button" parent="."]
 layout_mode = 0
-offset_left = 668.0
-offset_top = 725.0
-offset_right = 887.0
-offset_bottom = 857.0
+offset_left = 580.0
+offset_top = 800.0
+offset_right = 860.0
+offset_bottom = 940.0
 theme_override_fonts/font = ExtResource("2_yvnqr")
 theme_override_font_sizes/font_size = 90
 text = "Next"
 
 [node name="Leave" type="Button" parent="."]
 layout_mode = 0
-offset_left = 1093.0
-offset_top = 724.0
-offset_right = 1370.0
-offset_bottom = 856.0
+offset_left = 1050.0
+offset_top = 800.0
+offset_right = 1330.0
+offset_bottom = 940.0
+pivot_offset = Vector2(0, 800)
 theme_override_fonts/font = ExtResource("2_yvnqr")
 theme_override_font_sizes/font_size = 90
 text = "Menu"
