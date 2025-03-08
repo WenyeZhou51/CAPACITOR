@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://btmgiq233knap"]
+[gd_scene load_steps=3 format=3 uid="uid://btmgiq233knap"]
 
 [ext_resource type="Script" path="res://Scenes/tutorial_level_0/tutorial_0.gd" id="1_nueqr"]
+[ext_resource type="FontFile" uid="uid://djxmwln40ig66" path="res://fonts/Geo-Regular.ttf" id="2_yvnqr"]
 
 [node name="Level0Complete" type="Control"]
 layout_mode = 3
@@ -22,19 +23,21 @@ offset_bottom = 40.0
 
 [node name="Label" type="Label" parent="TextureRect"]
 layout_mode = 0
-offset_left = 623.0
-offset_top = 370.0
-offset_right = 1390.0
-offset_bottom = 494.0
+offset_left = 692.0
+offset_top = 347.0
+offset_right = 1459.0
+offset_bottom = 471.0
+theme_override_fonts/font = ExtResource("2_yvnqr")
 theme_override_font_sizes/font_size = 90
 text = "Stage 0 Complete!"
 
 [node name="Label2" type="Label" parent="TextureRect"]
 layout_mode = 0
-offset_left = 588.0
-offset_top = 528.0
-offset_right = 1428.0
-offset_bottom = 682.0
+offset_left = 607.0
+offset_top = 524.0
+offset_right = 1447.0
+offset_bottom = 678.0
+theme_override_fonts/font = ExtResource("2_yvnqr")
 theme_override_font_sizes/font_size = 50
 text = "Good job meeting the quota!
 The next stage introduces enemies"
@@ -42,19 +45,21 @@ horizontal_alignment = 1
 
 [node name="Next" type="Button" parent="."]
 layout_mode = 0
-offset_left = 677.0
-offset_top = 704.0
-offset_right = 892.0
-offset_bottom = 836.0
+offset_left = 668.0
+offset_top = 725.0
+offset_right = 887.0
+offset_bottom = 857.0
+theme_override_fonts/font = ExtResource("2_yvnqr")
 theme_override_font_sizes/font_size = 90
 text = "Next"
 
 [node name="Leave" type="Button" parent="."]
 layout_mode = 0
-offset_left = 1063.0
-offset_top = 703.0
-offset_right = 1340.0
-offset_bottom = 835.0
+offset_left = 1093.0
+offset_top = 724.0
+offset_right = 1370.0
+offset_bottom = 856.0
+theme_override_fonts/font = ExtResource("2_yvnqr")
 theme_override_font_sizes/font_size = 90
 text = "Menu"
 

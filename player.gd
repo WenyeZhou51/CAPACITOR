@@ -13,7 +13,7 @@ const STAMINA_THRESHOLD = 0.5  # Buffer threshold for stamina management
 
 signal value_changed(new_value)
 signal change_ui(idx, type)
-signal inv_high(pI, cI, name)
+signal inv_high(prev_idx: int, curr_idx: int, name: String)
 var curSlotUpdating = false
 # Variables
 @export var stamina_bar: VSlider  # Reference to the stamina UI slider
@@ -77,7 +77,20 @@ func _ready():
 	interact_label = get_node("/root/Level/UI/InteractLabel")
 	texture_rect = get_node("/root/Level/UI/TextureRect")
 	crt_shader_material = texture_rect.material
-	var msg = "Collect a total scrap value of: " + str(GameState.get_quota())
+	
+	# Determine which tutorial level we're in and set the appropriate message
+	var current_scene = get_tree().current_scene.scene_file_path
+	var msg = ""
+	
+	if "tutorial_level_0" in current_scene:
+		msg = "Collect and cash in 600 scrap"
+	elif "tutorial_level_1" in current_scene:
+		msg = "Beware the enemies"
+	elif "tutorial_level_2" in current_scene:
+		msg = "Gather and explore"
+	else:
+		msg = "Collect a total scrap value of: " + str(GameState.get_quota())
+	
 	popup_instance = popup_scene.instantiate()
 	popup_instance.popup_text = msg
 	add_child(popup_instance)

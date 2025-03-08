@@ -21,31 +21,31 @@ offset_bottom = 1092.0
 
 [node name="Label" type="Label" parent="TextureRect"]
 layout_mode = 0
-offset_left = 388.0
-offset_top = 436.0
-offset_right = 1938.0
-offset_bottom = 560.0
+offset_left = 207.0
+offset_top = 418.0
+offset_right = 1775.0
+offset_bottom = 542.0
 theme_override_fonts/font = ExtResource("2_66yb0")
 theme_override_font_sizes/font_size = 90
-text = "Congrats on completing the tutorial"
+text = "Congrats on completing the Fixed Map Mode"
 
 [node name="Button" type="Button" parent="TextureRect"]
 layout_mode = 0
-offset_left = 829.0
-offset_top = 686.0
-offset_right = 1109.0
-offset_bottom = 763.0
+offset_left = 811.0
+offset_top = 679.0
+offset_right = 1091.0
+offset_bottom = 756.0
 theme_override_font_sizes/font_size = 30
 text = "Main Menu"
 
 [node name="Label2" type="Label" parent="TextureRect"]
 layout_mode = 0
-offset_left = 852.0
-offset_top = 589.0
-offset_right = 1097.0
-offset_bottom = 624.0
+offset_left = 747.0
+offset_top = 591.0
+offset_right = 1180.0
+offset_bottom = 626.0
 theme_override_fonts/font = ExtResource("2_66yb0")
 theme_override_font_sizes/font_size = 25
-text = "You have met the quota!"
+text = "Put your skills to use in shifting walls mode"
 
 [connection signal="pressed" from="TextureRect/Button" to="." method="_on_button_pressed"]
