@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctwaw8niaod3"]
+
+[ext_resource type="Script" path="res://Scenes/gameover.gd" id="1_fjpru"]
+[ext_resource type="Texture2D" uid="uid://cuh28gw618cnn" path="res://imgs/Screenshot 2025-01-27 000706.png" id="2_reyqj"]
+
+[node name="Gameover" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = -8.0
+offset_right = 1.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fjpru")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 10.0
+offset_right = 1944.0
+offset_bottom = 1100.0
+texture = ExtResource("2_reyqj")
+
+[node name="Label" type="Label" parent="TextureRect"]
+layout_mode = 0
+offset_left = 739.0
+offset_top = 416.0
+offset_right = 1228.0
+offset_bottom = 540.0
+theme_override_font_sizes/font_size = 90
+text = "Game Over"
+
+[node name="Button" type="Button" parent="TextureRect"]
+layout_mode = 0
+offset_left = 845.0
+offset_top = 712.0
+offset_right = 1125.0
+offset_bottom = 789.0
+theme_override_font_sizes/font_size = 30
+text = "Main Menu"
+
+[connection signal="pressed" from="TextureRect/Button" to="." method="_on_button_pressed"]

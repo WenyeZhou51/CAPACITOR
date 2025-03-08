@@ -1,0 +1,94 @@
+[gd_scene load_steps=12 format=3 uid="uid://b1uym1tun4xmx"]
+
+[ext_resource type="Script" path="res://Scenes/prefabs/enemies/enemy_BLACKOUT.gd" id="1_blackout"]
+[ext_resource type="PackedScene" uid="uid://dut37wi0mmur5" path="res://Assets/BLACKOUT_MONSTER_Animation_Running_withSkin.fbx" id="2_blackout_run"]
+[ext_resource type="PackedScene" uid="uid://cmm8452pv1no4" path="res://Assets/BLACKOUT_MONSTER_Animation_Left_Slash_withSkin.fbx" id="3_blackout_attack"]
+[ext_resource type="AudioStream" uid="uid://cwoeeot163gmg" path="res://audio/excited horror sound.wav" id="4_4n8xw"]
+[ext_resource type="AudioStream" uid="uid://sodncgkcrqp3" path="res://audio/enemy BLACKOUT audio.wav" id="5_blackout"]
+[ext_resource type="PackedScene" uid="uid://dwvpdu2sqvlcu" path="res://Scenes/prefabs/enemies/earworm_0203172223_texture_obj/earworm new animation.fbx" id="6_earworm"]
+
+[sub_resource type="Animation" id="Animation_walking"]
+resource_name = "Walking"
+loop_mode = 1
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_blackout"]
+_data = {
+"Walking": SubResource("Animation_walking")
+}
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_33x1u"]
+radius = 1.0
+height = 3.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_65130"]
+size = Vector3(0.950935, 0.729492, 0.89508)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_81kcf"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="enemy_BLACKOUT" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.106848, 0)
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("detection_area")]
+safe_margin = 0.1
+script = ExtResource("1_blackout")
+chase_speed = 10.0
+attack_damage = 20.0
+attack_cooldown = 0.1
+animation_speed = 4.0
+chase_animation_speed = 8.0
+detection_area = NodePath("Area3D")
+
+[node name="BLACKOUT_RUN" parent="CharacterBody3D" instance=ExtResource("2_blackout_run")]
+transform = Transform3D(-2.5, 0, -3.77489e-07, 0, 2.5, 0, 3.77489e-07, 0, -2.5, 0, 0, 0)
+
+[node name="BLACKOUT_ATTACK" parent="CharacterBody3D" instance=ExtResource("3_blackout_attack")]
+transform = Transform3D(-2.5, 0, -3.77489e-07, 0, 2.5, 0, 3.77489e-07, 0, -2.5, 0, 0, 0)
+visible = false
+
+[node name="EARWORM" parent="CharacterBody3D" instance=ExtResource("6_earworm")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody3D"]
+libraries = {
+"": SubResource("AnimationLibrary_blackout")
+}
+speed_scale = 3.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0287771, 1.77753, 0.143532)
+shape = SubResource("CapsuleShape3D_33x1u")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="CharacterBody3D"]
+
+[node name="AttackTimer" type="Timer" parent="CharacterBody3D"]
+autostart = true
+
+[node name="ScareSound" type="AudioStreamPlayer" parent="CharacterBody3D"]
+stream = ExtResource("4_4n8xw")
+volume_db = 5.0
+
+[node name="BlackoutSound" type="AudioStreamPlayer3D" parent="CharacterBody3D"]
+stream = ExtResource("5_blackout")
+autoplay = true
+max_distance = 20.0
+
+[node name="RayCast3D" type="RayCast3D" parent="CharacterBody3D"]
+
+[node name="Area3D" type="Area3D" parent="CharacterBody3D"]
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/Area3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0.109891, 2.21473, 0.241022)
+shape = SubResource("BoxShape3D_65130")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_81kcf")
+
+[connection signal="timeout" from="CharacterBody3D/AttackTimer" to="CharacterBody3D" method="_on_timer_timeout"]

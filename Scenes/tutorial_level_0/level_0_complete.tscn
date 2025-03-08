@@ -1,0 +1,61 @@
+[gd_scene load_steps=2 format=3 uid="uid://btmgiq233knap"]
+
+[ext_resource type="Script" path="res://Scenes/tutorial_level_0/tutorial_0.gd" id="1_nueqr"]
+
+[node name="Level0Complete" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = 5.0
+offset_right = -2.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nueqr")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="TextureRect"]
+layout_mode = 0
+offset_left = 623.0
+offset_top = 370.0
+offset_right = 1390.0
+offset_bottom = 494.0
+theme_override_font_sizes/font_size = 90
+text = "Level 1 Complete!"
+
+[node name="Label2" type="Label" parent="TextureRect"]
+layout_mode = 0
+offset_left = 640.0
+offset_top = 524.0
+offset_right = 1409.0
+offset_bottom = 678.0
+theme_override_font_sizes/font_size = 50
+text = "Wasn't so hard was it?
+ Be careful on the next level..."
+
+[node name="Next" type="Button" parent="."]
+layout_mode = 0
+offset_left = 677.0
+offset_top = 704.0
+offset_right = 892.0
+offset_bottom = 836.0
+theme_override_font_sizes/font_size = 90
+text = "Next"
+
+[node name="Leave" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1063.0
+offset_top = 703.0
+offset_right = 1340.0
+offset_bottom = 835.0
+theme_override_font_sizes/font_size = 90
+text = "Menu"
+
+[connection signal="pressed" from="Next" to="." method="_on_next_pressed"]
+[connection signal="pressed" from="Leave" to="." method="_on_leave_pressed"]

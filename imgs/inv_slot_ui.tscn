@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7u6fnuv64hfv"]
+
+[ext_resource type="Texture2D" uid="uid://blun8addsee0y" path="res://imgs/Slot.png" id="1_q8sin"]
+[ext_resource type="Texture2D" uid="uid://c0tj3p5m034y" path="res://imgs/Inventory Select cursor.png" id="2_o6mhh"]
+
+[node name="Inv_slot_UI" type="Control"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 101.0
+offset_bottom = 100.0
+
+[node name="slot sprite" type="Sprite2D" parent="."]
+position = Vector2(66, 68)
+texture = ExtResource("1_q8sin")
+
+[node name="Highlight overlay" type="Sprite2D" parent="."]
+position = Vector2(66, 68)
+texture = ExtResource("2_o6mhh")
