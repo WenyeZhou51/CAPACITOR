@@ -170,6 +170,9 @@ func _ready() -> void:
 			print("[EARWORM] Started playing animation: ", animation_name)
 		else:
 			print("[EARWORM] No animations found in the animation player")
+	
+	# Make the earworm model respond to lighting
+	setup_lighting_responsive_material()
 
 func set_initial_position() -> void:
 	if agent:
@@ -384,3 +387,51 @@ func _on_navigation_finished() -> void:
 		" | On Floor: ", is_on_floor(), 
 		" | Target Y: ", agent.target_position.y if agent else "No agent",
 		" | Y Difference: ", (agent.target_position.y - global_position.y) if agent else "N/A")
+
+# Add this new function to set up the material
+func setup_lighting_responsive_material():
+	print("[EARWORM] Setting up lighting-responsive material")
+	
+	# Find all mesh instances in the model
+	var mesh_instances = []
+	find_mesh_instances(earworm_model, mesh_instances)
+	
+	print("[EARWORM] Found " + str(mesh_instances.size()) + " mesh instances")
+	
+	# Apply lighting-responsive material to each mesh
+	for mesh_instance in mesh_instances:
+		if mesh_instance is MeshInstance3D and mesh_instance.mesh:
+			print("[EARWORM] Processing mesh: " + mesh_instance.name)
+			
+			# Create a new StandardMaterial3D
+			var material = StandardMaterial3D.new()
+			
+			# Get the existing material if any
+			var existing_material = null
+			if mesh_instance.get_surface_override_material_count() > 0:
+				existing_material = mesh_instance.get_surface_override_material(0)
+			elif mesh_instance.mesh.get_surface_count() > 0 and mesh_instance.mesh.surface_get_material(0):
+				existing_material = mesh_instance.mesh.surface_get_material(0)
+			
+			# Copy properties from existing material if possible
+			if existing_material and existing_material is StandardMaterial3D:
+				if existing_material.albedo_texture:
+					material.albedo_texture = existing_material.albedo_texture
+				material.albedo_color = existing_material.albedo_color
+			
+			# Configure the material to respond to lighting
+			material.roughness = 0.7
+			material.metallic = 0.0
+			material.emission_enabled = false
+			
+			# Apply the material
+			mesh_instance.material_override = material
+			print("[EARWORM] Applied lighting-responsive material to " + mesh_instance.name)
+
+# Helper function to find all mesh instances in a node hierarchy
+func find_mesh_instances(node, result_array):
+	if node is MeshInstance3D:
+		result_array.append(node)
+	
+	for child in node.get_children():
+		find_mesh_instances(child, result_array)
