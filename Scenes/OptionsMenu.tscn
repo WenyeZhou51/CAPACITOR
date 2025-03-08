@@ -1,0 +1,229 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxnvp4eqcjbw8"]
+
+[ext_resource type="Script" path="res://Scenes/options_menu.gd" id="1_yvnqr"]
+[ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_k34gm"]
+[ext_resource type="FontFile" uid="uid://c4ixvvxmjxiex" path="res://fonts/Geo-Regular.ttf" id="3_yvnqr"]
+
+[node name="OptionsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yvnqr")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_k34gm")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yvnqr")
+theme_override_font_sizes/font_size = 90
+text = "OPTIONS"
+horizontal_alignment = 1
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_yvnqr")
+theme_override_font_sizes/font_size = 40
+
+[node name="Settings" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/Settings"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="VolumeSection" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/Settings/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/Settings/VBoxContainer/VolumeSection"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yvnqr")
+theme_override_font_sizes/font_size = 40
+text = "Volume"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/Settings/VBoxContainer/VolumeSection"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/Settings/VBoxContainer/VolumeSection/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("3_yvnqr")
+theme_override_font_sizes/font_size = 30
+text = "Master Volume"
+
+[node name="VolumeSlider" type="HSlider" parent="MarginContainer/VBoxContainer/TabContainer/Settings/VBoxContainer/VolumeSection/HBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 0.8
+
+[node name="BrightnessSection" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/Settings/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/Settings/VBoxContainer/BrightnessSection"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yvnqr")
+theme_override_font_sizes/font_size = 40
+text = "Brightness"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/Settings/VBoxContainer/BrightnessSection"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/Settings/VBoxContainer/BrightnessSection/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("3_yvnqr")
+theme_override_font_sizes/font_size = 30
+text = "Screen Brightness"
+
+[node name="BrightnessSlider" type="HSlider" parent="MarginContainer/VBoxContainer/TabContainer/Settings/VBoxContainer/BrightnessSection/HBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_vertical = 4
+min_value = 0.5
+max_value = 1.5
+step = 0.01
+value = 1.0
+
+[node name="Controls" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/Controls"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yvnqr")
+theme_override_font_sizes/font_size = 40
+text = "Control Scheme"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 50
+theme_override_constants/v_separation = 20
+columns = 2
+
+[node name="MoveLabel" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yvnqr")
+theme_override_font_sizes/font_size = 30
+text = "WASD"
+
+[node name="MoveAction" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yvnqr")
+theme_override_font_sizes/font_size = 30
+text = "Move"
+
+[node name="JumpLabel" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yvnqr")
+theme_override_font_sizes/font_size = 30
+text = "Space"
+
+[node name="JumpAction" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yvnqr")
+theme_override_font_sizes/font_size = 30
+text = "Jump"
+
+[node name="SprintLabel" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yvnqr")
+theme_override_font_sizes/font_size = 30
+text = "Shift"
+
+[node name="SprintAction" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yvnqr")
+theme_override_font_sizes/font_size = 30
+text = "Sprint"
+
+[node name="InteractLabel" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yvnqr")
+theme_override_font_sizes/font_size = 30
+text = "E"
+
+[node name="InteractAction" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yvnqr")
+theme_override_font_sizes/font_size = 30
+text = "Interact/Pickup"
+
+[node name="DropLabel" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yvnqr")
+theme_override_font_sizes/font_size = 30
+text = "Q"
+
+[node name="DropAction" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yvnqr")
+theme_override_font_sizes/font_size = 30
+text = "Drop"
+
+[node name="FlashlightLabel" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yvnqr")
+theme_override_font_sizes/font_size = 30
+text = "Left Mouse"
+
+[node name="FlashlightAction" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yvnqr")
+theme_override_font_sizes/font_size = 30
+text = "Toggle Flashlight"
+
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("3_yvnqr")
+theme_override_font_sizes/font_size = 50
+text = "BACK"
+
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/TabContainer/Settings/VBoxContainer/VolumeSection/HBoxContainer/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/TabContainer/Settings/VBoxContainer/BrightnessSection/HBoxContainer/BrightnessSlider" to="." method="_on_brightness_slider_value_changed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"] 
