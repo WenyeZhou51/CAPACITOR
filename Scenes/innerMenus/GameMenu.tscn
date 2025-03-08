@@ -37,13 +37,13 @@ offset_bottom = 1191.0
 [node name="Random" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 90
-text = "RANDOM"
+text = "Shifting Walls"
 
 [node name="Fixed" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 0.843137)
 theme_override_font_sizes/font_size = 90
-text = "FIXED"
+text = "Fixed Map"
 
 [node name="Back" type="Button" parent="MarginContainer/TextureRect"]
 layout_mode = 2
@@ -63,6 +63,54 @@ offset_bottom = 569.0
 theme_override_font_sizes/font_size = 90
 text = "CHOOSE GAME MODE: "
 
+[node name="RandomDescription" type="Panel" parent="MarginContainer/TextureRect"]
+visible = false
+layout_mode = 0
+offset_left = 1620.0
+offset_top = 651.0
+offset_right = 2020.0
+offset_bottom = 801.0
+
+[node name="Label" type="Label" parent="MarginContainer/TextureRect/RandomDescription"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "Maps are large and randomized, enemies are plenty, darkness is ever present "
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="FixedDescription" type="Panel" parent="MarginContainer/TextureRect"]
+visible = false
+layout_mode = 0
+offset_left = 1620.0
+offset_top = 751.0
+offset_right = 2020.0
+offset_bottom = 901.0
+
+[node name="Label" type="Label" parent="MarginContainer/TextureRect/FixedDescription"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "Starts the tutorial sequence on fixed levels. Learn the basics of collecting scraps and avoiding enemies"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[connection signal="mouse_entered" from="MarginContainer/TextureRect/VBoxContainer/Random" to="." method="_on_random_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/TextureRect/VBoxContainer/Random" to="." method="_on_random_mouse_exited"]
 [connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Random" to="." method="_on_random_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/TextureRect/VBoxContainer/Fixed" to="." method="_on_fixed_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/TextureRect/VBoxContainer/Fixed" to="." method="_on_fixed_mouse_exited"]
 [connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Fixed" to="." method="_on_fixed_pressed"]
 [connection signal="pressed" from="MarginContainer/TextureRect/Back" to="." method="_on_back_pressed"]

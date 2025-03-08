@@ -3,6 +3,7 @@ extends Node
 var _quota = 400
 var _team_score = 0
 var alive_count = 0
+var auto_start = false  # Flag to indicate if the game should auto-start
 
 var endScene: String = "res://Scenes/win.tscn"
 
@@ -31,6 +32,12 @@ func set_team_score(val: int) -> void:
 
 func set_end_scene(scene: String) -> void:
 	endScene = scene
+	
+func set_auto_start(value: bool) -> void:
+	auto_start = value
+	
+func should_auto_start() -> bool:
+	return auto_start
 
 func check_game_end() -> void:
 	if (_team_score >= _quota):

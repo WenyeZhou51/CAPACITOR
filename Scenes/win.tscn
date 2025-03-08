@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://6vdrcukrj72y"]
+[gd_scene load_steps=3 format=3 uid="uid://6vdrcukrj72y"]
 
 [ext_resource type="Script" path="res://Scenes/gameover.gd" id="1_vasx5"]
+[ext_resource type="FontFile" uid="uid://djxmwln40ig66" path="res://fonts/Geo-Regular.ttf" id="2_66yb0"]
 
 [node name="Win" type="Control"]
 layout_mode = 3
@@ -20,28 +21,30 @@ offset_bottom = 1092.0
 
 [node name="Label" type="Label" parent="TextureRect"]
 layout_mode = 0
-offset_left = 783.0
-offset_top = 412.0
-offset_right = 1272.0
-offset_bottom = 536.0
+offset_left = 388.0
+offset_top = 436.0
+offset_right = 1938.0
+offset_bottom = 560.0
+theme_override_fonts/font = ExtResource("2_66yb0")
 theme_override_font_sizes/font_size = 90
-text = "Congrats!"
+text = "Congrats on completing the tutorial"
 
 [node name="Button" type="Button" parent="TextureRect"]
 layout_mode = 0
-offset_left = 848.0
-offset_top = 685.0
-offset_right = 1128.0
-offset_bottom = 762.0
+offset_left = 829.0
+offset_top = 686.0
+offset_right = 1109.0
+offset_bottom = 763.0
 theme_override_font_sizes/font_size = 30
 text = "Main Menu"
 
 [node name="Label2" type="Label" parent="TextureRect"]
 layout_mode = 0
-offset_left = 839.0
-offset_top = 567.0
-offset_right = 1190.0
-offset_bottom = 602.0
+offset_left = 852.0
+offset_top = 589.0
+offset_right = 1097.0
+offset_bottom = 624.0
+theme_override_fonts/font = ExtResource("2_66yb0")
 theme_override_font_sizes/font_size = 25
 text = "You have met the quota!"
 

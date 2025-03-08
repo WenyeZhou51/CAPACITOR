@@ -6,6 +6,7 @@ func _ready() -> void:
 func _on_next_pressed() -> void:
 	GameState.set_quota(500)
 	GameState.set_end_scene("res://Scenes/tutorial_level_1/level_1_complete.tscn")
+	GameState.set_auto_start(true)
 	MultiplayerManager.switch_map("res://Scenes/tutorial_level_1/testscene.tscn")
 	get_tree().change_scene_to_file("res://Scenes/multiplayer/multiplayer_menu.tscn")
 

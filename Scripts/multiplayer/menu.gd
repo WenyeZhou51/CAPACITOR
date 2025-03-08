@@ -15,6 +15,18 @@ func _ready() -> void:
 	MultiplayerManager.host_msg.connect(hostMessage)
 	$MarginContainer/VBoxContainer/HBoxContainer/START.hide()
 	
+	# Check if we should auto-start the game (for tutorials)
+	if GameState.should_auto_start():
+		print_debug("Auto-starting game for tutorial")
+		# Auto-host the game
+		_on_host_button_pressed()
+		# Wait a frame to ensure hosting is complete
+		await get_tree().process_frame
+		# Auto-start the game
+		_on_button_pressed()
+		# Reset the auto-start flag
+		GameState.set_auto_start(false)
+	
 func _on_host_button_pressed() -> void:
 	
 	$MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2.hide()
