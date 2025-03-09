@@ -6,9 +6,8 @@ var ui
 
 func _ready() -> void:
 	ui = $UI
+	GameState.initNewLevel(GameState._quota);
 	_players_spawn_node = get_tree().get_current_scene().get_node("players")
-	GameState._team_score = 0
-	GameState.alive_count = MultiplayerManager.player_count
 	for id in MultiplayerManager.players.keys():
 		print_debug("spawning player " + str(id))
 		_add_player_to_game(MultiplayerManager.players[id].id)

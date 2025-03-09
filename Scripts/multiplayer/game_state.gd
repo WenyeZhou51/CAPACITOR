@@ -14,6 +14,11 @@ signal end_game
 signal change_ui
 signal inv_high
 
+func initNewLevel(quota: int):
+	_quota = quota;
+	_team_score = 0;
+	alive_count = MultiplayerManager.player_count
+
 func get_quota() -> int:
 	return _quota
 	

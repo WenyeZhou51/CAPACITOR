@@ -114,10 +114,24 @@ func set_map_seed_and_player_count(new: int, count: int):
 	player_count = count;
 		
 func _on_peer_disconnected(id: int):
+	if (!multiplayer.is_server()): return
+	
 	debug_log("Peer disconnected with ID: " + str(id))
 	host_msg.emit("Client " + str(id) + " has disconnected!")
+	player_count = len( multiplayer.get_peers());
+	players.erase(id)
+	set_map_seed_and_player_count.rpc(map_seed, player_count)
+	removePlayerInGame.rpc(id)
+	
+	
 	# host should delete player
 
+@rpc("authority", "call_local")
+func removePlayerInGame(id: int):
+	var player = get_tree().get_root().get_node_or_null("Level/players/" + str(id))
+	if (!player): return
+	player.queue_free()
+	
 @rpc
 func display_session_end_message(message: String):
 	host_msg.emit(message)
