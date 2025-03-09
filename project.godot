@@ -18,13 +18,14 @@ config/icon="res://icon.svg"
 [autoload]
 
 MultiplayerManager="*res://Scripts/multiplayer/multiplayer_manager.gd"
-GameState="*res://Scripts/multiplayer/game_state.gd"
+GameState="*res://Scripts/Management/game_state.gd"
 MultiplayerConfirm="*res://Scripts/multiplayer/comms/multiplayer_confirm.gd"
 MultiplayerPropogate="*res://Scripts/multiplayer/comms/multiplayer_propogate.gd"
 MultiplayerRequest="*res://Scripts/multiplayer/comms/multiplayer_request.gd"
 EarwormManager="*res://Scripts/earworm_manager.gd"
 GlobalSettings="*res://Scripts/global_settings.gd"
 MultiplayerUnreliableBroadcast="*res://Scripts/multiplayer/comms/multiplayer_unreliable_broadcast.gd"
+Constants="*res://Scripts/Management/constants.gd"
 
 [display]
 

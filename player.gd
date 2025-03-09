@@ -377,10 +377,8 @@ func _physics_process(delta: float) -> void:
 			animation_player.play("player_anim/walk")
 			animation_player.speed_scale = 2.0
 			
-			# Handle sprint sound
-			if is_multiplayer_authority() and sprint_sound_player:
-				if not sprint_sound_player.playing:
-					sprint_sound_player.play()
+			if ! sprint_sound_player.playing:
+				sprint_sound_player.play()
 		else:
 			animation_player.play("player_anim/walk")
 			animation_player.speed_scale = 1.0
@@ -412,6 +410,23 @@ func endGame() -> void:
 		get_tree().change_scene_to_file("res://Scenes/win.tscn")
 	else:
 		return
+
+func play_sound(sound: Constants.SOUNDS):
+	
+	match sound:
+		Constants.SOUNDS.SPRINT: 
+			if ! sprint_sound_player.playing:
+				sprint_sound_player.play()
+		Constants.SOUNDS.JUMP: 
+			pass
+		Constants.SOUNDS.DROP: 
+			pass
+		Constants.SOUNDS.DOOR: 
+			pass
+		Constants.SOUNDS.CASH_IN: 
+			cashin_sound_player.play()
+
+		
 
 func update_health_indicator():
 	if crt_shader_material and crt_shader_material is ShaderMaterial:
