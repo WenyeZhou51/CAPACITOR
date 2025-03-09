@@ -20,10 +20,11 @@ func propogate_item_interact(player_name: String, item_name: String):
 	item.interact(player)
 
 @rpc("authority", "call_local")
-func propagate_current_slot_idx(player_id: int, new_slot: int):
+func propogate_inventory_idx_change(player_id: int, new_slot: int):
 	var player = GameState.get_player_node_by_name(str(player_id))
-	if !player: return
+	if !player or player_id == MultiplayerManager.multiplayer.get_unique_id(): return
 	player.set_inv_slot(new_slot)
+
 @rpc("authority", "call_local")
 func changeHolding(player_name: String):
 	var player = get_tree().get_root().get_node("Level/players/" + player_name)
@@ -55,7 +56,3 @@ func propogate_new_player_health(player_name: String, health: int):
 	var player = GameState.get_player_node_by_name(player_name)
 	if !player: return
 	player.set_health(health)
-
-@rpc("authority", "call_local")
-func propogate_disconnect(player: int):
-	MultiplayerManager.kick_client(player)

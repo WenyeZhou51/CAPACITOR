@@ -16,8 +16,5 @@ func changeHolding():
 func request_item_drop():
 	MultiplayerConfirm.confirm_item_drop.rpc_id(1)
 
-func update_current_slot_idx(idx: int):
-	MultiplayerConfirm.confirm_current_slot_idx.rpc_id(1, idx)
-
-func disconnect_player():
-	MultiplayerConfirm.confirm_disconnect.rpc_id(1)
+func request_inventory_idx_change(idx: int):
+	MultiplayerConfirm.confirm_inventory_idx_change.rpc_id(1, idx)

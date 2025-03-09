@@ -34,11 +34,6 @@ func confirm_item_drop():
 	MultiplayerPropogate.propogate_item_drop.rpc(player_name)
 
 @rpc("any_peer", "call_local")
-func confirm_current_slot_idx(idx: int):
+func confirm_inventory_idx_change(idx: int):
 	var sender_id = multiplayer.get_remote_sender_id()
-	MultiplayerPropogate.propagate_current_slot_idx.rpc(sender_id, idx)
-
-@rpc("any_peer", "call_local")
-func confirm_disconnect():
-	var sender_id = multiplayer.get_remote_sender_id()
-	MultiplayerPropogate.propogate_disconnect.rpc(sender_id)
+	MultiplayerPropogate.propogate_inventory_idx_change.rpc(sender_id, idx)

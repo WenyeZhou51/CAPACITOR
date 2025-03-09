@@ -225,12 +225,14 @@ func check_inv_slot_change(event: InputEventMouseButton):
 	if event.button_index == 4:
 		current_slot = (current_slot + 1) % inventory.size()
 		curSlotUpdating = true
-		MultiplayerRequest.update_current_slot_idx(current_slot)
+		set_inv_slot(current_slot)
+		MultiplayerRequest.request_inventory_idx_change(current_slot)
 		
 	elif event.button_index == 5:  # Scroll wheel down
 		current_slot = (current_slot - 1 + inventory.size()) % inventory.size()
 		curSlotUpdating = true
-		MultiplayerRequest.update_current_slot_idx(current_slot)
+		set_inv_slot(current_slot)
+		MultiplayerRequest.request_inventory_idx_change(current_slot)
 		
 		
 	
