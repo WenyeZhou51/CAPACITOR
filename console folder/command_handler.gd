@@ -29,10 +29,12 @@ func on_command_buy(console: Node, args: Array):
 		return
 	
 	for i in amount:
+		
 		var instance = found_scene.instantiate()
-		var item_node = get_tree().current_scene.get_node("items")
-		item_node.add_child(instance)
 		instance.global_transform = spawn_node.global_transform
+		
+		MultiplayerRequest.request_item_spawn(Constants.ITEMS.FLASHLIGHT, spawn_node.global_transform)
+		
 	console.push_message("Transaction Processed!")
 
 	

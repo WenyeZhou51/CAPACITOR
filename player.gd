@@ -246,7 +246,7 @@ func toggle_console() -> void:
 		#clear crt shader effect completely
 		texture_rect.visible = false
 		camera_locked = true
-		MultiplayerRequest.changeHolding()
+
 
 		print("shader disabled")
 	else:
@@ -255,7 +255,7 @@ func toggle_console() -> void:
 		texture_rect.visible = true
 		update_health_indicator()
 		camera_locked = false
-		MultiplayerRequest.changeHolding()
+
 		# Reset camera to follow head directly
 		camera.global_transform = $Head.global_transform
 

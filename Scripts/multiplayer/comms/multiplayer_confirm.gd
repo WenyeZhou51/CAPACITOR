@@ -14,11 +14,6 @@ func confirm_item_interact(item_name: String):
 func confirm_flash_toggle(item_name: String):
 	var player_name = str(multiplayer.get_remote_sender_id());
 	MultiplayerPropogate.propogate_flash_toggle.rpc(player_name, item_name)
-
-@rpc("any_peer", "call_local")
-func confirm_changeHolding():
-	var player_name = str(multiplayer.get_remote_sender_id());
-	MultiplayerPropogate.changeHolding.rpc(player_name)
 	
 @rpc("any_peer", "call_local")
 func confirm_current_slot(new_slot: int):
@@ -37,3 +32,16 @@ func confirm_item_drop():
 func confirm_inventory_idx_change(idx: int):
 	var sender_id = multiplayer.get_remote_sender_id()
 	MultiplayerPropogate.propogate_inventory_idx_change.rpc(sender_id, idx)
+
+@rpc("any_peer", "call_local")
+func confirm_item_spawn(item: Constants.ITEMS, position: Transform3D):
+	var item_node = get_tree().current_scene.get_node("items")
+	
+	var scene
+	var instance
+	match item:
+		Constants.ITEMS.FLASHLIGHT:
+			scene = preload("res://Scenes/prefabs/items/flashlight.tscn")
+			instance = scene.instantiate()
+			instance.global_transform = position
+	item_node.add_child(instance, true)

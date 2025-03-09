@@ -7,3 +7,7 @@ enum SOUNDS {
 	SPRINT,
 	CASH_IN
 }
+
+enum ITEMS {
+	FLASHLIGHT
+}
