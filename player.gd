@@ -379,8 +379,9 @@ func _physics_process(delta: float) -> void:
 			animation_player.play("player_anim/walk")
 			animation_player.speed_scale = 2.0
 			
-			if ! sprint_sound_player.playing:
-				sprint_sound_player.play()
+			if ( not sprint_sound_player.playing):
+				play_sound(Constants.SOUNDS.SPRINT)
+				MultiplayerPropogate.propogate_player_play_sound.rpc(Constants.SOUNDS.SPRINT)
 		else:
 			animation_player.play("player_anim/walk")
 			animation_player.speed_scale = 1.0
@@ -397,14 +398,15 @@ func _physics_process(delta: float) -> void:
 			animation_player.speed_scale = 1.0
 			
 		# Stop sprint sound if it was playing
-		if is_multiplayer_authority() and sprint_sound_player and sprint_sound_player.playing:
-			sprint_sound_player.stop()
+		if (sprint_sound_player.playing):
+			stop_sound(Constants.SOUNDS.SPRINT)
+			MultiplayerPropogate.propogate_player_stop_sound.rpc(Constants.SOUNDS.SPRINT)
 
 	# Update stamina bar value smoothly
 	if stamina_bar:
 		stamina_bar.value = lerp(stamina_bar.value, current_stamina - STAMINA_THRESHOLD / 2, 0.1)
 
-	# Move the character
+	# Move the cSPRINTharacter
 	move_and_slide()
 
 func endGame() -> void:
@@ -413,8 +415,12 @@ func endGame() -> void:
 	else:
 		return
 
+func stop_sound(sound: Constants.SOUNDS):
+	match sound:
+		Constants.SOUNDS.SPRINT:
+			sprint_sound_player.stop()
+
 func play_sound(sound: Constants.SOUNDS):
-	
 	match sound:
 		Constants.SOUNDS.SPRINT: 
 			if ! sprint_sound_player.playing:
