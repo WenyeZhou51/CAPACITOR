@@ -90,6 +90,7 @@ func join_game():
 func start_game():
 	begin_game_logic.rpc(0)
 
+@rpc("any_peer", "call_local")
 func switch_map(url: String):
 	map = url
 
