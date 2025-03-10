@@ -435,3 +435,16 @@ func find_mesh_instances(node, result_array):
 	
 	for child in node.get_children():
 		find_mesh_instances(child, result_array)
+
+func handle_sound_emission(sound_position: Vector3, radius: float) -> void:
+	# Only process sounds on the server
+	if not is_multiplayer_authority():
+		return
+	
+	# Existing sound handling logic
+	var distance = global_position.distance_to(sound_position)
+	if distance <= radius * 2.0:
+		heard_sounds.append({
+			"position": sound_position,
+			"timestamp": Time.get_unix_time_from_system()
+		})

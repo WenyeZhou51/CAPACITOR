@@ -86,7 +86,7 @@ func convert_rigidbody_to_staticbody(rigidbody: RigidBody3D) -> StaticBody3D:
 	static_body.type = rigidbody.type
 	var mesh_instance = static_body.get_node_or_null("MeshInstance3D")
 	if mesh_instance:
-		mesh_instance.visible = true
+		mesh_instance.visible = false
 	# Optionally free the old RigidBody3D to clean up memory
 	rigidbody.queue_free()
 	

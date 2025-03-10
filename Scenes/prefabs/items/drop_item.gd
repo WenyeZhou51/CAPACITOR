@@ -16,6 +16,12 @@ func drop(player: CharacterBody3D, drop_position: Vector3 = Vector3.ZERO, drop_d
 	# 2) Re-parent this object back to the world or a specific drop parent
 	if self.get_parent() == item_socket:
 		#var world = get_tree().current_scene # You can adjust this to a specific node if needed
+		if(self.type == "flashlight"):
+			print("dropping flashlight")
+			var light_node = self.get_node("Model/FlashLight")
+			if light_node and light_node is Light3D:
+				print("deleting light node")
+				light_node.queue_free()
 		item_socket.remove_child(self)
 		
 		# 3) Set the drop position relative to the player or item socket

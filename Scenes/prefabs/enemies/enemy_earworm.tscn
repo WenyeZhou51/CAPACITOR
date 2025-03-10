@@ -7,7 +7,7 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rphe8"]
 radius = 0.424328
-height = 2.11789
+height = 0.962792
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8bs8h"]
 properties/0/path = NodePath(".:position")
@@ -37,7 +37,7 @@ sound_cleanup_interval = 0.1
 wander_interval = 3.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 2.5, 0.652985)
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 1.07909, 0.652985)
 shape = SubResource("CapsuleShape3D_rphe8")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]

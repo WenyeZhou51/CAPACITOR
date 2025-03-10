@@ -20,7 +20,7 @@ size = Vector3(0.376205, 0.385712, 0.464172)
 collision_layer = 8
 collision_mask = 5
 script = ExtResource("1_kty08")
-Price = 1
+Price = 100
 type = "coolant"
 
 [node name="coolant mesh" type="MeshInstance3D" parent="."]

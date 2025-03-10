@@ -80,19 +80,23 @@ func emit_footstep_sound() -> void:
 func emit_sprint_sound() -> void:
 	if player:
 		print("[SOUND EMITTER] Emitting sprint sound at: ", player.global_position)
-		EarwormManager.get_instance().emit_sound(player.global_position, sprint_radius)
+		if player.is_multiplayer_authority():
+			# Send sound to server and all peers
+			rpc("_emit_sound_networked", player.global_position, sprint_radius)
+
+@rpc("any_peer", "call_local", "reliable")
+func _emit_sound_networked(sound_position: Vector3, radius: float) -> void:
+	EarwormManager.get_instance().emit_sound(sound_position, radius)
 
 # Function for door usage sound
 func emit_door_sound() -> void:
-	if player:
-		print("[SOUND EMITTER] Emitting door sound at: ", player.global_position)
-		EarwormManager.get_instance().emit_sound(player.global_position, door_radius)
+	if player and player.is_multiplayer_authority():
+		rpc("_emit_sound_networked", player.global_position, door_radius)
 
 # Function for drop item sound
 func emit_drop_item_sound() -> void:
-	if player:
-		print("[SOUND EMITTER] Emitting drop item sound at: ", player.global_position)
-		EarwormManager.get_instance().emit_sound(player.global_position, drop_item_radius)
+	if player and player.is_multiplayer_authority():
+		rpc("_emit_sound_networked", player.global_position, drop_item_radius)
 
 # Call this when player performs a loud action (shooting, using items, etc.)
 func emit_action_sound() -> void:
