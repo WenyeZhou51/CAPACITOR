@@ -124,7 +124,7 @@ func _physics_process(delta: float) -> void:
 	
 	# If a player has been spotted, start chasing them.
 	if has_seen_player:
-		if(player.dead):
+		if(is_instance_valid(player) and player.dead):
 			print("successfully killed player")
 			has_seen_player = false
 			
