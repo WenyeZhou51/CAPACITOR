@@ -31,7 +31,7 @@
 [ext_resource type="PackedScene" uid="uid://cvvhr51m3d3cb" path="res://objectmodels/cardboard_box_01_4k/cardboard_box_01_4k.gltf" id="27_kwbr7"]
 [ext_resource type="Texture2D" uid="uid://c1d5kcr4f1c5l" path="res://textures/worn_plank/worn_planks_diff_4k.png" id="28_pn1eg"]
 [ext_resource type="PackedScene" uid="uid://dhmtymlk3gb34" path="res://Scenes/prefabs/items/flashlight.tscn" id="28_tiy5o"]
-[ext_resource type="PackedScene" path="res://Scenes/Spawn Points/player_spawn_point.tscn" id="29_cqaaa"]
+[ext_resource type="PackedScene" uid="uid://b0yt2h0ox1gxb" path="res://Scenes/Spawn Points/player_spawn_point.tscn" id="29_cqaaa"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_binvk"]
 sky_top_color = Color(0.0101014, 0.0122771, 0.0165181, 1)
