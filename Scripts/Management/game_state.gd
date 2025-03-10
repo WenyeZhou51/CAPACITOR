@@ -46,10 +46,10 @@ func should_auto_start() -> bool:
 
 func check_game_end() -> void:
 	if (_team_score >= _quota):
-		var curr =get_tree().get_current_scene().get_node("players")
-		for child in curr.get_children():
-			child.queue_free()
-		players = {}
+		#var curr =get_tree().get_current_scene().get_node("players")
+		#for child in curr.get_children():
+			#child.queue_free()
+		#players = {}
 		get_tree().change_scene_to_file(endScene)
 		#MultiplayerManager.kick_everyone()
 	elif alive_count <= 0:
