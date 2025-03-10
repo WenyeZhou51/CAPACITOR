@@ -10,7 +10,7 @@ radius = 0.6
 height = 3.5
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_65130"]
-size = Vector3(0.950935, 0.729492, 0.89508)
+size = Vector3(3.26594, 0.729492, 2.48958)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_81kcf"]
 properties/0/path = NodePath(".:position")
@@ -173,7 +173,7 @@ volume_db = 5.0
 collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/Area3D"]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0.109891, 2.21473, 0.241022)
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -0.0672768, 2.21473, -3.74523)
 shape = SubResource("BoxShape3D_65130")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]

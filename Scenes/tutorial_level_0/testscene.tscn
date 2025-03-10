@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=4 uid="uid://b0ogfy3qfh5d3"]
+[gd_scene load_steps=81 format=4 uid="uid://b0ogfy3qfh5d3"]
 
 [ext_resource type="Script" path="res://Scenes/testscene.gd" id="1_v17iy"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
@@ -18,7 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://dm8q140i8u3ih" path="res://Scenes/prefabs/enemies/enemy_earworm.tscn" id="9_vw5pj"]
 [ext_resource type="Script" path="res://Scenes/GameManager.gd" id="10_2bpfs"]
 [ext_resource type="AudioStream" uid="uid://bc2qvfrbnwvn6" path="res://audio/demoLevel.wav" id="11_wadk3"]
-[ext_resource type="PackedScene" uid="uid://cli3ed0vm0drp" path="res://imgs/inv_slot_ui.tscn" id="11_yg2qu"]
+[ext_resource type="PackedScene" uid="uid://b7u6fnuv64hfv" path="res://imgs/inv_slot_ui.tscn" id="11_yg2qu"]
 [ext_resource type="PackedScene" uid="uid://dhmtymlk3gb34" path="res://Scenes/prefabs/items/flashlight.tscn" id="13_1s1s2"]
 [ext_resource type="Shader" path="res://shaders/bayer.gdshader" id="14_hrlu7"]
 [ext_resource type="FontFile" uid="uid://djxmwln40ig66" path="res://fonts/Geo-Regular.ttf" id="14_imrbg"]
@@ -42,6 +42,7 @@
 [ext_resource type="PackedScene" uid="uid://rpy0m4novqme" path="res://objectmodels3/barrel/detail_barrel.glb" id="37_hgayo"]
 [ext_resource type="Texture2D" uid="uid://d248n30v1rcw1" path="res://objectmodels3/bricks_a/detail-bricks-type-a.png" id="38_ip7y5"]
 [ext_resource type="ArrayMesh" uid="uid://c7ouyxu4g67jv" path="res://objectmodels3/bricks_a/detail-bricks-type-a.obj" id="39_gr58f"]
+[ext_resource type="Texture2D" uid="uid://b8aq0wu0cmbi2" path="res://rooms/cash_box_sign.png" id="43_0sj8y"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_binvk"]
 sky_top_color = Color(0.0101014, 0.0122771, 0.0165181, 1)
@@ -378,6 +379,14 @@ shader_parameter/gamma = 0.8
 shader_parameter/posterization_strength = 0.8
 shader_parameter/dark_preservation = 0.05
 shader_parameter/highlight_preservation = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_klfyw"]
+albedo_texture = ExtResource("43_0sj8y")
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_3xswk"]
+material = SubResource("StandardMaterial3D_klfyw")
 
 [node name="Level" type="Node3D"]
 script = ExtResource("1_v17iy")
@@ -802,6 +811,10 @@ spawn_path = NodePath("../items")
 
 [node name="Player Spawn Point" parent="." instance=ExtResource("24_gf8n3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.3085, 19.1879, 1.94595)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.0329193, 0.000780959, -0.999458, 0.0237168, 0.999719, 3.86113e-10, 0.999176, -0.0237039, -0.0329286, 46.2256, 16.7662, 0.204222)
+mesh = SubResource("QuadMesh_3xswk")
 
 [connection signal="bake_finished" from="Tutorial2" to="GameManager" method="_on_navigation_region_3d_bake_finished"]
 [connection signal="bake_finished" from="NavigationRegion3D" to="GameManager" method="_on_navigation_region_3d_bake_finished"]

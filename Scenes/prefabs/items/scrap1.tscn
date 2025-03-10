@@ -59,7 +59,7 @@ script = ExtResource("1_srse0")
 Price = 100
 type = "scrap1"
 
-[node name="brass_vase_03" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 mesh = SubResource("ArrayMesh_mbojr")
 skeleton = NodePath("")

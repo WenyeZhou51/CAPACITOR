@@ -471,6 +471,16 @@ func set_health(new: int):
 	var hurt = new < current_health
 	current_health = new
 	if (current_health <= 0):
+		var item_socket = get_node("Head/ItemSocket")
+		#var curr = item_socket.get_child(0)
+		if item_socket.get_child_count() > 0:
+			MultiplayerRequest.request_item_drop()
+		var inventory_container = get_node("InventoryContainer")
+		while inventory_container.get_child_count() > 0:
+			var item = inventory_container.get_child(0)
+			inventory_container.remove_child(item)
+			item_socket.add_child(item)
+			MultiplayerRequest.request_item_drop()
 		set_death(true)
 		return
 	
@@ -510,46 +520,54 @@ func play_cashin_sound():
 func client_is_this_player() -> bool:
 	return name == str(multiplayer.get_unique_id())
 
+# Add these at the top of Player class
+var debug_item_locations = {}
+
+func _set_item_visibility(item: Node, visible: bool, context: String = "") -> void:
+	if not item: return
+	var mesh_instance = item.get_node_or_null("MeshInstance3D")
+	if mesh_instance:
+		mesh_instance.visible = visible
+		print("Setting {item.name} visibility to {visible} ({context})")
+	if item.type == "flashlight":
+		var light_node = item.get_node("Model/FlashLight")
+		if light_node and light_node is Light3D:
+			light_node.visible = visible
+
+# Updated set_inv_slot
 func set_inv_slot(new: int):
 	current_slot = new
 	var current_item = inventory[current_slot]
 	
-	var pre = -1 
-	if(current_item):
+	print("Setting slot to {new}, item: {current_item.name if current_item else 'null'}")
+	
+	var pre = -1
+	if current_item:
 		is_holding = true
 		emit_signal("inv_high", pre, current_slot, current_item.type)
 	else:
 		is_holding = false
 		emit_signal("inv_high", pre, current_slot, "")
+	
 	var item_socket = get_node("Head/ItemSocket")
-	var old_item = null
-	if(item_socket.get_child_count() > 0):
-		old_item = item_socket.get_child(0)
-	var new_item = inventory[current_slot]
-	if old_item:
-		if(old_item.type == "flashlight"):
-			var light_node = old_item.get_node("Model/FlashLight")
-			if light_node and light_node is Light3D:
-				light_node.visible = false
+	var inventory_container = get_node("InventoryContainer")
+	
+	# Clear socket first
+	while item_socket.get_child_count() > 0:
+		var old_item = item_socket.get_child(0)
 		item_socket.remove_child(old_item)
-		var mesh_instance = old_item.get_node_or_null("MeshInstance3D")
-		if mesh_instance:
-			mesh_instance.visible = false
-		var container = get_node("InventoryContainer")
-		if container:
-			container.add_child(old_item)  # Store the old item safely in the inventory container
+		_set_item_visibility(old_item, false, "moving to inventory")
+		if inventory_container:
+			inventory_container.add_child(old_item)
 		else:
-			print("InventoryContainer not found. Old item may not be stored correctly.")
-	if new_item:
-		if new_item.get_parent():
-			new_item.get_parent().remove_child(new_item)
-		var mesh_instance = new_item.get_node_or_null("MeshInstance3D")
-		if mesh_instance:
-			mesh_instance.visible = true
-		item_socket.add_child(new_item)
-		if(new_item.type == "flashlight"):
-			var light_node = new_item.get_node("Model/FlashLight")
-			if light_node and light_node is Light3D:
-				light_node.visible = true
-		new_item.transform = Transform3D()
+			print("Warning: No InventoryContainer found")
+			old_item.queue_free()  # Prevent orphaned nodes
+	
+	if current_item:
+		if current_item.get_parent():
+			current_item.get_parent().remove_child(current_item)
+		item_socket.add_child(current_item)
+		current_item.transform = Transform3D()
+		_set_item_visibility(current_item, true, "active in socket")
+	
 	curSlotUpdating = false

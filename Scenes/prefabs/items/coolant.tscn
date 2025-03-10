@@ -23,7 +23,7 @@ script = ExtResource("1_kty08")
 Price = 100
 type = "coolant"
 
-[node name="coolant mesh" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.45, 0, 0, 0, 0.42, 0, 0, 0, 0.45, 0.0329471, -0.00698996, 0.0202395)
 material_override = SubResource("StandardMaterial3D_dcebv")
 mesh = SubResource("CylinderMesh_olvwk")

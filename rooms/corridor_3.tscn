@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://b4vh1narrpvm2"]
+[gd_scene load_steps=18 format=4 uid="uid://b4vh1narrpvm2"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_nfukj"]
 [ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="2_ghaxt"]
@@ -26,9 +26,6 @@ func remove_unused_doors():
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wj10s"]
 albedo_texture = ExtResource("2_ghaxt")
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_3gfgy"]
-size = Vector3(1, 0.9, 0.7)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vyxo1"]
 resource_name = "lightbulb_01_glass"
@@ -163,10 +160,6 @@ snap = 0.1
 size = Vector3(1, 8, 6)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1.10556, 0, 1.01377, 0, 1.5, 0, -1.01377, 0, 1.10556, -3.28841, -4.09822, -2.86033)
-shape = SubResource("BoxShape3D_3gfgy")
 
 [node name="lightbulb_01_4k" type="Node3D" parent="StaticBody3D"]
 transform = Transform3D(5, 0, 0, 0, -4.99688, 0.176504, 0, -0.176504, -4.99688, -1.9279, 1.76506, -1.3719)

@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="12_bg0dx"]
 [ext_resource type="Script" path="res://Scenes/ui.gd" id="13_ugbvm"]
 [ext_resource type="FontFile" uid="uid://djxmwln40ig66" path="res://fonts/Geo-Regular.ttf" id="14_3p005"]
-[ext_resource type="PackedScene" uid="uid://cli3ed0vm0drp" path="res://imgs/inv_slot_ui.tscn" id="14_us5u4"]
+[ext_resource type="PackedScene" uid="uid://b7u6fnuv64hfv" path="res://imgs/inv_slot_ui.tscn" id="14_us5u4"]
 [ext_resource type="Script" path="res://Scenes/navigation_region_3d.gd" id="15_05s8m"]
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonGenerator3D.gd" id="16_43yvh"]
 [ext_resource type="PackedScene" uid="uid://7pskmagldtnr" path="res://rooms/stair_1.tscn" id="17_fmsrp"]

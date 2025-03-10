@@ -8,33 +8,33 @@ func _ready() -> void:
 	pass
 
 func drop(player: CharacterBody3D, drop_position: Vector3 = Vector3.ZERO, drop_direction: Vector3 = Vector3.FORWARD) -> void:
-	
-	# 1) Get the reference to the player's 'ItemSocket'
-	var item_socket = player.get_node("Head/ItemSocket") # Adjust path as needed
-	var items_node = player.get_tree().get_root().get_node("Level/items")
+	var item_socket = player.get_node("Head/ItemSocket")
 	var world = get_tree().current_scene
-	# 2) Re-parent this object back to the world or a specific drop parent
+	
 	if self.get_parent() == item_socket:
-		#var world = get_tree().current_scene # You can adjust this to a specific node if needed
-		if(self.type == "flashlight"):
-			print("dropping flashlight")
-			var light_node = self.get_node("Model/FlashLight")
-			if light_node and light_node is Light3D:
-				print("deleting light node")
-				light_node.queue_free()
 		item_socket.remove_child(self)
+		player._set_item_visibility(self, false, "before dropping")  # Hide before conversion
 		
-		# 3) Set the drop position relative to the player or item socket
-		# For example, position it in front of the player
 		var global_transform = player.global_transform
 		self.global_transform.origin = global_transform.origin + (global_transform.basis.z * drop_direction * 2) + drop_position
 		
-		# 4) Enable physics behavior by converting back to RigidBody3D
 		if self is StaticBody3D:
-			convert_staticbody_to_rigidbody(self, world)
-			world.add_child(self)
-
-func convert_staticbody_to_rigidbody(static_body: StaticBody3D, world: Node3D):
+			var rigidbody = convert_staticbody_to_rigidbody(self, world)
+			world.add_child(rigidbody)
+			player._set_item_visibility(rigidbody, true, "dropped in world")
+	
+	# Clear from inventory
+	for i in range(player.inventory.size()):
+		if player.inventory[i] == self:
+			player.inventory[i] = null
+			player.inv_size -= 1
+			if str(player.get_tree().get_multiplayer().get_unique_id()) == player.name:
+				GameState.change_ui.emit(i, "empty")
+			break
+	player.is_holding = false
+				
+				
+func convert_staticbody_to_rigidbody(static_body: StaticBody3D, world: Node3D) -> RigidBody3D:
 	# Get the parent node
 	
 	var path = "res://Scenes/prefabs/items/" + str(static_body.type) + ".tscn"
@@ -77,3 +77,4 @@ func convert_staticbody_to_rigidbody(static_body: StaticBody3D, world: Node3D):
 	items_node.add_child(rigidbody)
 	# Optionally free the old StaticBody3D to clean up memory
 	static_body.queue_free()
+	return rigidbody

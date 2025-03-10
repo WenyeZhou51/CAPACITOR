@@ -41,6 +41,8 @@ func propogate_item_drop(player_name: String):
 	if player == null: return
 	var item_socket = player.get_node("Head/ItemSocket")
 	var curr_item = item_socket.get_child(0)
+	if curr_item == null:
+		return  # Early exit if there is no item to drop
 	curr_item.drop(player)
 	player.inventory[player.current_slot] = null
 	if (str(player.get_tree().get_multiplayer().get_unique_id()) == player_name):
