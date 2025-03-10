@@ -57,6 +57,7 @@ func propogate_player_play_sound(sound: Constants.SOUNDS):
 	var caller_id = multiplayer.get_remote_sender_id();
 	print_debug("SOUNDING", caller_id)
 	var player = GameState.get_player_node_by_name(str(caller_id))
+	if !player: return
 	player.play_sound(sound)
 
 @rpc("any_peer")
