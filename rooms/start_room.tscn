@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=4 uid="uid://btqev772fc7bl"]
+[gd_scene load_steps=38 format=4 uid="uid://btqev772fc7bl"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_pykbe"]
 [ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="3_e13x1"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://dvleiqfmloahr" path="res://Scenes/prefabs/coolant_marker.tscn" id="10_ytvcr"]
 [ext_resource type="PackedScene" uid="uid://xcj3me4ww2u2" path="res://console folder/console.tscn" id="11_s0eup"]
 [ext_resource type="PackedScene" uid="uid://cvwdeshjlru0d" path="res://objectmodels3/fence/fence.glb" id="14_qbpxr"]
+[ext_resource type="Texture2D" uid="uid://b8aq0wu0cmbi2" path="res://rooms/cash_box_sign.png" id="16_807ni"]
 [ext_resource type="PackedScene" uid="uid://dhmtymlk3gb34" path="res://Scenes/prefabs/items/flashlight.tscn" id="16_cihow"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_2up67"]
@@ -199,6 +200,13 @@ size = Vector3(4, 8.6, 3.1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_17jbb"]
 size = Vector3(4, 2.5, 0.1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_55ojl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_daqcn"]
+albedo_texture = ExtResource("16_807ni")
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
 
 [node name="start_room" type="Node3D"]
 script = ExtResource("1_pykbe")
@@ -393,3 +401,8 @@ shape = SubResource("BoxShape3D_17jbb")
 
 [node name="Flashlight" parent="." instance=ExtResource("16_cihow")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.88199, -4.5, -0.459741)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 6.4106, -3.20362, 0.409727)
+mesh = SubResource("QuadMesh_55ojl")
+surface_material_override/0 = SubResource("StandardMaterial3D_daqcn")
