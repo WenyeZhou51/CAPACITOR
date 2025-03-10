@@ -10,6 +10,7 @@ func propogate_item_interact(player_name: String, item_name: String):
 		
 	var item = get_tree().get_root().get_node("Level/items/" + item_name)
 	var player = GameState.get_player_node_by_name(player_name)
+	if player == null: return
 	if(item_name == "planter_box_01_4k"):
 		item = get_tree().get_root().get_node("Level/NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D2/planter_box_01_4k")
 	print("interacting with", item)
@@ -22,12 +23,14 @@ func propogate_item_interact(player_name: String, item_name: String):
 @rpc("authority", "call_local")
 func propogate_inventory_idx_change(player_id: int, new_slot: int):
 	var player = GameState.get_player_node_by_name(str(player_id))
+	if player == null: return
 	if !player or player_id == MultiplayerManager.multiplayer.get_unique_id(): return
 	player.set_inv_slot(new_slot)
 
 @rpc("authority", "call_local")
 func propogate_flash_toggle(player_name: String, item_name: String):
 	var player = GameState.get_player_node_by_name(player_name)
+	if player == null: return
 	var item = player.get_node("Head/ItemSocket").get_child(0)
 	var light = item.get_node("Model").get_node("FlashLight")
 	light.visible = !light.visible
@@ -35,6 +38,7 @@ func propogate_flash_toggle(player_name: String, item_name: String):
 @rpc("authority", "call_local")
 func propogate_item_drop(player_name: String):
 	var player: Player = GameState.get_player_node_by_name(player_name)
+	if player == null: return
 	var item_socket = player.get_node("Head/ItemSocket")
 	var curr_item = item_socket.get_child(0)
 	curr_item.drop(player)
@@ -64,4 +68,5 @@ func propogate_player_play_sound(sound: Constants.SOUNDS):
 func propogate_player_stop_sound(sound: Constants.SOUNDS):
 	var caller_id = multiplayer.get_remote_sender_id();
 	var player = GameState.get_player_node_by_name(str(caller_id))
+	if player == null: return
 	player.stop_sound(sound)
