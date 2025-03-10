@@ -26,6 +26,7 @@ func debug_log(message: String) -> void:
 func host_game():
 	host_msg.emit("Hosting game...")
 	debug_log("Starting host initialization")
+	
 	var server_peer = ENetMultiplayerPeer.new()
 	var error = server_peer.create_server(SERVER_PORT, 4)  # Max 4 players
 	
