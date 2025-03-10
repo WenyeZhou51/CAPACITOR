@@ -122,6 +122,7 @@ func _ready():
 		camera.current = false
 		print("Remote player: camera disabled.")
 
+
 func setup_sound_players():
 	# Setup sprint sound player
 	sprint_sound_player = AudioStreamPlayer.new()

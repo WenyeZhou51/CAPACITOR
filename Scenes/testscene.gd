@@ -24,8 +24,7 @@ func _add_player_to_game(id: int):
 	var player_instance: Player = multiplayer_scene.instantiate()
 	print_debug("Player instance created")
 	player_instance.name = str(id)
-	player_instance.set_color(id)
-	
+	player_instance.set_color(id);
 	var spawn_position = Vector3(0, 0, 100)
 	
 	var spawn_points = get_tree().get_nodes_in_group("player_spawn_point")
