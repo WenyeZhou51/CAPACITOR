@@ -627,6 +627,9 @@ func separate_rooms_iteration(first_call_in_loop : bool) -> void:
 func force_all_doors_open(room: DungeonRoom3D) -> void:
 	for door in room.get_doors_cached():
 		door.optional = false
+		
+
+		
 func create_junction(corridor_pos: Vector3i):
 	# Possible directions (assuming +X, -X, +Z, -Z)
 	var directions = [
@@ -637,7 +640,13 @@ func create_junction(corridor_pos: Vector3i):
 	]
 
 	# Shuffle directions to pick random branching paths
-	directions.shuffle()
+	for i in range(directions.size()-1, 0, -1):
+		var j = rng.randi() % (i + 1)
+		var temp = directions[i]
+		directions[i] = directions[j]
+		directions[j] = temp
+	
+	
 
 	var branches_to_create = 1 + int(rng.randf() * 1) # Try 1 or 2 extra branches
 	var created_branches = 0
