@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://ctwaw8niaod3"]
+[gd_scene load_steps=4 format=3 uid="uid://ctwaw8niaod3"]
 
 [ext_resource type="Script" path="res://Scenes/gameover.gd" id="1_fjpru"]
 [ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_dug37"]
+[ext_resource type="AudioStream" uid="uid://d338r6w8jhdoe" path="res://audio/The Surreal Truth.mp3" id="3_vs5vs"]
 
 [node name="Gameover" type="Control"]
 layout_mode = 3
@@ -41,5 +42,9 @@ offset_right = 1350.0
 offset_bottom = 920.0
 theme_override_font_sizes/font_size = 40
 text = "Main Menu"
+
+[node name="background_music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_vs5vs")
+autoplay = true
 
 [connection signal="pressed" from="TextureRect/Button" to="." method="_on_button_pressed"]

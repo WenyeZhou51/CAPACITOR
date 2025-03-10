@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://q202lrglap61"]
+[gd_scene load_steps=4 format=3 uid="uid://q202lrglap61"]
 
 [ext_resource type="Script" path="res://Scenes/menu.gd" id="1_hqwk4"]
 [ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_r4oa5"]
+[ext_resource type="AudioStream" uid="uid://cvwxxbscll8k6" path="res://audio/Cage of the Cryptid.mp3" id="3_nk3pr"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -48,6 +49,10 @@ text = "OPTION"
 layout_mode = 2
 theme_override_font_sizes/font_size = 90
 text = "QUIT"
+
+[node name="background_music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_nk3pr")
+autoplay = true
 
 [connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Multiplayer" to="." method="_on_multiplayer_pressed"]
 [connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Options" to="." method="_on_options_pressed"]

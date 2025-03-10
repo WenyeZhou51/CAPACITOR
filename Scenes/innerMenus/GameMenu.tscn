@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dagu06p8qd6gg"]
+[gd_scene load_steps=4 format=3 uid="uid://dagu06p8qd6gg"]
 
 [ext_resource type="Script" path="res://Scenes/innerMenus/innerMenuScript.gd" id="1_22w3a"]
 [ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_k34gm"]
+[ext_resource type="AudioStream" uid="uid://dd1mq17xo467w" path="res://audio/Final Captain&#039;s Log.mp3" id="3_r8asp"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -106,6 +107,10 @@ text = "Starts the tutorial sequence on fixed levels. Learn the basics of collec
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
+
+[node name="background_music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_r8asp")
+autoplay = true
 
 [connection signal="mouse_entered" from="MarginContainer/TextureRect/VBoxContainer/Random" to="." method="_on_random_mouse_entered"]
 [connection signal="mouse_exited" from="MarginContainer/TextureRect/VBoxContainer/Random" to="." method="_on_random_mouse_exited"]
