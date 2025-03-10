@@ -9,5 +9,5 @@ enum SOUNDS {
 }
 
 enum ITEMS {
-	FLASHLIGHT
+	FLASHLIGHT,
 }

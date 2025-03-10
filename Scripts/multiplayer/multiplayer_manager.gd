@@ -114,6 +114,9 @@ func set_map_seed_and_player_count(new: int, count: int):
 	player_count = count;
 		
 func _on_peer_disconnected(id: int):
+	if (id == 1): 
+		host_msg.emit("Host ended game session");
+	
 	if (!multiplayer.is_server()): return
 	
 	debug_log("Peer disconnected with ID: " + str(id))

@@ -65,6 +65,4 @@ func _on_button_pressed() -> void:
 
 
 func _on_back_multi_pressed() -> void:
-	if(has_join):
-		MultiplayerRequest.disconnect_player()
 	get_tree().change_scene_to_file("res://Scenes/Menu.tscn")
