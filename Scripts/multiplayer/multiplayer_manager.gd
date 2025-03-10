@@ -24,6 +24,7 @@ func debug_log(message: String) -> void:
 		print("[MultiplayerManager][%d] %s" % [Time.get_ticks_msec(), message])
 
 func host_game():
+	multiplayer.multiplayer_peer.close()
 	host_msg.emit("Hosting game...")
 	debug_log("Starting host initialization")
 	

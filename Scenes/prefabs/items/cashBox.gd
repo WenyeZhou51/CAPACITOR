@@ -32,7 +32,7 @@ func interact(player: CharacterBody3D):
 		msg = "Scrap value " + str(value)
 		player.popup_instance.popup_text = msg
 		player.popup_instance.pop_up()
-		if player.name == str(multiplayer.get_unique_id()):
+		if player.name == str(MultiplayerManager.multiplayer.get_unique_id()):
 			GameState.change_ui.emit(player.current_slot, "empty")
 		player.inv_size -= 1
 		player.is_holding = false
