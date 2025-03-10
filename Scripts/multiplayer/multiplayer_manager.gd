@@ -97,6 +97,7 @@ func begin_game_logic(seed: int):
 	get_tree().change_scene_to_file(map)
 
 func _on_peer_connected(id: int):
+	if not multiplayer.is_server(): return
 	debug_log("Peer connected with ID: " + str(id))
 	# Server creates peer
 	if multiplayer.is_server():
