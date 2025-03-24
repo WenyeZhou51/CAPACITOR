@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://btqev772fc7bl"]
+[gd_scene load_steps=38 format=4 uid="uid://btqev772fc7bl"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_pykbe"]
 [ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="3_e13x1"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://cvwdeshjlru0d" path="res://objectmodels3/fence/fence.glb" id="14_qbpxr"]
 [ext_resource type="PackedScene" uid="uid://dhmtymlk3gb34" path="res://Scenes/prefabs/items/flashlight.tscn" id="16_cihow"]
 [ext_resource type="Texture2D" uid="uid://b8aq0wu0cmbi2" path="res://rooms/cash_box_sign.png" id="16_ooxae"]
+[ext_resource type="PackedScene" uid="uid://dvleiqfmloahr" path="res://Scenes/prefabs/coolant_marker.tscn" id="16_vkmh3"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_2up67"]
 vertices = PackedVector3Array(-9.48562, 5.5, -9.49464, -9.48562, 5.5, 9.50536, 9.51438, 5.5, 9.50536, 9.51438, 5.5, -9.49464, 8.51438, -4, -7.99464, -9.48562, -4, -7.74464, -8.73562, -4, -7.24464, -8.73562, -4, 7.00536, 8.51438, -4, 7.00536)
@@ -402,3 +403,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.88199, -4.5, -0.459741)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(-0.0329193, 0.000780959, -0.999458, 0.0237168, 0.999719, 3.86113e-10, 0.999176, -0.0237039, -0.0329286, 6.49263, -3.36588, 0.12152)
 mesh = SubResource("QuadMesh_vf04h")
+
+[node name="ScrapMarker" parent="." instance=ExtResource("16_vkmh3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.90201, -3.89654, 1.42552)

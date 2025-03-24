@@ -8,11 +8,22 @@ func propogate_team_score_update(val: int):
 @rpc("authority", "call_local")
 func propogate_item_interact(player_name: String, item_name: String):
 		
-	var item = get_tree().get_root().get_node("Level/items/" + item_name)
+	var item = get_tree().get_root().get_node_or_null("Level/items/" + item_name)
 	var player = GameState.get_player_node_by_name(player_name)
 	if player == null: return
+	
+	# Special cases for specific items
 	if(item_name == "planter_box_01_4k"):
-		item = get_tree().get_root().get_node("Level/NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D2/planter_box_01_4k")
+		item = get_tree().get_root().get_node_or_null("Level/NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D2/planter_box_01_4k")
+	# Special case for the generator
+	elif(item_name == "Generator" or item_name.begins_with("Generator")):
+		item = get_tree().get_root().get_node_or_null("Level/Generator")
+		if not item:
+			# Fallback: look for generator in any group
+			var generators = get_tree().get_nodes_in_group("generator")
+			if generators.size() > 0:
+				item = generators[0]
+
 	print("interacting with", item)
 	
 	if (not item):

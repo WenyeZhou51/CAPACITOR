@@ -39,12 +39,16 @@ func interact(player: Player) -> int:
 			update_heat_bar_color()
 			print("is coolant")
 			
+			# Update player inventory
 			player.inventory[player.current_slot] = null
 			player.inv_size -= 1
 			player.is_holding = false
-			if (player.name == str(player.get_tree().get_multiplayer().get_unique_id())):
+			
+			# Update UI for the current player only
+			if str(player.get_tree().get_multiplayer().get_unique_id()) == player.name:
 				GameState.change_ui.emit(player.current_slot, "empty")
-			return 1  # Return 0 since this isn't a cash value interaction
+				
+			return 1  # Return 1 since this is a successful interaction
 	print("not coolant")
 	return 0  # Return 0 for no interaction
 
