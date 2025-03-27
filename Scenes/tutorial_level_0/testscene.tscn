@@ -795,14 +795,11 @@ spawn_path = NodePath("../players")
 
 [node name="items" type="Node3D" parent="."]
 
-[node name="Flashlight" parent="items" instance=ExtResource("13_1s1s2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.9189, 16.0335, 0)
-
 [node name="scrap1" parent="items" instance=ExtResource("14_q11nm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.3867, 17.8615, -2.75375)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.2024, 17.8615, -2.75375)
 
 [node name="Scrap2" parent="items" instance=ExtResource("4_occg4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.3208, 18.1068, -4.2485)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.285, 18.1068, -4.37036)
 
 [node name="Scrap3" parent="items" instance=ExtResource("5_kvhlf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.4563, 18.2752, -5.64612)
@@ -823,6 +820,10 @@ script = ExtResource("44_roeov")
 
 [node name="TutorialMessageUI" parent="." instance=ExtResource("45_c5sts")]
 z_index = 100
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+omni_range = 87.856
+omni_attenuation = 0.0
 
 [connection signal="bake_finished" from="Tutorial2" to="GameManager" method="_on_navigation_region_3d_bake_finished"]
 [connection signal="bake_finished" from="NavigationRegion3D" to="GameManager" method="_on_navigation_region_3d_bake_finished"]

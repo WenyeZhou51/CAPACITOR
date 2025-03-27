@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=4 uid="uid://b0ogfy3qfh5d3"]
+[gd_scene load_steps=71 format=4 uid="uid://b0ogfy3qfh5d3"]
 
 [ext_resource type="Script" path="res://Scenes/testscene.gd" id="1_mmvxi"]
 [ext_resource type="Script" path="res://Scenes/GameManager.gd" id="2_ooohi"]
@@ -32,6 +32,8 @@
 [ext_resource type="Texture2D" uid="uid://c1d5kcr4f1c5l" path="res://textures/worn_plank/worn_planks_diff_4k.png" id="28_pn1eg"]
 [ext_resource type="PackedScene" uid="uid://dhmtymlk3gb34" path="res://Scenes/prefabs/items/flashlight.tscn" id="28_tiy5o"]
 [ext_resource type="PackedScene" uid="uid://b0yt2h0ox1gxb" path="res://Scenes/Spawn Points/player_spawn_point.tscn" id="29_cqaaa"]
+[ext_resource type="Script" path="res://Scripts/tutorial_level_1_manager.gd" id="33_gvs8j"]
+[ext_resource type="PackedScene" path="res://Scenes/tutorial_level_1_ui.tscn" id="34_41wyc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_binvk"]
 sky_top_color = Color(0.0101014, 0.0122771, 0.0165181, 1)
@@ -856,6 +858,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.3085, 19.1879, 1.94595)
 
 [node name="enemy_venus" parent="." instance=ExtResource("9_w2ced")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.58516, 15.8298, -13.4771)
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("33_gvs8j")
+
+[node name="TutorialMessageUI" parent="." instance=ExtResource("34_41wyc")]
+z_index = 100
 
 [connection signal="bake_finished" from="Tutorial2" to="GameManager" method="_on_navigation_region_3d_bake_finished"]
 [connection signal="bake_finished" from="NavigationRegion3D" to="GameManager" method="_on_navigation_region_3d_bake_finished"]
