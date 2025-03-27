@@ -73,6 +73,7 @@ var sound_emitter: Node
 func _ready():
 	set_multiplayer_authority(str(name).to_int())
 	add_to_group("players")
+	add_to_group("player")  # Add to player group for tutorial detection
 	stamina_bar = get_node("/root/Level/UI/SprintSlider")
 	interact_label = get_node("/root/Level/UI/InteractLabel")
 	texture_rect = get_node("/root/Level/UI/TextureRect")
