@@ -44,6 +44,9 @@ func interact(player: Player) -> int:
 			player.inv_size -= 1
 			player.is_holding = false
 			
+			# Update the tutorial tracking - set the has_refueled_generator flag
+			player.has_refueled_generator = true
+			
 			# Update UI for the current player only
 			if str(player.get_tree().get_multiplayer().get_unique_id()) == player.name:
 				GameState.change_ui.emit(player.current_slot, "empty")

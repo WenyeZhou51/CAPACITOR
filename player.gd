@@ -70,6 +70,12 @@ var was_running: bool = false # Track previous running state
 
 var sound_emitter: Node
 
+var in_console_mode: bool = false
+var has_typed_help: bool = false
+var has_bought_coolant: bool = false
+var has_picked_up_coolant: bool = false
+var has_refueled_generator: bool = false
+
 func _ready():
 	set_multiplayer_authority(str(name).to_int())
 	add_to_group("players")
@@ -241,6 +247,9 @@ func check_inv_slot_change(event: InputEventMouseButton):
 #helper for console
 func toggle_console() -> void:
 	using_console = !using_console
+	# Update in_console_mode for tutorial tracking
+	in_console_mode = using_console
+	
 	if using_console:
 		console_window.visible = true
 		console_window.input_bar.grab_focus()
@@ -248,8 +257,6 @@ func toggle_console() -> void:
 		#clear crt shader effect completely
 		texture_rect.visible = false
 		camera_locked = true
-
-
 		print("shader disabled")
 	else:
 		console_window.visible = false

@@ -1,8 +1,10 @@
 extends Node3D
 
 var multiplayer_scene = preload("res://Scenes/player.tscn")
+var tutorial_manager_scene = preload("res://Scripts/tutorial_level_2_manager.gd")
 var _players_spawn_node: Node3D
 var ui
+var tutorial_manager
 
 func _ready() -> void:
 	ui = $UI
@@ -11,6 +13,11 @@ func _ready() -> void:
 	for id in MultiplayerManager.players.keys():
 		print_debug("spawning player " + str(id))
 		_add_player_to_game(MultiplayerManager.players[id].id)
+	
+	# Initialize tutorial manager
+	tutorial_manager = TutorialLevel2Manager.new()
+	add_child(tutorial_manager)
+	print_debug("Tutorial manager initialized")
 
 func _add_player_to_game(id: int):
 	print_debug("Adding player with ID: " + str(id))

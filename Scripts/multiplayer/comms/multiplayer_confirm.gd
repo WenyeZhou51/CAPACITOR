@@ -44,4 +44,8 @@ func confirm_item_spawn(item: Constants.ITEMS, position: Transform3D):
 			scene = preload("res://Scenes/prefabs/items/flashlight.tscn")
 			instance = scene.instantiate()
 			instance.global_transform = position
+		Constants.ITEMS.COOLANT:
+			scene = preload("res://Scenes/prefabs/items/coolant.tscn")
+			instance = scene.instantiate()
+			instance.global_transform = position
 	item_node.add_child(instance, true)

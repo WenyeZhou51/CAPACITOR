@@ -28,16 +28,35 @@ func on_command_buy(console: Node, args: Array):
 		console.push_message("Error: Item not found - " + item_name)
 		return
 	
+	# Get the item type to determine which constant to use
+	var item_type = Constants.ITEMS.FLASHLIGHT  # Default to flashlight
+	
+	# Check the item name to set the correct item type
+	if item_name.to_lower() == "coolant":
+		item_type = Constants.ITEMS.COOLANT
+	elif item_name.to_lower() == "flashlight":
+		item_type = Constants.ITEMS.FLASHLIGHT
+	
 	for i in amount:
-		
 		var instance = found_scene.instantiate()
 		instance.global_transform = spawn_node.global_transform
 		
-		MultiplayerRequest.request_item_spawn(Constants.ITEMS.FLASHLIGHT, spawn_node.global_transform)
+		# Use the appropriate item type constant
+		MultiplayerRequest.request_item_spawn(item_type, spawn_node.global_transform)
+		
+		# Update tutorial progress for level 2 if player bought coolant
+		var player = _find_player()
+		if player and item_name.to_lower() == "coolant":
+			player.has_bought_coolant = true
 		
 	console.push_message("Transaction Processed!")
 
-	
+# Helper function to find the player
+func _find_player():
+	var players = get_tree().get_nodes_in_group("player")
+	if players.size() > 0:
+		return players[0]
+	return null
 
 func on_command_clear(console, args):
 	console.clear_output()
@@ -90,15 +109,38 @@ func on_command_cam(console: Node, args: Array):
 	console.push_message("Now viewing: " + target_name)
 
 func on_command_help(console: Node, args: Array):
-	var help_text = """Collect scrap and deposit in cash-box to reach quota. Deposite coolant in generator to prevent blackout.
-
-Controls:
-awsd - move
-space - jump
-e - interact
-q - drop
-shift - run
-Left mouse - toggle flashlight"""
+	var help_text = "Console Commands:\n"
+	
+	# Get all command modules from the console window
+	var command_modules = console.command_modules
+	
+	if command_modules.size() > 0:
+		for module in command_modules:
+			var commands = module.command_refs
+			
+			# Add each command to the help text
+			for cmd_name in commands.keys():
+				var cmd = commands[cmd_name]
+				help_text += "\n" + cmd.get_usage() + "\n"
+				help_text += "  " + cmd.help + "\n"
+	else:
+		help_text += "\nNo commands available.\n"
+	
+	# Add a note about game controls
+	help_text += "\n--- Game Controls ---\n"
+	help_text += "WASD - Move\n"
+	help_text += "Space - Jump\n"
+	help_text += "E - Interact\n"
+	help_text += "Q - Drop\n"
+	help_text += "Shift - Run\n"
+	help_text += "Left mouse - Toggle flashlight\n"
+	help_text += "ESC - Exit console"
+	
 	console.push_message(help_text)
+	
+	# Update player's has_typed_help property for tutorial tracking
+	var player = _find_player()
+	if player:
+		player.has_typed_help = true
 
 	

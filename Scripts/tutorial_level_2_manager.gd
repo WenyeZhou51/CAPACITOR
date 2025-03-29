@@ -1,6 +1,6 @@
 extends Node
 
-class_name TutorialLevel1Manager
+class_name TutorialLevel2Manager
 
 var tutorial_ui
 var player
@@ -14,9 +14,9 @@ func _ready():
 	if not tutorial_ui:
 		tutorial_ui = find_child("TutorialMessageUI", true, false)
 		if not tutorial_ui:
-			tutorial_ui = get_node_or_null("/root/tutorial1/TutorialMessageUI")
+			tutorial_ui = get_node_or_null("/root/tutorial2/TutorialMessageUI")
 			if not tutorial_ui:
-				tutorial_ui = get_node_or_null("/root/Tutorial1/TutorialMessageUI")
+				tutorial_ui = get_node_or_null("/root/Tutorial2/TutorialMessageUI")
 				if not tutorial_ui:
 					var root = get_tree().root
 					for i in range(root.get_child_count()):
@@ -41,7 +41,7 @@ func _ready():
 	if not game_manager:
 		game_manager = find_child("GameManager", true, false)
 		if not game_manager:
-			game_manager = get_node_or_null("/root/tutorial1/GameManager")
+			game_manager = get_node_or_null("/root/tutorial2/GameManager")
 	
 	print("Tutorial manager initialized, will find player shortly")
 	
@@ -51,57 +51,35 @@ func _ready():
 			game_manager.team_score_changed.connect(_on_team_score_changed)
 
 func find_player():
-	print("Attempting to find player...")
 	player_find_attempts += 1
+	print("Attempting to find player (attempt #", player_find_attempts, ")")
 	
-	# Multiple ways to find the player
+	# Try to get the player using various methods
 	player = get_tree().get_first_node_in_group("player")
 	if not player:
-		player = get_tree().get_first_node_in_group("players")
-	if not player:
-		# Try direct scene paths
-		player = get_node_or_null("/root/tutorial1/Player")
-		if not player:
-			player = get_node_or_null("/root/Tutorial1/Player")
-			if not player:
-				# Try looking through the whole tree to find the Player
-				var root = get_tree().root
-				for i in range(root.get_child_count()):
-					var scene = root.get_child(i)
-					var potential_player = find_player_in_node(scene)
-					if potential_player:
-						player = potential_player
-						break
+		var players = get_tree().get_nodes_in_group("player")
+		if players.size() > 0:
+			player = players[0]
 	
-	print("Player find result: ", player)
+	if not player:
+		# Try specific paths
+		player = get_node_or_null("/root/tutorial2/players/1")
+		if not player:
+			player = get_node_or_null("/root/Tutorial2/players/1")
+			if not player:
+				# Try using a more generic approach
+				var players_container = get_node_or_null("/root/tutorial2/players")
+				if players_container and players_container.get_child_count() > 0:
+					player = players_container.get_child(0)
 	
 	if player:
-		print("Found player: ", player.name, " at path: ", player.get_path())
+		print("Player found: ", player)
 		setup_tutorial_system()
-	elif player_find_attempts < 3:
-		# Try again after a delay if we haven't found the player yet
-		var timer = Timer.new()
-		timer.wait_time = 1.0
-		timer.one_shot = true
-		timer.timeout.connect(find_player)
-		add_child(timer)
-		timer.start()
-		print("Will try again to find player in 1 second")
 	else:
-		push_error("Failed to find player after multiple attempts")
-
-func find_player_in_node(node):
-	# Recursively search for a node named "Player" or with a name containing "Player"
-	if node.name == "Player" or "Player" in node.name:
-		print("Found player candidate: ", node.name)
-		return node
-	
-	for child in node.get_children():
-		var result = find_player_in_node(child)
-		if result:
-			return result
-	
-	return null
+		if player_find_attempts < 3:
+			print("Player not found yet, will try again")
+		else:
+			push_error("Unable to find player after multiple attempts")
 
 func setup_tutorial_system():
 	# Now that we have the player, set up the tutorial message system
@@ -144,15 +122,19 @@ func _on_message_completed(message_index: int):
 	
 	# You can add specific logic for when each message is completed
 	match message_index:
-		0: # Player dropped item with Q
-			print("Player dropped item!")
-		1: # Player picked up flashlight
-			print("Player picked up flashlight!")
-		2: # Player clicked to turn on flashlight
-			print("Player turned on flashlight!")
-		3: # Player sprinted
-			print("Player sprinted!")
-		4: # Quota message
+		0: # Player interacted with console
+			print("Player interacted with console!")
+		1: # Player typed help
+			print("Player typed help!")
+		2: # Player bought coolant
+			print("Player bought coolant!")
+		3: # Player exited console
+			print("Player exited console!")
+		4: # Player picked up coolant
+			print("Player picked up coolant!")
+		5: # Player refueled generator
+			print("Player refueled generator!")
+		6: # Quota message
 			print("Quota message shown")
 
 func _on_team_score_changed(new_score):
@@ -165,7 +147,7 @@ func _on_team_score_changed(new_score):
 	
 	if quota_met and tutorial_message_system != null:
 		# If tutorial is complete and quota is met, hide it
-		if tutorial_message_system.current_message_index == 4:
+		if tutorial_message_system.current_message_index == 6:
 			tutorial_message_system.complete_tutorial()
 
 # Optional: Method to skip the tutorial
