@@ -46,6 +46,11 @@ enabled=PackedStringArray()
 
 import/blender/enabled=false
 
+[gui]
+
+theme/custom="res://fonts/geo_global_theme.tres"
+theme/custom_font="res://fonts/Geo-Regular.ttf"
+
 [input]
 
 Forward={

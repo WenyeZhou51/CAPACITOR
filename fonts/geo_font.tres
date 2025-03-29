@@ -1,0 +1,4 @@
+[gd_resource type="FontFile" path="res://fonts/Geo-Regular.ttf" id="1_geo"]
+
+[resource]
+font_data = ExtResource("1_geo") 

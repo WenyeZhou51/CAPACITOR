@@ -1,8 +1,14 @@
 [gd_scene load_steps=5 format=3 uid="uid://x6pwle50rjdl"]
 
 [ext_resource type="Script" path="res://Scripts/tutorial_message_system.gd" id="1_sfqvl"]
+[ext_resource type="LabelSettings" path="res://fonts/geo_title_label_settings.tres" id="2_j3iqv"]
+[ext_resource type="LabelSettings" path="res://fonts/geo_message_label_settings.tres" id="3_gg745"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mj2h1"]
+content_margin_left = 15.0
+content_margin_top = 10.0
+content_margin_right = 15.0
+content_margin_bottom = 10.0
 bg_color = Color(0.129412, 0.14902, 0.180392, 0.768627)
 border_width_left = 2
 border_width_top = 2
@@ -17,16 +23,6 @@ shadow_color = Color(0, 0, 0, 0.25098)
 shadow_size = 4
 shadow_offset = Vector2(2, 2)
 
-[sub_resource type="LabelSettings" id="LabelSettings_4jwbs"]
-font_color = Color(0.592157, 0.796078, 0.92549, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_w2k8o"]
-font_size = 22
-font_color = Color(0.964706, 0.976471, 0.992157, 1)
-outline_size = 1
-outline_color = Color(0, 0, 0, 0.25098)
-shadow_color = Color(0, 0, 0, 0.258824)
-
 [node name="TutorialMessageUI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -37,13 +33,14 @@ grow_vertical = 2
 script = ExtResource("1_sfqvl")
 
 [node name="MessagePanel" type="Panel" parent="."]
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -250.0
+offset_left = -300.0
 offset_top = 30.0
-offset_right = 250.0
+offset_right = 300.0
 offset_bottom = 110.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mj2h1")
@@ -63,14 +60,14 @@ grow_vertical = 2
 [node name="TitleLabel" type="Label" parent="MessagePanel/VBoxContainer"]
 layout_mode = 2
 text = "TUTORIAL"
-label_settings = SubResource("LabelSettings_4jwbs")
+label_settings = ExtResource("2_j3iqv")
 horizontal_alignment = 1
 
 [node name="MessageLabel" type="Label" parent="MessagePanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Move with WASD to navigate"
-label_settings = SubResource("LabelSettings_w2k8o")
+label_settings = ExtResource("3_gg745")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3

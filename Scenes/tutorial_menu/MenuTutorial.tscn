@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://crg887yi5f3rr"]
+[gd_scene load_steps=4 format=3 uid="uid://crg887yi5f3rr"]
 
 [ext_resource type="Script" path="res://Scenes/menuTutorial.gd" id="1_a0af3"]
 [ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_r4oa5"]
+[ext_resource type="FontFile" uid="uid://bk7y7cg03wr1n" path="res://fonts/Geo-Regular.ttf" id="3_geo"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -36,6 +37,7 @@ offset_bottom = 1004.0
 
 [node name="Easy" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_geo")
 theme_override_font_sizes/font_size = 90
 text = "EASY
 "
@@ -43,17 +45,20 @@ text = "EASY
 [node name="Medium" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 0.843137)
+theme_override_fonts/font = ExtResource("3_geo")
 theme_override_font_sizes/font_size = 90
 text = "MEDIUM
 "
 
 [node name="Hard" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_geo")
 theme_override_font_sizes/font_size = 90
 text = "HARD"
 
 [node name="Pro" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_geo")
 theme_override_font_sizes/font_size = 90
 text = "PRO"
 

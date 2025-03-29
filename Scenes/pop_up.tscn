@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b6mpaab555b31"]
+[gd_scene load_steps=3 format=3 uid="uid://b6mpaab555b31"]
 
 [ext_resource type="Script" path="res://Scenes/pop_up.gd" id="1_ag2g5"]
+[ext_resource type="FontFile" uid="uid://bk7y7cg03wr1n" path="res://fonts/Geo-Regular.ttf" id="2_geo"]
 
 [node name="PopUp" type="Control"]
 layout_mode = 3
@@ -20,6 +21,7 @@ offset_right = 1047.0
 offset_bottom = 575.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_geo")
 theme_override_font_sizes/font_size = 80
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -50,48 +50,40 @@ func _ready():
 	print("Tutorial Message System ready, finding player shortly")
 
 func find_player():
-	print("TutorialMessageSystem attempting to find player...")
 	player_find_attempts += 1
 	
+	# Try to get the player using the path if set
 	if player_path:
 		player = get_node_or_null(player_path)
 		if player:
-			print("Found player via player_path: ", player.get_path())
-			return
+			print("Player found via path: ", player)
 	
-	# Try every possible way to find the player
-	player = get_tree().get_first_node_in_group("player")
+	# If still not found, try using groups
 	if not player:
-		player = get_tree().get_first_node_in_group("players")
+		var players = get_tree().get_nodes_in_group("player")
+		if players.size() > 0:
+			player = players[0]
+			print("Player found via group: ", player)
+	
+	# If still no player, try finding directly in scene tree
 	if not player:
-		# Try direct scene paths
-		player = get_node_or_null("/root/tutorial0/Player")
+		player = get_tree().get_first_node_in_group("player")
+		if player:
+			print("Player found via first node in group: ", player)
+	
+	# Try other common names or paths
+	if not player:
+		player = get_node_or_null("/root/tutorial0/players/1") # Adjust path as needed
 		if not player:
-			player = get_node_or_null("/root/Tutorial0/Player")
-			if not player:
-				# Try looking through the whole tree to find the Player
-				var root = get_tree().root
-				for i in range(root.get_child_count()):
-					var scene = root.get_child(i)
-					if scene.has_node("Player"):
-						player = scene.get_node("Player")
-						break
-	
-	print("Player find result in TutorialMessageSystem: ", player)
+			player = get_node_or_null("/root/Tutorial0/players/1")
 	
 	if player:
-		print("Found player: ", player.name, " at path: ", player.get_path())
-	elif player_find_attempts < 3:
-		# Try again after a delay
-		var timer = Timer.new()
-		timer.wait_time = 1.0
-		timer.one_shot = true
-		timer.timeout.connect(find_player)
-		add_child(timer)
-		timer.start()
-		print("Will try again to find player in 1 second")
+		print("Player reference set to: ", player)
 	else:
-		push_error("Failed to find player after multiple attempts")
+		if player_find_attempts <= 3:
+			print("Player not found, will try again")
+		else:
+			print("Failed to find player after multiple attempts")
 
 func _process(delta):
 	# If player not found yet, keep trying
@@ -174,6 +166,10 @@ func show_current_message():
 	if current_message_index < messages.size():
 		if message_label:
 			message_label.text = messages[current_message_index]
+			# Wait one frame for the label to update its size
+			await get_tree().process_frame
+			adjust_panel_size()
+			
 		if message_panel:
 			message_panel.visible = true
 	else:
@@ -186,6 +182,31 @@ func show_message(index: int):
 	if index >= 0 and index < messages.size():
 		current_message_index = index
 		show_current_message()
+
+# Adjust panel size based on message content
+func adjust_panel_size():
+	if message_panel and message_label:
+		# Get the minimum size needed for the message
+		var message_size = message_label.get_minimum_size()
+		
+		# Add padding for the container
+		var panel_width = max(500, message_size.x + 60)  # Minimum width 500px
+		var panel_height = message_size.y + 60  # Add padding
+		
+		# Properly resize the panel while maintaining centering
+		# When using anchors_preset 5 (top-center), we need to set the offsets correctly
+		message_panel.custom_minimum_size.x = panel_width
+		message_panel.size.x = panel_width
+		message_panel.size.y = panel_height
+		
+		# For proper centering with anchor 0.5, we need equal offsets on both sides
+		var half_width = panel_width / 2
+		message_panel.offset_left = -half_width
+		message_panel.offset_right = half_width
+		message_panel.position.y = 30
+		
+		# Force a layout update
+		message_panel.queue_redraw()
 
 # Advances to the next message and emits a signal
 func advance_to_next_message():

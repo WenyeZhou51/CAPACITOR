@@ -1,0 +1,11 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dtqx3eelx18wi"]
+
+[ext_resource type="FontFile" uid="uid://bk7y7cg03wr1n" path="res://fonts/Geo-Regular.ttf" id="1_geo"]
+
+[resource]
+font = ExtResource("1_geo")
+font_size = 22
+font_color = Color(0.964706, 0.976471, 0.992157, 1)
+outline_size = 1
+outline_color = Color(0, 0, 0, 0.25098)
+shadow_color = Color(0, 0, 0, 0.258824) 

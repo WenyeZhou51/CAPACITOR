@@ -209,6 +209,10 @@ func show_current_message():
 	if current_message_index < messages.size():
 		if message_label:
 			message_label.text = messages[current_message_index]
+			# Wait one frame for the label to update its size
+			await get_tree().process_frame
+			adjust_panel_size()
+			
 		if message_panel:
 			message_panel.visible = true
 	else:
@@ -221,6 +225,31 @@ func show_message(index: int):
 	if index >= 0 and index < messages.size():
 		current_message_index = index
 		show_current_message()
+
+# Adjust panel size based on message content
+func adjust_panel_size():
+	if message_panel and message_label:
+		# Get the minimum size needed for the message
+		var message_size = message_label.get_minimum_size()
+		
+		# Add padding for the container
+		var panel_width = max(500, message_size.x + 60)  # Minimum width 500px
+		var panel_height = message_size.y + 60  # Add padding
+		
+		# Properly resize the panel while maintaining centering
+		# When using anchors_preset 5 (top-center), we need to set the offsets correctly
+		message_panel.custom_minimum_size.x = panel_width
+		message_panel.size.x = panel_width
+		message_panel.size.y = panel_height
+		
+		# For proper centering with anchor 0.5, we need equal offsets on both sides
+		var half_width = panel_width / 2
+		message_panel.offset_left = -half_width
+		message_panel.offset_right = half_width
+		message_panel.position.y = 30
+		
+		# Force a layout update
+		message_panel.queue_redraw()
 
 # Advances to the next message and emits a signal
 func advance_to_next_message():
