@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://5uwouo5bc741"]
+[gd_scene load_steps=7 format=3 uid="uid://5uwouo5bc741"]
 
 [ext_resource type="Script" path="res://Scripts/multiplayer/menu.gd" id="1_fdfo8"]
 [ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_qbjsc"]
 [ext_resource type="AudioStream" uid="uid://ctunecfug1oc8" path="res://audio/The Depths of Hell.mp3" id="3_ugwee"]
+[ext_resource type="AudioStream" uid="uid://d21tn6mxl1rmc" path="res://audio/click_sounds/Click_Electronic_03.mp3" id="4_2gvr6"]
+[ext_resource type="AudioStream" uid="uid://b65npb10w2pj3" path="res://audio/click_sounds/Click_Electronic_16.mp3" id="4_ssxkk"]
+[ext_resource type="AudioStream" uid="uid://3h1wvfo8jksv" path="res://audio/click_sounds/Click_Electronic_04.mp3" id="6_wbjek"]
 
 [node name="multiplayer_menu" type="Control"]
 layout_mode = 3
@@ -97,6 +100,15 @@ text = "BACK"
 [node name="background_music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_ugwee")
 autoplay = true
+
+[node name="click_good" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_2gvr6")
+
+[node name="click_back" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ssxkk")
+
+[node name="click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_wbjek")
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/host_button" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/join_button" to="." method="_on_join_button_pressed"]

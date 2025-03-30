@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://c8y6hkpnlip1g"]
+[gd_scene load_steps=37 format=3 uid="uid://c8y6hkpnlip1g"]
 
 [ext_resource type="Script" path="res://Scenes/testscene.gd" id="1_v17iy"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
@@ -24,6 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://dhmtymlk3gb34" path="res://Scenes/prefabs/items/flashlight.tscn" id="13_1s1s2"]
 [ext_resource type="Shader" path="res://shaders/bayer.gdshader" id="14_hrlu7"]
 [ext_resource type="PackedScene" uid="uid://cjdanhbr7qd50" path="res://Scenes/prefabs/items/scrap1.tscn" id="14_q11nm"]
+[ext_resource type="PackedScene" path="res://Scenes/heat_warning.tscn" id="16_b4ibx"]
 [ext_resource type="PackedScene" uid="uid://bi3tstfh1x606" path="res://rooms/small_room_2.tscn" id="19_o6rck"]
 [ext_resource type="PackedScene" uid="uid://bwoto031wapot" path="res://Scenes/pause_menu.tscn" id="20_chau2"]
 [ext_resource type="Script" path="res://Scenes/electricity_manager.gd" id="22_fg5vs"]
@@ -172,6 +173,9 @@ layout_mode = 2
 
 [node name="Inv_slot_UI4" parent="UI/ninepatch/GridContainer" instance=ExtResource("11_yg2qu")]
 layout_mode = 2
+
+[node name="HeatWarning" parent="UI" instance=ExtResource("16_b4ibx")]
+layout_mode = 1
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_t4gef")

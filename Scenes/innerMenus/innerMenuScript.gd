@@ -1,8 +1,11 @@
 extends Control
 
+@onready var click_good = $click_good  # Reference the AudioStreamPlayer
+@onready var click_back = $click_back  # Reference the AudioStreamPlayer
 
 
 func _on_random_pressed() -> void:
+	click_good.play()
 	GameState.set_quota(1000)
 	GameState.set_end_scene("res://Scenes/win.tscn")
 	MultiplayerManager.switch_map("res://Scenes/testscene.tscn")
@@ -10,12 +13,14 @@ func _on_random_pressed() -> void:
 
 
 func _on_fixed_pressed() -> void:
+	click_good.play()
 	GameState.set_quota(600)
 	GameState.set_end_scene("res://Scenes/tutorial_level_0/level_0_complete.tscn")
 	MultiplayerManager.switch_map("res://Scenes/tutorial_level_0/testscene.tscn")
 	get_tree().change_scene_to_file("res://Scenes/multiplayer/multiplayer_menu.tscn")
 	
 func _on_demo_pressed() -> void:
+	click_good.play()
 	GameState.set_quota(600)
 	GameState.set_end_scene("res://Scenes/tutorial_level_3/level_0_complete.tscn")
 	MultiplayerManager.switch_map("res://Scenes/tutorial_level_3/testscene.tscn")
@@ -24,6 +29,7 @@ func _on_demo_pressed() -> void:
 
 func _on_back_pressed() -> void:
 	get_tree().change_scene_to_file("res://Scenes/Menu.tscn")
+	click_back.play()
 
 # Connect description panel visibility to button hover events
 func _ready() -> void:

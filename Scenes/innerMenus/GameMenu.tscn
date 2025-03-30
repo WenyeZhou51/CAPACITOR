@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://dagu06p8qd6gg"]
+[gd_scene load_steps=7 format=3 uid="uid://dagu06p8qd6gg"]
 
 [ext_resource type="Script" path="res://Scenes/innerMenus/innerMenuScript.gd" id="1_22w3a"]
 [ext_resource type="Texture2D" uid="uid://dnwx1p2ks3c4x" path="res://Assets/title screen.png" id="2_h10u2"]
 [ext_resource type="AudioStream" uid="uid://dd1mq17xo467w" path="res://audio/Final Captain&#039;s Log.mp3" id="3_r8asp"]
 [ext_resource type="Script" path="res://Scenes/menu_button.gd" id="4_fdbfv"]
+[ext_resource type="AudioStream" uid="uid://d21tn6mxl1rmc" path="res://audio/click_sounds/Click_Electronic_03.mp3" id="5_wj00g"]
+[ext_resource type="AudioStream" uid="uid://cu6s0vhnr65hu" path="res://audio/click_sounds/Click_Electronic_14.mp3" id="6_1l68u"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -125,6 +127,12 @@ autowrap_mode = 3
 [node name="background_music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_r8asp")
 autoplay = true
+
+[node name="ClickGood" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_wj00g")
+
+[node name="ClickBack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_1l68u")
 
 [connection signal="mouse_entered" from="MarginContainer/TextureRect/VBoxContainer/Random" to="." method="_on_random_mouse_entered"]
 [connection signal="mouse_exited" from="MarginContainer/TextureRect/VBoxContainer/Random" to="." method="_on_random_mouse_exited"]

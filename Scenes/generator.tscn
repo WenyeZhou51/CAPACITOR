@@ -48,6 +48,7 @@ script = ExtResource("1_rux7k")
 sub_viewport = NodePath("SubViewport")
 heat_bar = NodePath("SubViewport/Generator Display/Heat Bar")
 energy_bar = NodePath("SubViewport/Generator Display/Electricity Bar")
+max_heat = 100.0
 
 [node name="Generator Model" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.13347, 0)

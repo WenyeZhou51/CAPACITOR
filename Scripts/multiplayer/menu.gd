@@ -1,5 +1,9 @@
 extends Node
 
+@onready var click = $click  # Reference the AudioStreamPlayer
+@onready var click_good = $click_good  # Reference the AudioStreamPlayer
+@onready var click_back = $click_back  # Reference the AudioStreamPlayer
+
 var has_join: bool = false
 
 func get_system_ip() -> String:
@@ -28,6 +32,7 @@ func _ready() -> void:
 		GameState.set_auto_start(false)
 	
 func _on_host_button_pressed() -> void:
+	click.play()
 	
 	$MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2.hide()
 	$MarginContainer/VBoxContainer/HBoxContainer/START.show()
@@ -49,6 +54,8 @@ func hostMessage(msg: String):
 	
 	
 func _on_join_button_pressed() -> void:
+	click.play()
+	
 	$MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer.hide()
 	var input = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/ip_input
 	MultiplayerManager.SERVER_IP = input.text
@@ -61,8 +68,10 @@ func _on_join_button_pressed() -> void:
 
 
 func _on_button_pressed() -> void:
+	click_good.play()
 	MultiplayerManager.start_game()
 
 
 func _on_back_multi_pressed() -> void:
+	click_back.play()
 	get_tree().change_scene_to_file("res://Scenes/Menu.tscn")
