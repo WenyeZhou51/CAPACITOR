@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dagu06p8qd6gg"]
+[gd_scene load_steps=5 format=3 uid="uid://dagu06p8qd6gg"]
 
 [ext_resource type="Script" path="res://Scenes/innerMenus/innerMenuScript.gd" id="1_22w3a"]
-[ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_k34gm"]
+[ext_resource type="Texture2D" uid="uid://dnwx1p2ks3c4x" path="res://Assets/title screen.png" id="2_h10u2"]
 [ext_resource type="AudioStream" uid="uid://dd1mq17xo467w" path="res://audio/Final Captain&#039;s Log.mp3" id="3_r8asp"]
+[ext_resource type="Script" path="res://Scenes/menu_button.gd" id="4_fdbfv"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -19,48 +20,54 @@ script = ExtResource("1_22w3a")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
-offset_left = 755.0
-offset_top = 320.0
-offset_right = 825.0
-offset_bottom = 421.0
+offset_left = 1038.0
+offset_top = 372.0
+offset_right = 2574.0
+offset_bottom = 1396.0
+scale = Vector2(1.28, 1.08)
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer"]
 layout_mode = 2
-texture = ExtResource("2_k34gm")
+texture = ExtResource("2_h10u2")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TextureRect"]
 layout_mode = 2
-offset_left = 1004.0
-offset_top = 651.0
-offset_right = 1614.0
-offset_bottom = 1191.0
+offset_left = 287.5
+offset_top = 476.852
+offset_right = 897.5
+offset_bottom = 1016.85
 
 [node name="Random" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 90
 text = "Shifting Walls"
+flat = true
+script = ExtResource("4_fdbfv")
 
 [node name="Fixed" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 0.843137)
 theme_override_font_sizes/font_size = 90
 text = "Fixed Map"
+flat = true
+script = ExtResource("4_fdbfv")
 
 [node name="Back" type="Button" parent="MarginContainer/TextureRect"]
 layout_mode = 2
-offset_left = 1882.0
-offset_top = 975.0
-offset_right = 2079.0
-offset_bottom = 1068.0
+offset_left = 1071.09
+offset_top = 804.629
+offset_right = 1268.09
+offset_bottom = 897.629
 theme_override_font_sizes/font_size = 60
 text = "BACK"
+flat = true
+script = ExtResource("4_fdbfv")
 
 [node name="Label" type="Label" parent="MarginContainer/TextureRect"]
 layout_mode = 2
-offset_left = 845.0
-offset_top = 445.0
-offset_right = 1786.0
-offset_bottom = 569.0
+offset_left = 282.813
+offset_top = 146.296
+offset_right = 1271.81
+offset_bottom = 270.296
 theme_override_font_sizes/font_size = 90
 text = "CHOOSE GAME MODE: "
 

@@ -19,6 +19,15 @@ func _on_fixed_pressed() -> void:
 func _on_back_pressed() -> void:
 	get_tree().change_scene_to_file("res://Scenes/Menu.tscn")
 
+# Connect description panel visibility to button hover events
+func _ready() -> void:
+	# The menu_button.gd script handles the scaling effects automatically,
+	# but we still need to manually connect our description panel visibility
+	$MarginContainer/TextureRect/VBoxContainer/Random.mouse_entered.connect(_on_random_mouse_entered)
+	$MarginContainer/TextureRect/VBoxContainer/Random.mouse_exited.connect(_on_random_mouse_exited)
+	$MarginContainer/TextureRect/VBoxContainer/Fixed.mouse_entered.connect(_on_fixed_mouse_entered)
+	$MarginContainer/TextureRect/VBoxContainer/Fixed.mouse_exited.connect(_on_fixed_mouse_exited)
+
 # Show the Random button description when mouse hovers over it
 func _on_random_mouse_entered() -> void:
 	$MarginContainer/TextureRect/RandomDescription.visible = true
