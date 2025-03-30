@@ -51,6 +51,12 @@ text = "Fixed Map"
 flat = true
 script = ExtResource("4_fdbfv")
 
+[node name="Demo" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 0.843137)
+theme_override_font_sizes/font_size = 90
+text = "Demo"
+
 [node name="Back" type="Button" parent="MarginContainer/TextureRect"]
 layout_mode = 2
 offset_left = 1071.09
@@ -125,4 +131,7 @@ autoplay = true
 [connection signal="mouse_entered" from="MarginContainer/TextureRect/VBoxContainer/Fixed" to="." method="_on_fixed_mouse_entered"]
 [connection signal="mouse_exited" from="MarginContainer/TextureRect/VBoxContainer/Fixed" to="." method="_on_fixed_mouse_exited"]
 [connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Fixed" to="." method="_on_fixed_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/TextureRect/VBoxContainer/Demo" to="." method="_on_fixed_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/TextureRect/VBoxContainer/Demo" to="." method="_on_fixed_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Demo" to="." method="_on_demo_pressed"]
 [connection signal="pressed" from="MarginContainer/TextureRect/Back" to="." method="_on_back_pressed"]
