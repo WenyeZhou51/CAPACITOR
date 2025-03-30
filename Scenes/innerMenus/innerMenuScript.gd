@@ -33,6 +33,8 @@ func _ready() -> void:
 	$MarginContainer/TextureRect/VBoxContainer/Random.mouse_exited.connect(_on_random_mouse_exited)
 	$MarginContainer/TextureRect/VBoxContainer/Fixed.mouse_entered.connect(_on_fixed_mouse_entered)
 	$MarginContainer/TextureRect/VBoxContainer/Fixed.mouse_exited.connect(_on_fixed_mouse_exited)
+	$MarginContainer/TextureRect/VBoxContainer/Demo.mouse_entered.connect(_on_fixed_mouse_entered)
+	$MarginContainer/TextureRect/VBoxContainer/Demo.mouse_exited.connect(_on_fixed_mouse_exited)
 
 # Show the Random button description when mouse hovers over it
 func _on_random_mouse_entered() -> void:

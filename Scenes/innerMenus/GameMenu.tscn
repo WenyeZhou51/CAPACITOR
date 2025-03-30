@@ -53,9 +53,10 @@ script = ExtResource("4_fdbfv")
 
 [node name="Demo" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 0.843137)
 theme_override_font_sizes/font_size = 90
 text = "Demo"
+flat = true
+script = ExtResource("4_fdbfv")
 
 [node name="Back" type="Button" parent="MarginContainer/TextureRect"]
 layout_mode = 2
