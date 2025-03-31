@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://6vdrcukrj72y"]
+[gd_scene load_steps=6 format=3 uid="uid://6vdrcukrj72y"]
 
 [ext_resource type="Script" path="res://Scenes/gameover.gd" id="1_vasx5"]
 [ext_resource type="FontFile" uid="uid://djxmwln40ig66" path="res://fonts/Geo-Regular.ttf" id="2_66yb0"]
+[ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_qh1nj"]
+[ext_resource type="Script" path="res://Scenes/menu_button.gd" id="4_yvg11"]
+[ext_resource type="AudioStream" uid="uid://d21tn6mxl1rmc" path="res://audio/click_sounds/Click_Electronic_03.mp3" id="5_tmijp"]
 
 [node name="Win" type="Control"]
 layout_mode = 3
@@ -14,38 +17,44 @@ script = ExtResource("1_vasx5")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 1.0
-offset_top = 2.0
-offset_right = 1934.0
-offset_bottom = 1092.0
+offset_left = -289.0
+offset_top = -24.0
+offset_right = 2261.0
+offset_bottom = 3276.0
+texture = ExtResource("2_qh1nj")
 
 [node name="Label" type="Label" parent="TextureRect"]
 layout_mode = 0
-offset_left = 376.0
-offset_top = 415.0
-offset_right = 1590.0
-offset_bottom = 539.0
+offset_left = 653.0
+offset_top = 488.0
+offset_right = 1867.0
+offset_bottom = 612.0
 theme_override_fonts/font = ExtResource("2_66yb0")
 theme_override_font_sizes/font_size = 90
 text = "Congrates on completing the level"
 
 [node name="Button" type="Button" parent="TextureRect"]
 layout_mode = 0
-offset_left = 811.0
-offset_top = 679.0
-offset_right = 1091.0
-offset_bottom = 756.0
-theme_override_font_sizes/font_size = 30
+offset_left = 1083.0
+offset_top = 775.0
+offset_right = 1404.0
+offset_bottom = 861.0
+theme_override_fonts/font = ExtResource("2_66yb0")
+theme_override_font_sizes/font_size = 65
 text = "Main Menu"
+script = ExtResource("4_yvg11")
 
 [node name="Label2" type="Label" parent="TextureRect"]
 layout_mode = 0
-offset_left = 850.0
-offset_top = 586.0
-offset_right = 1032.0
-offset_bottom = 621.0
+offset_left = 1007.0
+offset_top = 628.0
+offset_right = 1553.0
+offset_bottom = 706.0
 theme_override_fonts/font = ExtResource("2_66yb0")
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 65
 text = "You met the quota"
+
+[node name="ClickGood" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_tmijp")
 
 [connection signal="pressed" from="TextureRect/Button" to="." method="_on_button_pressed"]

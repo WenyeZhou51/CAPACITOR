@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://q202lrglap61"]
+[gd_scene load_steps=8 format=3 uid="uid://q202lrglap61"]
 
 [ext_resource type="Script" path="res://Scenes/menu.gd" id="1_hqwk4"]
-[ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_r4oa5"]
-[ext_resource type="AudioStream" uid="uid://d338r6w8jhdoe" path="res://audio/The Surreal Truth.mp3" id="3_5j4fi"]
-[ext_resource type="AudioStream" uid="uid://d21tn6mxl1rmc" path="res://audio/click_sounds/Click_Electronic_03.mp3" id="4_qjdbw"]
+[ext_resource type="Texture2D" uid="uid://dnwx1p2ks3c4x" path="res://Assets/title screen.png" id="2_tmagq"]
+[ext_resource type="FontFile" uid="uid://djxmwln40ig66" path="res://fonts/Geo-Regular.ttf" id="3_0l5v5"]
+[ext_resource type="AudioStream" uid="uid://cvwxxbscll8k6" path="res://audio/Cage of the Cryptid.mp3" id="3_nk3pr"]
+[ext_resource type="Script" path="res://Scenes/menu_button.gd" id="5_rqb47"]
+[ext_resource type="AudioStream" uid="uid://d21tn6mxl1rmc" path="res://audio/click_sounds/Click_Electronic_03.mp3" id="6_cbh3u"]
+[ext_resource type="AudioStream" uid="uid://cdy0uy4q3ejn5" path="res://audio/click_sounds/Click_Electronic_15.mp3" id="7_wxorw"]
 
-[node name="Menu" type="Control"]
+[node name="Menu2" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,43 +23,75 @@ script = ExtResource("1_hqwk4")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
-offset_left = 755.0
-offset_top = 320.0
-offset_right = 825.0
-offset_bottom = 421.0
+offset_left = 1055.0
+offset_top = 374.0
+offset_right = 2591.0
+offset_bottom = 1398.0
+scale = Vector2(1.28, 1.04)
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer"]
 layout_mode = 2
-texture = ExtResource("2_r4oa5")
+texture = ExtResource("2_tmagq")
+
+[node name="Label" type="Label" parent="MarginContainer/TextureRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -328.938
+offset_top = 118.269
+offset_right = 370.063
+offset_bottom = 303.269
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_0l5v5")
+theme_override_font_sizes/font_size = 180
+text = "Capacitor"
+horizontal_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TextureRect"]
 layout_mode = 2
-offset_left = 1000.0
-offset_top = 464.0
-offset_right = 1610.0
-offset_bottom = 1004.0
+offset_left = 604.688
+offset_top = 433.654
+offset_right = 1214.69
+offset_bottom = 973.655
+scale = Vector2(1.4, 1.4)
 
 [node name="Multiplayer" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_0l5v5")
 theme_override_font_sizes/font_size = 90
 text = "START"
+flat = true
+alignment = 0
+script = ExtResource("5_rqb47")
 
 [node name="Options" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_0l5v5")
 theme_override_font_sizes/font_size = 90
 text = "OPTION"
+flat = true
+alignment = 0
+script = ExtResource("5_rqb47")
 
 [node name="Quit" type="Button" parent="MarginContainer/TextureRect/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_0l5v5")
 theme_override_font_sizes/font_size = 90
 text = "QUIT"
+flat = true
+alignment = 0
+script = ExtResource("5_rqb47")
 
 [node name="background_music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_5j4fi")
+stream = ExtResource("3_nk3pr")
 autoplay = true
 
-[node name="Click" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_qjdbw")
+[node name="ClickGood" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_cbh3u")
+
+[node name="ClickBack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_wxorw")
 
 [connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Multiplayer" to="." method="_on_multiplayer_pressed"]
 [connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Options" to="." method="_on_options_pressed"]

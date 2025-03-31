@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://djoe2eg5c0ckb"]
+[gd_scene load_steps=7 format=3 uid="uid://djoe2eg5c0ckb"]
 
 [ext_resource type="Script" path="res://Scenes/tutorial_level_0/tutorial_0.gd" id="1_nueqr"]
 [ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_asyja"]
 [ext_resource type="FontFile" uid="uid://djxmwln40ig66" path="res://fonts/Geo-Regular.ttf" id="2_yvnqr"]
+[ext_resource type="Script" path="res://Scenes/menu_button.gd" id="4_ru7i5"]
+[ext_resource type="AudioStream" uid="uid://d21tn6mxl1rmc" path="res://audio/click_sounds/Click_Electronic_03.mp3" id="5_jt2ca"]
+[ext_resource type="AudioStream" uid="uid://cdy0uy4q3ejn5" path="res://audio/click_sounds/Click_Electronic_15.mp3" id="6_8fqkf"]
 
 [node name="Level0Complete" type="Control"]
 layout_mode = 3
@@ -57,6 +60,7 @@ offset_bottom = 940.0
 theme_override_fonts/font = ExtResource("2_yvnqr")
 theme_override_font_sizes/font_size = 90
 text = "Next"
+script = ExtResource("4_ru7i5")
 
 [node name="Leave" type="Button" parent="."]
 layout_mode = 0
@@ -68,6 +72,13 @@ pivot_offset = Vector2(0, 800)
 theme_override_fonts/font = ExtResource("2_yvnqr")
 theme_override_font_sizes/font_size = 90
 text = "Menu"
+script = ExtResource("4_ru7i5")
+
+[node name="ClickGood" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_jt2ca")
+
+[node name="ClickBack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_8fqkf")
 
 [connection signal="pressed" from="Next" to="." method="_on_next_pressed"]
 [connection signal="pressed" from="Leave" to="." method="_on_leave_pressed"]

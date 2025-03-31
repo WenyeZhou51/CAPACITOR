@@ -1,5 +1,7 @@
 extends Control
 
+@onready var click_back = $ClickBack # Reference the AudioStreamPlaye
+
 # Audio bus indices
 const MASTER_BUS = 0
 
@@ -47,6 +49,7 @@ func _on_brightness_slider_value_changed(value):
 
 func _on_back_button_pressed():
 	# Save settings and return to main menu
+	click_back.play()
 	GlobalSettings.save_settings()
 	get_tree().change_scene_to_file("res://Scenes/Menu.tscn")
 

@@ -52,28 +52,36 @@ func swap_UI(idx: int, new_scene: PackedScene):
 	# Add the new instance and move it to the correct index
 	grid_container.add_child(new_instance)
 	grid_container.move_child(new_instance, idx)
-func on_change_ui(idx: int, item: String):
+func on_change_ui(idx: int, item: String, price: int):
 	# Changed to swapping the texture of the inventory slot instead
 	var slot = grid_container.get_child(idx)
 	var sprite = slot.get_node("slot sprite")
 	var newTexture: Texture2D
+	var nameTag = slot.get_node("name")
+	var priceTag = slot.get_node("price")
 	#var new_scene: PackedScene
 	if(item == "empty"):
 		newTexture = load("res://imgs/Slot.png")
 		sprite.texture = newTexture
-		show_text("")
+		nameTag.text = ""
+		priceTag.text = ""
 	elif(item == "flashlight"):
 		newTexture = load("res://imgs/Flash.png")
 		sprite.texture = newTexture
-		show_text(item)
+		nameTag.text = item
+		priceTag.text = str(price)
 	elif(item == "coolant"):
 		newTexture = load("res://imgs/Coolant.png")
 		sprite.texture = newTexture
-		show_text(item)
+		nameTag.text = item
+		priceTag.text = str(price)
 	else:
 		newTexture = load("res://imgs/Scrap.png")
 		sprite.texture = newTexture
-		show_text(item)
+		print("found nametag: ", nameTag)
+		nameTag.text = item
+		priceTag.text = str(price)
+		#show_text(item)
 	
 	# Set the sprite size to 100x100 pixels
 	sprite.scale = Vector2(100, 100) / sprite.texture.get_size()

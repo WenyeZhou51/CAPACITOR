@@ -1,10 +1,10 @@
 extends Node
 
-@onready var click = $click  # Reference the AudioStreamPlayer
-@onready var click_good = $click_good  # Reference the AudioStreamPlayer
-@onready var click_back = $click_back  # Reference the AudioStreamPlayer
-
 var has_join: bool = false
+
+@onready var click_good = $ClickGood # Reference the AudioStreamPlayer
+@onready var click_back = $ClickBack # Reference the AudioStreamPlayer
+@onready var click_join = $ClickJoin
 
 func get_system_ip() -> String:
 	var addresses = IP.get_local_addresses()
@@ -32,8 +32,7 @@ func _ready() -> void:
 		GameState.set_auto_start(false)
 	
 func _on_host_button_pressed() -> void:
-	click.play()
-	
+	click_good.play()
 	$MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2.hide()
 	$MarginContainer/VBoxContainer/HBoxContainer/START.show()
 	var ip = get_system_ip()
@@ -46,6 +45,7 @@ func _on_host_button_pressed() -> void:
 	MultiplayerManager.host_game()
 	
 func hostMessage(msg: String):
+	click_join.play()
 	var hostLog = $MarginContainer/VBoxContainer/HBoxContainer2/hostlog
 	if (!hostLog):
 		print_debug("ERROR NO HOSTLOG")
@@ -54,8 +54,7 @@ func hostMessage(msg: String):
 	
 	
 func _on_join_button_pressed() -> void:
-	click.play()
-	
+	click_good.play()
 	$MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer.hide()
 	var input = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/ip_input
 	MultiplayerManager.SERVER_IP = input.text

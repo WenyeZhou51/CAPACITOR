@@ -59,6 +59,7 @@ var camera_locked: bool = false
 var camera_target: Vector3
 var popup_instance: Node
 var dead = false
+var spec_id = "1";
 @onready var camera: Camera3D = $Head/Camera3D
 
 # Sound players
@@ -128,6 +129,7 @@ func _ready():
 	else:
 		camera.current = false
 		print("Remote player: camera disabled.")
+	spec_id = str(multiplayer.get_unique_id());
 
 
 func setup_sound_players():
@@ -213,7 +215,8 @@ func _input(event: InputEvent) -> void:
 				# Don't mark as handled here to let the event propagate to the console's _unhandled_input
 			else:
 				console_window.get_parent().get_viewport().push_input(event)
-				get_viewport().set_input_as_handled()
+				if(get_viewport()):
+					get_viewport().set_input_as_handled()
 		return  # Return here to prevent inventory scrolling while console is open
 	else:
 		if event.is_action_pressed("Use"):
@@ -269,9 +272,16 @@ func toggle_console() -> void:
 		camera.global_transform = $Head.global_transform
 
 func _physics_process(delta: float) -> void:
-	if (dead): 
-		return
 	if not is_multiplayer_authority(): return
+	if (dead): 
+		if (Input.is_action_just_pressed("Jump")):
+			var cur_spec = GameState.get_player_node_by_name((spec_id));
+			var par = cur_spec.get_parent();
+			var next_spec_idx = (cur_spec.get_index() + 1) % par.get_child_count();
+			var next_spec = par.get_child(next_spec_idx)
+			spec_id = next_spec.name
+			next_spec.camera.current = true;
+		return
 	if camera_locked and console_window:
 		var console_root = console_window.get_parent().get_parent()
 		var console_screen = console_root.get_node("CSGBox3D/MeshInstance3D")

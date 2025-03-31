@@ -7,6 +7,7 @@ func _ready():
 func _input(event : InputEvent) -> void:
 	var player = get_parent()
 	if (player.name != str(multiplayer.get_unique_id())): return
+	if player.dead : return
 	if player.camera_locked:
 		return
 	if event is InputEventMouseMotion:

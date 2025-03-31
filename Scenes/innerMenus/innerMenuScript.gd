@@ -1,8 +1,7 @@
 extends Control
 
-@onready var click_good = $click_good  # Reference the AudioStreamPlayer
-@onready var click_back = $click_back  # Reference the AudioStreamPlayer
-
+@onready var click_good = $ClickGood # Reference the AudioStreamPlayer
+@onready var click_back = $ClickBack # Reference the AudioStreamPlayer
 
 func _on_random_pressed() -> void:
 	click_good.play()
@@ -28,8 +27,8 @@ func _on_demo_pressed() -> void:
 
 
 func _on_back_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/Menu.tscn")
 	click_back.play()
+	get_tree().change_scene_to_file("res://Scenes/Menu.tscn")
 
 # Connect description panel visibility to button hover events
 func _ready() -> void:

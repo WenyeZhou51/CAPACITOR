@@ -143,4 +143,5 @@ func on_command_help(console: Node, args: Array):
 	if player:
 		player.has_typed_help = true
 
-	
+func on_command_cobson(console: Node, args: Array):
+	GameState.instant_win()

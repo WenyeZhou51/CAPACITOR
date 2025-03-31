@@ -1,9 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dvvij8thoys1x"]
+[gd_scene load_steps=8 format=3 uid="uid://co5e7eoewaoup"]
 
 [ext_resource type="Script" path="res://Scenes/heat_warning.gd" id="1_m7tw1"]
 [ext_resource type="FontFile" uid="uid://djxmwln40ig66" path="res://fonts/Geo-Regular.ttf" id="2_eg56m"]
-[ext_resource type="Texture2D" uid="uid://7ctql0xx4jnj" path="res://Scenes/jaldsfadfu.png" id="3_grn4h"]
-[ext_resource type="AudioStream" uid="uid://wr637iixbsyk" path="res://audio/alarm.ogg" id="4_jj2ak"]
+[ext_resource type="Texture2D" uid="uid://cxxxki75our1x" path="res://Scenes/jaldsfadfu.png" id="3_grn4h"]
+[ext_resource type="AudioStream" uid="uid://b18io4y5mq0ci" path="res://audio/alarm.ogg" id="4_jj2ak"]
 
 [sub_resource type="Animation" id="Animation_pwm84"]
 length = 0.001

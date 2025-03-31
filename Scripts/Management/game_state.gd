@@ -62,3 +62,6 @@ func reduce_alive_count() -> void:
 	
 func get_player_node_by_name(name: String) -> Player:
 	return get_tree().get_root().get_node_or_null("Level/players/" + name)
+
+func instant_win() -> void:
+	get_tree().change_scene_to_file(endScene)

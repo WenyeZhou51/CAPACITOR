@@ -67,6 +67,9 @@ argument_names = Array[String](["subject"])
 argument_types = Array[int]([2])
 help = "get information about a particular subject"
 
+[node name="cobson" parent="SubViewport/ConsoleWindow/command handler/Console" index="5" instance=ExtResource("4_e1py3")]
+help = "Display game controls and instructions"
+
 [node name="Console Interaction Area" type="Area3D" parent="."]
 collision_layer = 2
 collision_mask = 2

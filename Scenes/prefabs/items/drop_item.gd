@@ -29,7 +29,7 @@ func drop(player: CharacterBody3D, drop_position: Vector3 = Vector3.ZERO, drop_d
 			player.inventory[i] = null
 			player.inv_size -= 1
 			if str(player.get_tree().get_multiplayer().get_unique_id()) == player.name:
-				GameState.change_ui.emit(i, "empty")
+				GameState.change_ui.emit(i, "empty", 0)
 			break
 	player.is_holding = false
 				

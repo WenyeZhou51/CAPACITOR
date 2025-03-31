@@ -33,14 +33,10 @@ func interact(player: Player) -> void:
 	static_obj.transform = Transform3D()
 	player._set_item_visibility(static_obj, true, "new pickup")
 	
-	# Update tutorial tracking for coolant pickup
-	if static_obj.type == "coolant":
-		player.has_picked_up_coolant = true
-	
 	# Update inventory
 	if player.inv_size == 4:
 		if str(player.get_tree().get_multiplayer().get_unique_id()) == player.name:
-			GameState.change_ui.emit(player.current_slot, static_obj.type)
+			GameState.change_ui.emit(player.current_slot, static_obj.type, static_obj.Price)
 		player.inventory[player.current_slot] = static_obj
 	else:
 		for i in range(player.inventory.size()):
@@ -50,7 +46,7 @@ func interact(player: Player) -> void:
 				player.current_slot = i
 				player.inv_size += 1
 				if str(player.get_tree().get_multiplayer().get_unique_id()) == player.name:
-					GameState.change_ui.emit(player.current_slot, static_obj.type)
+					GameState.change_ui.emit(player.current_slot, static_obj.type, static_obj.Price)
 				break
 		player.is_holding = true
 

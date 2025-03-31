@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://5uwouo5bc741"]
+[gd_scene load_steps=8 format=3 uid="uid://5uwouo5bc741"]
 
 [ext_resource type="Script" path="res://Scripts/multiplayer/menu.gd" id="1_fdfo8"]
 [ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_qbjsc"]
+[ext_resource type="FontFile" uid="uid://djxmwln40ig66" path="res://fonts/Geo-Regular.ttf" id="3_qjpse"]
 [ext_resource type="AudioStream" uid="uid://ctunecfug1oc8" path="res://audio/The Depths of Hell.mp3" id="3_ugwee"]
-[ext_resource type="AudioStream" uid="uid://d21tn6mxl1rmc" path="res://audio/click_sounds/Click_Electronic_03.mp3" id="4_2gvr6"]
-[ext_resource type="AudioStream" uid="uid://b65npb10w2pj3" path="res://audio/click_sounds/Click_Electronic_16.mp3" id="4_ssxkk"]
-[ext_resource type="AudioStream" uid="uid://3h1wvfo8jksv" path="res://audio/click_sounds/Click_Electronic_04.mp3" id="6_wbjek"]
+[ext_resource type="Script" path="res://Scenes/menu_button.gd" id="4_cf4mk"]
+[ext_resource type="AudioStream" uid="uid://cdy0uy4q3ejn5" path="res://audio/click_sounds/Click_Electronic_15.mp3" id="5_rlag1"]
+[ext_resource type="AudioStream" uid="uid://d21tn6mxl1rmc" path="res://audio/click_sounds/Click_Electronic_03.mp3" id="6_3g04u"]
 
 [node name="multiplayer_menu" type="Control"]
 layout_mode = 3
@@ -56,29 +57,37 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_qjpse")
 theme_override_font_sizes/font_size = 90
 
 [node name="host_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_qjpse")
 theme_override_font_sizes/font_size = 90
 text = "Host"
+script = ExtResource("4_cf4mk")
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
 [node name="ip_input" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_qjpse")
 theme_override_font_sizes/font_size = 90
 
 [node name="join_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_qjpse")
 theme_override_font_sizes/font_size = 90
 text = "Join"
+script = ExtResource("4_cf4mk")
 
 [node name="START" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_qjpse")
 theme_override_font_sizes/font_size = 90
 text = "START"
+script = ExtResource("4_cf4mk")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -94,21 +103,23 @@ offset_left = 1574.0
 offset_top = 854.0
 offset_right = 1817.0
 offset_bottom = 965.0
+theme_override_fonts/font = ExtResource("3_qjpse")
 theme_override_font_sizes/font_size = 75
 text = "BACK"
+script = ExtResource("4_cf4mk")
 
 [node name="background_music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_ugwee")
 autoplay = true
 
-[node name="click_good" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_2gvr6")
+[node name="ClickBack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_rlag1")
 
-[node name="click_back" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_ssxkk")
+[node name="ClickGood" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_3g04u")
 
-[node name="click" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_wbjek")
+[node name="ClickJoin" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_rlag1")
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/host_button" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/join_button" to="." method="_on_join_button_pressed"]
