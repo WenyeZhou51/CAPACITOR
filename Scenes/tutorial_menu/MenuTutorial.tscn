@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scenes/menuTutorial.gd" id="1_a0af3"]
 [ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_r4oa5"]
-[ext_resource type="FontFile" uid="uid://bk7y7cg03wr1n" path="res://fonts/Geo-Regular.ttf" id="3_geo"]
+[ext_resource type="FontFile" uid="uid://bk7y7cg03wr1n" path="res://console folder/fonts/SpaceMono-Regular.ttf" id="3_geo"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
