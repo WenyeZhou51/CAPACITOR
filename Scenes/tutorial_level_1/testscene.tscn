@@ -1,6 +1,6 @@
 [gd_scene load_steps=108 format=4 uid="uid://b0ogfy3qfh5d3"]
 
-[ext_resource type="Script" path="res://Scenes/testscene.gd" id="1_mmvxi"]
+[ext_resource type="Script" path="res://Scenes/tutorial_level_1/testscene.gd" id="1_p7srj"]
 [ext_resource type="Script" path="res://Scenes/GameManager.gd" id="2_ooohi"]
 [ext_resource type="PackedScene" uid="uid://cjdanhbr7qd50" path="res://Scenes/prefabs/items/scrap1.tscn" id="3_g88e2"]
 [ext_resource type="PackedScene" uid="uid://dt2qtx8apgmb0" path="res://Scenes/prefabs/items/scrap2.tscn" id="4_4vxvb"]
@@ -583,7 +583,7 @@ shader_parameter/dark_preservation = 0.05
 shader_parameter/highlight_preservation = 0.1
 
 [node name="Level" type="Node3D"]
-script = ExtResource("1_mmvxi")
+script = ExtResource("1_p7srj")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_0737e")

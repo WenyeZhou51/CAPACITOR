@@ -11,4 +11,5 @@ enum SOUNDS {
 enum ITEMS {
 	FLASHLIGHT,
 	COOLANT,
+	SCRAP2
 }

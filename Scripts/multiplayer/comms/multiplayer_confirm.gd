@@ -6,8 +6,13 @@ func confirm_team_score_update(val: int):
 	MultiplayerPropogate.propogate_team_score_update.rpc(new_score)
 
 @rpc("any_peer", "call_local")
-func confirm_item_interact(item_name: String):
-	var player_name = str(multiplayer.get_remote_sender_id());
+func confirm_item_interact(item_name: String, id: int):
+	var player_name: String
+	if(id == -1):
+		player_name = str(multiplayer.get_remote_sender_id());
+		print("no id feeded in")
+	else:
+		player_name = str(id)
 	MultiplayerPropogate.propogate_item_interact.rpc(player_name, item_name)
 	
 @rpc("any_peer", "call_local")
@@ -34,7 +39,7 @@ func confirm_inventory_idx_change(idx: int):
 	MultiplayerPropogate.propogate_inventory_idx_change.rpc(sender_id, idx)
 
 @rpc("any_peer", "call_local")
-func confirm_item_spawn(item: Constants.ITEMS, position: Transform3D):
+func confirm_item_spawn(item: Constants.ITEMS, position: Transform3D, id = -1):
 	var item_node = get_tree().current_scene.get_node("items")
 	
 	var scene
@@ -48,4 +53,11 @@ func confirm_item_spawn(item: Constants.ITEMS, position: Transform3D):
 			scene = preload("res://Scenes/prefabs/items/coolant.tscn")
 			instance = scene.instantiate()
 			instance.global_transform = position
+		Constants.ITEMS.SCRAP2:
+			scene = preload("res://Scenes/prefabs/items/scrap2.tscn")
+			instance = scene.instantiate()
+			instance.global_transform = position
 	item_node.add_child(instance, true)
+	
+	if(id != -1):
+		MultiplayerRequest.request_item_interact(instance.name, id)

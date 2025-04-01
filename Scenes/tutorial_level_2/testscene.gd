@@ -29,6 +29,7 @@ func _add_player_to_game(id: int):
 	player_instance.name = str(id)
 	player_instance.set_color(id)
 	
+	
 	var spawn_position = Vector3(0, 0, 0)
 	_players_spawn_node.add_child(player_instance, true)
 	print_debug("Player added to scene tree")
@@ -47,5 +48,3 @@ func _add_player_to_game(id: int):
 		ui.setup_player.rpc_id(id, player_instance.name)
 	else:
 		ui.setup_player(player_instance.name)
-	
-	
