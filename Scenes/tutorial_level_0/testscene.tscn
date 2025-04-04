@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=4 uid="uid://b0ogfy3qfh5d3"]
+[gd_scene load_steps=81 format=4 uid="uid://b0ogfy3qfh5d3"]
 
 [ext_resource type="Script" path="res://Scenes/testscene.gd" id="1_v17iy"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
@@ -36,7 +36,6 @@
 [ext_resource type="PackedScene" uid="uid://3pcw2q81hvrs" path="res://objectmodels/utility_box_02_4k/utility_box_02_4k.gltf" id="29_tlbuj"]
 [ext_resource type="Script" path="res://Scenes/prefabs/items/cashBox.gd" id="30_ksxy2"]
 [ext_resource type="Texture2D" uid="uid://bx5cau0dcic4g" path="res://objectmodels/planter_box_01_4k/textures/planter_box_01_diff_4k.jpg" id="31_8iimj"]
-[ext_resource type="PackedScene" uid="uid://yd6lu668s2rd" path="res://objectmodels/korean_public_payphone_01_4k/korean_public_payphone_01_4k.gltf" id="32_jvyby"]
 [ext_resource type="PackedScene" uid="uid://chjq57h8xmpmb" path="res://objectmodels/utility_box_01_4k/utility_box_01_4k.gltf" id="33_0pg0b"]
 [ext_resource type="Texture2D" uid="uid://br7ytuv2yx7ok" path="res://objectmodels/lightbulb_01_4k/textures/lightbulb_01_diff_4k.jpg" id="36_a4bsh"]
 [ext_resource type="PackedScene" uid="uid://rpy0m4novqme" path="res://objectmodels3/barrel/detail_barrel.glb" id="37_hgayo"]
@@ -246,9 +245,6 @@ size = Vector3(0.862061, 0.476501, 0.486053)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bt0kh"]
 size = Vector3(3.7, 1.8, 1.7)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_mw6lm"]
-size = Vector3(1.2, 3, 0.9)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xa56l"]
 size = Vector3(4, 8.6, 3.1)
@@ -672,15 +668,6 @@ shape = SubResource("BoxShape3D_n77td")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D2"]
 transform = Transform3D(-0.0493379, 0, 0.998782, 0, 1, 0, -0.998782, 0, -0.0493379, 7.39503, -3.60077, 0.167362)
 shape = SubResource("BoxShape3D_bt0kh")
-
-[node name="StaticBody3D3" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05267, -1.54652, -8.26586)
-shape = SubResource("BoxShape3D_mw6lm")
-
-[node name="korean_public_payphone_01_4k" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D3" instance=ExtResource("32_jvyby")]
-transform = Transform3D(2.99686, 0, -0.13724, 0, 3, 0, 0.13724, 0, 2.99686, 1.20527, -3.0188, -8.37966)
 
 [node name="StaticBody3D4" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
 

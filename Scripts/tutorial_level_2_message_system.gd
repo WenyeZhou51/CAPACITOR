@@ -22,10 +22,6 @@ var has_refueled_generator: bool = false
 
 # The messages to display in sequence
 var messages = [
-	"E to interact with the console",
-	"Type help to view console commands",
-	"buy a coolant from the console",
-	"esc to exit from console",
 	"Pick up the coolant",
 	"Refuel the generator with coolant to prevent overheating",
 	"complete the quota while preventing generator overheat"
@@ -103,41 +99,7 @@ func _process(delta):
 		
 	# Check for actions based on the current message
 	match current_message_index:
-		0: # "E to interact with the console"
-			# Check if player interacted with console
-			if !has_interacted_with_console:
-				# Check if player is in console mode - this would need proper implementation
-				if player.get("in_console_mode") != null and player.get("in_console_mode"):
-					print("Player interacted with console")
-					has_interacted_with_console = true
-					advance_to_next_message()
-				
-		1: # "Type help to view console commands"
-			# Check if player typed help
-			if !has_typed_help:
-				# This might be tracked in a console manager or similar
-				if player.get("has_typed_help") != null and player.get("has_typed_help"):
-					print("Player typed help")
-					has_typed_help = true
-					advance_to_next_message()
-				
-		2: # "buy a coolant from the console"
-			# Check if player bought coolant
-			if !has_bought_coolant:
-				if player.get("has_bought_coolant") != null and player.get("has_bought_coolant"):
-					print("Player bought coolant")
-					has_bought_coolant = true
-					advance_to_next_message()
-				
-		3: # "esc to exit from console"
-			# Check if player exited console
-			if !has_exited_console:
-				if player.get("in_console_mode") != null and !player.get("in_console_mode") and has_interacted_with_console:
-					print("Player exited console")
-					has_exited_console = true
-					advance_to_next_message()
-				
-		4: # "Pick up the coolant"
+		0: # "Pick up the coolant"
 			# Check if player picked up coolant
 			if !has_picked_up_coolant:
 				if player.get("has_picked_up_coolant") != null and player.get("has_picked_up_coolant"):
@@ -145,7 +107,7 @@ func _process(delta):
 					has_picked_up_coolant = true
 					advance_to_next_message()
 				
-		5: # "Refuel the generator with coolant to prevent overheating"
+		1: # "Refuel the generator with coolant to prevent overheating"
 			# Check if player refueled generator
 			if !has_refueled_generator:
 				if player.get("has_refueled_generator") != null and player.get("has_refueled_generator"):
@@ -153,7 +115,7 @@ func _process(delta):
 					has_refueled_generator = true
 					advance_to_next_message()
 				
-		6: # "complete the quota while preventing generator overheat"
+		2: # "complete the quota while preventing generator overheat"
 			# This just displays information, no condition to advance
 			pass
 

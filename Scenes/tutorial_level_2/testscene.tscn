@@ -1,4 +1,4 @@
-[gd_scene load_steps=96 format=4 uid="uid://b0ogfy3qfh5d3"]
+[gd_scene load_steps=94 format=4 uid="uid://b0ogfy3qfh5d3"]
 
 [ext_resource type="Script" path="res://Scenes/testscene.gd" id="1_v17iy"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
@@ -24,9 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://cjdanhbr7qd50" path="res://Scenes/prefabs/items/scrap1.tscn" id="14_q11nm"]
 [ext_resource type="PackedScene" uid="uid://bi3tstfh1x606" path="res://rooms/small_room_2.tscn" id="19_o6rck"]
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="19_oo0sl"]
-[ext_resource type="PackedScene" uid="uid://xcj3me4ww2u2" path="res://console folder/console.tscn" id="20_5ea0o"]
 [ext_resource type="PackedScene" uid="uid://bwoto031wapot" path="res://Scenes/pause_menu.tscn" id="20_chau2"]
-[ext_resource type="AudioStream" uid="uid://dffic3qafvokn" path="res://audio/Infestation in the Control Room.mp3" id="21_a4jof"]
 [ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="22_r6p60"]
 [ext_resource type="PackedScene" uid="uid://ceswkthrcvfrj" path="res://objectmodels2/modern_ceiling_lamp_01_4k/modern_ceiling_lamp_01_4k.gltf" id="23_kmt4g"]
 [ext_resource type="PackedScene" uid="uid://drfh7y8sxcgn0" path="res://rooms/medium_room_2.tscn" id="23_xnoos"]
@@ -551,15 +549,6 @@ script = ExtResource("19_oo0sl")
 size_in_voxels = Vector3i(2, 1, 2)
 min_count = 1
 max_count = 1
-
-[node name="Console" parent="NavigationRegion3D/DungeonGenerator3D/start_room" instance=ExtResource("20_5ea0o")]
-transform = Transform3D(3.85835, 0, 0, 0, 2.55677, 0, 0, 0, 3.08341, -4.02, -2.81254, -7.31016)
-use_collision = true
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Console"]
-stream = ExtResource("21_a4jof")
-autoplay = true
-parameters/looping = true
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
 navigation_mesh = SubResource("NavigationMesh_2up67")
