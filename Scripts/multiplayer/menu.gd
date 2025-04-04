@@ -17,7 +17,7 @@ func get_system_ip() -> String:
 
 func _ready() -> void:
 	MultiplayerManager.host_msg.connect(hostMessage)
-	$MarginContainer/VBoxContainer/HBoxContainer/START.hide()
+	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/START.hide();
 	
 	# Check if we should auto-start the game (for tutorials)
 	if GameState.should_auto_start():
@@ -33,10 +33,10 @@ func _ready() -> void:
 	
 func _on_host_button_pressed() -> void:
 	click_good.play()
-	$MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2.hide()
-	$MarginContainer/VBoxContainer/HBoxContainer/START.show()
+	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer2.hide()
+	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/START.show()
 	var ip = get_system_ip()
-	var hostField = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Label
+	var hostField = $MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/Label
 	if (ip != ""):
 		hostField.text = ip
 	else:
@@ -46,7 +46,7 @@ func _on_host_button_pressed() -> void:
 	
 func hostMessage(msg: String):
 	click_join.play()
-	var hostLog = $MarginContainer/VBoxContainer/HBoxContainer2/hostlog
+	var hostLog = $MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer2/hostlog
 	if (!hostLog):
 		print_debug("ERROR NO HOSTLOG")
 	var cur = hostLog.text
@@ -55,8 +55,8 @@ func hostMessage(msg: String):
 	
 func _on_join_button_pressed() -> void:
 	click_good.play()
-	$MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer.hide()
-	var input = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/ip_input
+	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer.hide()
+	var input = $MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer2/ip_input
 	MultiplayerManager.SERVER_IP = input.text
 	MultiplayerManager.join_game()
 	print_debug("JOIN PRESSED")

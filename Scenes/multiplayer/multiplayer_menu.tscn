@@ -44,56 +44,67 @@ offset_bottom = 542.92
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="Control" type="Control" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="ColorRect" type="ColorRect" parent="MarginContainer/Control"]
+layout_mode = 2
+offset_right = 834.0
+offset_bottom = 206.0
+color = Color(0, 0, 0, 0.631373)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control/ColorRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Control/ColorRect/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_qjpse")
 theme_override_font_sizes/font_size = 90
 
-[node name="host_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="host_button" type="Button" parent="MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_qjpse")
 theme_override_font_sizes/font_size = 90
 text = "Host"
 script = ExtResource("4_cf4mk")
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="ip_input" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+[node name="ip_input" type="LineEdit" parent="MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_qjpse")
 theme_override_font_sizes/font_size = 90
 
-[node name="join_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+[node name="join_button" type="Button" parent="MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_qjpse")
 theme_override_font_sizes/font_size = 90
 text = "Join"
 script = ExtResource("4_cf4mk")
 
-[node name="START" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="START" type="Button" parent="MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_qjpse")
 theme_override_font_sizes/font_size = 90
 text = "START"
 script = ExtResource("4_cf4mk")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/Control/ColorRect/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="hostlog" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="hostlog" type="Label" parent="MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 
@@ -121,7 +132,7 @@ stream = ExtResource("6_3g04u")
 [node name="ClickJoin" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_rlag1")
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/host_button" to="." method="_on_host_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/join_button" to="." method="_on_join_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/START" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/host_button" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer2/join_button" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/START" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Back_Multi" to="." method="_on_back_multi_pressed"]
