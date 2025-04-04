@@ -488,6 +488,7 @@ func init_take_damage(amount: int):
 func set_health(new: int):
 	var hurt = new < current_health
 	current_health = new
+	if not is_multiplayer_authority(): return
 	if (current_health <= 0):
 		var item_socket = get_node("Head/ItemSocket")
 		#var curr = item_socket.get_child(0)
