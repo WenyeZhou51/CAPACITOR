@@ -1,0 +1,115 @@
+[gd_scene load_steps=14 format=3 uid="uid://c4787ls85kplu"]
+
+[ext_resource type="Texture2D" uid="uid://dd75fl6rr2y7f" path="res://objectmodels/security_camera_02_4k/textures/security_camera_02_diff_4k.jpg" id="1_7313i"]
+[ext_resource type="Script" path="res://Scenes/generator.gd" id="1_rux7k"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_86pa1"]
+albedo_texture = ExtResource("1_7313i")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_f7bt7"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_41i3n"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_bie8y"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_0arax"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0q004"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_41i3n")
+emission_enabled = true
+emission = Color(0.0323822, 0.0323822, 0.0323822, 1)
+emission_energy_multiplier = 0.1
+emission_texture = SubResource("ViewportTexture_0arax")
+backlight = Color(0.492237, 0.492237, 0.492237, 1)
+backlight_texture = SubResource("ViewportTexture_bie8y")
+
+[sub_resource type="QuadMesh" id="QuadMesh_v8ndt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ks7wi"]
+bg_color = Color(0.435192, 0.435192, 0.435192, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_87e0m"]
+bg_color = Color(0.867917, 0.210116, 0.185367, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uxbcj"]
+bg_color = Color(0.843755, 0.853717, 0.811405, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8cyl3"]
+radius = 0.7
+
+[node name="Generator" type="StaticBody3D" node_paths=PackedStringArray("sub_viewport", "heat_bar", "energy_bar")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+collision_layer = 5
+script = ExtResource("1_rux7k")
+sub_viewport = NodePath("SubViewport")
+heat_bar = NodePath("SubViewport/Generator Display/Heat Bar")
+energy_bar = NodePath("SubViewport/Generator Display/Electricity Bar")
+
+[node name="Generator Model" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.13347, 0)
+material_override = SubResource("StandardMaterial3D_86pa1")
+mesh = SubResource("CylinderMesh_f7bt7")
+
+[node name="screen" type="MeshInstance3D" parent="Generator Model"]
+transform = Transform3D(-0.999891, 0, -0.0147647, 0, 0.492013, 0, 0.0147647, 0, -0.999891, -0.0343862, 0.121645, -0.501731)
+material_override = SubResource("StandardMaterial3D_0q004")
+mesh = SubResource("QuadMesh_v8ndt")
+
+[node name="body" type="MeshInstance3D" parent="Generator Model"]
+
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(1920, 1080)
+
+[node name="Generator Display" type="Control" parent="SubViewport"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="Heat Bar" type="ProgressBar" parent="SubViewport/Generator Display"]
+layout_mode = 0
+offset_left = 429.0
+offset_top = 366.0
+offset_right = 1549.0
+offset_bottom = 474.0
+theme_override_styles/background = SubResource("StyleBoxFlat_ks7wi")
+theme_override_styles/fill = SubResource("StyleBoxFlat_87e0m")
+value = 40.0
+show_percentage = false
+
+[node name="Electricity Bar" type="ProgressBar" parent="SubViewport/Generator Display"]
+layout_mode = 0
+offset_left = 409.0
+offset_top = 750.0
+offset_right = 1558.0
+offset_bottom = 864.0
+theme_override_styles/background = SubResource("StyleBoxFlat_ks7wi")
+theme_override_styles/fill = SubResource("StyleBoxFlat_uxbcj")
+value = 40.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="SubViewport/Generator Display"]
+layout_mode = 0
+offset_left = 760.0
+offset_top = 196.0
+offset_right = 1280.0
+offset_bottom = 416.0
+theme_override_font_sizes/font_size = 100
+text = "Heat Level"
+
+[node name="Label2" type="Label" parent="SubViewport/Generator Display"]
+layout_mode = 0
+offset_left = 658.0
+offset_top = 594.0
+offset_right = 1406.0
+offset_bottom = 814.0
+theme_override_font_sizes/font_size = 100
+text = "Electricity Level"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0421456, 1.09213, 0.0336108)
+shape = SubResource("CylinderShape3D_8cyl3")
