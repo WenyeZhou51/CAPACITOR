@@ -2,7 +2,7 @@
 
 [ext_resource type="Shader" path="res://Scenes/sprint_2.gdshader" id="1_dffqv"]
 [ext_resource type="Material" uid="uid://bl6bvg6m8lab0" path="res://shaders/crt_shader.tres" id="1_s6rhv"]
-[ext_resource type="FontFile" uid="uid://bk7y7cg03wr1n" path="res://fonts/Geo-Regular.ttf" id="2_geo"]
+[ext_resource type="FontFile" uid="uid://bk7y7cg03wr1n" path="res://console folder/fonts/SpaceMono-Regular.ttf" id="2_geo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jnuav"]
 shader = ExtResource("1_dffqv")

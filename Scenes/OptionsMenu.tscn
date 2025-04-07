@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_k34gm"]
 [ext_resource type="FontFile" uid="uid://djxmwln40ig66" path="res://fonts/Geo-Regular.ttf" id="3_yvnqr"]
 [ext_resource type="AudioStream" uid="uid://cdy0uy4q3ejn5" path="res://audio/click_sounds/Click_Electronic_15.mp3" id="4_nw10l"]
-[ext_resource type="Material" uid="uid://bl6bvg6m8lab0" path="res://shaders/crt_shader.tres" id="5_jmqhl"]
+[ext_resource type="Material" uid="uid://bl6bvg6m8lab0" path="res://shaders/crt_shader.tres" id="5_kniwc"]
 
 [node name="OptionsMenu" type="Control"]
 layout_mode = 3
@@ -24,16 +24,6 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_k34gm")
 
-[node name="CRTEffect" type="ColorRect" parent="."]
-material = ExtResource("5_jmqhl")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -47,6 +37,7 @@ theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 100
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+z_index = 1
 layout_mode = 2
 theme_override_constants/separation = 20
 
@@ -241,6 +232,13 @@ text = "BACK"
 
 [node name="ClickBack" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_nw10l")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = ExtResource("5_kniwc")
+layout_mode = 0
+offset_right = 1931.0
+offset_bottom = 1082.0
+mouse_filter = 2
 
 [connection signal="value_changed" from="MarginContainer/VBoxContainer/TabContainer/Settings/VBoxContainer/VolumeSection/HBoxContainer/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
 [connection signal="value_changed" from="MarginContainer/VBoxContainer/TabContainer/Settings/VBoxContainer/BrightnessSection/HBoxContainer/BrightnessSlider" to="." method="_on_brightness_slider_value_changed"]

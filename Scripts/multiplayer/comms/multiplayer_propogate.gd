@@ -13,8 +13,8 @@ func propogate_item_interact(player_name: String, item_name: String):
 	if player == null: return
 	
 	# Special cases for specific items
-	if(item_name == "planter_box_01_4k"):
-		item = get_tree().get_root().get_node_or_null("Level/NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D2/planter_box_01_4k")
+	if(item_name == "Cashier"):
+		item = get_tree().get_root().get_node_or_null("Level/NavigationRegion3D/DungeonGenerator3D/start_room/Cashier")
 	# Special case for the generator
 	elif(item_name == "Generator" or item_name.begins_with("Generator")):
 		item = get_tree().get_root().get_node_or_null("Level/Generator")

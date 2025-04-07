@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://crg887yi5f3rr"]
+[gd_scene load_steps=4 format=3 uid="uid://crg887yi5f3rr"]
 
 [ext_resource type="Script" path="res://Scenes/menuTutorial.gd" id="1_a0af3"]
 [ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_r4oa5"]
 [ext_resource type="FontFile" uid="uid://bk7y7cg03wr1n" path="res://console folder/fonts/SpaceMono-Regular.ttf" id="3_geo"]
-[ext_resource type="Material" uid="uid://bl6bvg6m8lab0" path="res://shaders/crt_shader.tres" id="4_v3hm0"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -62,11 +61,6 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("3_geo")
 theme_override_font_sizes/font_size = 90
 text = "PRO"
-
-[node name="CRTEffect" type="ColorRect" parent="MarginContainer"]
-material = ExtResource("4_v3hm0")
-layout_mode = 2
-mouse_filter = 2
 
 [connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Easy" to="." method="_on_easy_pressed"]
 [connection signal="pressed" from="MarginContainer/TextureRect/VBoxContainer/Medium" to="." method="_on_medium_pressed"]

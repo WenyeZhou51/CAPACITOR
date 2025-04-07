@@ -49,7 +49,7 @@ func interact(player: Player) -> int:
 			
 			# Update UI for the current player only
 			if str(player.get_tree().get_multiplayer().get_unique_id()) == player.name:
-				GameState.change_ui.emit(player.current_slot, "empty")
+				GameState.change_ui.emit(player.current_slot, "empty", 0)
 				
 			return 1  # Return 1 since this is a successful interaction
 	print("not coolant")

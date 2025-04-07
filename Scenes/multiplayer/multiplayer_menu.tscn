@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://Scenes/menu_button.gd" id="4_cf4mk"]
 [ext_resource type="AudioStream" uid="uid://cdy0uy4q3ejn5" path="res://audio/click_sounds/Click_Electronic_15.mp3" id="5_rlag1"]
 [ext_resource type="AudioStream" uid="uid://d21tn6mxl1rmc" path="res://audio/click_sounds/Click_Electronic_03.mp3" id="6_3g04u"]
-[ext_resource type="Material" uid="uid://bl6bvg6m8lab0" path="res://shaders/crt_shader.tres" id="8_mctj4"]
+[ext_resource type="Material" uid="uid://bl6bvg6m8lab0" path="res://shaders/crt_shader.tres" id="8_v2j2g"]
 
 [node name="multiplayer_menu" type="Control"]
 layout_mode = 3
@@ -31,17 +31,8 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_qbjsc")
 
-[node name="CRTEffect" type="ColorRect" parent="."]
-material = ExtResource("8_mctj4")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
 [node name="MarginContainer" type="MarginContainer" parent="."]
+z_index = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -120,6 +111,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 40
 
 [node name="Back_Multi" type="Button" parent="."]
+z_index = 1
 layout_mode = 2
 offset_left = 1574.0
 offset_top = 854.0
@@ -142,6 +134,13 @@ stream = ExtResource("6_3g04u")
 
 [node name="ClickJoin" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_rlag1")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = ExtResource("8_v2j2g")
+layout_mode = 0
+offset_right = 1931.0
+offset_bottom = 1082.0
+mouse_filter = 2
 
 [connection signal="pressed" from="MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/host_button" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer2/join_button" to="." method="_on_join_button_pressed"]

@@ -81,18 +81,10 @@ func _ready():
 	set_multiplayer_authority(str(name).to_int())
 	add_to_group("players")
 	add_to_group("player")  # Add to player group for tutorial detection
-	
-	# Initialize UI elements with error handling
-	if get_tree().root.has_node("Level/UI/SprintSlider"):
-		stamina_bar = get_node("/root/Level/UI/SprintSlider")
-	
-	if get_tree().root.has_node("Level/UI/InteractLabel"):
-		interact_label = get_node("/root/Level/UI/InteractLabel")
-	
-	if get_tree().root.has_node("Level/UI/TextureRect"):
-		texture_rect = get_node("/root/Level/UI/TextureRect")
-		if texture_rect != null:
-			crt_shader_material = texture_rect.material
+	stamina_bar = get_node("/root/Level/UI/SprintSlider")
+	interact_label = get_node("/root/Level/UI/InteractLabel")
+	texture_rect = get_node("/root/Level/UI/TextureRect")
+	crt_shader_material = texture_rect.material
 	
 	# Determine which tutorial level we're in and set the appropriate message
 	var current_scene = get_tree().current_scene.scene_file_path
@@ -266,16 +258,14 @@ func toggle_console() -> void:
 		console_window.input_bar.grab_focus()
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		#clear crt shader effect completely
-		if texture_rect != null:
-			texture_rect.visible = false
+		texture_rect.visible = false
 		camera_locked = true
 		print("shader disabled")
 	else:
 		console_window.visible = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		if texture_rect != null:
-			texture_rect.visible = true
-			update_health_indicator()
+		texture_rect.visible = true
+		update_health_indicator()
 		camera_locked = false
 
 		# Reset camera to follow head directly
@@ -466,16 +456,6 @@ func play_sound(sound: Constants.SOUNDS):
 		
 
 func update_health_indicator():
-	# Check if crt_shader_material is valid before trying to use it
-	if crt_shader_material == null:
-		# Try to get the material if the TextureRect is available now
-		if texture_rect != null:
-			crt_shader_material = texture_rect.material
-		
-		# If it's still null, we can't update the shader
-		if crt_shader_material == null:
-			return
-			
 	if crt_shader_material and crt_shader_material is ShaderMaterial:
 		var health_ratio = float(current_health) / float(max_health)
 		
@@ -534,10 +514,6 @@ func set_death(new: bool):
 		GameState.reduce_alive_count()
 
 func damage_taken_effect():
-	# Check if crt_shader_material is valid
-	if crt_shader_material == null:
-		return
-		
 	var damage_tint = Color(1, 0, 0, 0.3)
 	var tween = create_tween()
 	crt_shader_material.set_shader_parameter("tint_color", damage_tint)

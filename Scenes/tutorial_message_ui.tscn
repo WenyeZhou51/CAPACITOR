@@ -1,47 +1,30 @@
 [gd_scene load_steps=6 format=3 uid="uid://x6pwle50rjdl"]
 
 [ext_resource type="Script" path="res://Scripts/tutorial_message_system.gd" id="1_sfqvl"]
-[ext_resource type="LabelSettings" path="res://fonts/geo_title_label_settings.tres" id="2_j3iqv"]
-[ext_resource type="LabelSettings" path="res://fonts/geo_message_label_settings.tres" id="3_gg745"]
-[ext_resource type="Material" uid="uid://bl6bvg6m8lab0" path="res://shaders/crt_shader.tres" id="4_rdty5"]
+[ext_resource type="FontFile" uid="uid://djxmwln40ig66" path="res://fonts/Geo-Regular.ttf" id="2_4xdp1"]
+[ext_resource type="LabelSettings" uid="uid://c1v7o3vfpqkaw" path="res://fonts/geo_title_label_settings.tres" id="2_j3iqv"]
+[ext_resource type="LabelSettings" uid="uid://dtqx3eelx18wi" path="res://fonts/geo_message_label_settings.tres" id="3_gg745"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mj2h1"]
-content_margin_left = 15.0
-content_margin_top = 10.0
-content_margin_right = 15.0
-content_margin_bottom = 10.0
-bg_color = Color(0.129412, 0.14902, 0.180392, 0.768627)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t10ek"]
+bg_color = Color(0, 0, 0, 1)
 border_width_left = 2
-border_width_top = 2
+border_width_top = 3
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.294118, 0.631373, 0.807843, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-shadow_color = Color(0, 0, 0, 0.25098)
-shadow_size = 4
-shadow_offset = Vector2(2, 2)
+border_color = Color(0, 0.772769, 0.113702, 1)
 
 [node name="TutorialMessageUI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 1.0
+offset_right = 3.0
+offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_sfqvl")
-
-[node name="CRTEffect" type="ColorRect" parent="."]
-material = ExtResource("4_rdty5")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
 
 [node name="MessagePanel" type="Panel" parent="."]
 custom_minimum_size = Vector2(500, 0)
@@ -49,12 +32,12 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -300.0
-offset_top = 30.0
-offset_right = 300.0
-offset_bottom = 110.0
+offset_left = -933.0
+offset_top = 198.0
+offset_right = -387.0
+offset_bottom = 278.0
 grow_horizontal = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_mj2h1")
+theme_override_styles/panel = SubResource("StyleBoxFlat_t10ek")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MessagePanel"]
 layout_mode = 1
@@ -70,6 +53,7 @@ grow_vertical = 2
 
 [node name="TitleLabel" type="Label" parent="MessagePanel/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_4xdp1")
 text = "TUTORIAL"
 label_settings = ExtResource("2_j3iqv")
 horizontal_alignment = 1
@@ -77,6 +61,7 @@ horizontal_alignment = 1
 [node name="MessageLabel" type="Label" parent="MessagePanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("2_4xdp1")
 text = "Move with WASD to navigate"
 label_settings = ExtResource("3_gg745")
 horizontal_alignment = 1

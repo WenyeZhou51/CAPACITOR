@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4h1nyjdbpuwh"]
+
+[ext_resource type="PackedScene" uid="uid://jobfa30eityv" path="res://objectmodels3/CashRegister_01_4k/CashRegister_01_4k.gltf" id="1_00ap4"]
+
+[node name="CashRegister_01_4k" instance=ExtResource("1_00ap4")]
