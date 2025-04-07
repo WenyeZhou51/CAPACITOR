@@ -1,4 +1,4 @@
-[gd_scene load_steps=90 format=4 uid="uid://b0ogfy3qfh5d3"]
+[gd_scene load_steps=93 format=4 uid="uid://b0ogfy3qfh5d3"]
 
 [ext_resource type="Script" path="res://Scenes/testscene.gd" id="1_v17iy"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
@@ -42,6 +42,7 @@
 [ext_resource type="Texture2D" uid="uid://dvowvf07ve3vq" path="res://guides/fab.png" id="37_o7rqt"]
 [ext_resource type="Texture2D" uid="uid://b4r8knrowoecu" path="res://guides/scrapsign_1.png" id="38_g578j"]
 [ext_resource type="Texture2D" uid="uid://d248n30v1rcw1" path="res://objectmodels3/bricks_a/detail-bricks-type-a.png" id="38_ip7y5"]
+[ext_resource type="Texture2D" uid="uid://bp44srn0mpnro" path="res://guides/controls.png" id="38_puugv"]
 [ext_resource type="ArrayMesh" uid="uid://c7ouyxu4g67jv" path="res://objectmodels3/bricks_a/detail-bricks-type-a.obj" id="39_gr58f"]
 [ext_resource type="Script" path="res://Scripts/tutorial_level_0_manager.gd" id="44_roeov"]
 [ext_resource type="PackedScene" uid="uid://x6pwle50rjdl" path="res://Scenes/tutorial_message_ui.tscn" id="45_c5sts"]
@@ -338,6 +339,13 @@ albedo_texture = ExtResource("37_o7rqt")
 [sub_resource type="QuadMesh" id="QuadMesh_5g60x"]
 material = SubResource("StandardMaterial3D_4nt8k")
 size = Vector2(5, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lwh6k"]
+albedo_texture = ExtResource("38_puugv")
+
+[sub_resource type="QuadMesh" id="QuadMesh_absr6"]
+material = SubResource("StandardMaterial3D_lwh6k")
+size = Vector2(9, 7)
 
 [sub_resource type="GDScript" id="GDScript_1tv7g"]
 resource_name = "corridor"
@@ -696,15 +704,15 @@ spot_range = 12.0156
 spot_angle = 49.1396
 
 [node name="SpotLight3D6" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
-transform = Transform3D(1, 0, 0, 0, 0.127705, 0.991812, 0, -0.991812, 0.127705, -0.40324, 2.86431, -6.12123)
+transform = Transform3D(-0.119613, -0.780334, 0.613817, 0.114021, 0.603368, 0.78927, -0.986251, 0.164395, 0.0168043, 6.02993, 4.08015, -6.37227)
 light_color = Color(0.921252, 0.615242, 0.698727, 1)
 light_energy = 4.0
 shadow_enabled = true
-spot_range = 12.0156
+spot_range = 13.1929
 spot_angle = 49.1396
 
 [node name="SpotLight3D7" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
-transform = Transform3D(1, 0, 0, 0, -0.00963403, 0.999954, 0, -0.999954, -0.00963403, -4.25695, 2.05587, -4.27707)
+transform = Transform3D(1, 0, 0, 0, -0.00963403, 0.999954, 0, -0.999954, -0.00963403, -5.00257, 2.05587, -3.70005)
 light_color = Color(0.921252, 0.615242, 0.698727, 1)
 light_energy = 4.0
 shadow_enabled = true
@@ -717,12 +725,12 @@ light_color = Color(0.527304, 0.81407, 0.0995202, 1)
 light_energy = 4.0
 light_indirect_energy = 2.0
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
+[node name="UtilityBoxProp1" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
 
-[node name="utility_box_02_4k" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D" instance=ExtResource("29_tlbuj")]
+[node name="utility_box_02_4k" parent="NavigationRegion3D/DungeonGenerator3D/start_room/UtilityBoxProp1" instance=ExtResource("29_tlbuj")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 6.33308, -4.48755, -7.86182)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/UtilityBoxProp1"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 6.40654, -2.20006, -7.81607)
 shape = SubResource("BoxShape3D_wwlvr")
 
@@ -755,53 +763,57 @@ transform = Transform3D(-7.49997, 4.61937e-07, -0.0209438, 2.41213e-07, 7.49999,
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.53699, -0.207274, 5.88963)
 shape = SubResource("BoxShape3D_xa56l")
 
-[node name="StaticBody3D5" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
+[node name="ScrapGuide1" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
 transform = Transform3D(0.998133, 0, 0.0610834, 0, 1, 0, -0.0610834, 0, 0.998133, 0.752235, -0.000627518, -0.681372)
 
-[node name="standing_chalkboard_01_4k" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D5" instance=ExtResource("36_nefek")]
+[node name="standing_chalkboard_01_4k" parent="NavigationRegion3D/DungeonGenerator3D/start_room/ScrapGuide1" instance=ExtResource("36_nefek")]
 transform = Transform3D(1.138, 0, 0.380726, 0, 1.2, 0, -0.380726, 0, 1.138, -0.931442, -4.479, -2.94442)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D5"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/ScrapGuide1"]
 transform = Transform3D(0.424689, 0, -0.905339, 0, 1, 0, 0.905339, 0, 0.424689, -0.605881, -3.60258, -3.21575)
 shape = SubResource("BoxShape3D_7ptth")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D5"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/ScrapGuide1"]
 transform = Transform3D(0.941098, -0.187988, 0.281057, 0.115706, 0.960068, 0.254718, -0.317718, -0.207195, 0.925269, -0.805866, -3.5127, -2.67178)
 mesh = SubResource("QuadMesh_3xswk")
 skeleton = NodePath("")
 
-[node name="StaticBody3D7" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
+[node name="ScrapGuide3" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
 transform = Transform3D(0.695198, 0, 0.718818, 0, 1, 0, -0.718818, 0, 0.695198, -12.8086, -0.000627518, -5.54397)
 
-[node name="standing_chalkboard_01_4k" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D7" instance=ExtResource("36_nefek")]
+[node name="standing_chalkboard_01_4k" parent="NavigationRegion3D/DungeonGenerator3D/start_room/ScrapGuide3" instance=ExtResource("36_nefek")]
 transform = Transform3D(1.138, 0, 0.380726, 0, 1.2, 0, -0.380726, 0, 1.138, -0.931442, -4.479, -2.94442)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D7"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/ScrapGuide3"]
 transform = Transform3D(0.424689, 0, -0.905339, 0, 1, 0, 0.905339, 0, 0.424689, -0.605881, -3.60258, -3.21575)
 shape = SubResource("BoxShape3D_7ptth")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D7"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/ScrapGuide3"]
 transform = Transform3D(0.941098, -0.187988, 0.281057, 0.115706, 0.960068, 0.254718, -0.317718, -0.207195, 0.925269, -0.805866, -3.5127, -2.67178)
 mesh = SubResource("QuadMesh_3xswk")
 skeleton = NodePath("")
 
-[node name="StaticBody3D6" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
+[node name="ScrapGuide2" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
 transform = Transform3D(0.984094, 0, 0.177652, 0, 1, 0, -0.177652, 0, 0.984094, -4.51432, 0, -3.99926)
 
-[node name="standing_chalkboard_01_4k" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D6" instance=ExtResource("36_nefek")]
+[node name="standing_chalkboard_01_4k" parent="NavigationRegion3D/DungeonGenerator3D/start_room/ScrapGuide2" instance=ExtResource("36_nefek")]
 transform = Transform3D(1.138, 0, 0.380726, 0, 1.2, 0, -0.380726, 0, 1.138, -0.931442, -4.479, -2.94442)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D6"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/ScrapGuide2"]
 transform = Transform3D(0.424689, 0, -0.90534, 0, 1, 0, 0.90534, 0, 0.424689, -0.591854, -3.60258, -3.18582)
 shape = SubResource("BoxShape3D_7ptth")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D6"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/ScrapGuide2"]
 transform = Transform3D(0.956099, 0.219697, 0.19393, -0.27069, 0.915626, 0.297248, -0.112263, -0.336693, 0.934898, -0.851665, -3.50377, -2.65368)
 mesh = SubResource("QuadMesh_ls0tr")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
+[node name="Fabricator" type="MeshInstance3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
 transform = Transform3D(-0.0276599, 0, -0.999617, 0, 1, 0, 0.999617, 0, -0.0276599, 9.12479, -1.60446, -3.3005)
 mesh = SubResource("QuadMesh_5g60x")
+
+[node name="Controls" type="MeshInstance3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.59776, 0.142908, -8.65634)
+mesh = SubResource("QuadMesh_absr6")
 
 [node name="corridor_1" type="Node3D" parent="NavigationRegion3D/DungeonGenerator3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 20, -5)
