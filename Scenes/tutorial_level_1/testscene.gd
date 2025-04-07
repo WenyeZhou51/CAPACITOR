@@ -9,6 +9,7 @@ func _ready() -> void:
 	_players_spawn_node = get_tree().get_current_scene().get_node("players")
 	GameState.initNewLevel(GameState._quota);
 	GameState.alive_count = MultiplayerManager.player_count
+	$NavigationRegion3D.on_dungeon_done_generating()
 	for id in MultiplayerManager.players.keys():
 		print_debug("spawning player " + str(id))
 		_add_player_to_game(MultiplayerManager.players[id].id)
