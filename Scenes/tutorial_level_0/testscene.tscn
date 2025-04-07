@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=4 uid="uid://b0ogfy3qfh5d3"]
+[gd_scene load_steps=89 format=4 uid="uid://b0ogfy3qfh5d3"]
 
 [ext_resource type="Script" path="res://Scenes/testscene.gd" id="1_v17iy"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
@@ -28,6 +28,7 @@
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="22_lnqaj"]
 [ext_resource type="PackedScene" uid="uid://xcj3me4ww2u2" path="res://console folder/console.tscn" id="23_4y2bx"]
 [ext_resource type="PackedScene" uid="uid://b0yt2h0ox1gxb" path="res://Scenes/Spawn Points/player_spawn_point.tscn" id="24_gf8n3"]
+[ext_resource type="PackedScene" uid="uid://vr1uiqyg4cpx" path="res://objectmodels3/spray_paint_bottles_02_4k/spray_paint_bottles_02_4k.gltf" id="24_ov23s"]
 [ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="24_wo4np"]
 [ext_resource type="PackedScene" uid="uid://ceswkthrcvfrj" path="res://objectmodels2/modern_ceiling_lamp_01_4k/modern_ceiling_lamp_01_4k.gltf" id="25_x16wy"]
 [ext_resource type="Texture2D" uid="uid://dd75fl6rr2y7f" path="res://objectmodels/security_camera_02_4k/textures/security_camera_02_diff_4k.jpg" id="26_hc81b"]
@@ -37,13 +38,16 @@
 [ext_resource type="Script" path="res://Scenes/prefabs/items/cashBox.gd" id="30_ksxy2"]
 [ext_resource type="Texture2D" uid="uid://bx5cau0dcic4g" path="res://objectmodels/planter_box_01_4k/textures/planter_box_01_diff_4k.jpg" id="31_8iimj"]
 [ext_resource type="PackedScene" uid="uid://chjq57h8xmpmb" path="res://objectmodels/utility_box_01_4k/utility_box_01_4k.gltf" id="33_0pg0b"]
+[ext_resource type="PackedScene" uid="uid://jobfa30eityv" path="res://objectmodels3/CashRegister_01_4k/CashRegister_01_4k.gltf" id="35_1cab6"]
 [ext_resource type="Texture2D" uid="uid://br7ytuv2yx7ok" path="res://objectmodels/lightbulb_01_4k/textures/lightbulb_01_diff_4k.jpg" id="36_a4bsh"]
+[ext_resource type="PackedScene" uid="uid://dq3g1yn05ud8f" path="res://objectmodels3/standing_chalkboard_01_4k (1)/standing_chalkboard_01_4k.gltf" id="36_nefek"]
 [ext_resource type="PackedScene" uid="uid://rpy0m4novqme" path="res://objectmodels3/barrel/detail_barrel.glb" id="37_hgayo"]
+[ext_resource type="Texture2D" uid="uid://b4r8knrowoecu" path="res://guides/scrapsign_1.png" id="38_g578j"]
 [ext_resource type="Texture2D" uid="uid://d248n30v1rcw1" path="res://objectmodels3/bricks_a/detail-bricks-type-a.png" id="38_ip7y5"]
 [ext_resource type="ArrayMesh" uid="uid://c7ouyxu4g67jv" path="res://objectmodels3/bricks_a/detail-bricks-type-a.obj" id="39_gr58f"]
-[ext_resource type="Texture2D" uid="uid://b8aq0wu0cmbi2" path="res://rooms/cash_box_sign.png" id="43_0sj8y"]
 [ext_resource type="Script" path="res://Scripts/tutorial_level_0_manager.gd" id="44_roeov"]
 [ext_resource type="PackedScene" uid="uid://x6pwle50rjdl" path="res://Scenes/tutorial_message_ui.tscn" id="45_c5sts"]
+[ext_resource type="Texture2D" uid="uid://b06l6gju8jtif" path="res://guides/scrapsign.png" id="45_ucgwd"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_binvk"]
 sky_top_color = Color(0.0101014, 0.0122771, 0.0165181, 1)
@@ -55,7 +59,7 @@ ground_horizon_color = Color(0.0509804, 0.0235294, 0.027451, 1)
 sky_material = SubResource("ProceduralSkyMaterial_binvk")
 
 [sub_resource type="Environment" id="Environment_0737e"]
-background_mode = 5
+background_mode = 2
 background_energy_multiplier = 16.0
 sky = SubResource("Sky_mema1")
 tonemap_mode = 3
@@ -246,8 +250,21 @@ size = Vector3(0.862061, 0.476501, 0.486053)
 [sub_resource type="BoxShape3D" id="BoxShape3D_bt0kh"]
 size = Vector3(3.7, 1.8, 1.7)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_qy6ly"]
+size = Vector3(5, 6, 4)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_xa56l"]
 size = Vector3(4, 8.6, 3.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7ptth"]
+size = Vector3(1.30331, 2.04547, 1.52603)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wromw"]
+albedo_texture = ExtResource("38_g578j")
+
+[sub_resource type="QuadMesh" id="QuadMesh_ls0tr"]
+material = SubResource("StandardMaterial3D_wromw")
+size = Vector2(0.8, 1)
 
 [sub_resource type="GDScript" id="GDScript_1tv7g"]
 resource_name = "corridor"
@@ -379,7 +396,7 @@ shader_parameter/dark_preservation = 0.05
 shader_parameter/highlight_preservation = 0.1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_klfyw"]
-albedo_texture = ExtResource("43_0sj8y")
+albedo_texture = ExtResource("45_ucgwd")
 backlight_enabled = true
 backlight = Color(1, 1, 1, 1)
 
@@ -526,6 +543,15 @@ size_in_voxels = Vector3i(2, 1, 2)
 min_count = 1
 max_count = 1
 
+[node name="spray" parent="NavigationRegion3D/DungeonGenerator3D/start_room" instance=ExtResource("24_ov23s")]
+transform = Transform3D(2.39788, 0.564302, -0.426314, 0, 1.50698, 1.99475, 0.707235, -1.91327, 1.44542, -0.254807, -4.40995, -4.75982)
+
+[node name="spray2" parent="NavigationRegion3D/DungeonGenerator3D/start_room" instance=ExtResource("24_ov23s")]
+transform = Transform3D(1.57038, -1.55209, 1.17256, 2.10772e-08, 1.50698, 1.99475, -1.94522, -1.25301, 0.946612, -4.1406, -4.40995, 1.08563)
+
+[node name="spray3" parent="NavigationRegion3D/DungeonGenerator3D/start_room" instance=ExtResource("24_ov23s")]
+transform = Transform3D(1.34618, -2.04738, 0.496047, 0.46961, 0.86552, 2.2979, -2.0536, -1.14417, 0.850644, -1.99987, -4.40995, -4.99613)
+
 [node name="Console" parent="NavigationRegion3D/DungeonGenerator3D/start_room" instance=ExtResource("23_4y2bx")]
 transform = Transform3D(3.85835, 0, 0, 0, 2.55677, 0, 0, 0, 3.08341, -4.02, -2.81254, -7.31016)
 use_collision = true
@@ -577,15 +603,7 @@ script = ExtResource("28_3hxwf")
 [node name="Lights" type="Node3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
 
 [node name="SpotLight3D" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
-transform = Transform3D(1, 0, 0, 0, -0.0139796, 0.999902, 0, -0.999902, -0.0139796, 7.73058, 0.105429, 0.0853076)
-light_color = Color(0.834402, 0.833558, 1.54018e-06, 1)
-light_energy = 15.0
-light_indirect_energy = 2.0
-spot_range = 5.66704
-spot_angle = 26.0371
-
-[node name="SpotLight3D8" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
-transform = Transform3D(1, 0, 0, 0, -0.0139796, 0.999902, 0, -0.999902, -0.0139796, -5.562, -0.101765, 0.0853076)
+transform = Transform3D(1, 0, 0, 0, -0.0139796, 0.999902, 0, -0.999902, -0.0139796, 5.77291, 0.105429, -1.07544)
 light_color = Color(0.834402, 0.833558, 1.54018e-06, 1)
 light_energy = 15.0
 light_indirect_energy = 2.0
@@ -593,7 +611,7 @@ spot_range = 5.66704
 spot_angle = 26.0371
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
-transform = Transform3D(1, 0, 0, 0, -0.03162, 0.9995, 0, -0.9995, -0.03162, 7.39475, 0.684956, 0.828902)
+transform = Transform3D(1, 0, 0, 0, -0.03162, 0.9995, 0, -0.9995, -0.03162, 7.39475, 0.684956, -0.383317)
 light_color = Color(0.903479, 0.902613, 7.70092e-07, 1)
 light_energy = 5.0
 light_indirect_energy = 2.0
@@ -601,7 +619,7 @@ spot_range = 5.78442
 spot_angle = 27.9059
 
 [node name="SpotLight3D3" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
-transform = Transform3D(1, 0, 0, 0, -0.03162, 0.9995, 0, -0.9995, -0.03162, 7.39475, 0.684956, -0.757324)
+transform = Transform3D(1, 0, 0, 0, -0.03162, 0.9995, 0, -0.9995, -0.03162, 8.03872, 0.684956, -2.79777)
 light_color = Color(0.903479, 0.902613, 7.70092e-07, 1)
 light_energy = 5.0
 light_indirect_energy = 2.0
@@ -640,6 +658,12 @@ shadow_enabled = true
 spot_range = 12.0156
 spot_angle = 49.1396
 
+[node name="SpotLight3D9" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
+transform = Transform3D(1, 0, 0, 0, 0.228028, 0.973655, 0, -0.973655, 0.228028, -5.13399, -0.431635, -4.21503)
+light_color = Color(0.527304, 0.81407, 0.0995202, 1)
+light_energy = 7.0
+light_indirect_energy = 2.0
+
 [node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
 
 [node name="utility_box_02_4k" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D" instance=ExtResource("29_tlbuj")]
@@ -652,22 +676,33 @@ shape = SubResource("BoxShape3D_wwlvr")
 [node name="StaticBody3D2" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
 
 [node name="planter_box_01_4k" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D2"]
-transform = Transform3D(-0.116222, 0, 3.99831, 0, 4, 0, -3.99831, 0, -0.116222, 7.41064, -4.48161, 0.141352)
+transform = Transform3D(-0.116222, 0, 3.99831, 0, 4, 0, -3.99831, 0, -0.116222, 7.41064, -4.22646, 0.141352)
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("30_ksxy2")
 
 [node name="planter_box_01" type="MeshInstance3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D2/planter_box_01_4k"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.13448, -0.0502419, -0.0329742)
 mesh = SubResource("ArrayMesh_tdus8")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D2/planter_box_01_4k"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0133986, 0.226831, -0.0102599)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.09662, 0.226831, -0.0417471)
 shape = SubResource("BoxShape3D_n77td")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D2"]
-transform = Transform3D(-0.0493379, 0, 0.998782, 0, 1, 0, -0.998782, 0, -0.0493379, 7.39503, -3.60077, 0.167362)
+transform = Transform3D(-0.0493379, 0, 0.998782, 0, 1, 0, -0.998782, 0, -0.0493379, 7.39503, -3.60077, 4.79552)
 shape = SubResource("BoxShape3D_bt0kh")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
+script = ExtResource("30_ksxy2")
+
+[node name="CashRegister_01_4k" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D3" instance=ExtResource("35_1cab6")]
+transform = Transform3D(-2.62268e-07, 0, -6, 0, 6, 0, 6, 0, -2.62268e-07, 8.06643, -4.48755, -1.3202)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.68444, -3.14604, -1.4245)
+shape = SubResource("BoxShape3D_qy6ly")
 
 [node name="StaticBody3D4" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
 
@@ -679,7 +714,31 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.53699, -0.207274, 5.88963)
 shape = SubResource("BoxShape3D_xa56l")
 
 [node name="Flashlight" parent="NavigationRegion3D/DungeonGenerator3D/start_room" instance=ExtResource("13_1s1s2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.88199, -4.5, -0.459741)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.70227, -4.31323, -0.190661)
+
+[node name="StaticBody3D5" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
+transform = Transform3D(0.998133, 0, 0.0610834, 0, 1, 0, -0.0610834, 0, 0.998133, 0.371563, 0, -0.353971)
+
+[node name="standing_chalkboard_01_4k" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D5" instance=ExtResource("36_nefek")]
+transform = Transform3D(1.138, 0, 0.380726, 0, 1.2, 0, -0.380726, 0, 1.138, -0.931442, -4.479, -2.94442)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D5"]
+transform = Transform3D(0.424689, 0, -0.905339, 0, 1, 0, 0.905339, 0, 0.424689, -0.605881, -3.60258, -3.21575)
+shape = SubResource("BoxShape3D_7ptth")
+
+[node name="StaticBody3D6" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
+transform = Transform3D(0.992058, 0, -0.125783, 0, 1, 0, 0.125783, 0, 0.992058, -4.51432, 0, -2.22758)
+
+[node name="standing_chalkboard_01_4k" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D6" instance=ExtResource("36_nefek")]
+transform = Transform3D(1.138, 0, 0.380726, 0, 1.2, 0, -0.380726, 0, 1.138, -0.931442, -4.479, -2.94442)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D6"]
+transform = Transform3D(0.424689, 0, -0.90534, 0, 1, 0, 0.90534, 0, 0.424689, -0.591854, -3.60258, -3.18582)
+shape = SubResource("BoxShape3D_7ptth")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/StaticBody3D6"]
+transform = Transform3D(0.956099, 0.219697, 0.19393, -0.27069, 0.915626, 0.297248, -0.112263, -0.336693, 0.934898, -0.851665, -3.50377, -2.65368)
+mesh = SubResource("QuadMesh_ls0tr")
 
 [node name="corridor_1" type="Node3D" parent="NavigationRegion3D/DungeonGenerator3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 20, -5)
@@ -783,13 +842,13 @@ spawn_path = NodePath("../players")
 [node name="items" type="Node3D" parent="."]
 
 [node name="scrap1" parent="items" instance=ExtResource("14_q11nm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.2024, 17.8615, -2.75375)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.2024, 15.6873, -2.75375)
 
 [node name="Scrap2" parent="items" instance=ExtResource("4_occg4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.285, 18.1068, -4.37036)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.285, 15.6129, -4.37036)
 
 [node name="Scrap3" parent="items" instance=ExtResource("5_kvhlf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.4563, 18.2752, -5.64612)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.4563, 15.666, -5.64612)
 
 [node name="ItemSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://Scenes/prefabs/items/scrap1.tscn", "res://Scenes/prefabs/items/scrap2.tscn", "res://Scenes/prefabs/items/scrap3.tscn", "res://Scenes/prefabs/Door.tscn", "res://Scenes/prefabs/items/coolant.tscn", "res://Scenes/prefabs/enemies/enemy_earworm.tscn", "res://Scenes/prefabs/enemies/enemy_venus.tscn", "res://Scenes/prefabs/items/flashlight.tscn")
@@ -798,8 +857,13 @@ spawn_path = NodePath("../items")
 [node name="Player Spawn Point" parent="." instance=ExtResource("24_gf8n3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.3085, 19.1879, 1.94595)
 
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.919934, -0.200293, 0.337051, 0.115706, 0.960068, 0.254718, -0.37461, -0.195325, 0.906374, 39.404, 16.4873, -2.97154)
+mesh = SubResource("QuadMesh_3xswk")
+skeleton = NodePath("../MeshInstance3D")
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.0329193, 0.000780959, -0.999458, 0.0237168, 0.999719, 3.86113e-10, 0.999176, -0.0237039, -0.0329286, 46.2256, 16.7662, 0.204222)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 0.999999, 0, -4.37114e-08, 46.5491, 16.6347, 4.67795)
 mesh = SubResource("QuadMesh_3xswk")
 
 [node name="Node" type="Node" parent="."]
