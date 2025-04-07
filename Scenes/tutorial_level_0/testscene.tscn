@@ -1,4 +1,4 @@
-[gd_scene load_steps=89 format=4 uid="uid://b0ogfy3qfh5d3"]
+[gd_scene load_steps=88 format=4 uid="uid://b0ogfy3qfh5d3"]
 
 [ext_resource type="Script" path="res://Scenes/testscene.gd" id="1_v17iy"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
@@ -27,7 +27,6 @@
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="22_lnqaj"]
 [ext_resource type="PackedScene" uid="uid://xcj3me4ww2u2" path="res://console folder/console.tscn" id="23_4y2bx"]
 [ext_resource type="PackedScene" uid="uid://b0yt2h0ox1gxb" path="res://Scenes/Spawn Points/player_spawn_point.tscn" id="24_gf8n3"]
-[ext_resource type="PackedScene" uid="uid://vr1uiqyg4cpx" path="res://objectmodels3/spray_paint_bottles_02_4k/spray_paint_bottles_02_4k.gltf" id="24_ov23s"]
 [ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="24_wo4np"]
 [ext_resource type="PackedScene" uid="uid://ceswkthrcvfrj" path="res://objectmodels2/modern_ceiling_lamp_01_4k/modern_ceiling_lamp_01_4k.gltf" id="25_x16wy"]
 [ext_resource type="Texture2D" uid="uid://dd75fl6rr2y7f" path="res://objectmodels/security_camera_02_4k/textures/security_camera_02_diff_4k.jpg" id="26_hc81b"]
@@ -603,15 +602,6 @@ size_in_voxels = Vector3i(2, 1, 2)
 min_count = 1
 max_count = 1
 
-[node name="spray" parent="NavigationRegion3D/DungeonGenerator3D/start_room" instance=ExtResource("24_ov23s")]
-transform = Transform3D(2.39788, 0.564302, -0.426314, 0, 1.50698, 1.99475, 0.707235, -1.91327, 1.44542, -0.254807, -4.40995, -4.75982)
-
-[node name="spray2" parent="NavigationRegion3D/DungeonGenerator3D/start_room" instance=ExtResource("24_ov23s")]
-transform = Transform3D(1.57038, -1.55209, 1.17256, 2.10772e-08, 1.50698, 1.99475, -1.94522, -1.25301, 0.946612, -4.1406, -4.40995, 1.08563)
-
-[node name="spray3" parent="NavigationRegion3D/DungeonGenerator3D/start_room" instance=ExtResource("24_ov23s")]
-transform = Transform3D(1.34618, -2.04738, 0.496047, 0.46961, 0.86552, 2.2979, -2.0536, -1.14417, 0.850644, -1.99987, -4.40995, -4.99613)
-
 [node name="Console" parent="NavigationRegion3D/DungeonGenerator3D/start_room" instance=ExtResource("23_4y2bx")]
 transform = Transform3D(3.85835, 0, 0, 0, 2.55677, 0, 0, 0, 3.08341, -4.02, -2.81254, -7.31016)
 use_collision = true
@@ -735,7 +725,7 @@ shape = SubResource("BoxShape3D_wwlvr")
 
 [node name="Cashier" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.150791, 0, 0)
-collision_layer = 4
+collision_layer = 5
 collision_mask = 7
 script = ExtResource("30_ksxy2")
 

@@ -153,7 +153,7 @@ size = Vector3(4, 8.6, 3.1)
 size = Vector3(4, 2.5, 0.1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yid5x"]
-size = Vector3(5.83496, 6, 4)
+size = Vector3(6.23584, 6, 4)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_80nd6"]
 resource_name = "CashRegister_01"
@@ -440,12 +440,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.90201, -3.89654, 1.42552)
 
 [node name="Cashier" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9097, 0, 0.726667)
-collision_layer = 4
+collision_layer = 5
 collision_mask = 7
 script = ExtResource("7_lf1au")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cashier"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.26696, -3.14604, -0.596285)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.06652, -3.14604, -0.596285)
 shape = SubResource("BoxShape3D_yid5x")
 
 [node name="CashRegister_01_body" type="MeshInstance3D" parent="Cashier"]
