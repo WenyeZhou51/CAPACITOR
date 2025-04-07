@@ -215,7 +215,7 @@ size = Vector3(4, 8.6, 3.1)
 size = Vector3(4, 2.5, 0.1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rinem"]
-size = Vector3(5.83496, 6, 4)
+size = Vector3(6.34131, 6.46387, 4.40967)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_80nd6"]
 resource_name = "CashRegister_01"
@@ -828,7 +828,7 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.474962, -4.27081, 5.64823)
 [node name="Lights" type="Node3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
 
 [node name="SpotLight3D" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
-transform = Transform3D(1, 0, 0, 0, -0.0139796, 0.999902, 0, -0.999902, -0.0139796, 7.73058, 0.727866, 0.0853076)
+transform = Transform3D(1, 0, 0, 0, -0.0139796, 0.999902, 0, -0.999902, -0.0139796, 6.59896, 0.727865, -0.302838)
 light_color = Color(0.834402, 0.833558, 1.54018e-06, 1)
 light_energy = 6.0
 light_indirect_energy = 2.0
@@ -836,7 +836,7 @@ spot_range = 5.66704
 spot_angle = 26.0371
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
-transform = Transform3D(1, 0, 0, 0, -0.03162, 0.9995, 0, -0.9995, -0.03162, 7.39475, 0.684956, 0.828902)
+transform = Transform3D(1, 0, 0, 0, -0.03162, 0.9995, 0, -0.9995, -0.03162, 7.98373, 2.78589, 0.828902)
 light_color = Color(0.903479, 0.902613, 7.70092e-07, 1)
 light_energy = 4.0
 light_indirect_energy = 2.0
@@ -844,7 +844,7 @@ spot_range = 5.78442
 spot_angle = 27.9059
 
 [node name="SpotLight3D3" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
-transform = Transform3D(1, 0, 0, 0, -0.03162, 0.9995, 0, -0.9995, -0.03162, 7.39475, 0.684956, -0.757324)
+transform = Transform3D(1, 0, 0, 0, -0.03162, 0.9995, 0, -0.9995, -0.03162, 7.93866, 2.57527, -1.19939)
 light_color = Color(0.903479, 0.902613, 7.70092e-07, 1)
 light_energy = 4.0
 light_indirect_energy = 2.0
@@ -852,7 +852,7 @@ spot_range = 5.86025
 spot_angle = 27.9059
 
 [node name="SpotLight3D4" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
-transform = Transform3D(1, 0, 0, 0, -0.00963403, 0.999954, 0, -0.999954, -0.00963403, -0.136833, 2.16389, 0)
+transform = Transform3D(1, 0, 0, 0, -0.00963403, 0.999954, 0, -0.999954, -0.00963403, -0.136833, 3.44964, 0)
 light_color = Color(0.921252, 0.615242, 0.698727, 1)
 light_energy = 5.0
 shadow_enabled = true
@@ -953,7 +953,7 @@ collision_mask = 7
 script = ExtResource("29_1eahx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Cashier"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.26696, -3.14604, -0.596285)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.01379, -2.91411, -0.801119)
 shape = SubResource("BoxShape3D_rinem")
 
 [node name="CashRegister_01_body" type="MeshInstance3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Cashier"]
@@ -962,7 +962,7 @@ mesh = SubResource("ArrayMesh_gtc6i")
 skeleton = NodePath("")
 
 [node name="CashRegister_011_drawer" type="MeshInstance3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Cashier"]
-transform = Transform3D(-0.0805271, 0, 5.99946, 0, 6, 0, -5.99946, 0, -0.0805271, 4.02936, -4.4726, -0.70766)
+transform = Transform3D(-0.0805271, 0, 5.99946, 0, 6, 0, -5.99946, 0, -0.0805271, 4.42344, -4.4726, -0.70766)
 mesh = SubResource("ArrayMesh_0d5mv")
 skeleton = NodePath("")
 
@@ -1272,7 +1272,7 @@ spawn_path = NodePath("../players")
 [node name="items" type="Node3D" parent="."]
 
 [node name="Coolant" parent="items" instance=ExtResource("5_p0nx2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.493, 18.3637, -1.66209)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.493, 16.173, -1.66209)
 
 [node name="Coolant2" parent="items" instance=ExtResource("5_p0nx2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.0828, 18.3637, 29.2616)
