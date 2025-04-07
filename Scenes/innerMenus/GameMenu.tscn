@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dagu06p8qd6gg"]
+[gd_scene load_steps=9 format=3 uid="uid://dagu06p8qd6gg"]
 
 [ext_resource type="Script" path="res://Scenes/innerMenus/innerMenuScript.gd" id="1_22w3a"]
 [ext_resource type="Texture2D" uid="uid://dnwx1p2ks3c4x" path="res://Assets/title screen.png" id="2_h10u2"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Scenes/menu_button.gd" id="4_fdbfv"]
 [ext_resource type="AudioStream" uid="uid://d21tn6mxl1rmc" path="res://audio/click_sounds/Click_Electronic_03.mp3" id="5_40ipl"]
 [ext_resource type="AudioStream" uid="uid://cdy0uy4q3ejn5" path="res://audio/click_sounds/Click_Electronic_15.mp3" id="6_lugpc"]
+[ext_resource type="Material" uid="uid://bl6bvg6m8lab0" path="res://shaders/crt_shader.tres" id="8_iy3gm"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -131,6 +132,11 @@ text = "Starts the tutorial sequence on fixed levels. Learn the basics of collec
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
+
+[node name="CRTEffect" type="ColorRect" parent="MarginContainer"]
+material = ExtResource("8_iy3gm")
+layout_mode = 2
+mouse_filter = 2
 
 [node name="background_music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_r8asp")

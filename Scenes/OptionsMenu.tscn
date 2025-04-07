@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bc478i7omcrwi"]
+[gd_scene load_steps=6 format=3 uid="uid://bc478i7omcrwi"]
 
 [ext_resource type="Script" path="res://Scenes/options_menu.gd" id="1_yvnqr"]
 [ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_k34gm"]
 [ext_resource type="FontFile" uid="uid://djxmwln40ig66" path="res://fonts/Geo-Regular.ttf" id="3_yvnqr"]
 [ext_resource type="AudioStream" uid="uid://cdy0uy4q3ejn5" path="res://audio/click_sounds/Click_Electronic_15.mp3" id="4_nw10l"]
+[ext_resource type="Material" uid="uid://bl6bvg6m8lab0" path="res://shaders/crt_shader.tres" id="5_jmqhl"]
 
 [node name="OptionsMenu" type="Control"]
 layout_mode = 3
@@ -22,6 +23,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_k34gm")
+
+[node name="CRTEffect" type="ColorRect" parent="."]
+material = ExtResource("5_jmqhl")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1

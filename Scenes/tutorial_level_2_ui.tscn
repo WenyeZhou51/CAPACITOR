@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://b870nmgcudj86"]
+[gd_scene load_steps=6 format=3 uid="uid://b870nmgcudj86"]
 
 [ext_resource type="Script" path="res://Scripts/tutorial_level_2_message_system.gd" id="1_abcde"]
 [ext_resource type="LabelSettings" path="res://fonts/geo_title_label_settings.tres" id="2_j3iqv"]
 [ext_resource type="LabelSettings" path="res://fonts/geo_message_label_settings.tres" id="3_gg745"]
+[ext_resource type="Material" uid="uid://bl6bvg6m8lab0" path="res://shaders/crt_shader.tres" id="4_w8edr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mj2h1"]
 content_margin_left = 15.0
@@ -31,6 +32,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_abcde")
+
+[node name="CRTEffect" type="ColorRect" parent="."]
+material = ExtResource("4_w8edr")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="MessagePanel" type="Panel" parent="."]
 custom_minimum_size = Vector2(500, 0)

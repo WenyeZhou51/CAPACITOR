@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://q202lrglap61"]
+[gd_scene load_steps=9 format=3 uid="uid://q202lrglap61"]
 
 [ext_resource type="Script" path="res://Scenes/menu.gd" id="1_hqwk4"]
 [ext_resource type="Texture2D" uid="uid://dnwx1p2ks3c4x" path="res://Assets/title screen.png" id="2_tmagq"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Scenes/menu_button.gd" id="5_rqb47"]
 [ext_resource type="AudioStream" uid="uid://d21tn6mxl1rmc" path="res://audio/click_sounds/Click_Electronic_03.mp3" id="6_cbh3u"]
 [ext_resource type="AudioStream" uid="uid://cdy0uy4q3ejn5" path="res://audio/click_sounds/Click_Electronic_15.mp3" id="7_wxorw"]
+[ext_resource type="Material" uid="uid://bl6bvg6m8lab0" path="res://shaders/crt_shader.tres" id="8_5n7tc"]
 
 [node name="Menu2" type="Control"]
 layout_mode = 3
@@ -82,6 +83,11 @@ text = "QUIT"
 flat = true
 alignment = 0
 script = ExtResource("5_rqb47")
+
+[node name="CRTEffect" type="ColorRect" parent="MarginContainer"]
+material = ExtResource("8_5n7tc")
+layout_mode = 2
+mouse_filter = 2
 
 [node name="background_music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_nk3pr")

@@ -1,12 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://b6mpaab555b31"]
+[gd_scene load_steps=4 format=3 uid="uid://b6mpaab555b31"]
 
 [ext_resource type="Script" path="res://Scenes/pop_up.gd" id="1_ag2g5"]
 [ext_resource type="FontFile" uid="uid://bk7y7cg03wr1n" path="res://fonts/Geo-Regular.ttf" id="2_geo"]
+[ext_resource type="Material" uid="uid://bl6bvg6m8lab0" path="res://shaders/crt_shader.tres" id="3_7wbev"]
 
 [node name="PopUp" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_ag2g5")
+
+[node name="CRTEffect" type="ColorRect" parent="."]
+material = ExtResource("3_7wbev")
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 1
