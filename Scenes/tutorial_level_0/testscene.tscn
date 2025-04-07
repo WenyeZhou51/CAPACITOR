@@ -42,7 +42,7 @@
 [ext_resource type="Texture2D" uid="uid://dvowvf07ve3vq" path="res://guides/fab.png" id="37_o7rqt"]
 [ext_resource type="Texture2D" uid="uid://b4r8knrowoecu" path="res://guides/scrapsign_1.png" id="38_g578j"]
 [ext_resource type="Texture2D" uid="uid://d248n30v1rcw1" path="res://objectmodels3/bricks_a/detail-bricks-type-a.png" id="38_ip7y5"]
-[ext_resource type="Texture2D" uid="uid://bp44srn0mpnro" path="res://guides/controls.png" id="38_puugv"]
+[ext_resource type="Texture2D" uid="uid://b5bf12rrdy8h1" path="res://guides/control.png" id="38_m55cp"]
 [ext_resource type="ArrayMesh" uid="uid://c7ouyxu4g67jv" path="res://objectmodels3/bricks_a/detail-bricks-type-a.obj" id="39_gr58f"]
 [ext_resource type="Script" path="res://Scripts/tutorial_level_0_manager.gd" id="44_roeov"]
 [ext_resource type="PackedScene" uid="uid://x6pwle50rjdl" path="res://Scenes/tutorial_message_ui.tscn" id="45_c5sts"]
@@ -318,13 +318,13 @@ size = Vector3(4, 8.6, 3.1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_7ptth"]
 size = Vector3(1.30331, 2.04547, 1.52603)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_klfyw"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3axcp"]
 albedo_texture = ExtResource("45_ucgwd")
 backlight_enabled = true
 backlight = Color(1, 1, 1, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_3xswk"]
-material = SubResource("StandardMaterial3D_klfyw")
+material = SubResource("StandardMaterial3D_3axcp")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wromw"]
 albedo_texture = ExtResource("38_g578j")
@@ -334,17 +334,19 @@ material = SubResource("StandardMaterial3D_wromw")
 size = Vector2(0.8, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4nt8k"]
+albedo_color = Color(0.794121, 0.794121, 0.794121, 1)
 albedo_texture = ExtResource("37_o7rqt")
 
 [sub_resource type="QuadMesh" id="QuadMesh_5g60x"]
 material = SubResource("StandardMaterial3D_4nt8k")
 size = Vector2(5, 4)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lwh6k"]
-albedo_texture = ExtResource("38_puugv")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b203u"]
+albedo_color = Color(0.791999, 0.791999, 0.791999, 1)
+albedo_texture = ExtResource("38_m55cp")
 
 [sub_resource type="QuadMesh" id="QuadMesh_absr6"]
-material = SubResource("StandardMaterial3D_lwh6k")
+material = SubResource("StandardMaterial3D_b203u")
 size = Vector2(9, 7)
 
 [sub_resource type="GDScript" id="GDScript_1tv7g"]
@@ -704,26 +706,26 @@ spot_range = 12.0156
 spot_angle = 49.1396
 
 [node name="SpotLight3D6" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
-transform = Transform3D(-0.119613, -0.780334, 0.613817, 0.114021, 0.603368, 0.78927, -0.986251, 0.164395, 0.0168043, 6.02993, 4.08015, -6.37227)
+transform = Transform3D(-0.119613, -0.780334, 0.613817, 0.114021, 0.603368, 0.78927, -0.986251, 0.164395, 0.0168038, 2.14291, 3.79792, -7.12227)
 light_color = Color(0.921252, 0.615242, 0.698727, 1)
-light_energy = 4.0
+light_energy = 3.0
 shadow_enabled = true
 spot_range = 13.1929
 spot_angle = 49.1396
 
 [node name="SpotLight3D7" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
-transform = Transform3D(1, 0, 0, 0, -0.00963403, 0.999954, 0, -0.999954, -0.00963403, -5.00257, 2.05587, -3.70005)
+transform = Transform3D(0.986549, -0.00157481, 0.163456, -0.163464, -0.00950444, 0.986504, 0, -0.999954, -0.00963403, -1.42934, 1.70631, -3.70005)
 light_color = Color(0.921252, 0.615242, 0.698727, 1)
-light_energy = 4.0
+light_energy = 3.0
+light_indirect_energy = 0.2
 shadow_enabled = true
 spot_range = 12.0156
 spot_angle = 49.1396
 
 [node name="SpotLight3D9" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
-transform = Transform3D(1, 0, 0, 0, 0.228028, 0.973655, 0, -0.973655, 0.228028, -6.65801, 1.13729, -4.21503)
+transform = Transform3D(1, 0, 0, 0, 0.228028, 0.973655, 0, -0.973655, 0.228028, -5.88696, -2.52666, -6.01843)
 light_color = Color(0.527304, 0.81407, 0.0995202, 1)
-light_energy = 4.0
-light_indirect_energy = 2.0
+light_energy = 0.5
 
 [node name="UtilityBoxProp1" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
 
@@ -779,7 +781,7 @@ mesh = SubResource("QuadMesh_3xswk")
 skeleton = NodePath("")
 
 [node name="ScrapGuide3" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
-transform = Transform3D(0.695198, 0, 0.718818, 0, 1, 0, -0.718818, 0, 0.695198, -12.8086, -0.000627518, -5.54397)
+transform = Transform3D(0.695198, 0, 0.718818, 0, 1, 0, -0.718818, 0, 0.695198, -12.5272, -0.000627518, -5.44658)
 
 [node name="standing_chalkboard_01_4k" parent="NavigationRegion3D/DungeonGenerator3D/start_room/ScrapGuide3" instance=ExtResource("36_nefek")]
 transform = Transform3D(1.138, 0, 0.380726, 0, 1.2, 0, -0.380726, 0, 1.138, -0.931442, -4.479, -2.94442)
@@ -812,7 +814,7 @@ transform = Transform3D(-0.0276599, 0, -0.999617, 0, 1, 0, 0.999617, 0, -0.02765
 mesh = SubResource("QuadMesh_5g60x")
 
 [node name="Controls" type="MeshInstance3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.59776, 0.142908, -8.65634)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.86529, 0.142908, -8.56335)
 mesh = SubResource("QuadMesh_absr6")
 
 [node name="corridor_1" type="Node3D" parent="NavigationRegion3D/DungeonGenerator3D"]
