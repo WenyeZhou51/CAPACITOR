@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=4 uid="uid://b0ogfy3qfh5d3"]
+[gd_scene load_steps=90 format=4 uid="uid://b0ogfy3qfh5d3"]
 
 [ext_resource type="Script" path="res://Scenes/testscene.gd" id="1_v17iy"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
@@ -39,6 +39,7 @@
 [ext_resource type="Texture2D" uid="uid://br7ytuv2yx7ok" path="res://objectmodels/lightbulb_01_4k/textures/lightbulb_01_diff_4k.jpg" id="36_a4bsh"]
 [ext_resource type="PackedScene" uid="uid://dq3g1yn05ud8f" path="res://objectmodels3/standing_chalkboard_01_4k (1)/standing_chalkboard_01_4k.gltf" id="36_nefek"]
 [ext_resource type="PackedScene" uid="uid://rpy0m4novqme" path="res://objectmodels3/barrel/detail_barrel.glb" id="37_hgayo"]
+[ext_resource type="Texture2D" uid="uid://dvowvf07ve3vq" path="res://guides/fab.png" id="37_o7rqt"]
 [ext_resource type="Texture2D" uid="uid://b4r8knrowoecu" path="res://guides/scrapsign_1.png" id="38_g578j"]
 [ext_resource type="Texture2D" uid="uid://d248n30v1rcw1" path="res://objectmodels3/bricks_a/detail-bricks-type-a.png" id="38_ip7y5"]
 [ext_resource type="ArrayMesh" uid="uid://c7ouyxu4g67jv" path="res://objectmodels3/bricks_a/detail-bricks-type-a.obj" id="39_gr58f"]
@@ -331,7 +332,12 @@ albedo_texture = ExtResource("38_g578j")
 material = SubResource("StandardMaterial3D_wromw")
 size = Vector2(0.8, 1)
 
-[sub_resource type="QuadMesh" id="QuadMesh_b6d4x"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4nt8k"]
+albedo_texture = ExtResource("37_o7rqt")
+
+[sub_resource type="QuadMesh" id="QuadMesh_5g60x"]
+material = SubResource("StandardMaterial3D_4nt8k")
+size = Vector2(5, 4)
 
 [sub_resource type="GDScript" id="GDScript_1tv7g"]
 resource_name = "corridor"
@@ -660,7 +666,7 @@ spot_angle = 26.0371
 [node name="SpotLight3D2" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
 transform = Transform3D(1, 0, 0, 0, -0.03162, 0.9995, 0, -0.9995, -0.03162, 7.39475, 2.64682, 1.84704)
 light_color = Color(0.903479, 0.902613, 7.70092e-07, 1)
-light_energy = 5.0
+light_energy = 4.0
 light_indirect_energy = 2.0
 spot_range = 5.78442
 spot_angle = 27.9059
@@ -668,15 +674,15 @@ spot_angle = 27.9059
 [node name="SpotLight3D3" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
 transform = Transform3D(1, 0, 0, 0, -0.03162, 0.9995, 0, -0.9995, -0.03162, 8.03872, 3.17942, -0.363813)
 light_color = Color(0.903479, 0.902613, 7.70092e-07, 1)
-light_energy = 5.0
+light_energy = 4.0
 light_indirect_energy = 2.0
 spot_range = 5.86025
 spot_angle = 27.9059
 
 [node name="SpotLight3D4" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
-transform = Transform3D(1, 0, 0, 0, -0.00963403, 0.999954, 0, -0.999954, -0.00963403, -0.136833, 2.16389, 0)
+transform = Transform3D(1, 0, 0, 0, -0.00963403, 0.999954, 0, -0.999954, -0.00963403, -0.136833, 2.16389, 2.58978)
 light_color = Color(0.921252, 0.615242, 0.698727, 1)
-light_energy = 5.0
+light_energy = 4.0
 shadow_enabled = true
 spot_range = 12.0156
 spot_angle = 49.1396
@@ -684,15 +690,15 @@ spot_angle = 49.1396
 [node name="SpotLight3D5" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
 transform = Transform3D(1, 0, 0, 0, -0.00963403, 0.999954, 0, -0.999954, -0.00963403, -9.09104, 2.16389, 2.62589)
 light_color = Color(0.921252, 0.615242, 0.698727, 1)
-light_energy = 5.0
+light_energy = 3.0
 shadow_enabled = true
 spot_range = 12.0156
 spot_angle = 49.1396
 
 [node name="SpotLight3D6" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
-transform = Transform3D(1, 0, 0, 0, 0.127705, 0.991812, 0, -0.991812, 0.127705, -2.22409, 2.86431, -6.12123)
+transform = Transform3D(1, 0, 0, 0, 0.127705, 0.991812, 0, -0.991812, 0.127705, -0.40324, 2.86431, -6.12123)
 light_color = Color(0.921252, 0.615242, 0.698727, 1)
-light_energy = 5.0
+light_energy = 4.0
 shadow_enabled = true
 spot_range = 12.0156
 spot_angle = 49.1396
@@ -700,15 +706,15 @@ spot_angle = 49.1396
 [node name="SpotLight3D7" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
 transform = Transform3D(1, 0, 0, 0, -0.00963403, 0.999954, 0, -0.999954, -0.00963403, -4.25695, 2.05587, -4.27707)
 light_color = Color(0.921252, 0.615242, 0.698727, 1)
-light_energy = 5.0
+light_energy = 4.0
 shadow_enabled = true
 spot_range = 12.0156
 spot_angle = 49.1396
 
 [node name="SpotLight3D9" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
-transform = Transform3D(1, 0, 0, 0, 0.228028, 0.973655, 0, -0.973655, 0.228028, -5.13399, -0.431635, -4.21503)
+transform = Transform3D(1, 0, 0, 0, 0.228028, 0.973655, 0, -0.973655, 0.228028, -6.65801, 1.13729, -4.21503)
 light_color = Color(0.527304, 0.81407, 0.0995202, 1)
-light_energy = 7.0
+light_energy = 4.0
 light_indirect_energy = 2.0
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
@@ -794,8 +800,8 @@ transform = Transform3D(0.956099, 0.219697, 0.19393, -0.27069, 0.915626, 0.29724
 mesh = SubResource("QuadMesh_ls0tr")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
-transform = Transform3D(0.775804, 0, -0.630974, 0, 1, 0, 0.630974, 0, 0.775804, 0, 0, 0)
-mesh = SubResource("QuadMesh_b6d4x")
+transform = Transform3D(-0.0276599, 0, -0.999617, 0, 1, 0, 0.999617, 0, -0.0276599, 9.12479, -1.60446, -3.3005)
+mesh = SubResource("QuadMesh_5g60x")
 
 [node name="corridor_1" type="Node3D" parent="NavigationRegion3D/DungeonGenerator3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 20, -5)
@@ -841,7 +847,6 @@ skeleton = NodePath("")
 [node name="SpotLight3D" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/corridor_1/Lights"]
 transform = Transform3D(-0.639719, -0.768601, 0.00354422, 0.00753409, -0.00165962, 0.99997, -0.768572, 0.639727, 0.0068524, 0, 2.72433, 0)
 light_color = Color(0.277939, 0.601375, 0.320244, 1)
-light_energy = 1.5
 spot_range = 35.527
 spot_attenuation = 1.15
 spot_angle = 40.2
