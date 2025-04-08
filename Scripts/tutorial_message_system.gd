@@ -14,12 +14,14 @@ var player_find_attempts = 0
 
 # Player action tracking
 var has_moved: bool = false
+var has_jumped: bool = false
 var has_picked_up_scrap: bool = false 
 var has_sold_scrap: bool = false
 
 # The messages to display in sequence
 var messages = [
 	"Move with AWSD",
+	"Space to jump",
 	"Pick up scrap with E",
 	"Move to the Fabricator and press E to sell scrap",
 	"Meet the quota by turning in all scraps in this room"
@@ -113,8 +115,21 @@ func _process(delta):
 					print("Player moved using WASD")
 					has_moved = true
 					advance_to_next_message()
+			
+		1: # Jump tutorial - "Space to jump"
+			# Check for Space key press and jump action
+			if !has_jumped:
+				var space_pressed = Input.is_action_just_pressed("Jump")
 				
-		1: # Scrap pickup tutorial - "Pick up scrap with E"
+				if space_pressed:
+					print("Space key pressed for jumping")
+					# Check if player is actually jumping
+					if player.get("velocity") != null and player.get("velocity").y > 0:
+						has_jumped = true
+						print("Player jumped")
+						advance_to_next_message()
+				
+		2: # Scrap pickup tutorial - "Pick up scrap with E"
 			# Check for scrap pickup
 			if !has_picked_up_scrap:
 				var has_scrap = false
@@ -135,7 +150,7 @@ func _process(delta):
 					has_picked_up_scrap = true
 					advance_to_next_message()
 				
-		2: # Sell scrap tutorial - "Move to the Fabricator and press E to sell scrap"
+		3: # Sell scrap tutorial - "Move to the Fabricator and press E to sell scrap"
 			# Check for scrap selling
 			if !has_sold_scrap:
 				var has_sold = false
@@ -156,7 +171,7 @@ func _process(delta):
 					has_sold_scrap = true
 					advance_to_next_message()
 				
-		3: # Quota message - "Meet the quota by turning in all scraps in this room"
+		4: # Quota message - "Meet the quota by turning in all scraps in this room"
 			# This just displays information, no condition to advance
 			pass
 

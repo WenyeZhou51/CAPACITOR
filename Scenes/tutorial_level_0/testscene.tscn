@@ -587,11 +587,6 @@ layout_mode = 2
 [node name="Inv_slot_UI4" parent="UI/ninepatch/GridContainer" instance=ExtResource("11_yg2qu")]
 layout_mode = 2
 
-[node name="Tutorial2" type="NavigationRegion3D" parent="."]
-navigation_mesh = SubResource("NavigationMesh_t4gef")
-
-[node name="DGTutorial2" type="Node3D" parent="Tutorial2"]
-
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_t4gef")
 script = ExtResource("6_jds6y")
@@ -722,6 +717,15 @@ shadow_enabled = true
 spot_range = 12.0156
 spot_angle = 49.1396
 
+[node name="SpotLight3D8" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
+transform = Transform3D(0.986549, -0.00157482, 0.163456, -0.163464, -0.00950444, 0.986504, 0, -0.999954, -0.00963402, -10.5278, -1.1804, -4.87815)
+light_color = Color(0.921252, 0.615242, 0.698727, 1)
+light_energy = 3.0
+light_indirect_energy = 0.2
+shadow_enabled = true
+spot_range = 12.0156
+spot_angle = 49.1396
+
 [node name="SpotLight3D9" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
 transform = Transform3D(1, 0, 0, 0, 0.228028, 0.973655, 0, -0.973655, 0.228028, -5.88696, -2.52666, -6.01843)
 light_color = Color(0.527304, 0.81407, 0.0995202, 1)
@@ -781,7 +785,7 @@ mesh = SubResource("QuadMesh_3xswk")
 skeleton = NodePath("")
 
 [node name="ScrapGuide3" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
-transform = Transform3D(0.695198, 0, 0.718818, 0, 1, 0, -0.718818, 0, 0.695198, -12.5272, -0.000627518, -5.44658)
+transform = Transform3D(0.695198, 0, 0.718818, 0, 1, 0, -0.718818, 0, 0.695198, -12.5272, 0.789904, -5.44658)
 
 [node name="standing_chalkboard_01_4k" parent="NavigationRegion3D/DungeonGenerator3D/start_room/ScrapGuide3" instance=ExtResource("36_nefek")]
 transform = Transform3D(1.138, 0, 0.380726, 0, 1.2, 0, -0.380726, 0, 1.138, -0.931442, -4.479, -2.94442)
@@ -832,9 +836,10 @@ use_collision = true
 size = Vector3(10, 10, 10)
 
 [node name="Roomcut" type="CSGBox3D" parent="NavigationRegion3D/DungeonGenerator3D/corridor_1/CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.364014, 0)
 operation = 2
 snap = 0.1
-size = Vector3(9, 9, 9)
+size = Vector3(9, 8.27197, 9)
 
 [node name="DOOR?3" type="CSGBox3D" parent="NavigationRegion3D/DungeonGenerator3D/corridor_1/CSGBox3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, -0.5, 0)
@@ -866,6 +871,7 @@ spot_attenuation = 1.15
 spot_angle = 40.2
 
 [node name="StaticBody3D2" type="StaticBody3D" parent="NavigationRegion3D/DungeonGenerator3D/corridor_1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.740314, 0)
 
 [node name="detail_barrel2" parent="NavigationRegion3D/DungeonGenerator3D/corridor_1/StaticBody3D2" instance=ExtResource("37_hgayo")]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -2.8565, -4.4571, 2.51497)
@@ -924,7 +930,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.1166, 15.6873, -2.69527)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.9373, 15.6129, -6.01013)
 
 [node name="Scrap3" parent="items" instance=ExtResource("5_kvhlf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.4563, 15.666, -5.64612)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.4563, 16.5183, -5.64612)
 
 [node name="ItemSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://Scenes/prefabs/items/scrap1.tscn", "res://Scenes/prefabs/items/scrap2.tscn", "res://Scenes/prefabs/items/scrap3.tscn", "res://Scenes/prefabs/Door.tscn", "res://Scenes/prefabs/items/coolant.tscn", "res://Scenes/prefabs/enemies/enemy_earworm.tscn", "res://Scenes/prefabs/enemies/enemy_venus.tscn", "res://Scenes/prefabs/items/flashlight.tscn")
@@ -944,7 +950,6 @@ mouse_filter = 2
 omni_range = 87.856
 omni_attenuation = 0.0
 
-[connection signal="bake_finished" from="Tutorial2" to="GameManager" method="_on_navigation_region_3d_bake_finished"]
 [connection signal="bake_finished" from="NavigationRegion3D" to="GameManager" method="_on_navigation_region_3d_bake_finished"]
 [connection signal="done_generating" from="NavigationRegion3D/DungeonGenerator3D" to="NavigationRegion3D" method="on_dungeon_done_generating"]
 [connection signal="dungeon_done_generating" from="NavigationRegion3D/DungeonGenerator3D/corridor_1" to="NavigationRegion3D/DungeonGenerator3D/corridor_1/RemoveUnusedDoors" method="remove_unused_doors"]

@@ -144,15 +144,13 @@ func _on_message_completed(message_index: int):
 	
 	# You can add specific logic for when each message is completed
 	match message_index:
-		0: # Player dropped item with Q
-			print("Player dropped item!")
-		1: # Player picked up flashlight
+		0: # Player picked up flashlight
 			print("Player picked up flashlight!")
-		2: # Player clicked to turn on flashlight
+		1: # Player clicked to turn on flashlight
 			print("Player turned on flashlight!")
-		3: # Player sprinted
+		2: # Player sprinted
 			print("Player sprinted!")
-		4: # Quota message
+		3: # Quota message
 			print("Quota message shown")
 
 func _on_team_score_changed(new_score):
@@ -165,7 +163,7 @@ func _on_team_score_changed(new_score):
 	
 	if quota_met and tutorial_message_system != null:
 		# If tutorial is complete and quota is met, hide it
-		if tutorial_message_system.current_message_index == 4:
+		if tutorial_message_system.current_message_index == 3:
 			tutorial_message_system.complete_tutorial()
 
 # Optional: Method to skip the tutorial

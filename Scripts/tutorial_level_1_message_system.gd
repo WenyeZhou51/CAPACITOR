@@ -13,14 +13,12 @@ var current_message_index: int = 0
 var player_find_attempts = 0
 
 # Player action tracking
-var has_dropped_item: bool = false
 var has_picked_up_flashlight: bool = false 
 var has_toggled_flashlight: bool = false
 var has_sprinted: bool = false
 
 # The messages to display in sequence
 var messages = [
-	"Q to drop item",
 	"Pick up flashlight",
 	"Click to turn on flashlight",
 	"Shift to sprint. Sprint past the dark hall",
@@ -107,23 +105,7 @@ func _process(delta):
 		
 	# Check for actions based on the current message
 	match current_message_index:
-		0: # "Q to drop item" - Check for Q key press and item dropping
-			if !has_dropped_item:
-				# Check if Q key is pressed
-				var q_pressed = Input.is_action_just_pressed("Drop")
-				
-				if q_pressed:
-					print("Q key pressed for dropping item")
-					# Wait a short time to verify item was dropped
-					await get_tree().create_timer(0.1).timeout
-					
-					# Check if player dropped something
-					if player.get("is_holding") != null and !player.get("is_holding"):
-						has_dropped_item = true
-						print("Player dropped an item")
-						advance_to_next_message()
-				
-		1: # "Pick up flashlight" - Check for flashlight pickup
+		0: # "Pick up flashlight" - Check for flashlight pickup
 			if !has_picked_up_flashlight:
 				# Check player's inventory for a flashlight
 				var inventory = player.get("inventory")
@@ -160,7 +142,7 @@ func _process(delta):
 							print("Player has flashlight in current slot")
 							advance_to_next_message()
 				
-		2: # "Click to turn on flashlight" - Check for mouse click to toggle flashlight
+		1: # "Click to turn on flashlight" - Check for mouse click to toggle flashlight
 			if !has_toggled_flashlight:
 				# Check for mouse click
 				var mouse_clicked = Input.is_action_just_pressed("Use")
@@ -179,7 +161,7 @@ func _process(delta):
 							has_toggled_flashlight = true
 							advance_to_next_message()
 				
-		3: # "Shift to sprint. Sprint past the dark hall" - Check for shift key and sprinting
+		2: # "Shift to sprint. Sprint past the dark hall" - Check for shift key and sprinting
 			if !has_sprinted:
 				# Check for shift key press
 				var shift_pressed = Input.is_action_pressed("Sprint")
@@ -199,7 +181,7 @@ func _process(delta):
 						print("Player sprinted")
 						advance_to_next_message()
 				
-		4: # "Turn in scrap and meet your quota" - No condition, just informational
+		3: # "Turn in scrap and meet your quota" - No condition, just informational
 			# This message stays visible until the end of the tutorial or quota is met
 			pass
 
