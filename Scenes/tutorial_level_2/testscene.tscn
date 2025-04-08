@@ -1,4 +1,4 @@
-[gd_scene load_steps=124 format=4 uid="uid://b0ogfy3qfh5d3"]
+[gd_scene load_steps=134 format=4 uid="uid://b0ogfy3qfh5d3"]
 
 [ext_resource type="Script" path="res://Scenes/testscene.gd" id="1_v17iy"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
@@ -28,9 +28,9 @@
 [ext_resource type="PackedScene" uid="uid://b0yt2h0ox1gxb" path="res://Scenes/Spawn Points/player_spawn_point.tscn" id="24_gf8n3"]
 [ext_resource type="PackedScene" uid="uid://c4lvx2bce1ryx" path="res://rooms/junction.tscn" id="24_nrufq"]
 [ext_resource type="Texture2D" uid="uid://dd75fl6rr2y7f" path="res://objectmodels/security_camera_02_4k/textures/security_camera_02_diff_4k.jpg" id="24_ygubj"]
+[ext_resource type="Script" path="res://Scenes/generator.gd" id="25_3ld0t"]
 [ext_resource type="PackedScene" uid="uid://dob0y1cay5v7v" path="res://Scenes/prefabs/door_marker.tscn" id="25_7na41"]
 [ext_resource type="PackedScene" uid="uid://bbrqul6xiyvqp" path="res://rooms/corridor_2.tscn" id="25_8g2gc"]
-[ext_resource type="PackedScene" uid="uid://bcot47xqk0oe3" path="res://Scenes/generator.tscn" id="26_8a2tq"]
 [ext_resource type="PackedScene" uid="uid://dvleiqfmloahr" path="res://Scenes/prefabs/coolant_marker.tscn" id="27_xvtoi"]
 [ext_resource type="PackedScene" uid="uid://3pcw2q81hvrs" path="res://objectmodels/utility_box_02_4k/utility_box_02_4k.gltf" id="28_nq3hd"]
 [ext_resource type="Script" path="res://Scenes/prefabs/items/cashBox.gd" id="29_1eahx"]
@@ -66,13 +66,14 @@ ground_horizon_color = Color(0.0509804, 0.0235294, 0.027451, 1)
 sky_material = SubResource("ProceduralSkyMaterial_binvk")
 
 [sub_resource type="Environment" id="Environment_0737e"]
-background_mode = 2
+background_mode = 5
 background_energy_multiplier = 16.0
 sky = SubResource("Sky_mema1")
 tonemap_mode = 3
 sdfgi_enabled = true
 glow_enabled = true
-volumetric_fog_density = 0.1
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0704
 volumetric_fog_albedo = Color(0.984314, 1, 1, 1)
 volumetric_fog_emission = Color(0.0196078, 0, 0, 1)
 
@@ -667,6 +668,41 @@ shader_parameter/posterization_strength = 0.8
 shader_parameter/dark_preservation = 0.05
 shader_parameter/highlight_preservation = 0.1
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_86pa1"]
+albedo_texture = ExtResource("24_ygubj")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_f7bt7"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_5h3h3"]
+viewport_path = NodePath("Generator/SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_flr22"]
+viewport_path = NodePath("Generator/SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_608tr"]
+viewport_path = NodePath("Generator/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fp2n2"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_5h3h3")
+emission_enabled = true
+emission = Color(0.0323822, 0.0323822, 0.0323822, 1)
+emission_energy_multiplier = 0.1
+emission_texture = SubResource("ViewportTexture_608tr")
+backlight = Color(0.492237, 0.492237, 0.492237, 1)
+backlight_texture = SubResource("ViewportTexture_flr22")
+
+[sub_resource type="QuadMesh" id="QuadMesh_v8ndt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ks7wi"]
+bg_color = Color(0.435192, 0.435192, 0.435192, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_87e0m"]
+bg_color = Color(0.867917, 0.210116, 0.185367, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8cyl3"]
+radius = 0.7
+
 [node name="Level" type="Node3D"]
 script = ExtResource("1_v17iy")
 
@@ -843,9 +879,6 @@ skeleton = NodePath("")
 [node name="DoorMarker2" parent="NavigationRegion3D/DungeonGenerator3D/start_room" instance=ExtResource("25_7na41")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -9.99856, -4.65394, -3.31934)
 
-[node name="Generator" parent="NavigationRegion3D/DungeonGenerator3D/start_room" instance=ExtResource("26_8a2tq")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.474962, -4.27081, 5.64823)
-
 [node name="Lights" type="Node3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room"]
 
 [node name="SpotLight3D" type="SpotLight3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Lights"]
@@ -960,9 +993,6 @@ transform = Transform3D(4, 0, 0, 0, 5, 0, 0, 0, 8, -1.94923, -2.30884, 3.39733)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/DungeonGenerator3D/start_room/Fence2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.94189, -1.05709, 3.38158)
 shape = SubResource("BoxShape3D_17jbb")
-
-[node name="Flashlight" parent="NavigationRegion3D/DungeonGenerator3D/start_room" instance=ExtResource("13_1s1s2")]
-transform = Transform3D(0.958328, 0, -0.285672, 0, 1, 0, 0.285672, 0, 0.958328, 4.88199, -4.00241, -4.05967)
 
 [node name="ScrapMarker" parent="NavigationRegion3D/DungeonGenerator3D/start_room" instance=ExtResource("27_xvtoi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.90201, -3.89654, 1.42552)
@@ -1329,6 +1359,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.2731, 16.2735, 24.1763)
 [node name="Scrap4" parent="items" instance=ExtResource("4_occg4")]
 transform = Transform3D(0.999683, 0, 0.0251824, 0, 1, 0, -0.0251824, 0, 0.999683, -17.8793, 16.9282, -14.8759)
 
+[node name="Scrap6" parent="items" instance=ExtResource("4_occg4")]
+transform = Transform3D(0.999683, 0, 0.0251824, 0, 1, 0, -0.0251824, 0, 0.999683, 282.054, -192.985, -14.8759)
+
 [node name="Scrap5" parent="items" instance=ExtResource("4_occg4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.08448, 17.4854, -17.3804)
 
@@ -1351,6 +1384,61 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.8689, 17.245, -1.47789)
 
 [node name="ScrapMarker2" parent="." instance=ExtResource("27_xvtoi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.9911, 23.4629, 26.2181)
+
+[node name="Generator" type="StaticBody3D" parent="." node_paths=PackedStringArray("sub_viewport", "heat_bar")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 40.8498, 15.5, 5.49691)
+collision_layer = 5
+script = ExtResource("25_3ld0t")
+sub_viewport = NodePath("SubViewport")
+heat_bar = NodePath("SubViewport/Generator Display/Heat Bar")
+heat_level = 60.0
+
+[node name="Generator Model" type="MeshInstance3D" parent="Generator"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.13347, 0)
+material_override = SubResource("StandardMaterial3D_86pa1")
+mesh = SubResource("CylinderMesh_f7bt7")
+
+[node name="screen" type="MeshInstance3D" parent="Generator/Generator Model"]
+transform = Transform3D(-0.999891, 0, -0.0147647, 0, 0.492013, 0, 0.0147647, 0, -0.999891, -0.0343862, 0.121645, -0.501731)
+material_override = SubResource("StandardMaterial3D_fp2n2")
+mesh = SubResource("QuadMesh_v8ndt")
+
+[node name="body" type="MeshInstance3D" parent="Generator/Generator Model"]
+
+[node name="SubViewport" type="SubViewport" parent="Generator"]
+size = Vector2i(1920, 1080)
+
+[node name="Generator Display" type="Control" parent="Generator/SubViewport"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="Heat Bar" type="ProgressBar" parent="Generator/SubViewport/Generator Display"]
+layout_mode = 0
+offset_left = 243.0
+offset_top = 428.0
+offset_right = 1363.0
+offset_bottom = 536.0
+scale = Vector2(1.26538, 2.5865)
+theme_override_styles/background = SubResource("StyleBoxFlat_ks7wi")
+theme_override_styles/fill = SubResource("StyleBoxFlat_87e0m")
+value = 40.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="Generator/SubViewport/Generator Display"]
+layout_mode = 0
+offset_left = 520.0
+offset_top = 166.0
+offset_right = 1744.0
+offset_bottom = 463.0
+theme_override_fonts/font = ExtResource("13_d7nh0")
+theme_override_font_sizes/font_size = 200
+text = "Heat Level"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Generator"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0421456, 1.09213, 0.0336108)
+shape = SubResource("CylinderShape3D_8cyl3")
 
 [connection signal="bake_finished" from="NavigationRegion3D" to="GameManager" method="_on_navigation_region_3d_bake_finished"]
 [connection signal="done_generating" from="NavigationRegion3D/DungeonGenerator3D" to="NavigationRegion3D" method="on_dungeon_done_generating"]

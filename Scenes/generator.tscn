@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dd75fl6rr2y7f" path="res://objectmodels/security_camera_02_4k/textures/security_camera_02_diff_4k.jpg" id="1_7313i"]
 [ext_resource type="Script" path="res://Scenes/generator.gd" id="1_rux7k"]
+[ext_resource type="FontFile" uid="uid://djxmwln40ig66" path="res://fonts/Geo-Regular.ttf" id="3_x63h8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_86pa1"]
 albedo_texture = ExtResource("1_7313i")
@@ -35,19 +36,15 @@ bg_color = Color(0.435192, 0.435192, 0.435192, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_87e0m"]
 bg_color = Color(0.867917, 0.210116, 0.185367, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uxbcj"]
-bg_color = Color(0.843755, 0.853717, 0.811405, 1)
-
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_8cyl3"]
 radius = 0.7
 
-[node name="Generator" type="StaticBody3D" node_paths=PackedStringArray("sub_viewport", "heat_bar", "energy_bar")]
+[node name="Generator" type="StaticBody3D" node_paths=PackedStringArray("sub_viewport", "heat_bar")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 collision_layer = 5
 script = ExtResource("1_rux7k")
 sub_viewport = NodePath("SubViewport")
 heat_bar = NodePath("SubViewport/Generator Display/Heat Bar")
-energy_bar = NodePath("SubViewport/Generator Display/Electricity Bar")
 
 [node name="Generator Model" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.13347, 0)
@@ -72,43 +69,25 @@ offset_bottom = 1080.0
 
 [node name="Heat Bar" type="ProgressBar" parent="SubViewport/Generator Display"]
 layout_mode = 0
-offset_left = 429.0
-offset_top = 366.0
-offset_right = 1549.0
-offset_bottom = 474.0
+offset_left = 243.0
+offset_top = 428.0
+offset_right = 1363.0
+offset_bottom = 536.0
+scale = Vector2(1.26538, 2.5865)
 theme_override_styles/background = SubResource("StyleBoxFlat_ks7wi")
 theme_override_styles/fill = SubResource("StyleBoxFlat_87e0m")
 value = 40.0
 show_percentage = false
 
-[node name="Electricity Bar" type="ProgressBar" parent="SubViewport/Generator Display"]
-layout_mode = 0
-offset_left = 409.0
-offset_top = 750.0
-offset_right = 1558.0
-offset_bottom = 864.0
-theme_override_styles/background = SubResource("StyleBoxFlat_ks7wi")
-theme_override_styles/fill = SubResource("StyleBoxFlat_uxbcj")
-value = 40.0
-show_percentage = false
-
 [node name="Label" type="Label" parent="SubViewport/Generator Display"]
 layout_mode = 0
-offset_left = 760.0
-offset_top = 196.0
-offset_right = 1280.0
-offset_bottom = 416.0
-theme_override_font_sizes/font_size = 100
+offset_left = 520.0
+offset_top = 166.0
+offset_right = 1744.0
+offset_bottom = 463.0
+theme_override_fonts/font = ExtResource("3_x63h8")
+theme_override_font_sizes/font_size = 200
 text = "Heat Level"
-
-[node name="Label2" type="Label" parent="SubViewport/Generator Display"]
-layout_mode = 0
-offset_left = 658.0
-offset_top = 594.0
-offset_right = 1406.0
-offset_bottom = 814.0
-theme_override_font_sizes/font_size = 100
-text = "Electricity Level"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0421456, 1.09213, 0.0336108)
