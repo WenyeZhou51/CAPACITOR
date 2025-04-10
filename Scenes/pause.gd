@@ -49,4 +49,8 @@ func _on_resume_pressed() -> void:
 	resume_game(player)
 	
 func _on_exit_pressed() -> void:
-	get_tree().quit()
+	# go to menu scene
+	get_tree().change_scene_to_file("res://Scenes/innerMenus/GameMenu.tscn")
+
+	# quit entire game	
+	#get_tree().quit()

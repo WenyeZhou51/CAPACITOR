@@ -1,8 +1,8 @@
 extends Control
 
 @export var text: String = "Default Text"  # Text to display in the popup
-@onready var label: Label = $Label2  # Reference to the Label node
-@onready var player 
+@onready var quotaLabel: Label = $ScrapDisplay/Label  # Reference to the Label node
+@onready var player
 @onready var grid_container = $ninepatch/GridContainer
 # var quota = 600 // REPLACED WITH QUOTA FROM MULT MANAGER
 
@@ -12,7 +12,7 @@ func setup_player(name: String):
 	player = get_parent().get_node("players/" + name)
 	if (not player == null):
 		print_debug("player " + name + " found in ui")
-	label.text = str(GameState.get_quota())
+	quotaLabel.text = "SCRAP\n"+str(GameState.get_team_score())+"/"+str(GameState.get_quota())
 	GameState.team_score_changed.connect(on_value_changed)
 	GameState.change_ui.connect(on_change_ui)
 	player.inv_high.connect(update_highlight)
@@ -39,7 +39,7 @@ func _ready():
 
 func on_value_changed(val: int):
 	#print("signal recieved")
-	label.text = str(GameState.get_quota() - val)
+	quotaLabel.text = "SCRAP\n"+str(GameState.get_team_score())+"/"+str(GameState.get_quota())
 	
 func swap_UI(idx: int, new_scene: PackedScene):
 	var old_child = grid_container.get_child(idx)
@@ -116,6 +116,6 @@ func update_highlight(previous_idx: int, curr_idx: int, name: String):
 	highlight.visible = true
 
 func show_text(popup_text: String):
-	var label = get_node("Label3")
-	label.text = popup_text
-	label.modulate = Color(1, 1, 1, 1)
+	var popupLabel = get_node("Label3")
+	popupLabel.text = popup_text
+	popupLabel.modulate = Color(1, 1, 1, 1)

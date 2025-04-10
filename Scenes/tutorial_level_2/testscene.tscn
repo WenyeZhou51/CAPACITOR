@@ -735,6 +735,7 @@ z_index = 10
 texture = SubResource("ViewportTexture_iphau")
 
 [node name="Label" type="Label" parent="UI"]
+visible = false
 z_index = 20
 layout_mode = 0
 offset_left = 178.0
@@ -746,6 +747,7 @@ theme_override_font_sizes/font_size = 45
 text = "Remaining Quota: "
 
 [node name="Label4" type="Label" parent="UI"]
+visible = false
 z_index = 20
 layout_mode = 0
 offset_left = 1642.0
@@ -757,6 +759,7 @@ theme_override_font_sizes/font_size = 45
 text = "Stamina"
 
 [node name="Label2" type="Label" parent="UI"]
+visible = false
 z_index = 20
 layout_mode = 0
 offset_left = 590.0

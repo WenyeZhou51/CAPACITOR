@@ -1,8 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://gin1s6t5p5jh"]
+[gd_scene load_steps=14 format=3 uid="uid://gin1s6t5p5jh"]
 
 [ext_resource type="Shader" path="res://Scenes/sprint_2.gdshader" id="1_dffqv"]
 [ext_resource type="Material" uid="uid://bl6bvg6m8lab0" path="res://shaders/crt_shader.tres" id="1_s6rhv"]
 [ext_resource type="FontFile" uid="uid://bk7y7cg03wr1n" path="res://console folder/fonts/SpaceMono-Regular.ttf" id="2_geo"]
+[ext_resource type="Texture2D" uid="uid://dhnj3bm40c8nh" path="res://imgs/progress-bar-circle.png" id="4_cmun5"]
+[ext_resource type="Texture2D" uid="uid://nxsovgj28ee2" path="res://imgs/person_run.png" id="5_2invm"]
+[ext_resource type="Texture2D" uid="uid://dut0kim0nbpjn" path="res://imgs/duck.png" id="5_rusgf"]
+[ext_resource type="Texture2D" uid="uid://b5xcy2x0tsgys" path="res://imgs/heart_filled.png" id="7_se68a"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jnuav"]
 shader = ExtResource("1_dffqv")
@@ -19,6 +23,14 @@ shader_parameter/edge_softness = 0.25
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ysr43"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2aj25"]
+bg_color = Color(0.6, 0.6, 0.6, 0.0196078)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+shadow_color = Color(0, 0, 0, 0.0666667)
+
 [node name="UI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -28,6 +40,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SprintSlider" type="VSlider" parent="."]
+visible = false
 z_index = 20
 material = SubResource("ShaderMaterial_jnuav")
 layout_mode = 0
@@ -58,6 +71,7 @@ theme_override_font_sizes/font_size = 22
 text = "[E]"
 
 [node name="TextureRect" type="TextureRect" parent="."]
+z_as_relative = false
 material = ExtResource("1_s6rhv")
 layout_mode = 1
 anchors_preset = 15
@@ -66,3 +80,323 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ViewportTexture_ysr43")
+
+[node name="TempDisplay" type="Panel" parent="."]
+z_index = 5
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 100.0
+offset_top = -280.0
+offset_right = 400.0
+offset_bottom = -90.0
+grow_vertical = 0
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_2aj25")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="TempDisplay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = 36.0
+offset_right = 64.0
+offset_bottom = 164.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2.38, 2.38)
+pivot_offset = Vector2(64.4445, 64.1482)
+value = 33.0
+fill_mode = 4
+radial_initial_angle = 300.0
+texture_progress = ExtResource("4_cmun5")
+tint_under = Color(1, 1, 1, 0.360784)
+tint_over = Color(0, 0, 0, 1)
+tint_progress = Color(1, 0.501961, 0.439216, 1)
+
+[node name="Needle" type="ColorRect" parent="TempDisplay"]
+layout_mode = 0
+offset_left = 143.0
+offset_top = 43.0
+offset_right = 148.0
+offset_bottom = 123.0
+pivot_offset = Vector2(2.27728, 144.919)
+color = Color(1, 0, 0, 1)
+
+[node name="Label" type="Label" parent="TempDisplay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -78.5
+offset_top = -12.0
+offset_right = 78.5
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.501961)
+theme_override_constants/line_spacing = 0
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_font_sizes/font_size = 70
+text = "HEAT 
+X%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrapDisplay" type="Panel" parent="."]
+z_index = 5
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 90.0
+offset_top = -1026.0
+offset_right = 390.0
+offset_bottom = -726.0
+grow_vertical = 0
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_2aj25")
+
+[node name="TextureRect" type="TextureRect" parent="ScrapDisplay"]
+modulate = Color(0.733333, 0.47451, 1, 0.643137)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 38.0
+offset_top = -4.0
+offset_right = 1018.0
+offset_bottom = 919.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.17, 0.17)
+texture = ExtResource("5_rusgf")
+
+[node name="Label" type="Label" parent="ScrapDisplay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -136.0
+offset_top = -148.0
+offset_right = 121.0
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.501961)
+theme_override_constants/line_spacing = 0
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_font_sizes/font_size = 70
+text = "SCRAP
+14/800"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PowerDisplay" type="Panel" parent="."]
+visible = false
+z_index = 5
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -397.0
+offset_top = -329.0
+offset_right = -97.0
+offset_bottom = -63.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_2aj25")
+
+[node name="TextureProgressBar2" type="TextureProgressBar" parent="PowerDisplay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -58.0
+offset_top = 31.0
+offset_right = 70.0
+offset_bottom = 159.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2.38, 2.38)
+pivot_offset = Vector2(64.4445, 64.1482)
+value = 33.0
+fill_mode = 4
+radial_initial_angle = 300.0
+texture_progress = ExtResource("4_cmun5")
+tint_under = Color(1, 1, 1, 0.360784)
+tint_over = Color(0, 0, 0, 1)
+tint_progress = Color(0.854902, 0.839216, 1, 1)
+
+[node name="Label" type="Label" parent="PowerDisplay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -135.0
+offset_top = -41.5
+offset_right = 135.0
+offset_bottom = 41.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.501961)
+theme_override_constants/line_spacing = 0
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_font_sizes/font_size = 70
+text = "POWER
+ X%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Needle" type="ColorRect" parent="PowerDisplay"]
+layout_mode = 0
+offset_left = 153.0
+offset_top = 76.0
+offset_right = 158.0
+offset_bottom = 156.0
+pivot_offset = Vector2(2.27728, 144.919)
+color = Color(1, 0, 0, 1)
+
+[node name="HealthDisplay" type="Panel" parent="."]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_bottom = 470.0
+grow_horizontal = 0
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_2aj25")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="HealthDisplay"]
+layout_mode = 0
+offset_left = 41.0
+offset_top = 47.0
+offset_right = 656.0
+offset_bottom = 808.0
+scale = Vector2(0.3, 0.3)
+value = 100.0
+fill_mode = 3
+texture_under = ExtResource("7_se68a")
+texture_progress = ExtResource("7_se68a")
+tint_under = Color(0.208334, 0.218114, 0.220558, 0.513726)
+tint_progress = Color(1, 0.317647, 0.698039, 0.4)
+
+[node name="Label" type="Label" parent="HealthDisplay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -146.0
+offset_top = -164.0
+offset_right = 111.0
+offset_bottom = 46.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.501961)
+theme_override_constants/line_spacing = 0
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_font_sizes/font_size = 65
+text = "HEALTH
+100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StaminaDisplay" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -200.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_2aj25")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="StaminaDisplay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -166.0
+offset_top = -236.0
+offset_right = 858.0
+offset_bottom = 788.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.28, 0.28)
+value = 50.0
+fill_mode = 3
+texture_under = ExtResource("5_2invm")
+texture_progress = ExtResource("5_2invm")
+tint_under = Color(0.208334, 0.218114, 0.220558, 0.513726)
+tint_progress = Color(1, 0.317647, 0.698039, 0.4)
+
+[node name="Label" type="Label" parent="StaminaDisplay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -166.0
+offset_top = -175.0
+offset_right = 134.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.501961)
+theme_override_constants/line_spacing = 0
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_font_sizes/font_size = 65
+text = "STAMINA
+30%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+z_index = 5
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_right = -20.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Spacer2" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2

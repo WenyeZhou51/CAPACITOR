@@ -53,7 +53,7 @@ script = ExtResource("4_fdbfv")
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_b2kad")
 theme_override_font_sizes/font_size = 90
-text = "FIXED MAP"
+text = "TUTORIAL"
 flat = true
 script = ExtResource("4_fdbfv")
 

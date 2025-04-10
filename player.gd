@@ -30,14 +30,20 @@ var curSlotUpdating = false
 @export var max_scan_line_amount: float = 1.0
 @export var player_mesh: GeometryInstance3D
 @export var player_colors = [Color.RED, Color.BLUE] # , Color.WHITE, Color.GREEN, Color.YELLOW
-
 @export var quota: int = 600 ## REPLACE WITH MULT MANAGER QUOTA
+@export var current_health: float = 10.0 #### MUST HAVE EXPORT FOR SYNCING
+
+var tempLabel: Label
+var healthLabel: Label
+var staminaLabel: Label
+var tempProgress: TextureProgressBar
+var healthProgress: TextureProgressBar
+var staminaProgress: TextureProgressBar
 
 var current_stamina: float = 1.0 + STAMINA_THRESHOLD  # Current stamina level
 var is_running: bool = false  # Whether the player is sprinting
 var movement_speed: float = WALK_SPEED  # Current movement speed
 var is_holding: bool = false # Whether the player is holding an intem
-@export var current_health: float = 10.0 #### MUST HAVE EXPORT FOR SYNCING
 var max_health: float = 100.0
 var crt_shader_material: ShaderMaterial
 var inv_size: int = 0
@@ -81,7 +87,16 @@ func _ready():
 	set_multiplayer_authority(str(name).to_int())
 	add_to_group("players")
 	add_to_group("player")  # Add to player group for tutorial detection
-	stamina_bar = get_node("/root/Level/UI/SprintSlider")
+	
+	#/root/Level/UI/VBoxContainer/
+	#const containers = ["TempDisplay", "HealthDisplay", "StaminaDisplay", "PowerDisplay"]
+	
+	# Status indicators
+	healthLabel = get_node("/root/Level/UI/HealthDisplay/Label")
+	staminaLabel = get_node("/root/Level/UI/StaminaDisplay/Label")
+	healthProgress = get_node("/root/Level/UI/HealthDisplay/TextureProgressBar")
+	staminaProgress = get_node("/root/Level/UI/StaminaDisplay/TextureProgressBar")
+	
 	interact_label = get_node("/root/Level/UI/InteractLabel")
 	texture_rect = get_node("/root/Level/UI/TextureRect")
 	crt_shader_material = texture_rect.material
@@ -421,9 +436,31 @@ func _physics_process(delta: float) -> void:
 			stop_sound(Constants.SOUNDS.SPRINT)
 			MultiplayerPropogate.propogate_player_stop_sound.rpc(Constants.SOUNDS.SPRINT)
 
-	# Update stamina bar value smoothly
-	if stamina_bar:
-		stamina_bar.value = lerp(stamina_bar.value, current_stamina - STAMINA_THRESHOLD / 2, 0.1)
+	# Normalize stamina for display (0.0 to 1.0 scale)
+	var stamina_ratio = clamp((current_stamina - STAMINA_THRESHOLD / 2) / (1.5 - STAMINA_THRESHOLD / 2), 0.0, 1.0)
+
+	# Update stamina progress bar
+	if staminaProgress:
+		staminaProgress.value = stamina_ratio * 100
+
+	# Update stamina label
+	if staminaLabel:
+		staminaLabel.text = "STAMINA\n" + str(round(stamina_ratio * 100)) + "%"
+#
+#
+	## Update stamina bar value smoothly
+	#if staminaProgress:
+		#staminaProgress.value = lerp(staminaProgress.value, current_stamina - STAMINA_THRESHOLD / 2, 0.1)
+	#else:
+		#print("[UI] AAAAAAAAAAAAAAAAAAAAAA")
+	#if staminaLabel:
+		#
+		#staminaLabel.text = "STAMINA\n" + str(floor(current_stamina / 1.5)) + "%"
+	#else:
+		#print("[UI] AAAAAAhealthAAAAAAAAAAAAAAAA")
+	
+	#if stamina_bar:
+		#stamina_bar.value = lerp(stamina_bar.value, current_stamina - STAMINA_THRESHOLD / 2, 0.1)
 
 	# Move the cSPRINTharacter
 	move_and_slide()
@@ -468,7 +505,14 @@ func update_health_indicator():
 		crt_shader_material.set("shader_param/vignette_intensity", vignette_intensity)
 		crt_shader_material.set("shader_param/noise_amount", noise_amount)
 		crt_shader_material.set("shader_param/scan_line_amount", scan_line_amount)
+		
+		# Update health progress bar
+		if healthProgress:
+			healthProgress.value = health_ratio * 100.0
 
+		# Update stamina label
+		if healthLabel:
+			healthLabel.text = "HEALTH\n" + str(round(health_ratio * 100)) + "%"
 
 func init_take_damage(amount: int):
 	if not multiplayer.is_server(): return

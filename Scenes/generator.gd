@@ -2,6 +2,17 @@ extends StaticBody3D
 
 @export var sub_viewport: SubViewport
 @export var heat_bar: ProgressBar
+@export var energy_bar: ProgressBar
+
+var heat_needle: ColorRect
+var heat_label: Label
+var power_needle: ColorRect
+var power_label: Label
+
+const NEEDLE_MIN_DEG = -60.0
+const NEEDLE_MAX_DEG = 60.0
+
+@onready var electricity_manager = get_node("/root/Level/Electricity Manager")
 @onready var world_environment = get_node("/root/Level/WorldEnvironment")
 
 @export var heat_level: float = 0.0
@@ -37,7 +48,10 @@ func _ready():
 	
 	# Set up audio player for coolant sound
 	setup_audio_player()
-
+	
+	# Set up UI for temperature display
+	heat_needle = get_node("/root/Level/UI/TempDisplay/Needle")
+	heat_label = get_node("/root/Level/UI/TempDisplay/Label")
 
 func setup_audio_player():
 	# Create audio player for coolant sound
@@ -141,6 +155,18 @@ func _process(delta):
 		if heat_bar:
 			heat_bar.value = heat_level
 			update_heat_bar_color()
+			
+		# Update rotation of heat needle
+		var heat_ratio = clamp(heat_level / max_heat, 0.0, 1.0)
+		if heat_needle:
+			var angle = lerp(NEEDLE_MIN_DEG, NEEDLE_MAX_DEG, heat_ratio)
+			heat_needle.rotation_degrees = angle
+		if heat_label:
+			heat_label.text = "HEAT\n" + str(round(heat_ratio * 100)) + "%"
+	
+		# Update the energy bar from the electricity manager
+		if electricity_manager and energy_bar:
+			energy_bar.value = electricity_manager.electricity_level
 		
 		# Update lighting and fog based on heat level
 		update_lighting_and_fog(heat_level)
