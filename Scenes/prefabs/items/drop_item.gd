@@ -1,4 +1,4 @@
-extends StaticBody3D
+class_name Drop extends StaticBody3D
 
 var pick_script
 @export var Price: int = 0
@@ -40,7 +40,12 @@ func convert_staticbody_to_rigidbody(static_body: StaticBody3D, world: Node3D) -
 	var path = "res://Scenes/prefabs/items/" + str(static_body.type) + ".tscn"
 	print("Attempting to load: ", path)
 	var parent = static_body.get_parent()
-	pick_script = load("res://Scripts/pickupable.gd")
+	if str(static_body.name) == "Flashlight":
+		pick_script = load("res://flash_light.gd")
+		print("Adding flashlight to object")
+	else:
+		print("Adding normal drop script")
+		pick_script = load("res://Scripts/pickupable.gd")
 	
 	# Create a new RigidBody3D
 	var scene = load(path)
@@ -51,10 +56,13 @@ func convert_staticbody_to_rigidbody(static_body: StaticBody3D, world: Node3D) -
 		# Create a simple RigidBody3D as fallback
 		var fallback_rigidbody = RigidBody3D.new()
 		fallback_rigidbody.name = static_body.name
+		print("Dropping an object named" + str(static_body.name))
 		fallback_rigidbody.transform = static_body.transform
 		fallback_rigidbody.collision_layer = 1 << 2
 		fallback_rigidbody.collision_mask = 0b00000101
+		
 		fallback_rigidbody.set_script(pick_script)
+		
 		fallback_rigidbody.Price = static_body.Price
 		fallback_rigidbody.type = static_body.type
 		
@@ -75,11 +83,18 @@ func convert_staticbody_to_rigidbody(static_body: StaticBody3D, world: Node3D) -
 		return fallback_rigidbody
 	
 	var rigidbody = scene.instantiate()
+	#rigidbody.light_strength = static_body.light_strength
 	rigidbody.name = static_body.name  # Retain the same name for clarity
 	
 	# Transfer the transform (position, rotation, scale)
 	rigidbody.transform = static_body.transform
 	
+	# Transfer light strength for flashlight
+	if str(static_body.name) == "Flashlight":
+		rigidbody.light_strength = static_body.light_strength
+		print("Transferred light strength: ", rigidbody.light_strength)
+		
+		rigidbody.set_multiplayer_authority(1)
 	# Only transfer specific children to avoid duplicating what's already in the scene
 	var children_to_keep = []
 	for child in static_body.get_children():
@@ -95,10 +110,16 @@ func convert_staticbody_to_rigidbody(static_body: StaticBody3D, world: Node3D) -
 		# Fallback - add directly to world
 		world.add_child(rigidbody)
 	
+	if str(static_body.name) == "Flashlight" and MultiplayerManager.multiplayer.is_server():
+		rigidbody.set_light_strength.rpc(static_body.light_strength)
+	
 	# Restore collision layers and masks if necessary
 	rigidbody.collision_layer = 1 << 2 # Bit 3 (layer 4)
 	rigidbody.collision_mask = 0b00000101 # Bits 1 and 3 (layers 1 and 3)
-	
+	var light_node = rigidbody.get_node("Model/FlashLight")
+	if light_node and light_node is Light3D:
+		light_node.light_energy = rigidbody.light_strength
+		print("Applied light strength to light node: ", light_node.light_energy)
 	# Set properties
 	rigidbody.Price = static_body.Price
 	rigidbody.type = static_body.type

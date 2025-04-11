@@ -44,7 +44,7 @@ func _ready():
 		initial_fog_density = world_environment.environment.volumetric_fog_density
 	
 	# Find all lights in the level
-	find_all_lights(get_node("/root/Level"))
+	#find_all_lights(get_node("/root/Level"))
 	
 	# Set up audio player for coolant sound
 	setup_audio_player()
@@ -80,8 +80,9 @@ func find_all_lights(node):
 
 func _find_lights_recursive(node):
 	# Recursively find all lights in the scene
-	if node is Light3D:
+	if node is Light3D and not node.is_in_group("flashlight"):
 		all_lights.append(node)
+		print("Light level changed for node")
 		# Store the original energy for later reference
 		base_light_energy[node] = node.light_energy
 	
@@ -178,8 +179,8 @@ func _process(delta):
 		cleanup_lights_array()
 		
 		# Check if we need to refresh the list entirely
-		if all_lights.size() == 0:
-			find_all_lights(get_node("/root/Level"))
+		#if all_lights.size() == 0:
+			#find_all_lights(get_node("/root/Level"))
 
 func update_lighting_and_fog(current_heat):
 	# Calculate heat percentage (0-100)

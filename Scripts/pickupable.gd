@@ -57,12 +57,15 @@ func interact(player: Player) -> void:
 
 func convert_rigidbody_to_staticbody(rigidbody: RigidBody3D) -> StaticBody3D:
 	drop_script = load("res://Scenes/prefabs/items/drop_item.gd")
+	var flash_script = load("res://flash_light.gd")
 	# Get the parent node
 	var parent = rigidbody.get_parent()
 	 # Create a new StaticBody3D
 	var static_body = StaticBody3D.new()
 	static_body.name = rigidbody.name  # Retain the same name for clarity
 	
+	print("Picked up a " + str(static_body.name))
+
 	 # Transfer the transform (position, rotation, scale)
 	static_body.transform = rigidbody.transform
 
@@ -71,22 +74,27 @@ func convert_rigidbody_to_staticbody(rigidbody: RigidBody3D) -> StaticBody3D:
 		rigidbody.remove_child(child)  # Detach child from RigidBody3D
 		static_body.add_child(child)  # Attach child to StaticBody3D
 		child.owner = static_body  # Ensure the new owner is set for proper scene management
-
-	# Replace the RigidBody3D with the StaticBody3D in the scene tree
-	parent.remove_child(rigidbody)
-	parent.add_child(static_body)
-	static_body.owner = parent.owner  # Set the correct owner for saving in scenes
 	
 	static_body.collision_layer = 0
 	static_body.collision_mask = 0
-	
-	static_body.set_script(drop_script)
+	if str(static_body.name) == "Flashlight":
+		var flash_static = load("res://flash_light_static.gd")
+		print("Adding flashlight static to object")
+		static_body.set_script(flash_static)
+		print("Load flashlight static to object successful")
+		static_body.light_strength = rigidbody.light_strength
+	else:
+		print("Adding normal drop script")
+		static_body.set_script(drop_script)
 	static_body.Price = rigidbody.Price
 	static_body.type = rigidbody.type
 	var mesh_instance = static_body.get_node_or_null("MeshInstance3D")
 	if mesh_instance:
 		mesh_instance.visible = true
 	# Optionally free the old RigidBody3D to clean up memory
+	
+	
+	
 	rigidbody.queue_free()
 	
 	return static_body
