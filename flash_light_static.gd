@@ -7,10 +7,9 @@ class_name Flashlight_Static_Class
 @export var light_strength: float
 
 # Keep existing light-specific logic from flash_light.gd lines 3-28
-# EXPERIMENTAL VALUE FOR TESTS!!!
-var decay_rate: float = 1
-var decay_interval: float = 1
-var min_strength: float = 0.2
+var decay_rate: float = 0.1
+var decay_interval: float = 20
+var min_strength: float = 1
 var decay_timer: float = 0.0
 
 func _ready() -> void:
