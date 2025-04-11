@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://djjsubecjewsm"]
+[gd_scene load_steps=8 format=3 uid="uid://djjsubecjewsm"]
 
 [ext_resource type="Script" path="res://Scenes/tutorial_level_1/tutorial_1.gd" id="1_xrplj"]
 [ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_08dnm"]
 [ext_resource type="FontFile" uid="uid://djxmwln40ig66" path="res://fonts/Geo-Regular.ttf" id="2_yvnqr"]
+[ext_resource type="Material" uid="uid://bl6bvg6m8lab0" path="res://shaders/crt_shader.tres" id="4_a7g8j"]
 [ext_resource type="Script" path="res://Scenes/menu_button.gd" id="4_d8jom"]
 [ext_resource type="AudioStream" uid="uid://d21tn6mxl1rmc" path="res://audio/click_sounds/Click_Electronic_03.mp3" id="5_qpl0f"]
 [ext_resource type="AudioStream" uid="uid://cdy0uy4q3ejn5" path="res://audio/click_sounds/Click_Electronic_15.mp3" id="6_a022s"]
@@ -42,25 +43,13 @@ vertical_alignment = 1
 
 [node name="Label2" type="Label" parent="TextureRect"]
 layout_mode = 0
-offset_left = 869.0
-offset_top = 587.0
-offset_right = 1670.0
-offset_bottom = 711.0
+offset_left = 598.0
+offset_top = 631.0
+offset_right = 2006.0
+offset_bottom = 755.0
 theme_override_fonts/font = ExtResource("2_yvnqr")
-theme_override_font_sizes/font_size = 60
-text = "Next level requires you to explore"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label3" type="Label" parent="TextureRect"]
-layout_mode = 0
-offset_left = 1096.0
-offset_top = 706.0
-offset_right = 1420.0
-offset_bottom = 830.0
-theme_override_fonts/font = ExtResource("2_yvnqr")
-theme_override_font_sizes/font_size = 75
-text = "Good Luck!"
+theme_override_font_sizes/font_size = 100
+text = "Please Proceed for coolant training"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -85,6 +74,17 @@ theme_override_fonts/font = ExtResource("2_yvnqr")
 theme_override_font_sizes/font_size = 90
 text = "MENU"
 script = ExtResource("4_d8jom")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = 10
+material = ExtResource("4_a7g8j")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="ClickGood" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_qpl0f")

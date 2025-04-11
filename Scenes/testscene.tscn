@@ -68,7 +68,7 @@ shader_parameter/posterization_strength = 0.8
 shader_parameter/dark_preservation = 0.05
 shader_parameter/highlight_preservation = 0.1
 
-[node name="Level" type="Node3D"]
+[node name="Level2" type="Node3D"]
 script = ExtResource("1_v17iy")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
