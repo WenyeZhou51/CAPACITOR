@@ -2,6 +2,8 @@ extends Node
 
 var has_join: bool = false
 
+var state = 0;
+
 @onready var click_good = $ClickGood # Reference the AudioStreamPlayer
 @onready var click_back = $ClickBack # Reference the AudioStreamPlayer
 @onready var click_join = $ClickJoin
@@ -16,9 +18,10 @@ func get_system_ip() -> String:
 	return ""
 
 func _ready() -> void:
+	state = 0;
 	MultiplayerManager.host_msg.connect(hostMessage)
 	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/START.hide();
-	
+	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/ip_input.hide()
 	# Check if we should auto-start the game (for tutorials)
 	if GameState.should_auto_start():
 		print_debug("Auto-starting game for tutorial")
@@ -33,7 +36,8 @@ func _ready() -> void:
 	
 func _on_host_button_pressed() -> void:
 	click_good.play()
-	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer2.hide()
+	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/ip_input.hide()
+	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/join_button.hide()
 	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/START.show()
 	var ip = get_system_ip()
 	var hostField = $MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/Label
@@ -55,8 +59,15 @@ func hostMessage(msg: String):
 	
 func _on_join_button_pressed() -> void:
 	click_good.play()
-	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer.hide()
-	var input = $MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer2/ip_input
+	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/ip_input.show()
+	#$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/Label.hide()
+	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/host_button.hide()
+
+	var input = $MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/ip_input
+	if (state == 0):
+		state = 1;
+		return;
+	
 	MultiplayerManager.SERVER_IP = input.text
 	MultiplayerManager.join_game()
 	print_debug("JOIN PRESSED")

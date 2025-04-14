@@ -104,6 +104,13 @@ func cleanup_lights_array():
 	all_lights = valid_lights
 	base_light_energy = valid_light_energies
 
+@rpc("any_peer")
+func red_heat(call_state: int):
+	if (call_state == 0):
+		red_heat.rpc(1);
+	heat_level = max(heat_level - 60.0, 0.0)
+	update_heat_bar_color()
+		
 
 func interact(player: Player) -> int:
 	var item_socket = player.get_node("Head/ItemSocket")
@@ -118,8 +125,7 @@ func interact(player: Player) -> int:
 			held_item.queue_free()
 			
 			# Reduce heat
-			heat_level = max(heat_level - 60.0, 0.0)
-			update_heat_bar_color()
+			red_heat(0)
 			print("is coolant")
 			
 			# Play coolant insertion sound
