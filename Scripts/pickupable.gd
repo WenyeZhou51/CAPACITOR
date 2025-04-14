@@ -5,11 +5,11 @@ var drop_script
 @export var type: String
 
 func interact(player: Player) -> void:
-	if player.inv_size == 4:
-		var item_socket = player.get_node("Head/ItemSocket")
-		if item_socket.get_child_count() > 0:
-			var curr_item = item_socket.get_child(0)
-			curr_item.drop(player)
+	#if player.inv_size == 4:
+		#var item_socket = player.get_node("Head/ItemSocket")
+		#if item_socket.get_child_count() > 0:
+			#var curr_item = item_socket.get_child(0)
+			#curr_item.drop(player)
 
 	var item_socket = player.get_node("Head/ItemSocket")
 	var static_obj: StaticBody3D
@@ -20,11 +20,17 @@ func interact(player: Player) -> void:
 	# Clear current item if exists
 	if item_socket.get_child_count() > 0:
 		var old_item = item_socket.get_child(0)
-		item_socket.remove_child(old_item)
-		player._set_item_visibility(old_item, false, "replaced by new pickup")
-		var container = player.get_node("InventoryContainer")
-		if container:
-			container.add_child(old_item)
+		print("Current inventory size is: " + str(player.inv_size))
+		if player.inv_size == 4:
+			print("currently swapping out "+ str(old_item))
+			MultiplayerRequest.request_item_drop()
+			player.inv_size = 4
+		else:
+			item_socket.remove_child(old_item)
+			player._set_item_visibility(old_item, false, "replaced by new pickup")
+			var container = player.get_node("InventoryContainer")
+			if container:
+				container.add_child(old_item)
 	
 	# Add new item
 	if static_obj.get_parent():
