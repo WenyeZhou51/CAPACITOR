@@ -105,10 +105,17 @@ func cleanup_lights_array():
 	base_light_energy = valid_light_energies
 
 @rpc("any_peer")
-func red_heat(call_state: int):
+func red_heat(call_state: int, hl: int):
 	if (call_state == 0):
-		red_heat.rpc(1);
-	heat_level = max(heat_level - 60.0, 0.0)
+		red_heat.rpc_id(1, 1, 0);
+		return
+	if (call_state == 1):
+		if multiplayer.get_unique_id() != 1:
+			return;
+		heat_level = max(heat_level - 60.0, 0.0)
+		red_heat.rpc(2, heat_level)
+		hl = heat_level
+	heat_level = hl;
 	update_heat_bar_color()
 		
 
@@ -123,9 +130,9 @@ func interact(player: Player) -> int:
 			# Remove coolant from player
 			item_socket.remove_child(held_item)
 			held_item.queue_free()
-			
+			heat_label
 			# Reduce heat
-			red_heat(0)
+			red_heat(0, 0)
 			print("is coolant")
 			
 			# Play coolant insertion sound
