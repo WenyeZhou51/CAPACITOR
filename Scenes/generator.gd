@@ -117,7 +117,6 @@ func red_heat(call_state: int, hl: int):
 		hl = heat_level
 	heat_level = hl;
 	update_heat_bar_color()
-		
 
 func interact(player: Player) -> int:
 	var item_socket = player.get_node("Head/ItemSocket")

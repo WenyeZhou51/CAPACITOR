@@ -75,18 +75,26 @@ theme_override_fonts/font = ExtResource("3_qjpse")
 theme_override_font_sizes/font_size = 90
 horizontal_alignment = 1
 
+[node name="ip_input" type="LineEdit" parent="MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_qjpse")
+theme_override_font_sizes/font_size = 90
+placeholder_text = "< ip >"
+alignment = 1
+
+[node name="NAME" type="LineEdit" parent="MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_qjpse")
+theme_override_font_sizes/font_size = 80
+placeholder_text = "< name >"
+alignment = 1
+
 [node name="host_button" type="Button" parent="MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_qjpse")
 theme_override_font_sizes/font_size = 90
 text = "Host"
 script = ExtResource("4_cf4mk")
-
-[node name="ip_input" type="LineEdit" parent="MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("3_qjpse")
-theme_override_font_sizes/font_size = 90
-alignment = 1
 
 [node name="join_button" type="Button" parent="MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -101,7 +109,7 @@ size_flags_horizontal = 2
 
 [node name="START" type="Button" parent="MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 2
+size_flags_horizontal = 6
 theme_override_fonts/font = ExtResource("3_qjpse")
 theme_override_font_sizes/font_size = 90
 text = "START"

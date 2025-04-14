@@ -53,7 +53,7 @@ func check_game_end() -> void:
 		get_tree().change_scene_to_file(endScene)
 		#MultiplayerManager.kick_everyone()
 	elif alive_count <= 0:
-		#MultiplayerManager.kick_everyone()
+		#MulmultiplayertiplayerManager.kick_everyone()
 		get_tree().change_scene_to_file("res://Scenes/Gameover.tscn")
 	
 func reduce_alive_count() -> void:

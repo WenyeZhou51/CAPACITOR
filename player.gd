@@ -141,6 +141,7 @@ func _ready():
 	if is_multiplayer_authority():
 		camera.current = true
 		print("Local player: camera enabled.")
+		$spatial/SubViewport/name.text = MultiplayerManager.player_username
 	else:
 		camera.current = false
 		print("Remote player: camera disabled.")

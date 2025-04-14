@@ -14,7 +14,7 @@ const DEBUG = true  # Toggle debug logging
 var players = {}
 var player_count = 1
 var map: String
-
+var player_username = "the nameless soul"
 var player_info = {
 	"id": 0
 }

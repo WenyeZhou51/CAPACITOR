@@ -4,6 +4,7 @@ var has_join: bool = false
 
 var state = 0;
 
+
 @onready var click_good = $ClickGood # Reference the AudioStreamPlayer
 @onready var click_back = $ClickBack # Reference the AudioStreamPlayer
 @onready var click_join = $ClickJoin
@@ -19,6 +20,7 @@ func get_system_ip() -> String:
 
 func _ready() -> void:
 	state = 0;
+	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/NAME.hide()
 	MultiplayerManager.host_msg.connect(hostMessage)
 	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/START.hide();
 	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/ip_input.hide()
@@ -36,6 +38,7 @@ func _ready() -> void:
 	
 func _on_host_button_pressed() -> void:
 	click_good.play()
+	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/NAME.show()
 	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/ip_input.hide()
 	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/join_button.hide()
 	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/START.show()
@@ -62,12 +65,13 @@ func _on_join_button_pressed() -> void:
 	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/ip_input.show()
 	#$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/Label.hide()
 	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/host_button.hide()
-
+	$MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/NAME.show()
 	var input = $MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/ip_input
 	if (state == 0):
 		state = 1;
 		return;
 	
+	MultiplayerManager.player_username = $MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/NAME.text
 	MultiplayerManager.SERVER_IP = input.text
 	MultiplayerManager.join_game()
 	print_debug("JOIN PRESSED")
@@ -79,6 +83,7 @@ func _on_join_button_pressed() -> void:
 
 func _on_button_pressed() -> void:
 	click_good.play()
+	MultiplayerManager.player_username = $MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/NAME.text
 	MultiplayerManager.start_game()
 
 
