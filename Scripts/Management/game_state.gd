@@ -55,8 +55,11 @@ func check_game_end() -> void:
 	elif alive_count <= 0:
 		#MulmultiplayertiplayerManager.kick_everyone()
 		get_tree().change_scene_to_file("res://Scenes/Gameover.tscn")
-	
-func reduce_alive_count() -> void:
+
+@rpc("any_peer")
+func reduce_alive_count(state: int) -> void:
+	if (state == 0):
+		reduce_alive_count.rpc(1)
 	alive_count -= 1
 	check_game_end()
 	

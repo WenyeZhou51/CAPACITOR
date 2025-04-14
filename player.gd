@@ -540,17 +540,12 @@ func set_health(new: int):
 		print("player.gd: Died, dropping all items")
 		var item_socket = get_node("Head/ItemSocket")
 		#var curr = item_socket.get_child(0)
-		if item_socket.get_child_count() > 0:
-			print("player.gd: Died, dropping item on hand")
-			MultiplayerRequest.request_item_drop()
+		#if item_socket.get_child_count() > 0:
+			#print("player.gd: Died, dropping item on hand")
+			#MultiplayerRequest.request_item_drop()
 		var inventory_container = get_node("InventoryContainer")
-		while inventory_container.get_child_count() > 0:
-			print("player.gd: Died, dropping everything in inventory")
-			var item = inventory_container.get_child(0)
-			inventory_container.remove_child(item)
-			print("player.gd: currently dropping" + str(item))
-			_set_item_visibility(item, true, "death drop, active in socket")
-			item_socket.add_child(item)
+		for i in range(4):
+			MultiplayerRequest.request_inventory_idx_change(i)
 			MultiplayerRequest.request_item_drop()
 		set_death(true)
 		return
@@ -563,7 +558,7 @@ func set_death(new: bool):
 	dead = new
 	if(dead):
 		death_effect()
-		GameState.reduce_alive_count()
+		GameState.reduce_alive_count(0)
 
 func damage_taken_effect():
 	var damage_tint = Color(1, 0, 0, 0.3)
