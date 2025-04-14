@@ -534,14 +534,19 @@ func set_health(new: int):
 	current_health = new
 	if not is_multiplayer_authority(): return
 	if (current_health <= 0):
+		print("player.gd: Died, dropping all items")
 		var item_socket = get_node("Head/ItemSocket")
 		#var curr = item_socket.get_child(0)
 		if item_socket.get_child_count() > 0:
+			print("player.gd: Died, dropping item on hand")
 			MultiplayerRequest.request_item_drop()
 		var inventory_container = get_node("InventoryContainer")
 		while inventory_container.get_child_count() > 0:
+			print("player.gd: Died, dropping everything in inventory")
 			var item = inventory_container.get_child(0)
 			inventory_container.remove_child(item)
+			print("player.gd: currently dropping" + str(item))
+			_set_item_visibility(item, true, "death drop, active in socket")
 			item_socket.add_child(item)
 			MultiplayerRequest.request_item_drop()
 		set_death(true)

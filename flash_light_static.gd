@@ -14,12 +14,10 @@ var decay_timer: float = 0.0
 
 func _ready() -> void:
 	#light_strength = 1.5
-	print("initializing the process")
 	light.add_to_group("flashlight")
 	set_process(true)
 
 func _process(delta: float) -> void:
-	print("Processing light decay for flashlight")
 	if is_multiplayer_authority() and light.visible:
 		decay_timer += delta
 		if decay_timer >= decay_interval:
