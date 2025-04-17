@@ -5,7 +5,7 @@ extends Control
 
 func _on_random_pressed() -> void:
 	click_good.play()
-	GameState.set_quota(1000)
+	GameState.set_quota(10)
 	GameState.set_end_scene("res://Scenes/win.tscn")
 	MultiplayerManager.switch_map("res://Scenes/testscene.tscn")
 	get_tree().change_scene_to_file("res://Scenes/multiplayer/multiplayer_menu.tscn")
