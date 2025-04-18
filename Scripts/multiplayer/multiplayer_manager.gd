@@ -47,7 +47,7 @@ func host_game():
 	# set map seed
 	randomize()
 	map_seed = randi()
-	
+	#map_seed = 1;
 	host_msg.emit("Success! Share IP for others to join")
 
 func kick_everyone():

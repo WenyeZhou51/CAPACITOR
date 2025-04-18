@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ctwaw8niaod3"]
 
-[ext_resource type="Script" path="res://Scenes/gameover.gd" id="1_fjpru"]
+[ext_resource type="Script" path="res://Scenes/gameover_lose.gd" id="1_d48gm"]
 [ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_dug37"]
 [ext_resource type="AudioStream" uid="uid://d338r6w8jhdoe" path="res://audio/The Surreal Truth.mp3" id="3_vs5vs"]
 
@@ -15,7 +15,7 @@ offset_right = 1.0
 offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_fjpru")
+script = ExtResource("1_d48gm")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
