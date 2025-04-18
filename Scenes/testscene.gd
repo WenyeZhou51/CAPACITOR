@@ -7,7 +7,7 @@ var count = 0;
 
 func _ready() -> void:
 	ui = $UI
-	GameState.initNewLevel(1000);
+	GameState.initNewLevel(200 * MultiplayerManager.player_count);
 	_players_spawn_node = get_tree().get_current_scene().get_node("players")
 	
 	if not multiplayer.is_server(): return
