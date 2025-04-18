@@ -44,9 +44,7 @@ func _ready() -> void:
 		print("Warning: Game time was too low, using fallback value")
 		target_time = 30.0  # Fallback time if game timer didn't work
 	
-	# Get player stats
-	max_players = MultiplayerManager.player_count
-	target_players = GameState.alive_count
+	
 	
 	# Initialize the labels
 	quota_label.text = "Quota Reached: "
@@ -64,8 +62,8 @@ func _ready() -> void:
 	timer.start()
 	
 	print("Win screen setup complete. Quota: ", target_quota, 
-		  " Time: ", target_time, 
-		  " Players: ", target_players, "/", max_players)
+		  " Time: ", target_time)
+		  #" Players: ", target_players, "/", max_players)
 
 func _start_animations() -> void:
 	animation_started = true
@@ -73,7 +71,8 @@ func _start_animations() -> void:
 func _process(delta: float) -> void:
 	if not animation_started:
 		return
-	
+	max_players = MultiplayerManager.player_count
+	target_players = GameState.alive_count
 	# Animate quota counter
 	if not quota_done:
 		quota_value += quota_speed * delta
@@ -124,6 +123,8 @@ func _process(delta: float) -> void:
 			# Play sound effect
 			if click_good:
 				click_good.play()
+		# Get player stats
+		
 		players_label.text = "Players survived: " + str(int(players_value)) + "/" + str(max_players)
 
 func _on_button_pressed() -> void:
