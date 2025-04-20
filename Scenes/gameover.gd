@@ -4,6 +4,8 @@ extends Control
 @onready var quota_label = $TextureRect/Label
 @onready var time_label = $TextureRect/Label2
 @onready var players_label = $TextureRect/Label3
+@onready var win_sound = $WinSound
+@onready var menu_item_sound = $WinMenuItemSound
 
 # Animation parameters
 var quota_value = 0
@@ -44,7 +46,9 @@ func _ready() -> void:
 		print("Warning: Game time was too low, using fallback value")
 		target_time = 30.0  # Fallback time if game timer didn't work
 	
-	
+	# Play win sound
+	if win_sound:
+		win_sound.play()
 	
 	# Initialize the labels
 	quota_label.text = "Quota Reached: "
@@ -81,8 +85,8 @@ func _process(delta: float) -> void:
 			quota_done = true
 			delay_timer = 0.0  # Reset delay timer
 			# Play sound effect
-			if click_good:
-				click_good.play()
+			if menu_item_sound:
+				menu_item_sound.play()
 		quota_label.text = "Quota Reached: " + str(int(quota_value))
 	
 	# Delay between animations
@@ -90,6 +94,9 @@ func _process(delta: float) -> void:
 		delay_timer += delta
 		if delay_timer >= delay_duration:
 			time_label.visible = true  # Show time label when it's time for its animation
+			# Play menu item sound when time label appears
+			if menu_item_sound:
+				menu_item_sound.play()
 	
 	# Animate time counter (only start after quota is done AND delay has passed)
 	elif quota_done and time_label.visible and not time_done:
@@ -99,8 +106,8 @@ func _process(delta: float) -> void:
 			time_done = true
 			delay_timer = 0.0  # Reset delay timer
 			# Play sound effect
-			if click_good:
-				click_good.play()
+			if menu_item_sound:
+				menu_item_sound.play()
 		
 		# Format time as MM:SS
 		var minutes = int(time_value) / 60
@@ -113,6 +120,9 @@ func _process(delta: float) -> void:
 		delay_timer += delta
 		if delay_timer >= delay_duration:
 			players_label.visible = true  # Show players label when it's time for its animation
+			# Play menu item sound when players label appears
+			if menu_item_sound:
+				menu_item_sound.play()
 	
 	# Animate players counter (only start after time is done AND delay has passed)
 	elif time_done and players_label.visible and not players_done:
@@ -121,8 +131,8 @@ func _process(delta: float) -> void:
 			players_value = target_players
 			players_done = true
 			# Play sound effect
-			if click_good:
-				click_good.play()
+			if menu_item_sound:
+				menu_item_sound.play()
 		# Get player stats
 		
 		players_label.text = "Players survived: " + str(int(players_value)) + "/" + str(max_players)

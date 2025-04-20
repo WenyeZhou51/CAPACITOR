@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://6vdrcukrj72y"]
+[gd_scene load_steps=10 format=3 uid="uid://6vdrcukrj72y"]
 
 [ext_resource type="Script" path="res://Scenes/gameover.gd" id="1_vasx5"]
 [ext_resource type="FontFile" uid="uid://djxmwln40ig66" path="res://fonts/Geo-Regular.ttf" id="2_66yb0"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://db68njtvirns6" path="res://imgs/victory landscape.png" id="3_3e2m8"]
 [ext_resource type="Script" path="res://Scenes/menu_button.gd" id="4_yvg11"]
 [ext_resource type="AudioStream" uid="uid://d21tn6mxl1rmc" path="res://audio/click_sounds/Click_Electronic_03.mp3" id="5_tmijp"]
+[ext_resource type="AudioStream" uid="uid://co7otnhl2jd83" path="res://audio/win sound.wav" id="7_ksve0"]
+[ext_resource type="AudioStream" uid="uid://bm7yml3gjti6s" path="res://audio/win menu listitem sound.wav" id="8_2rkf3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5yfhu"]
 shader = ExtResource("2_sqvgo")
@@ -75,5 +77,12 @@ script = ExtResource("4_yvg11")
 
 [node name="ClickGood" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_tmijp")
+
+[node name="WinSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_ksve0")
+
+[node name="WinMenuItemSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_2rkf3")
+volume_db = 20.0
 
 [connection signal="pressed" from="TextureRect/Button" to="." method="_on_button_pressed"]

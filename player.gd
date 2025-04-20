@@ -83,6 +83,9 @@ var has_bought_coolant: bool = false
 var has_picked_up_coolant: bool = false
 var has_refueled_generator: bool = false
 
+# At the class level, add a variable to store the label reference
+var player_name_label: Label = null
+
 func _ready():
 	set_multiplayer_authority(str(name).to_int())
 	add_to_group("players")
@@ -290,6 +293,9 @@ func toggle_console() -> void:
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority(): return
 	if (dead): 
+		# Animate the CRT effects for spectator mode
+		_animate_spectator_effects(delta)
+		
 		if (Input.is_action_just_pressed("Jump")):
 			var cur_spec = GameState.get_player_node_by_name((spec_id));
 			var par = cur_spec.get_parent();
@@ -297,6 +303,19 @@ func _physics_process(delta: float) -> void:
 			var next_spec = par.get_child(next_spec_idx)
 			spec_id = next_spec.name
 			next_spec.camera.current = true;
+			
+			# Update the player name label when switching players
+			if player_name_label:
+				var player_name = next_spec.name
+				
+				# Try to get username if available
+				if next_spec.has_node("spatial/SubViewport/name"):
+					var nametag = next_spec.get_node("spatial/SubViewport/name")
+					if nametag and nametag.text and nametag.text.length() > 0:
+						player_name = nametag.text
+						
+				player_name_label.text = "VIEWING: " + player_name
+				print("Updated player name label to: " + player_name)
 		return
 	if camera_locked and console_window:
 		var console_root = console_window.get_parent().get_parent()
@@ -561,13 +580,108 @@ func set_death(new: bool):
 		GameState.reduce_alive_count(0)
 
 func damage_taken_effect():
-	var damage_tint = Color(1, 0, 0, 0.3)
+	var damage_tint = Color(1, 0, 0, 0.05)
 	var tween = create_tween()
 	crt_shader_material.set_shader_parameter("tint_color", damage_tint)
 	tween.tween_property(crt_shader_material, "shader_parameter/tint_color", Color(0, 0, 0, 0), 0.3)
 
 func death_effect():
 	animation_player.play("player_anim/die")
+	
+	# Apply more severe CRT effect for spectator mode
+	if crt_shader_material and crt_shader_material is ShaderMaterial:
+		# IMPORTANT: Completely disable grille effect to prevent checkerboard pattern
+		crt_shader_material.set_shader_parameter("grille_amount", 0.0)
+		
+		# Use much lower aberration to prevent color bleeding at edges
+		crt_shader_material.set_shader_parameter("aberation_amount", 0.2)
+		
+		# Apply a very subtle red tint that won't affect the borders
+		crt_shader_material.set_shader_parameter("tint_color", Color(0.7, 0.0, 0.0, 0.05))
+		
+		# Other effects that don't cause border issues
+		crt_shader_material.set_shader_parameter("warp_amount", 4.0)
+		crt_shader_material.set_shader_parameter("noise_amount", 0.2)
+		crt_shader_material.set_shader_parameter("scan_line_amount", 1.0)
+		crt_shader_material.set_shader_parameter("interference_amount", 0.4)
+		crt_shader_material.set_shader_parameter("roll_line_amount", 0.7)
+		
+		# Use extreme vignette settings for pure black borders
+		crt_shader_material.set_shader_parameter("vignette_amount", 2.0)
+		crt_shader_material.set_shader_parameter("vignette_intensity", 1.5)
+		
+		# Create a label for the spectator mode instructions
+		var space_label = Label.new()
+		space_label.name = "SpectatorInstructions"
+		space_label.text = "SPACE TO CYCLE VIEW"
+		
+		# Set proper anchors to center the label on screen
+		space_label.anchor_left = 0.5
+		space_label.anchor_top = 0.5
+		space_label.anchor_right = 0.5
+		space_label.anchor_bottom = 0.5
+		
+		# Set alignment for text within the label
+		space_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		space_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		
+		# Use bold red text for visibility
+		var font_color = Color(1, 0, 0, 1)
+		space_label.set("theme_override_colors/font_color", font_color)
+		space_label.set("theme_override_font_sizes/font_size", 70)
+		
+		# Set the size and offset (larger size for the bigger font)
+		space_label.size = Vector2(800, 200)
+		# Offset from center position (half the width and height)
+		space_label.position = Vector2(-400, -100)
+		
+		# Add to UI - using same parent as the spectator instructions
+		add_child(space_label)
+		
+		# Create a tween to fade out the label
+		var tween = create_tween()
+		tween.tween_property(space_label, "modulate", Color(1, 0, 0, 0), 5.0)
+		tween.tween_callback(space_label.queue_free)
+		
+		# PLAYER NAME LABEL - USING IDENTICAL SETUP LOGIC AS SPACE LABEL
+		var name_label = Label.new()
+		name_label.name = "PlayerNameLabel"
+		
+		# Get current spectated player name
+		var current_player = GameState.get_player_node_by_name(spec_id)
+		var player_name = current_player.name if current_player else "Unknown"
+		
+		# Try to get username from the player if possible
+		if current_player and current_player.has_node("spatial/SubViewport/name"):
+			var nametag = current_player.get_node("spatial/SubViewport/name")
+			if nametag and nametag.text and nametag.text.length() > 0:
+				player_name = nametag.text
+				
+		name_label.text = "VIEWING: " + player_name
+		
+		# USE IDENTICAL SETUP AS SPACE LABEL, just different position
+		name_label.anchor_left = 0.5
+		name_label.anchor_top = 0.5  # Center anchor, same as space label
+		name_label.anchor_right = 0.5
+		name_label.anchor_bottom = 0.5
+		
+		name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		name_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		
+		# Green color
+		name_label.set("theme_override_colors/font_color", Color(0, 1, 0, 1))
+		name_label.set("theme_override_font_sizes/font_size", 70) # Same size as space label
+		
+		# Same size as space label
+		name_label.size = Vector2(800, 200)
+		# Position at bottom of screen (only difference is Y position)
+		name_label.position = Vector2(-400, 200)  # Lower on screen than space label
+		
+		print("Creating player name label: " + name_label.text)
+		add_child(name_label)
+		
+		# Store reference to update later when cycling players
+		player_name_label = name_label
 
 func end_invincibility() -> void:
 	is_invincible = false
@@ -637,3 +751,32 @@ func set_inv_slot(new: int):
 		_set_item_visibility(current_item, true, "active in socket")
 	
 	curSlotUpdating = false
+
+# Animate the CRT effects when in spectator mode
+func _animate_spectator_effects(delta: float) -> void:
+	if crt_shader_material and crt_shader_material is ShaderMaterial:
+		# Ensure grille effect stays disabled to prevent checkerboard pattern
+		crt_shader_material.set_shader_parameter("grille_amount", 0.0)
+		
+		# Only animate parameters that don't affect the borders
+		var pulse = (sin(Time.get_ticks_msec() * 0.001) + 1.0) * 0.5
+		
+		# Keep aberration low to prevent color bleeding at edges
+		crt_shader_material.set_shader_parameter("aberation_amount", 0.2)
+		
+		# Subtle noise animation
+		var noise_amount = lerp(0.15, 0.25, pulse)
+		crt_shader_material.set_shader_parameter("noise_amount", noise_amount)
+		
+		# Very subtle tint pulsing that won't affect borders
+		var tint_alpha = lerp(0.03, 0.07, pulse)
+		var tint_color = Color(0.7, 0.0, 0.0, tint_alpha)
+		crt_shader_material.set_shader_parameter("tint_color", tint_color)
+		
+		# Changing roll speed
+		var roll_speed = lerp(2.0, 4.0, pulse)
+		crt_shader_material.set_shader_parameter("roll_speed", roll_speed)
+		
+		# Keep vignette settings high for pure black borders
+		crt_shader_material.set_shader_parameter("vignette_amount", 2.0)
+		crt_shader_material.set_shader_parameter("vignette_intensity", 1.5)
