@@ -86,6 +86,9 @@ var has_refueled_generator: bool = false
 # At the class level, add a variable to store the label reference
 var player_name_label: Label = null
 
+# Store original CRT shader parameters to reset later
+var default_crt_parameters = {}
+
 func _ready():
 	set_multiplayer_authority(str(name).to_int())
 	add_to_group("players")
@@ -103,6 +106,13 @@ func _ready():
 	interact_label = get_node("/root/Level/UI/InteractLabel")
 	texture_rect = get_node("/root/Level/UI/TextureRect")
 	crt_shader_material = texture_rect.material
+	
+	# Store default CRT parameters for resetting later
+	if crt_shader_material and crt_shader_material is ShaderMaterial:
+		_store_default_crt_parameters()
+	
+	# Listen for scene change signals to reset effects
+	get_tree().root.connect("ready", _on_scene_changed)
 	
 	# Determine which tutorial level we're in and set the appropriate message
 	var current_scene = get_tree().current_scene.scene_file_path
@@ -149,7 +159,6 @@ func _ready():
 		camera.current = false
 		print("Remote player: camera disabled.")
 	spec_id = str(multiplayer.get_unique_id());
-
 
 func setup_sound_players():
 	# Setup sprint sound player
@@ -486,6 +495,9 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func endGame() -> void:
+	# Reset CRT effects before changing scene
+	reset_crt_effects()
+	
 	if(score >= quota):
 		get_tree().change_scene_to_file("res://Scenes/win.tscn")
 	else:
@@ -780,3 +792,51 @@ func _animate_spectator_effects(delta: float) -> void:
 		# Keep vignette settings high for pure black borders
 		crt_shader_material.set_shader_parameter("vignette_amount", 2.0)
 		crt_shader_material.set_shader_parameter("vignette_intensity", 1.5)
+
+# Store original CRT shader parameters to reset later
+func _store_default_crt_parameters():
+	if crt_shader_material:
+		default_crt_parameters = {
+			"grille_amount": crt_shader_material.get_shader_parameter("grille_amount"),
+			"aberation_amount": crt_shader_material.get_shader_parameter("aberation_amount"), 
+			"tint_color": crt_shader_material.get_shader_parameter("tint_color"),
+			"warp_amount": crt_shader_material.get_shader_parameter("warp_amount"),
+			"noise_amount": crt_shader_material.get_shader_parameter("noise_amount"),
+			"scan_line_amount": crt_shader_material.get_shader_parameter("scan_line_amount"),
+			"interference_amount": crt_shader_material.get_shader_parameter("interference_amount"),
+			"roll_line_amount": crt_shader_material.get_shader_parameter("roll_line_amount"),
+			"vignette_amount": crt_shader_material.get_shader_parameter("vignette_amount"),
+			"vignette_intensity": crt_shader_material.get_shader_parameter("vignette_intensity")
+		}
+
+# Reset CRT shader to default parameters
+func reset_crt_effects():
+	if crt_shader_material and default_crt_parameters.size() > 0:
+		for param in default_crt_parameters:
+			crt_shader_material.set_shader_parameter(param, default_crt_parameters[param])
+		print("Reset CRT shader to default parameters")
+
+# Called when scene changes (like going to menu or win screen)
+func _on_scene_changed():
+	# Reset effects when scene changes
+	reset_crt_effects()
+	print("Scene changed, reset CRT effects")
+
+# Make sure we reset CRT effects when exiting gameplay
+func _notification(what):
+	if what == NOTIFICATION_PREDELETE:
+		# Object is being deleted, reset CRT effects
+		reset_crt_effects()
+		print("Player being deleted, reset CRT effects")
+
+# Add a cleanup method to be called from external scripts like menu transitions
+func cleanup_spectator_effects():
+	# Clear any spectator-specific effects
+	if player_name_label:
+		player_name_label.queue_free()
+		player_name_label = null
+	
+	# Reset CRT shader effects
+	reset_crt_effects()
+	
+	print("Cleaned up spectator effects")
