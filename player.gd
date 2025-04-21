@@ -589,6 +589,8 @@ func set_death(new: bool):
 	dead = new
 	if(dead):
 		death_effect()
+		var uis = get_tree().get_root().get_node_or_null("Level/UI/ninepatch")
+		uis.visible = false
 		GameState.reduce_alive_count(0)
 
 func damage_taken_effect():

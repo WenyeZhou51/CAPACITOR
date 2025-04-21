@@ -29,16 +29,16 @@ var los_timer = 0.0
 var los
 
 func _ready() -> void:
-	print("[VENUS] _ready() called")
+	#print("[VENUS] _ready() called")
 	randomize()
-	
+	floor_snap_length = 1.0
 	#delay timer
-	var timer = Timer.new()
-	timer.wait_time = randf_range(20, 40)#should be 20, 40
-	timer.one_shot = true
-	timer.timeout.connect(_on_activation_timeout)
-	add_child(timer)
-	timer.start()
+	#var timer = Timer.new()
+	#timer.wait_time = randf_range(20, 40)#should be 20, 40
+	#timer.one_shot = true
+	#timer.timeout.connect(_on_activation_timeout)
+	#add_child(timer)
+	#timer.start()
 	
 	# Node initialization debug
 	animation_player = get_node("Venus/AnimationPlayer")
@@ -46,15 +46,15 @@ func _ready() -> void:
 	#print("[VENUS] Nodes initialized - AnimationPlayer: ", animation_player, " | Agent: ", agent)
 	
 	await get_tree().physics_frame
-	print("[VENUS] Physics frame awaited")
+	#print("[VENUS] Physics frame awaited")
 	
 	if agent:
 		agent.path_desired_distance = 0.5
 		agent.target_desired_distance = 0.5
 		agent.max_speed = chase_speed
-		print("[VENUS] Agent configured | Speed: ", chase_speed, 
-			" | Path Distance: ", agent.path_desired_distance,
-			" | Target Distance: ", agent.target_desired_distance)
+		#print("[VENUS] Agent configured | Speed: ", chase_speed, 
+			#" | Path Distance: ", agent.path_desired_distance,
+			#" | Target Distance: ", agent.target_desired_distance)
 	
 	# Player detection debug
 	var players = get_tree().get_nodes_in_group("players")
@@ -98,18 +98,18 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	# Gravity system debug
-	var pre_gravity_y = local_velocity.y
-	local_velocity.y -= gravity * delta
+	#var pre_gravity_y = local_velocity.y
+	#local_velocity.y -= gravity * delta
 	#print("[GRAVITY] Applied: ", gravity * delta, 
 		#" | Pre: ", pre_gravity_y, 
 	#	" | Post: ", local_velocity.y, 
 	#	" | On Floor: ", is_on_floor())
 	
-	if is_on_floor():
-		local_velocity.y = max(local_velocity.y, 0)
+	#if is_on_floor():
+		#local_velocity.y = max(local_velocity.y, 0)
 		#print("[FLOOR] Velocity clamped to: ", local_velocity.y)
 	
-	
+	apply_floor_snap()
 	#chase_player(delta)
 	
 	# Line of sight debug
@@ -133,6 +133,11 @@ func _physics_process(delta: float) -> void:
 		var pre_move_velocity = velocity
 		velocity = local_velocity
 		move_and_slide()
+		
+		var nav_map = agent.get_navigation_map()
+		var closest_point = NavigationServer3D.map_get_closest_point(nav_map, global_transform.origin)
+		global_transform.origin = closest_point
+		
 		local_velocity = velocity
 		#print("[MOVEMENT] Pre: ", pre_move_velocity, 
 			#" | Post: ", local_velocity, 
@@ -144,8 +149,10 @@ func _physics_process(delta: float) -> void:
 
 func chase_player(delta: float) -> void:
 	if not is_instance_valid(player) or player.dead:
+		print("venus: invalid target, abort")
 		return
 	
+	print("Venus: start chase behavior")
 	path_update_timer += delta
 	if path_update_timer >= path_update_cooldown:
 		agent.target_position = player.global_transform.origin
@@ -155,13 +162,14 @@ func chase_player(delta: float) -> void:
 func update_path_following(speed: float) -> void:
 	#print("[PATH] Navigation finished: ", agent.is_navigation_finished())
 	
+	
 	if not agent.is_navigation_finished():
 		var next_pos = agent.get_next_path_position()
 		var current_pos = global_transform.origin
 		var offset_3d = next_pos - current_pos
 		var offset_2d = Vector3(offset_3d.x, 0, offset_3d.z)
 		var offset_length = offset_2d.length()
-		
+		print("Venus: chase pathing")
 		#print("[PATH] Next Position: ", next_pos, 
 		#	" | Current Position: ", current_pos, 
 			#" | Offset 2D: ", offset_2d, 
@@ -217,7 +225,7 @@ func _on_timer_timeout() -> void:
 	var dist = global_transform.origin.distance_to(player.global_transform.origin)
 	#print("[ATTACK] Distance: ", dist, " | Radius: ", attack_radius)
 	
-	if dist < attack_radius:
+	if dist < attack_radius and has_seen_player:
 		#print("[ATTACK] !!! Hitting player !!!")
 		player.init_take_damage(attack_damage)
 		$AttackSound.play()
@@ -231,10 +239,11 @@ func has_line_of_sight() -> CharacterBody3D:
 	#	" | Player Hit: ", result.collider == player)
 	for body in overlapping_bodies:
 		if body.is_in_group("players") and !body.dead:
+			print("Venus: Found target")
 			return body
 	return null
 	
 
-func _on_activation_timeout() -> void:
-	is_active = true
-	print("[VENUS] Activation timer finished - Starting chase behavior")
+#func _on_activation_timeout() -> void:
+	#is_active = true
+	#print("[VENUS] Activation timer finished - Starting chase behavior")

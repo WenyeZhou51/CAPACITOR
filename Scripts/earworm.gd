@@ -180,6 +180,7 @@ func set_initial_position() -> void:
 		nav_ready = true
 
 func _physics_process(delta: float) -> void:
+
 	if not is_active or not nav_ready:
 		return
 

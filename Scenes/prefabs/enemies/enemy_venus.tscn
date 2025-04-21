@@ -173,7 +173,7 @@ volume_db = 5.0
 collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/Area3D"]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -0.0672768, 2.21473, -3.74523)
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -0.0672768, 0.988114, -3.74523)
 shape = SubResource("BoxShape3D_65130")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]

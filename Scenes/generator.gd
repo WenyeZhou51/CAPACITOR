@@ -108,13 +108,21 @@ func cleanup_lights_array():
 func red_heat(call_state: int, hl: int):
 	if (call_state == 0):
 		red_heat.rpc_id(1, 1, 0);
+		#print("generator: heat reduce ckpoint 1")
+		if(multiplayer.get_unique_id() == 1):
+			#print("generator: host call")
+			heat_level = max(heat_level - 60.0, 0.0)
+			red_heat.rpc(2, heat_level)
+			hl = heat_level
 		return
 	if (call_state == 1):
 		if multiplayer.get_unique_id() != 1:
+			#print("generator: heat reduce ckpoint 2")
 			return;
 		heat_level = max(heat_level - 60.0, 0.0)
 		red_heat.rpc(2, heat_level)
 		hl = heat_level
+	#print("generator: heat reduce ckpoint 3")
 	heat_level = hl;
 	update_heat_bar_color()
 
