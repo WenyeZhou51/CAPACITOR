@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://6vdrcukrj72y"]
+[gd_scene load_steps=12 format=3 uid="uid://6vdrcukrj72y"]
 
 [ext_resource type="Script" path="res://Scenes/gameover.gd" id="1_vasx5"]
 [ext_resource type="FontFile" uid="uid://djxmwln40ig66" path="res://fonts/Geo-Regular.ttf" id="2_66yb0"]
@@ -8,9 +8,28 @@
 [ext_resource type="AudioStream" uid="uid://d21tn6mxl1rmc" path="res://audio/click_sounds/Click_Electronic_03.mp3" id="5_tmijp"]
 [ext_resource type="AudioStream" uid="uid://co7otnhl2jd83" path="res://audio/win sound.wav" id="7_ksve0"]
 [ext_resource type="AudioStream" uid="uid://bm7yml3gjti6s" path="res://audio/win menu listitem sound.wav" id="8_2rkf3"]
+[ext_resource type="Shader" path="res://shaders/crt.gdshader" id="9_g2mxg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5yfhu"]
 shader = ExtResource("2_sqvgo")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tovrs"]
+shader = ExtResource("9_g2mxg")
+shader_parameter/resolution = Vector2(320, 180)
+shader_parameter/tint_color = Color(0, 0, 0, 0)
+shader_parameter/scan_line_amount = 1.0
+shader_parameter/warp_amount = 0.1
+shader_parameter/noise_amount = 0.03
+shader_parameter/interference_amount = 0.2
+shader_parameter/grille_amount = 0.1
+shader_parameter/grille_size = 1.0
+shader_parameter/vignette_amount = 0.6
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/aberation_amount = 0.5
+shader_parameter/roll_line_amount = 0.3
+shader_parameter/roll_speed = 1.0
+shader_parameter/scan_line_strength = -8.0
+shader_parameter/pixel_strength = -2.0
 
 [node name="Win" type="Control"]
 layout_mode = 3
@@ -30,6 +49,15 @@ offset_right = 1954.0
 offset_bottom = 1174.0
 texture = ExtResource("3_3e2m8")
 expand_mode = 1
+
+[node name="ColorRect" type="ColorRect" parent="TextureRect"]
+z_index = 1
+material = SubResource("ShaderMaterial_tovrs")
+layout_mode = 0
+offset_left = -9.0
+offset_top = -19.0
+offset_right = 2013.0
+offset_bottom = 1202.0
 
 [node name="Label" type="Label" parent="TextureRect"]
 layout_mode = 0
@@ -65,6 +93,7 @@ theme_override_font_sizes/font_size = 80
 text = "Players survivded: "
 
 [node name="Button" type="Button" parent="TextureRect"]
+z_index = 10
 layout_mode = 0
 offset_left = 1600.0
 offset_top = 969.0

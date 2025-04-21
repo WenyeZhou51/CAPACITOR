@@ -1,8 +1,28 @@
-[gd_scene load_steps=4 format=3 uid="uid://ctwaw8niaod3"]
+[gd_scene load_steps=7 format=3 uid="uid://ctwaw8niaod3"]
 
 [ext_resource type="Script" path="res://Scenes/gameover_lose.gd" id="1_d48gm"]
-[ext_resource type="Texture2D" uid="uid://bq8arwc8uwrp1" path="res://imgs/1f5d7f566145ab4361f31a36ba80bb3.jpg" id="2_dug37"]
+[ext_resource type="Texture2D" uid="uid://djgiis2extgc0" path="res://imgs/Lose Image.png" id="2_0xfd1"]
 [ext_resource type="AudioStream" uid="uid://d338r6w8jhdoe" path="res://audio/The Surreal Truth.mp3" id="3_vs5vs"]
+[ext_resource type="FontFile" uid="uid://djxmwln40ig66" path="res://fonts/Geo-Regular.ttf" id="3_yn8e2"]
+[ext_resource type="Shader" path="res://shaders/crt.gdshader" id="5_vishv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3bq7r"]
+shader = ExtResource("5_vishv")
+shader_parameter/resolution = Vector2(320, 180)
+shader_parameter/tint_color = Color(0, 0, 0, 0)
+shader_parameter/scan_line_amount = 1.0
+shader_parameter/warp_amount = 0.1
+shader_parameter/noise_amount = 0.03
+shader_parameter/interference_amount = 0.2
+shader_parameter/grille_amount = 0.1
+shader_parameter/grille_size = 1.0
+shader_parameter/vignette_amount = 0.6
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/aberation_amount = 0.5
+shader_parameter/roll_line_amount = 0.3
+shader_parameter/roll_speed = 1.0
+shader_parameter/scan_line_strength = -8.0
+shader_parameter/pixel_strength = -2.0
 
 [node name="Gameover" type="Control"]
 layout_mode = 3
@@ -19,27 +39,52 @@ script = ExtResource("1_d48gm")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = -205.0
+offset_left = -37.0
 offset_top = -80.0
-offset_right = 2345.0
-offset_bottom = 3220.0
-texture = ExtResource("2_dug37")
+offset_right = 1958.0
+offset_bottom = 1135.0
+texture = ExtResource("2_0xfd1")
+
+[node name="ColorRect" type="ColorRect" parent="TextureRect"]
+z_index = 1
+material = SubResource("ShaderMaterial_3bq7r")
+layout_mode = 0
+offset_left = -21.0
+offset_top = -26.0
+offset_right = 2035.0
+offset_bottom = 1227.0
 
 [node name="Label" type="Label" parent="TextureRect"]
 layout_mode = 0
-offset_left = 900.0
-offset_top = 500.0
-offset_right = 1500.0
-offset_bottom = 660.0
+offset_left = 785.0
+offset_top = 151.0
+offset_right = 1270.0
+offset_bottom = 315.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("3_yn8e2")
 theme_override_font_sizes/font_size = 110
-text = "Game Over"
+text = "Signal Lost"
+
+[node name="typed label" type="Label" parent="TextureRect"]
+layout_mode = 0
+offset_left = 306.0
+offset_top = 461.0
+offset_right = 1745.0
+offset_bottom = 692.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("3_yn8e2")
+theme_override_font_sizes/font_size = 80
+text = "All personnel non-responsive. (Error code: 0xb1109)
+Terminating..."
+autowrap_mode = 3
 
 [node name="Button" type="Button" parent="TextureRect"]
+z_index = 10
 layout_mode = 0
-offset_left = 1050.0
-offset_top = 800.0
-offset_right = 1350.0
-offset_bottom = 920.0
+offset_left = 1540.0
+offset_top = 957.0
+offset_right = 1840.0
+offset_bottom = 1077.0
 theme_override_font_sizes/font_size = 40
 text = "Main Menu"
 
