@@ -703,7 +703,7 @@ bg_color = Color(0.867917, 0.210116, 0.185367, 1)
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_8cyl3"]
 radius = 0.7
 
-[node name="Level" type="Node3D"]
+[node name="Level3" type="Node3D"]
 script = ExtResource("1_syn0y")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
