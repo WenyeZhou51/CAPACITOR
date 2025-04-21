@@ -722,7 +722,7 @@ door_scene = ExtResource("6_rrefc")
 enemy_scenes = Array[PackedScene]([ExtResource("9_vw5pj"), ExtResource("9_js7c2")])
 min_spawn_time = 5.0
 max_spawn_time = 10.0
-max_enemies = 3
+max_enemies = 2
 
 [node name="EarwormManager" type="Node" parent="."]
 script = ExtResource("9_t504a")

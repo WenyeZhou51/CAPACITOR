@@ -24,6 +24,7 @@ properties/1/replication_mode = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.106848, 0)
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("detection_area")]
+collision_layer = 2
 safe_margin = 0.1
 script = ExtResource("2_4grln")
 chase_speed = 4.0

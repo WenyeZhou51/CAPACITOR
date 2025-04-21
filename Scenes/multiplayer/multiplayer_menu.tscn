@@ -120,6 +120,7 @@ layout_mode = 2
 theme_override_constants/separation = 0
 
 [node name="hostlog" type="Label" parent="MarginContainer/Control/ColorRect/VBoxContainer/HBoxContainer2"]
+z_index = 10
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 
