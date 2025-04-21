@@ -121,6 +121,9 @@ func _physics_process(delta: float) -> void:
 			has_seen_player = true
 			# Assign the detected player so that chase functions know whom to follow.
 			player = spotted
+		else:
+			velocity = Vector3.ZERO
+			
 	
 	# If a player has been spotted, start chasing them.
 	if has_seen_player:
