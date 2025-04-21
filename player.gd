@@ -562,36 +562,32 @@ func init_take_damage(amount: int):
 	invincibility_timer.start()
 		
 func set_health(new: int):
-	if (dead):
-		return;
 	var hurt = new < current_health
 	current_health = new
-	if not is_multiplayer_authority(): return
-	if (current_health <= 0):
-		print("player.gd: Died, dropping all items")
-		var item_socket = get_node("Head/ItemSocket")
-		#var curr = item_socket.get_child(0)
-		#if item_socket.get_child_count() > 0:
-			#print("player.gd: Died, dropping item on hand")
-			#MultiplayerRequest.request_item_drop()
-		var inventory_container = get_node("InventoryContainer")
-		for i in range(4):
-			MultiplayerRequest.request_inventory_idx_change(i)
-			MultiplayerRequest.request_item_drop()
-		set_death(true)
-		return
 	
-	if hurt && client_is_this_player():
+	if (current_health <= 0):
+		set_death(true)
+	
+	if hurt && is_multiplayer_authority():
 		damage_taken_effect()
 		update_health_indicator()
 	
 func set_death(new: bool):
 	dead = new
+	if (multiplayer.is_server()):
+		GameState.reduce_alive_count(0)
+	if (not is_multiplayer_authority()): return;
 	if(dead):
 		death_effect()
 		var uis = get_tree().get_root().get_node_or_null("Level/UI/ninepatch")
 		uis.visible = false
-		GameState.reduce_alive_count(0)
+		print("player.gd: Died, dropping all items")
+		var item_socket = get_node("Head/ItemSocket")
+		var inventory_container = get_node("InventoryContainer")
+		for i in range(4):
+			MultiplayerRequest.request_inventory_idx_change(i)
+			MultiplayerRequest.request_item_drop()
+		return
 
 func damage_taken_effect():
 	var damage_tint = Color(1, 0, 0, 0.05)

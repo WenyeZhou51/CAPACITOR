@@ -13,7 +13,7 @@ extends CharacterBody3D
 @export var detection_area: Area3D
 
 # State variables
-var player: CharacterBody3D
+var player: Player
 var animation_player: AnimationPlayer
 var agent: NavigationAgent3D
 var local_velocity: Vector3 = Vector3.ZERO
