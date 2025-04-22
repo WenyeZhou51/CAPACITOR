@@ -18,7 +18,6 @@ collision_layer = 8
 collision_mask = 5
 script = ExtResource("3_1r8d4")
 flashlight_sound = NodePath("AudioStreamPlayer")
-Price = 10
 type = "flashlight"
 
 [node name="Model" type="Node3D" parent="."]

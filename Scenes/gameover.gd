@@ -23,9 +23,9 @@ var players_done = false
 var animation_started = false
 
 # Animation speeds
-var quota_speed = 20  # Quota per second
-var time_speed = 15.0  # Seconds per second
-var players_speed = 1  # Players per second
+var quota_speed = 500  # Quota per second
+var time_speed = 120.0  # Seconds per second
+var players_speed = 2  # Players per second
 
 # Delay between animations
 var delay_timer = 0.0

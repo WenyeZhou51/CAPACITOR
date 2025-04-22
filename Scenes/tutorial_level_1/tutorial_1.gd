@@ -9,7 +9,7 @@ func _ready() -> void:
 func _on_next_2_pressed() -> void:
 	click_good.play()
 	GameState.set_quota(600)
-	GameState.set_end_scene("res://Scenes/win.tscn")
+	GameState.set_end_scene("res://Scenes/tutorial_level_2/level_2_complete.tscn")
 	#GameState.set_auto_start(true)
 	MultiplayerManager.switch_map.rpc("res://Scenes/tutorial_level_2/testscene.tscn")
 	MultiplayerManager.start_game()

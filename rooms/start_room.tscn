@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=4 uid="uid://btqev772fc7bl"]
+[gd_scene load_steps=38 format=4 uid="uid://btqev772fc7bl"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_pykbe"]
 [ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="3_e13x1"]
@@ -16,7 +16,6 @@
 [ext_resource type="Texture2D" uid="uid://rsjam50ykqwl" path="res://objectmodels3/CashRegister_01_4k/textures/CashRegister_01_nor_gl_4k.jpg" id="16_0opkq"]
 [ext_resource type="PackedScene" uid="uid://dhmtymlk3gb34" path="res://Scenes/prefabs/items/flashlight.tscn" id="16_cihow"]
 [ext_resource type="PackedScene" uid="uid://dvleiqfmloahr" path="res://Scenes/prefabs/coolant_marker.tscn" id="16_vkmh3"]
-[ext_resource type="PackedScene" uid="uid://bjjrllm15flh4" path="res://Scenes/prefabs/enemies/enemy_venus.tscn" id="17_aytn0"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_2up67"]
 vertices = PackedVector3Array(-9.48562, 5.5, -9.49464, -9.48562, 5.5, 9.50536, 9.51438, 5.5, 9.50536, 9.51438, 5.5, -9.49464, 8.51438, -4, -7.99464, -9.48562, -4, -7.74464, -8.73562, -4, -7.24464, -8.73562, -4, 7.00536, 8.51438, -4, 7.00536)
@@ -459,6 +458,3 @@ skeleton = NodePath("")
 transform = Transform3D(-0.0805271, 0, 5.99946, 0, 6, 0, -5.99946, 0, -0.0805271, 4.02936, -4.4726, -0.70766)
 mesh = SubResource("ArrayMesh_3tb50")
 skeleton = NodePath("")
-
-[node name="enemy_venus" parent="." instance=ExtResource("17_aytn0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.39112, -3.74572, 1.0507)

@@ -16,13 +16,13 @@ func interact(player: CharacterBody3D):
 	
 	if item_socket.get_child_count() > 0:
 		var old_item = item_socket.get_child(0)
-		print(old_item.name)
-		value = old_item.Price
-		item_socket.remove_child(old_item)
-	
-	player.inventory[player.current_slot] = null
-	player.inv_size -= 1
-	GameState.set_team_score(GameState.get_team_score() + value);
+		print("cash box " + old_item.name)
+		if old_item.name != "Flashlight":
+			value = old_item.Price
+			item_socket.remove_child(old_item)
+			player.inventory[player.current_slot] = null
+			player.inv_size -= 1
+			GameState.set_team_score(GameState.get_team_score() + value);
 	
 	var msg: String
 	if(value == 0):
