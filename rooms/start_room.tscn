@@ -312,7 +312,7 @@ mesh = SubResource("ArrayMesh_vrf4f")
 skeleton = NodePath("")
 
 [node name="DoorMarker2" parent="." instance=ExtResource("6_xsa8n")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -9.99856, -4.65394, -3.31934)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -9.99856, -4.65394, -2.40964)
 
 [node name="Generator" parent="." instance=ExtResource("9_3lovi")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.474962, -4.27081, 5.64823)
