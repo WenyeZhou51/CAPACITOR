@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=4 uid="uid://btqev772fc7bl"]
+[gd_scene load_steps=37 format=4 uid="uid://btqev772fc7bl"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_pykbe"]
 [ext_resource type="Texture2D" uid="uid://bau667gbqrgk3" path="res://textures/small_room_texture/rusty_metal_sheet_diff_1k_compressed.png" id="3_e13x1"]
@@ -10,7 +10,6 @@
 [ext_resource type="Script" path="res://Scenes/prefabs/items/cashBox.gd" id="7_lf1au"]
 [ext_resource type="PackedScene" uid="uid://yd6lu668s2rd" path="res://objectmodels/korean_public_payphone_01_4k/korean_public_payphone_01_4k.gltf" id="8_hof4i"]
 [ext_resource type="PackedScene" uid="uid://bcot47xqk0oe3" path="res://Scenes/generator.tscn" id="9_3lovi"]
-[ext_resource type="PackedScene" uid="uid://xcj3me4ww2u2" path="res://console folder/console.tscn" id="11_s0eup"]
 [ext_resource type="PackedScene" uid="uid://cvwdeshjlru0d" path="res://objectmodels3/fence/fence.glb" id="14_qbpxr"]
 [ext_resource type="Texture2D" uid="uid://bbqfx4lomtrqe" path="res://objectmodels3/CashRegister_01_4k/textures/CashRegister_01_diff_4k.jpg" id="15_x5hkp"]
 [ext_resource type="Texture2D" uid="uid://rsjam50ykqwl" path="res://objectmodels3/CashRegister_01_4k/textures/CashRegister_01_nor_gl_4k.jpg" id="16_0opkq"]
@@ -269,10 +268,6 @@ script = ExtResource("1_pykbe")
 size_in_voxels = Vector3i(2, 1, 2)
 min_count = 1
 max_count = 1
-
-[node name="Console" parent="." instance=ExtResource("11_s0eup")]
-transform = Transform3D(3.85835, 0, 0, 0, 2.55677, 0, 0, 0, 3.08341, -4.02, -2.81254, -7.31016)
-use_collision = true
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_2up67")

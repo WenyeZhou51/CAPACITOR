@@ -1359,6 +1359,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.9189, 16.0335, 0)
 [node name="Scrap2" parent="items" instance=ExtResource("4_occg4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.2731, 16.2735, 24.1763)
 
+[node name="Scrap3" parent="items" instance=ExtResource("4_occg4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.7131, 16.0348, -6.79511)
+
 [node name="Scrap4" parent="items" instance=ExtResource("4_occg4")]
 transform = Transform3D(0.999683, 0, 0.0251824, 0, 1, 0, -0.0251824, 0, 0.999683, -17.8793, 16.9282, -14.8759)
 
@@ -1367,6 +1370,9 @@ transform = Transform3D(0.999683, 0, 0.0251824, 0, 1, 0, -0.0251824, 0, 0.999683
 
 [node name="Scrap5" parent="items" instance=ExtResource("4_occg4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.08448, 17.4854, -17.3804)
+
+[node name="Flashlight2" parent="items" instance=ExtResource("13_1s1s2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.05814, 6.12844, -1.54064)
 
 [node name="ItemSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://Scenes/prefabs/items/scrap1.tscn", "res://Scenes/prefabs/items/scrap2.tscn", "res://Scenes/prefabs/items/scrap3.tscn", "res://Scenes/prefabs/Door.tscn", "res://Scenes/prefabs/items/coolant.tscn", "res://Scenes/prefabs/enemies/enemy_earworm.tscn", "res://Scenes/prefabs/enemies/enemy_venus.tscn", "res://Scenes/prefabs/items/flashlight.tscn")
