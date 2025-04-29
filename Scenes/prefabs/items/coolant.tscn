@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cbn467wek4y8o"]
 
 [ext_resource type="Script" path="res://Scripts/pickupable.gd" id="1_kty08"]
-[ext_resource type="PackedScene" uid="uid://cl7s07l4blpls" path="res://blender exports/coolant.glb" id="2_ty8jy"]
+[ext_resource type="PackedScene" uid="uid://d2ggwqdqwyfi" path="res://blender exports/coolant.glb" id="2_ty8jy"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a5t05"]
 size = Vector3(0.376205, 0.687851, 0.464172)
@@ -18,4 +18,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00467682, 0.386956, 0.01644
 shape = SubResource("BoxShape3D_a5t05")
 
 [node name="coolant" parent="." instance=ExtResource("2_ty8jy")]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0.127557)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -0.0684187, 0, -0.140899)
