@@ -21,6 +21,8 @@ func drop(player: CharacterBody3D, drop_position: Vector3 = Vector3.ZERO, drop_d
 		if self is StaticBody3D:
 			var rigidbody = convert_staticbody_to_rigidbody(self, world)
 			world.add_child(rigidbody)
+			# Add the dropped item to the scrap group for radar detection
+			rigidbody.add_to_group("scrap")
 			player._set_item_visibility(rigidbody, true, "dropped in world")
 	
 	# Clear from inventory

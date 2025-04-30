@@ -21,6 +21,10 @@ func interact(player: Player) -> void:
 	# Convert to static body first
 	static_obj = convert_rigidbody_to_staticbody(self)
 	
+	# Remove from scrap group when in inventory
+	if static_obj.is_in_group("scrap"):
+		static_obj.remove_from_group("scrap")
+	
 	# Clear current item if exists
 	if item_socket.get_child_count() > 0:
 		var old_item = item_socket.get_child(0)
@@ -98,12 +102,15 @@ func convert_rigidbody_to_staticbody(rigidbody: RigidBody3D) -> StaticBody3D:
 		static_body.set_script(drop_script)
 	static_body.Price = rigidbody.Price
 	static_body.type = rigidbody.type
+	
+	# Don't add the static body to the scrap group
+	# It's now in the player's inventory and shouldn't be shown on radar
+	# We'll add it back when it's dropped
+	
 	var mesh_instance = static_body.get_node_or_null("MeshInstance3D")
 	if mesh_instance:
 		mesh_instance.visible = true
 	# Optionally free the old RigidBody3D to clean up memory
-	
-	
 	
 	rigidbody.queue_free()
 	
