@@ -5,8 +5,9 @@ class_name SprayPaint_Static_Class
 @onready var spray_particles: GPUParticles3D = $Model/SprayParticles
 @export var spray_sound: AudioStreamPlayer
 @export var spray_duration: float = 1.0  # Increase duration for better testing
-@export var spray_distance: float = 10.0  # How far the paint can reach
+@export_range(1.0, 20.0, 0.5) var spray_distance: float = 5.0  # Default to 5 meters, adjustable in inspector
 @export var paint_color: Color = Color(0.501961, 0, 1, 1)  # Purple color
+@export var allowed_layers: int = 1  # Default to layer 1 (walls and floors)
 
 var is_spraying: bool = false
 var spray_timer: float = 0.0
@@ -102,16 +103,36 @@ func _spray_paint(player: Node) -> void:
     # Create physics raycast query
     var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
     query.exclude = [player]
+    query.collision_mask = allowed_layers  # Only collide with allowed layers (walls/floors)
     var result = space_state.intersect_ray(query)
     
     if result:
         print("[Spray debug] Hit object: " + str(result.collider.name) + " at " + str(result.position))
-        # Create paint decal
-        var paint = _create_paint_decal(result.position, result.normal)
-        
-        # Add to the world
-        var world = player.get_tree().current_scene
-        world.add_child(paint)
+        # Check if this is a sprayable surface (wall or floor)
+        if _is_sprayable_surface(result.collider):
+            # Create paint decal
+            var paint = _create_paint_decal(result.position, result.normal)
+            
+            # Add to the world
+            var world = player.get_tree().current_scene
+            world.add_child(paint)
+        else:
+            print("[Spray debug] Surface not sprayable: " + str(result.collider.name))
+
+func _is_sprayable_surface(object: Object) -> bool:
+    # Check if the object is in the allowed layers (walls/floors)
+    # For simplicity, we'll consider anything in layer 1 as sprayable
+    # You can enhance this logic based on your game's layer setup
+    if object is StaticBody3D or object is CSGShape3D:
+        print("[Spray debug] Sprayable surface detected (StaticBody3D or CSGShape3D)")
+        return true
+    
+    # Check if it's part of the level geometry
+    if "wall" in object.name.to_lower() or "floor" in object.name.to_lower() or "ceiling" in object.name.to_lower():
+        print("[Spray debug] Sprayable surface detected based on name")
+        return true
+    
+    return false
 
 func _create_paint_decal(position: Vector3, normal: Vector3) -> Node3D:
     print("[Spray debug] Creating paint decal at " + str(position))
