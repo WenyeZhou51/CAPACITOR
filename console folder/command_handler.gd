@@ -105,6 +105,9 @@ func on_command_cam(console: Node, args: Array):
 	if radar_display:
 		radar_display.queue_free()
 	
+	# Clear console output before displaying camera view
+	console.clear_output()
+	
 	# Instance the new radar display (now a 2D Control node)
 	radar_display = load("res://console folder/camera_viewport.tscn").instantiate()
 	

@@ -101,8 +101,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.319724, 1.23512)
 
 [node name="ConsoleLight" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0.8)
-light_color = Color(0.647059, 0.784314, 0.831373, 1)
-light_energy = 1.5
+light_color = Color(0.706342, 1, 0.715834, 1)
+light_energy = 0.5
+light_volumetric_fog_energy = 0.0
+light_specular = 0.0
 omni_range = 3.0
 omni_attenuation = 1.5
 

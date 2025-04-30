@@ -1,7 +1,7 @@
 extends Control
 
 var target_player: Node3D
-var radar_size = Vector2(600, 300)
+var radar_size = Vector2(420, 210)  # Reduced by 30% from (600, 300)
 var ray_length = 100.0
 var max_detection_distance = 100.0  # Maximum distance to detect walls
 
@@ -67,6 +67,24 @@ func _process(_delta):
 	
 	# Request redraw to update the radar
 	queue_redraw()
+
+# Handle console input - disable camera and execute command
+func _input(event):
+	if event is InputEventKey and event.pressed and event.keycode == KEY_ENTER:
+		var console = get_parent()
+		if console and console.input_bar and console.input_bar.text.strip_edges() != "":
+			# User typed a command, disable camera view
+			console.clear_output() # Clear the console
+			queue_free() # Remove the camera viewport
+	
+	# Handle mouse clicks as well
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		var console = get_parent()
+		var input_bar = console.get_node_or_null("VBoxContainer/InputBar")
+		if input_bar and input_bar.has_focus():
+			# User is interacting with input, prepare to disable camera
+			set_process_input(false) # Stop processing input to avoid conflicts
+			# The command will be processed by the console system
 
 func perform_radar_scan():
 	if not target_player:
@@ -307,12 +325,6 @@ func _draw():
 	var x_size = 6
 	draw_line(center - Vector2(x_size, x_size), center + Vector2(x_size, x_size), Color(0, 1, 0), 2)
 	draw_line(center + Vector2(-x_size, x_size), center + Vector2(x_size, -x_size), Color(0, 1, 0), 2)
-	
-	# Draw debug text on radar 
-	var debug_color = Color(0, 1, 0)
-	draw_string(ThemeDB.fallback_font, Vector2(10, 20), "Walls: " + str(wall_hit_count), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, debug_color)
-	draw_string(ThemeDB.fallback_font, Vector2(10, 40), "Enemies: " + str(enemy_count), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, debug_color)
-	draw_string(ThemeDB.fallback_font, Vector2(10, 60), "Scraps: " + str(scrap_count), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, debug_color)
 
 # Find the nearest neighboring points to the given point
 func find_nearest_points(point, all_points, max_distance):
@@ -340,14 +352,17 @@ func find_nearest_points(point, all_points, max_distance):
 func draw_grid(center: Vector2, max_radius: float):
 	var grid_color = Color(0, 0.5, 0, 0.15)
 	
+	# Apply 30% reduction to the circles
+	var scaled_radius = max_radius * 0.7
+	
 	# Draw concentric circles
 	for i in range(1, 4):
-		var radius = max_radius * (i / 3.0)
+		var radius = scaled_radius * (i / 3.0)
 		draw_arc(center, radius, 0, 2 * PI, 36, grid_color, 1.0)
 	
-	# Draw cardinal direction lines
-	draw_line(center, center + Vector2(0, -max_radius), grid_color, 1.0)  # North
-	draw_line(center, center + Vector2(max_radius, 0), grid_color, 1.0)   # East
-	draw_line(center, center + Vector2(0, max_radius), grid_color, 1.0)   # South
-	draw_line(center, center + Vector2(-max_radius, 0), grid_color, 1.0)  # West
+	# Draw cardinal direction lines - also scaled to match circles
+	draw_line(center, center + Vector2(0, -scaled_radius), grid_color, 1.0)  # North
+	draw_line(center, center + Vector2(scaled_radius, 0), grid_color, 1.0)   # East
+	draw_line(center, center + Vector2(0, scaled_radius), grid_color, 1.0)   # South
+	draw_line(center, center + Vector2(-scaled_radius, 0), grid_color, 1.0)  # West
 	

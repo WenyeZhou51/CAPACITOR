@@ -120,18 +120,27 @@ func _spray_paint(player: Node) -> void:
             print("[Spray debug] Surface not sprayable: " + str(result.collider.name))
 
 func _is_sprayable_surface(object: Object) -> bool:
-    # Check if the object is in the allowed layers (walls/floors)
-    # For simplicity, we'll consider anything in layer 1 as sprayable
-    # You can enhance this logic based on your game's layer setup
-    if object is StaticBody3D or object is CSGShape3D:
-        print("[Spray debug] Sprayable surface detected (StaticBody3D or CSGShape3D)")
-        return true
+    # Only allow spraypaint on walls and floors, not on doors or props
     
-    # Check if it's part of the level geometry
+    # Check if it's explicitly a door or prop (reject these)
+    if "door" in object.name.to_lower() or "prop" in object.name.to_lower():
+        print("[Spray debug] Not sprayable: door or prop detected")
+        return false
+        
+    # Only allow if it's a wall or floor
     if "wall" in object.name.to_lower() or "floor" in object.name.to_lower() or "ceiling" in object.name.to_lower():
         print("[Spray debug] Sprayable surface detected based on name")
         return true
     
+    # Additional check for static level geometry that might be walls/floors but not named as such
+    # We only allow specific object types that are likely to be walls/floors
+    if (object is StaticBody3D or object is CSGShape3D) and not ("door" in object.get_parent().name.to_lower() or "prop" in object.get_parent().name.to_lower()):
+        # Extra check - if this has a parent with "door" or "prop" in the name, reject it
+        print("[Spray debug] Sprayable static geometry detected")
+        return true
+    
+    # If we reach here, it's not a sprayable surface
+    print("[Spray debug] Not a sprayable surface")
     return false
 
 func _create_paint_decal(position: Vector3, normal: Vector3) -> Node3D:
