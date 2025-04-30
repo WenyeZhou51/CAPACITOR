@@ -251,11 +251,24 @@ func _input(event: InputEvent) -> void:
 	else:
 		if event.is_action_pressed("Use"):
 			var current_item = inventory[current_slot]
+			print("[Spray debug] Use action pressed, current item: " + str(current_item))
+			if current_item:
+				print("[Spray debug] Item type: " + str(current_item.type))
+				
 			if current_item and current_item.type == "flashlight":
 				MultiplayerRequest.request_flash_toggle(current_item.name)
 				# Play flashlight toggle sound
 				if flashlight_sound_player and is_multiplayer_authority():
 					flashlight_sound_player.play()
+			elif current_item and current_item.type == "spraypaint":
+				# Use the spray paint item
+				print("[Spray debug] Found spraypaint item, checking for use method...")
+				if current_item.has_method("use"):
+					print("[Spray debug] Calling use() method on spraypaint")
+					current_item.use(self)
+				else:
+					print("[Spray debug] ERROR: spraypaint has no use() method!")
+					print("[Spray debug] Available methods: " + str(current_item.get_method_list()))
 		if event is InputEventMouseButton:
 			if event.pressed:
 				check_inv_slot_change(event)

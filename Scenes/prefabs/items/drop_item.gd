@@ -45,6 +45,9 @@ func convert_staticbody_to_rigidbody(static_body: StaticBody3D, world: Node3D) -
 	if str(static_body.name) == "Flashlight":
 		pick_script = load("res://flash_light.gd")
 		print("Adding flashlight to object")
+	elif str(static_body.name) == "SprayPaint":
+		pick_script = load("res://spray_paint.gd")
+		print("Adding spray paint to object")
 	else:
 		print("Adding normal drop script")
 		pick_script = load("res://Scripts/pickupable.gd")
@@ -85,7 +88,6 @@ func convert_staticbody_to_rigidbody(static_body: StaticBody3D, world: Node3D) -
 		return fallback_rigidbody
 	
 	var rigidbody = scene.instantiate()
-	#rigidbody.light_strength = static_body.light_strength
 	rigidbody.name = static_body.name  # Retain the same name for clarity
 	
 	# Transfer the transform (position, rotation, scale)
@@ -100,7 +102,7 @@ func convert_staticbody_to_rigidbody(static_body: StaticBody3D, world: Node3D) -
 	# Only transfer specific children to avoid duplicating what's already in the scene
 	var children_to_keep = []
 	for child in static_body.get_children():
-		if child is MeshInstance3D or child is Light3D:
+		if child is MeshInstance3D or child is Light3D or child is GPUParticles3D:
 			static_body.remove_child(child)
 			children_to_keep.append(child)
 	
@@ -118,10 +120,14 @@ func convert_staticbody_to_rigidbody(static_body: StaticBody3D, world: Node3D) -
 	# Restore collision layers and masks if necessary
 	rigidbody.collision_layer = 1 << 2 # Bit 3 (layer 4)
 	rigidbody.collision_mask = 0b00000101 # Bits 1 and 3 (layers 1 and 3)
-	var light_node = rigidbody.get_node("Model/FlashLight")
-	if light_node and light_node is Light3D:
-		light_node.light_energy = rigidbody.light_strength
-		print("Applied light strength to light node: ", light_node.light_energy)
+	
+	# Handle specific item types
+	if str(static_body.name) == "Flashlight":
+		var light_node = rigidbody.get_node("Model/FlashLight")
+		if light_node and light_node is Light3D:
+			light_node.light_energy = rigidbody.light_strength
+			print("Applied light strength to light node: ", light_node.light_energy)
+	
 	# Set properties
 	rigidbody.Price = static_body.Price
 	rigidbody.type = static_body.type

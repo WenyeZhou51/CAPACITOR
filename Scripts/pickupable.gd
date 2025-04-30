@@ -72,6 +72,7 @@ func interact(player: Player) -> void:
 func convert_rigidbody_to_staticbody(rigidbody: RigidBody3D) -> StaticBody3D:
 	drop_script = load("res://Scenes/prefabs/items/drop_item.gd")
 	var flash_script = load("res://flash_light.gd")
+	var spray_paint_script = load("res://spray_paint.gd")
 	# Get the parent node
 	var parent = rigidbody.get_parent()
 	 # Create a new StaticBody3D
@@ -97,6 +98,11 @@ func convert_rigidbody_to_staticbody(rigidbody: RigidBody3D) -> StaticBody3D:
 		static_body.set_script(flash_static)
 		print("Load flashlight static to object successful")
 		static_body.light_strength = rigidbody.light_strength
+	elif str(static_body.name) == "SprayPaint":
+		var spray_paint_static = load("res://spray_paint_static.gd")
+		print("Adding spray paint static to object")
+		static_body.set_script(spray_paint_static)
+		print("Load spray paint static to object successful")
 	else:
 		print("Adding normal drop script")
 		static_body.set_script(drop_script)
