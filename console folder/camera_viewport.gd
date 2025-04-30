@@ -3,10 +3,10 @@ extends Control
 var target_player: Node3D
 var radar_size = Vector2(600, 300)
 var ray_length = 50.0
-var radar_scale = 0.3 # Scale factor for better distribution across radar
+var max_detection_distance = 100.0  # Maximum distance to detect walls
 
 # Stores detected walls and enemies
-var wall_points = [] # Stores raycast hit points in order
+var wall_hit_groups = []  # Array of arrays, each inner array contains hit points for one angle
 var detected_enemies = []
 
 # Debug variables
@@ -15,7 +15,7 @@ var wall_hit_count = 0
 var enemy_count = 0
 
 # Maximum distance to show on radar
-var max_radar_distance = 25.0
+var max_radar_distance = 20.0
 
 func _ready():
 	# Configure the control node size
@@ -45,7 +45,7 @@ func _process(_delta):
 		return
 	
 	# Clear previous detections
-	wall_points.clear()
+	wall_hit_groups.clear()
 	detected_enemies.clear()
 	
 	# Reset debug counters
@@ -79,37 +79,65 @@ func perform_radar_scan():
 	# Try different collision masks if one isn't working
 	query.collision_mask = 0xFFFFFFFF  # Try all collision layers
 	
-	# Perform raycasting in many directions (every 5 degrees)
+	# Perform raycasting in many directions
 	var directions = 72
 	var angle_step = 2 * PI / directions
-	
-	# Pre-allocate array with correct size
-	wall_points.resize(directions)
 	
 	for i in range(directions):
 		var angle = i * angle_step
 		var direction = Vector3(cos(angle), 0, sin(angle))
 		
-		query.from = player_pos + Vector3(0, 0.5, 0) # Slightly above the floor to avoid floor collisions
-		query.to = query.from + direction * ray_length
+		# Start position for ray
+		var ray_start = player_pos + Vector3(0, 0.5, 0)  # Slightly above the floor
 		
-		ray_count += 1
+		# Create a hit group for this angle
+		var hit_group = []
 		
-		var result = space_state.intersect_ray(query)
-		if result:
-			wall_hit_count += 1
-			# Store point for this angle with distance info
-			wall_points[i] = {
-				"position": result.position,
-				"distance": player_pos.distance_to(result.position),
-				"direction": direction,
-				"hit": true
-			}
-		else:
-			# No hit - store a placeholder
-			wall_points[i] = {
-				"hit": false
-			}
+		# Cast multiple segments along the ray to detect multiple objects
+		var max_segments = 5  # Maximum number of segments to check
+		var segment_distance = 0.0
+		var excluded_objects = []  # List of objects to exclude in subsequent raycasts
+		
+		for _segment in range(max_segments):
+			query.from = ray_start + direction * segment_distance
+			query.to = ray_start + direction * ray_length
+			query.exclude = excluded_objects
+			
+			ray_count += 1
+			
+			var result = space_state.intersect_ray(query)
+			if result:
+				var hit_distance = player_pos.distance_to(result.position)
+				
+				# Only record hits within max detection distance
+				if hit_distance <= max_detection_distance:
+					wall_hit_count += 1
+					hit_group.append({
+						"position": result.position,
+						"distance": hit_distance,
+						"direction": direction,
+						"normal": result.normal if result.has("normal") else Vector3.ZERO
+					})
+					
+					# Add to excluded objects for next segment
+					if result.collider and not excluded_objects.has(result.collider):
+						excluded_objects.append(result.collider)
+					
+					# Update segment distance to continue a bit past the hit point
+					segment_distance = hit_distance + 0.1  # Offset a bit to avoid hitting the same point
+				else:
+					# Hit is beyond our max distance, stop checking this ray
+					break
+				
+				# If we've reached max ray length, stop checking
+				if segment_distance >= ray_length:
+					break
+			else:
+				# No more hits along this ray
+				break
+		
+		# Add this group of hits to the wall_hit_groups
+		wall_hit_groups.append(hit_group)
 	
 	# Check for all groups that might contain enemies
 	var enemy_groups = ["enemies", "enemy", "venus"]
@@ -120,7 +148,7 @@ func perform_radar_scan():
 			for node in get_tree().get_nodes_in_group(group_name):
 				if abs(node.global_position.y - current_floor_y) < y_threshold:
 					var distance = node.global_position.distance_to(player_pos)
-					if distance <= ray_length:
+					if distance <= max_detection_distance:
 						enemy_count += 1
 						detected_enemies.append(node.global_position)
 
@@ -137,58 +165,50 @@ func _draw():
 	# Draw a faint grid
 	draw_grid(center, max_radius)
 	
-	# Draw walls by connecting adjacent points
-	if wall_hit_count > 0:
-		var last_valid_point = null
-		var last_valid_index = -1
+	# Draw all wall hits as connected lines
+	for angle_idx in range(wall_hit_groups.size()):
+		var hit_group = wall_hit_groups[angle_idx]
 		
-		# Draw wall outline by connecting points
-		for i in range(wall_points.size()):
-			if wall_points[i].hit:
-				var direction = wall_points[i].position - player_pos
-				direction.y = 0 # Flatten to 2D plane
-				
-				# Calculate normalized direction and distance
-				var distance = wall_points[i].distance
-				var normalized_distance = min(distance, max_radar_distance) / max_radar_distance
-				
-				# Calculate position using normalized direction and distance
-				var direction_2d = Vector2(direction.x, direction.z).normalized()
-				var point = center + direction_2d * normalized_distance * max_radius
-				
-				# Connect to the previous valid point if possible
-				if last_valid_point != null and (i - last_valid_index) < 3: # Only connect if they're not too far apart
-					draw_line(last_valid_point, point, Color(0, 1, 0), 1.5)
-				
-				# Store this as the last valid point
-				last_valid_point = point
-				last_valid_index = i
-		
-		# Connect last and first points if close enough to complete the loop
-		if last_valid_point != null:
-			var first_valid_index = -1
-			var first_valid_point = null
+		# Process each hit in this group
+		for hit_idx in range(hit_group.size()):
+			var hit = hit_group[hit_idx]
 			
-			# Find first valid point
-			for i in range(wall_points.size()):
-				if wall_points[i].hit:
-					first_valid_index = i
-					
-					var direction = wall_points[i].position - player_pos
-					direction.y = 0
-					
-					var distance = wall_points[i].distance
-					var normalized_distance = min(distance, max_radar_distance) / max_radar_distance
-					
-					var direction_2d = Vector2(direction.x, direction.z).normalized()
-					first_valid_point = center + direction_2d * normalized_distance * max_radius
-					break
+			# Calculate normalized direction and distance
+			var normalized_distance = min(hit.distance, max_radar_distance) / max_radar_distance
 			
-			# If the first and last points are close in the scan, connect them
-			if first_valid_point != null and first_valid_index != -1:
-				if (first_valid_index == 0 and last_valid_index == wall_points.size() - 1) or \
-				   (wall_points.size() - last_valid_index + first_valid_index) < 3:
-					draw_line(last_valid_point, first_valid_point, Color(0, 1, 0), 1.5)
+			# Calculate position using normalized direction and distance
+			var direction_2d = Vector2(hit.direction.x, hit.direction.z).normalized()
+			var point = center + direction_2d * normalized_distance * max_radius
+			
+			# Draw a small dot at each hit point
+			draw_circle(point, 2, Color(0, 1, 0))
+			
+			# Connect to adjacent hits if they exist (both around the circle and for the same angle)
+			
+			# Connect to previous hit on same angle (inner walls)
+			if hit_idx > 0:
+				var prev_hit = hit_group[hit_idx - 1]
+				var prev_norm_distance = min(prev_hit.distance, max_radar_distance) / max_radar_distance
+				var prev_point = center + direction_2d * prev_norm_distance * max_radius
+				draw_line(prev_point, point, Color(0, 1, 0), 1.5)
+			
+			# Connect to the hit at the same position in the adjacent angle (circular walls)
+			var next_angle_idx = (angle_idx + 1) % wall_hit_groups.size()
+			var next_hits = wall_hit_groups[next_angle_idx]
+			
+			# Only connect if the next angle has hits and this hit has a valid index
+			if next_hits.size() > hit_idx:
+				var next_hit = next_hits[hit_idx]
+				
+				# Calculate the adjacent point
+				var next_direction_2d = Vector2(next_hit.direction.x, next_hit.direction.z).normalized()
+				var next_norm_distance = min(next_hit.distance, max_radar_distance) / max_radar_distance
+				var next_point = center + next_direction_2d * next_norm_distance * max_radius
+				
+				# Only connect if points are reasonably close
+				var distance_between = point.distance_to(next_point)
+				if distance_between < max_radius * 0.15:  # Arbitrary threshold
+					draw_line(point, next_point, Color(0, 1, 0), 1.5)
 	
 	# Draw detected enemies (green dots)
 	for enemy_pos in detected_enemies:
