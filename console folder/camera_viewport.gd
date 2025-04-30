@@ -2,12 +2,13 @@ extends Control
 
 var target_player: Node3D
 var radar_size = Vector2(600, 300)
-var ray_length = 50.0
+var ray_length = 100.0
 var max_detection_distance = 100.0  # Maximum distance to detect walls
 
 # Stores detected walls and enemies
 var wall_hit_groups = []  # Array of arrays, each inner array contains hit points for one angle
 var detected_enemies = []
+var all_wall_points = []  # Flattened array of all wall points for nearest neighbor calculations
 
 # Debug variables
 var ray_count = 0
@@ -15,7 +16,10 @@ var wall_hit_count = 0
 var enemy_count = 0
 
 # Maximum distance to show on radar
-var max_radar_distance = 20.0
+var max_radar_distance = 100.0
+
+# Connection parameters
+var max_connection_distance = 3.0  # Maximum 3D distance to connect points
 
 func _ready():
 	# Configure the control node size
@@ -47,6 +51,7 @@ func _process(_delta):
 	# Clear previous detections
 	wall_hit_groups.clear()
 	detected_enemies.clear()
+	all_wall_points.clear()
 	
 	# Reset debug counters
 	ray_count = 0
@@ -94,7 +99,7 @@ func perform_radar_scan():
 		var hit_group = []
 		
 		# Cast multiple segments along the ray to detect multiple objects
-		var max_segments = 5  # Maximum number of segments to check
+		var max_segments = 10  # Increased to detect more objects along ray
 		var segment_distance = 0.0
 		var excluded_objects = []  # List of objects to exclude in subsequent raycasts
 		
@@ -112,12 +117,17 @@ func perform_radar_scan():
 				# Only record hits within max detection distance
 				if hit_distance <= max_detection_distance:
 					wall_hit_count += 1
-					hit_group.append({
+					var hit_point = {
 						"position": result.position,
 						"distance": hit_distance,
 						"direction": direction,
-						"normal": result.normal if result.has("normal") else Vector3.ZERO
-					})
+						"normal": result.normal if result.has("normal") else Vector3.ZERO,
+						"display_pos": Vector2.ZERO,  # Will be filled during drawing
+						"connected": false  # Track if this point has been connected
+					}
+					
+					hit_group.append(hit_point)
+					all_wall_points.append(hit_point)
 					
 					# Add to excluded objects for next segment
 					if result.collider and not excluded_objects.has(result.collider):
@@ -165,50 +175,27 @@ func _draw():
 	# Draw a faint grid
 	draw_grid(center, max_radius)
 	
-	# Draw all wall hits as connected lines
-	for angle_idx in range(wall_hit_groups.size()):
-		var hit_group = wall_hit_groups[angle_idx]
+	# First pass: calculate display positions for all points
+	for point in all_wall_points:
+		# Calculate normalized direction and distance
+		var normalized_distance = min(point.distance, max_radar_distance) / max_radar_distance
 		
-		# Process each hit in this group
-		for hit_idx in range(hit_group.size()):
-			var hit = hit_group[hit_idx]
-			
-			# Calculate normalized direction and distance
-			var normalized_distance = min(hit.distance, max_radar_distance) / max_radar_distance
-			
-			# Calculate position using normalized direction and distance
-			var direction_2d = Vector2(hit.direction.x, hit.direction.z).normalized()
-			var point = center + direction_2d * normalized_distance * max_radius
-			
-			# Draw a small dot at each hit point
-			draw_circle(point, 2, Color(0, 1, 0))
-			
-			# Connect to adjacent hits if they exist (both around the circle and for the same angle)
-			
-			# Connect to previous hit on same angle (inner walls)
-			if hit_idx > 0:
-				var prev_hit = hit_group[hit_idx - 1]
-				var prev_norm_distance = min(prev_hit.distance, max_radar_distance) / max_radar_distance
-				var prev_point = center + direction_2d * prev_norm_distance * max_radius
-				draw_line(prev_point, point, Color(0, 1, 0), 1.5)
-			
-			# Connect to the hit at the same position in the adjacent angle (circular walls)
-			var next_angle_idx = (angle_idx + 1) % wall_hit_groups.size()
-			var next_hits = wall_hit_groups[next_angle_idx]
-			
-			# Only connect if the next angle has hits and this hit has a valid index
-			if next_hits.size() > hit_idx:
-				var next_hit = next_hits[hit_idx]
-				
-				# Calculate the adjacent point
-				var next_direction_2d = Vector2(next_hit.direction.x, next_hit.direction.z).normalized()
-				var next_norm_distance = min(next_hit.distance, max_radar_distance) / max_radar_distance
-				var next_point = center + next_direction_2d * next_norm_distance * max_radius
-				
-				# Only connect if points are reasonably close
-				var distance_between = point.distance_to(next_point)
-				if distance_between < max_radius * 0.15:  # Arbitrary threshold
-					draw_line(point, next_point, Color(0, 1, 0), 1.5)
+		# Calculate position using normalized direction and distance
+		var direction_2d = Vector2(point.direction.x, point.direction.z).normalized()
+		point.display_pos = center + direction_2d * normalized_distance * max_radius
+		
+		# Draw a small dot at each hit point
+		draw_circle(point.display_pos, 2, Color(0, 1, 0))
+	
+	# Second pass: connect points based on nearest neighbors
+	for point in all_wall_points:
+		# Find the nearest unconnected points
+		var nearest_points = find_nearest_points(point, all_wall_points, max_connection_distance)
+		
+		# Connect to the nearest points
+		for nearest in nearest_points:
+			# Draw line between points
+			draw_line(point.display_pos, nearest.display_pos, Color(0, 1, 0), 1.5)
 	
 	# Draw detected enemies (green dots)
 	for enemy_pos in detected_enemies:
@@ -235,6 +222,28 @@ func _draw():
 	var debug_color = Color(0, 1, 0)
 	draw_string(ThemeDB.fallback_font, Vector2(10, 20), "Walls: " + str(wall_hit_count), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, debug_color)
 	draw_string(ThemeDB.fallback_font, Vector2(10, 40), "Enemies: " + str(enemy_count), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, debug_color)
+
+# Find the nearest neighboring points to the given point
+func find_nearest_points(point, all_points, max_distance):
+	var nearest = []
+	
+	for other in all_points:
+		# Skip self
+		if other == point:
+			continue
+			
+		# Calculate 3D distance between points
+		var distance = point.position.distance_to(other.position)
+		
+		# Only consider points within max connection distance
+		if distance <= max_distance:
+			nearest.append(other)
+	
+	# Sort by distance (if needed)
+	nearest.sort_custom(func(a, b): return point.position.distance_to(a.position) < point.position.distance_to(b.position))
+	
+	# Limit to 2 nearest neighbors to avoid over-connecting
+	return nearest.slice(0, min(2, nearest.size()))
 
 # Draw a circular grid for reference
 func draw_grid(center: Vector2, max_radius: float):
