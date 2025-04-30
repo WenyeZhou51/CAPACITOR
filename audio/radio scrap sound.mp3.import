@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cumlejnkkbvn7"
+path="res://.godot/imported/radio scrap sound.mp3-c4baeee7bf56797fe3e0a2e9166f80e5.mp3str"
+
+[deps]
+
+source_file="res://audio/radio scrap sound.mp3"
+dest_files=["res://.godot/imported/radio scrap sound.mp3-c4baeee7bf56797fe3e0a2e9166f80e5.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

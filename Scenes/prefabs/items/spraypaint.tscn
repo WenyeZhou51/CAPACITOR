@@ -1,7 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://cthap72n58ne7"]
 
 [ext_resource type="Script" path="res://spray_paint.gd" id="1_1r8d4"]
-[ext_resource type="AudioStream" uid="uid://c5vs0wyoljvtg" path="res://audio/flashlight.wav" id="2_5hs0h"]
+[ext_resource type="AudioStream" uid="uid://cwrhkmytp68kj" path="res://audio/spraypaint sound.wav" id="2_yxc1f"]
+[ext_resource type="PackedScene" uid="uid://dcuieomwr2tke" path="res://blender exports/untitled.glb" id="3_bo246"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ygg37"]
+size = Vector3(0.2, 0.677783, 0.1)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u2dgf"]
 emission_shape = 1
@@ -15,51 +19,41 @@ scale_min = 0.05
 scale_max = 0.1
 color = Color(0.501961, 0, 1, 1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lxorr"]
+albedo_color = Color(0.581941, 0.000246814, 0.581937, 1)
+
 [sub_resource type="SphereMesh" id="SphereMesh_p7n2q"]
-radius = 0.05
+material = SubResource("StandardMaterial3D_lxorr")
+radius = 0.1
 height = 0.1
 radial_segments = 8
 rings = 4
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ygg37"]
-size = Vector3(0.2, 0.3, 0.1)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_7fw32"]
-top_radius = 0.05
-bottom_radius = 0.05
-height = 0.3
-
-[sub_resource type="BoxMesh" id="BoxMesh_aiwx3"]
-size = Vector3(0.1, 0.05, 0.05)
 
 [node name="SprayPaint" type="RigidBody3D" node_paths=PackedStringArray("spray_sound")]
 collision_layer = 8
 collision_mask = 5
 script = ExtResource("1_1r8d4")
 spray_sound = NodePath("AudioStreamPlayer")
+paint_color = Color(0.589787, 0.00306574, 0.8836, 1)
 type = "spraypaint"
 
-[node name="Model" type="Node3D" parent="."]
-
-[node name="SprayParticles" type="GPUParticles3D" parent="Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, -0.1)
-emitting = false
-amount = 200
-explosiveness = 0.2
-draw_order = 3
-process_material = SubResource("ParticleProcessMaterial_u2dgf")
-draw_pass_1 = SubResource("SphereMesh_p7n2q")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00734863, 0)
 shape = SubResource("BoxShape3D_ygg37")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_5hs0h")
+stream = ExtResource("2_yxc1f")
 volume_db = 5.0
 
-[node name="CanBody" type="MeshInstance3D" parent="."]
-mesh = SubResource("CylinderMesh_7fw32")
+[node name="untitled" parent="." instance=ExtResource("3_bo246")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0.0401671, -0.303112, -0.00340435)
 
-[node name="Nozzle" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, -0.05)
-mesh = SubResource("BoxMesh_aiwx3")
+[node name="SprayParticles" type="GPUParticles3D" parent="untitled"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0158846, 0.242835, -0.0166086)
+amount = 200
+explosiveness = 0.39
+collision_base_size = 0.1
+draw_order = 3
+trail_lifetime = 0.01
+process_material = SubResource("ParticleProcessMaterial_u2dgf")
+draw_pass_1 = SubResource("SphereMesh_p7n2q")
