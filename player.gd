@@ -6,7 +6,7 @@ class_name Player
 const WALK_SPEED = 4  # Default walking speed
 const RUN_SPEED = 9.0  # Sprinting speed
 const JUMP_FORCE = 6.5  # Force applied for jumping
-const STAMINA_DRAIN_RATE = 0.21  #should be 0.3. for debug 0.01 Rate at which stamina drains while sprinting
+const STAMINA_DRAIN_RATE = 0.01  #should be 0.21. for debug 0.01 Rate at which stamina drains while sprinting
 const STAMINA_REGEN_RATE = 0.2  # Rate at which stamina regenerates while not sprinting
 const GRAVITY_FORCE = Vector3.DOWN * 9.8 * 2  # Gravity vector
 const STAMINA_THRESHOLD = 0.5  # Buffer threshold for stamina management
@@ -88,6 +88,8 @@ var player_name_label: Label = null
 
 # Store original CRT shader parameters to reset later
 var default_crt_parameters = {}
+
+signal console_toggled(is_using)
 
 func _ready():
 	set_multiplayer_authority(str(name).to_int())
@@ -280,6 +282,8 @@ func toggle_console() -> void:
 	using_console = !using_console
 	# Update in_console_mode for tutorial tracking
 	in_console_mode = using_console
+	
+	emit_signal("console_toggled", using_console)
 	
 	if using_console:
 		console_window.visible = true

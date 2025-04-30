@@ -139,8 +139,7 @@ size = Vector3(4, 2.5, 0.1)
 [node name="small_room_1" type="Node3D"]
 script = ExtResource("1_sv0a6")
 size_in_voxels = Vector3i(2, 1, 2)
-min_count = 4
-max_count = 6
+max_count = 3
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00342763, -0.00274992, -0.00186777)

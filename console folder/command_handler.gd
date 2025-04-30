@@ -76,15 +76,22 @@ func on_command_query(console: Node, args: Array):
 		console.push_message("Subject '%s' not found in database" % subject)
 	
 func on_command_cam(console: Node, args: Array):
-	var target_name = args[0]
+	var target_name = args[0].strip_edges()
 	var players = get_tree().get_nodes_in_group("players")
 	
-	# Find target player
+	# Find target player by either player name or username
 	var target_player = null
 	for player in players:
 		if player.name == target_name:
 			target_player = player
 			break
+		
+		# Check if player has a username that matches
+		if player.has_node("spatial/SubViewport/name"):
+			var player_username = player.get_node("spatial/SubViewport/name").text
+			if player_username.to_lower() == target_name.to_lower():
+				target_player = player
+				break
 	
 	if not target_player:
 		console.push_message("Error: Player not found - " + target_name)
@@ -92,21 +99,35 @@ func on_command_cam(console: Node, args: Array):
 		
 	# Get the console root node and screen mesh
 	var console_root = console.get_parent().get_parent()
-	var console_screen = console_root.get_node("CSGBox3D/MeshInstance3D")
 	
-	# Get or create viewport container
-	var viewport_container = console.get_node_or_null("CameraViewport")
-	if viewport_container:
-		viewport_container.queue_free()
+	# Get or create radar display
+	var radar_display = console.get_node_or_null("CameraViewport")
+	if radar_display:
+		radar_display.queue_free()
 	
-	viewport_container = camera_viewport_scene.instantiate()
+	# Instance the new radar display (now a 2D Control node)
+	radar_display = load("res://console folder/camera_viewport.tscn").instantiate()
 	
-	# Add viewport to the console's SubViewport node
-	console_root.get_node("SubViewport").add_child(viewport_container)
+	# Add the radar to the console UI
+	console.add_child(radar_display)
+	
+	# Position the radar correctly on the console
+	radar_display.anchor_left = 0.2
+	radar_display.anchor_top = 0.1
+	radar_display.anchor_right = 1.0
+	radar_display.anchor_bottom = 0.4
 	
 	# Set target player
-	viewport_container.set_target(target_player)
-	console.push_message("Now viewing: " + target_name)
+	radar_display.set_target(target_player)
+	
+	# Display message with player's actual username if available
+	var display_name = target_name
+	if target_player.has_node("spatial/SubViewport/name"):
+		var username = target_player.get_node("spatial/SubViewport/name").text
+		if username and username.length() > 0:
+			display_name = username
+	
+	console.push_message("Now viewing: " + display_name)
 
 func on_command_help(console: Node, args: Array):
 	var help_text = "Console Commands:\n"

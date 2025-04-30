@@ -13,7 +13,7 @@ func _process(delta: float) -> void:
 		print("overlapping")
 		if player and is_instance_valid(player):
 			print("taking dmg")
-			player.take_damage(damage_per_second)
+			player.init_take_damage(damage_per_second)
 
 func _on_body_entered(body: Node3D) -> void:
 	print("entered")

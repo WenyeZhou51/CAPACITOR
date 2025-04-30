@@ -1,24 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://dtwwr3j6ysf4x"]
+[gd_scene load_steps=2 format=3 uid="uid://dtwwr3j6ysf4x"]
 
 [ext_resource type="Script" path="res://console folder/camera_viewport.gd" id="1_camera"]
 
-[sub_resource type="Environment" id="Environment_xyz12"]
-background_mode = 1
-background_color = Color(0.2, 0.2, 0.2, 1)
-ambient_light_color = Color(1, 1, 1, 1)
-
-[node name="CameraViewport" type="SubViewportContainer"]
+[node name="Radar" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_camera")
-
-[node name="SubViewport" type="SubViewport" parent="."]
-handle_input_locally = false
-size = Vector2i(300, 300)
-render_target_update_mode = 4
-
-[node name="Camera3D" type="Camera3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 15, 0)
-projection = 1
-size = 20.0
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewport"]
-environment = SubResource("Environment_xyz12")

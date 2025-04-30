@@ -1,155 +1,233 @@
-extends SubViewportContainer
+extends Control
 
 var target_player: Node3D
-var top_down_camera: Camera3D
-var map_objects = {}  # Dictionary to track map objects
+var radar_size = Vector2(600, 300)
+var ray_length = 50.0
+var radar_scale = 0.3 # Scale factor for better distribution across radar
+
+# Stores detected walls and enemies
+var wall_points = [] # Stores raycast hit points in order
+var detected_enemies = []
+
+# Debug variables
+var ray_count = 0
+var wall_hit_count = 0
+var enemy_count = 0
+
+# Maximum distance to show on radar
+var max_radar_distance = 25.0
 
 func _ready():
-	# Set up viewport container properties
-	custom_minimum_size = Vector2(300, 300)
-	size = Vector2(300, 300)
+	# Configure the control node size
+	custom_minimum_size = radar_size
+	size = radar_size
 	
 	# Add green border
-	add_theme_constant_override("margin_left", 2)
-	add_theme_constant_override("margin_right", 2)
-	add_theme_constant_override("margin_top", 2)
-	add_theme_constant_override("margin_bottom", 2)
-	
-	# Set border color
 	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.2, 0.2, 0.2, 1) # Dark gray background
 	style.border_width_left = 2
 	style.border_width_right = 2
 	style.border_width_top = 2
 	style.border_width_bottom = 2
-	style.border_color = Color(0, 1, 0, 1)  # Green border color
+	style.border_color = Color(0, 1, 0, 1) # Green border color
 	add_theme_stylebox_override("panel", style)
 	
-	# Position the viewport in the desired location on the console screen
-	anchor_left = 0.2
-	anchor_top = 0.1
-	anchor_right = 1.0
-	anchor_bottom = 0.4
-	
-	# Make sure the viewport matches the container size
-	$SubViewport.size = Vector2i(600, 300)
-	
-	# Initialize camera with proper settings
-	top_down_camera = $SubViewport/Camera3D
-	top_down_camera.projection = Camera3D.PROJECTION_ORTHOGONAL
-	top_down_camera.size = 20.0
-	# Make sure camera can see through everything
-	top_down_camera.cull_mask = 0xFFFFFFFF  # See all visual layers
-	
-	# Set up viewport properties
-	$SubViewport.transparent_bg = false
-	$SubViewport.render_target_clear_mode = SubViewport.CLEAR_MODE_ALWAYS
-	
-	# Ensure viewport is ready for 3D rendering
-	$SubViewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	print("[CAM DEBUG] Radar initialized with size: ", radar_size)
 
 func set_target(player: Node3D):
 	target_player = player
-	
-func is_visible_from_above(object_pos: Vector3, space_state: PhysicsDirectSpaceState3D, query: PhysicsRayQueryParameters3D) -> bool:
-	var ray_start = object_pos + Vector3(0, 20, 0)  # Start ray from above
-	var ray_end = object_pos  # End at object position
-	
-	query.from = ray_start
-	query.to = ray_end
-	query.collision_mask = 0xFFFFFFFF  # Check against all collision layers
-	query.exclude = []  # Don't exclude any objects
-	
-	var result = space_state.intersect_ray(query)
-	# Simply return true for now to debug marker visibility
-	return true
+	print("[CAM DEBUG] Target set to player: ", player.name)
 
 func _process(_delta):
 	if not target_player or not is_instance_valid(target_player):
+		print("[CAM DEBUG] Target player invalid or null - removing radar")
 		queue_free()
 		return
-		
-	print("Camera processing - Target player position: ", target_player.global_position)
 	
-	# Update camera position and rotation using basis vectors
-	var target_pos = target_player.global_position
-	top_down_camera.global_position = target_pos + Vector3(0, 15.0, 0)  # Changed from global_transform.origin
-	top_down_camera.global_transform.basis = Basis(Vector3.RIGHT, Vector3.DOWN, Vector3.BACK)
+	# Clear previous detections
+	wall_points.clear()
+	detected_enemies.clear()
 	
-	# Clear old markers
-	for obj in map_objects.values():
-		if is_instance_valid(obj):
-			obj.queue_free()
-	map_objects.clear()
+	# Reset debug counters
+	ray_count = 0
+	wall_hit_count = 0
+	enemy_count = 0
 	
-	# Add markers for nearby objects on the same floor
-	var y_threshold = 2.0  # Vertical threshold to consider objects on the same floor
-	var current_floor_y = target_player.global_position.y
+	# Perform the radar scan
+	perform_radar_scan()
 	
-	# Get all objects in the level
-	var level_node = get_tree().get_root().get_node("Level")
-	if not level_node:
-		print("Level node not found!")
+	# Request redraw to update the radar
+	queue_redraw()
+
+func perform_radar_scan():
+	if not target_player:
 		return
 		
-	# Filter objects by floor level
-	for node in get_tree().get_nodes_in_group("players"):
-		if abs(node.global_position.y - current_floor_y) < y_threshold:
-			print("Adding player marker at: ", node.global_position)
-			add_marker(node, Color.GREEN)
+	var player_pos = target_player.global_position
+	var current_floor_y = player_pos.y
+	var y_threshold = 2.0 # Objects within this range of player's Y are considered on same floor
 	
-	# Get physics world - with null check
-	var world = $SubViewport.get_world_3d()
-	if not world:
-		print("World not found!")
-		return
-		
-	var space_state = world.direct_space_state
+	# Get physics space for raycasting
+	var space_state = target_player.get_world_3d().direct_space_state
 	if not space_state:
-		print("Space state not found!")
+		print("[CAM DEBUG] ERROR: Could not get physics space state")
 		return
-		
+	
+	# Create raycast query parameters
 	var query = PhysicsRayQueryParameters3D.new()
 	
-	# Check objects in groups with debug prints
-	for group_name in ["players", "scrap", "coolant", "enemies", "doors"]:
-		var nodes = get_tree().get_nodes_in_group(group_name)
-		print("Found ", nodes.size(), " objects in group: ", group_name)
+	# Try different collision masks if one isn't working
+	query.collision_mask = 0xFFFFFFFF  # Try all collision layers
+	
+	# Perform raycasting in many directions (every 5 degrees)
+	var directions = 72
+	var angle_step = 2 * PI / directions
+	
+	# Pre-allocate array with correct size
+	wall_points.resize(directions)
+	
+	for i in range(directions):
+		var angle = i * angle_step
+		var direction = Vector3(cos(angle), 0, sin(angle))
 		
-		for node in nodes:
-			var object_pos = node.global_position
-			print("Checking object in group ", group_name, " at position ", object_pos)
-			
-			# Simplified visibility check - just use Y threshold for now
-			if abs(object_pos.y - current_floor_y) < y_threshold:
-				var color = Color.WHITE
-				match group_name:
-					"players": color = Color.GREEN
-					"scrap": color = Color.YELLOW
-					"coolant": color = Color.BLUE
-					"enemies": color = Color.RED
-					"doors": color = Color.PURPLE
-				print("Adding marker for ", group_name, " at position ", object_pos)
-				add_marker(node, color)
+		query.from = player_pos + Vector3(0, 0.5, 0) # Slightly above the floor to avoid floor collisions
+		query.to = query.from + direction * ray_length
+		
+		ray_count += 1
+		
+		var result = space_state.intersect_ray(query)
+		if result:
+			wall_hit_count += 1
+			# Store point for this angle with distance info
+			wall_points[i] = {
+				"position": result.position,
+				"distance": player_pos.distance_to(result.position),
+				"direction": direction,
+				"hit": true
+			}
+		else:
+			# No hit - store a placeholder
+			wall_points[i] = {
+				"hit": false
+			}
+	
+	# Check for all groups that might contain enemies
+	var enemy_groups = ["enemies", "enemy", "venus"]
+	
+	for group_name in enemy_groups:
+		if get_tree().has_group(group_name):
+			# Detect enemies within range
+			for node in get_tree().get_nodes_in_group(group_name):
+				if abs(node.global_position.y - current_floor_y) < y_threshold:
+					var distance = node.global_position.distance_to(player_pos)
+					if distance <= ray_length:
+						enemy_count += 1
+						detected_enemies.append(node.global_position)
 
-func add_marker(node: Node3D, color: Color):
-	var marker = CSGBox3D.new()
-	marker.size = Vector3(1, 0.1, 1)
+func _draw():
+	if not target_player:
+		return
 	
-	var material = StandardMaterial3D.new()
-	material.albedo_color = color
-	material.emission_enabled = true
-	material.emission = color
-	material.emission_energy_multiplier = 2.0
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	material.albedo_color.a = 0.8
-	marker.material = material
+	var center = size / 2
+	var player_pos = target_player.global_position
 	
-	$SubViewport.add_child(marker)
+	# Calculate the maximum radius in pixels
+	var max_radius = min(center.x, center.y) * 0.95
 	
-	# Position marker in world space relative to camera
-	marker.global_position = Vector3(
-		node.global_position.x,
-		0.1,  # Keep a consistent Y position for all markers
-		node.global_position.z
-	)
-	map_objects[node] = marker 
+	# Draw a faint grid
+	draw_grid(center, max_radius)
+	
+	# Draw walls by connecting adjacent points
+	if wall_hit_count > 0:
+		var last_valid_point = null
+		var last_valid_index = -1
+		
+		# Draw wall outline by connecting points
+		for i in range(wall_points.size()):
+			if wall_points[i].hit:
+				var direction = wall_points[i].position - player_pos
+				direction.y = 0 # Flatten to 2D plane
+				
+				# Calculate normalized direction and distance
+				var distance = wall_points[i].distance
+				var normalized_distance = min(distance, max_radar_distance) / max_radar_distance
+				
+				# Calculate position using normalized direction and distance
+				var direction_2d = Vector2(direction.x, direction.z).normalized()
+				var point = center + direction_2d * normalized_distance * max_radius
+				
+				# Connect to the previous valid point if possible
+				if last_valid_point != null and (i - last_valid_index) < 3: # Only connect if they're not too far apart
+					draw_line(last_valid_point, point, Color(0, 1, 0), 1.5)
+				
+				# Store this as the last valid point
+				last_valid_point = point
+				last_valid_index = i
+		
+		# Connect last and first points if close enough to complete the loop
+		if last_valid_point != null:
+			var first_valid_index = -1
+			var first_valid_point = null
+			
+			# Find first valid point
+			for i in range(wall_points.size()):
+				if wall_points[i].hit:
+					first_valid_index = i
+					
+					var direction = wall_points[i].position - player_pos
+					direction.y = 0
+					
+					var distance = wall_points[i].distance
+					var normalized_distance = min(distance, max_radar_distance) / max_radar_distance
+					
+					var direction_2d = Vector2(direction.x, direction.z).normalized()
+					first_valid_point = center + direction_2d * normalized_distance * max_radius
+					break
+			
+			# If the first and last points are close in the scan, connect them
+			if first_valid_point != null and first_valid_index != -1:
+				if (first_valid_index == 0 and last_valid_index == wall_points.size() - 1) or \
+				   (wall_points.size() - last_valid_index + first_valid_index) < 3:
+					draw_line(last_valid_point, first_valid_point, Color(0, 1, 0), 1.5)
+	
+	# Draw detected enemies (green dots)
+	for enemy_pos in detected_enemies:
+		var direction = enemy_pos - player_pos
+		direction.y = 0 # Flatten to 2D plane
+		
+		# Calculate normalized direction and distance
+		var distance = direction.length()
+		var normalized_distance = min(distance, max_radar_distance) / max_radar_distance
+		
+		# Calculate position using normalized direction and distance
+		var direction_2d = Vector2(direction.x, direction.z).normalized()
+		var point = center + direction_2d * normalized_distance * max_radius
+		
+		# Draw green dot for enemy
+		draw_circle(point, 5, Color(0, 1, 0))
+	
+	# Draw player position as a green X
+	var x_size = 6
+	draw_line(center - Vector2(x_size, x_size), center + Vector2(x_size, x_size), Color(0, 1, 0), 2)
+	draw_line(center + Vector2(-x_size, x_size), center + Vector2(x_size, -x_size), Color(0, 1, 0), 2)
+	
+	# Draw debug text on radar 
+	var debug_color = Color(0, 1, 0)
+	draw_string(ThemeDB.fallback_font, Vector2(10, 20), "Walls: " + str(wall_hit_count), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, debug_color)
+	draw_string(ThemeDB.fallback_font, Vector2(10, 40), "Enemies: " + str(enemy_count), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, debug_color)
+
+# Draw a circular grid for reference
+func draw_grid(center: Vector2, max_radius: float):
+	var grid_color = Color(0, 0.5, 0, 0.15)
+	
+	# Draw concentric circles
+	for i in range(1, 4):
+		var radius = max_radius * (i / 3.0)
+		draw_arc(center, radius, 0, 2 * PI, 36, grid_color, 1.0)
+	
+	# Draw cardinal direction lines
+	draw_line(center, center + Vector2(0, -max_radius), grid_color, 1.0)  # North
+	draw_line(center, center + Vector2(max_radius, 0), grid_color, 1.0)   # East
+	draw_line(center, center + Vector2(0, max_radius), grid_color, 1.0)   # South
+	draw_line(center, center + Vector2(-max_radius, 0), grid_color, 1.0)  # West
+	

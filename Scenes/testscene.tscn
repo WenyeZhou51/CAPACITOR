@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://c8y6hkpnlip1g"]
+[gd_scene load_steps=39 format=3 uid="uid://c8y6hkpnlip1g"]
 
 [ext_resource type="Script" path="res://Scenes/testscene.gd" id="1_v17iy"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
@@ -24,10 +24,13 @@
 [ext_resource type="PackedScene" uid="uid://dhmtymlk3gb34" path="res://Scenes/prefabs/items/flashlight.tscn" id="13_1s1s2"]
 [ext_resource type="Shader" path="res://shaders/bayer.gdshader" id="14_hrlu7"]
 [ext_resource type="PackedScene" uid="uid://cjdanhbr7qd50" path="res://Scenes/prefabs/items/scrap1.tscn" id="14_q11nm"]
-[ext_resource type="PackedScene" uid="uid://bi3tstfh1x606" path="res://rooms/small_room_2.tscn" id="19_o6rck"]
+[ext_resource type="PackedScene" uid="uid://bi3tstfh1x606" path="res://rooms/strange.tscn" id="19_o6rck"]
 [ext_resource type="PackedScene" uid="uid://bwoto031wapot" path="res://Scenes/pause_menu.tscn" id="20_chau2"]
+[ext_resource type="PackedScene" uid="uid://bnpre7ijy5lla" path="res://rooms/walkway room.tscn" id="22_7hvdk"]
 [ext_resource type="Script" path="res://Scenes/electricity_manager.gd" id="22_fg5vs"]
+[ext_resource type="PackedScene" uid="uid://bbngvevf00m03" path="res://rooms/jump room.tscn" id="23_t5eau"]
 [ext_resource type="PackedScene" uid="uid://b0yt2h0ox1gxb" path="res://Scenes/Spawn Points/player_spawn_point.tscn" id="24_gf8n3"]
+[ext_resource type="PackedScene" uid="uid://xcj3me4ww2u2" path="res://console folder/console.tscn" id="31_pwwba"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_binvk"]
 sky_top_color = Color(0.0101014, 0.0122771, 0.0165181, 1)
@@ -185,7 +188,7 @@ dungeon_generator_path = NodePath("DungeonGenerator3D")
 
 [node name="DungeonGenerator3D" type="Node3D" parent="NavigationRegion3D"]
 script = ExtResource("6_s8vmo")
-room_scenes = Array[PackedScene]([ExtResource("7_fiwcu"), ExtResource("8_osxs0"), ExtResource("7_d3uit"), ExtResource("19_o6rck")])
+room_scenes = Array[PackedScene]([ExtResource("7_fiwcu"), ExtResource("8_osxs0"), ExtResource("7_d3uit"), ExtResource("19_o6rck"), ExtResource("22_7hvdk"), ExtResource("23_t5eau")])
 corridor_room_scene = ExtResource("9_svjm5")
 dungeon_size = Vector3i(10, 5, 10)
 junctions = 30
@@ -243,6 +246,9 @@ spawn_path = NodePath("../items")
 
 [node name="Player Spawn Point" parent="." instance=ExtResource("24_gf8n3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.3085, 19.1879, 1.94595)
+
+[node name="Console" parent="." instance=ExtResource("31_pwwba")]
+transform = Transform3D(3.85835, 0, 0, 0, 2.55677, 0, 0, 0, 3.08341, 36.5434, 16.8592, -7.1602)
 
 [connection signal="bake_finished" from="NavigationRegion3D" to="GameManager" method="_on_navigation_region_3d_bake_finished"]
 [connection signal="done_generating" from="NavigationRegion3D/DungeonGenerator3D" to="NavigationRegion3D" method="on_dungeon_done_generating"]

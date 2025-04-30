@@ -23,7 +23,10 @@ viewport_path = NodePath("SubViewport")
 resource_local_to_scene = true
 albedo_texture = SubResource("ViewportTexture_us03y")
 emission_enabled = true
-emission_energy_multiplier = 0.1
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 2.0
+emission_operator = 1
+emission_texture = SubResource("ViewportTexture_us03y")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1iq15"]
 size = Vector3(0.981873, 1, 1.62439)
@@ -58,6 +61,7 @@ size = Vector3(1.05981, 0.248047, 1.07053)
 size = Vector2i(1000, 500)
 
 [node name="ConsoleWindow" parent="SubViewport" instance=ExtResource("1_y06sx")]
+offset_right = 5.0
 
 [node name="command handler" parent="SubViewport/ConsoleWindow" index="1"]
 console_spawn_point = NodePath("../../../Console Spawner")
@@ -94,6 +98,13 @@ shape = SubResource("BoxShape3D_ihoxq")
 
 [node name="Console Spawner" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.319724, 1.23512)
+
+[node name="ConsoleLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0.8)
+light_color = Color(0.647059, 0.784314, 0.831373, 1)
+light_energy = 1.5
+omni_range = 3.0
+omni_attenuation = 1.5
 
 [connection signal="body_entered" from="Console Interaction Area" to="SubViewport/ConsoleWindow" method="_on_console_interaction_area_body_entered"]
 [connection signal="body_entered" from="Console Interaction Area" to="Console Interaction Area" method="_on_body_entered"]

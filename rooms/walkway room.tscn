@@ -27,8 +27,7 @@ size = Vector3(4, 2.5, 0.1)
 [node name="walkway room" type="Node3D"]
 script = ExtResource("1_h2gxi")
 size_in_voxels = Vector3i(2, 2, 2)
-min_count = 4
-max_count = 8
+max_count = 3
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00342763, 0.0274777, 0.0945449)

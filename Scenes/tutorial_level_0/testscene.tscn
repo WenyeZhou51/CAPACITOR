@@ -22,7 +22,7 @@
 [ext_resource type="Shader" path="res://shaders/bayer.gdshader" id="14_hrlu7"]
 [ext_resource type="FontFile" uid="uid://djxmwln40ig66" path="res://fonts/Geo-Regular.ttf" id="14_imrbg"]
 [ext_resource type="PackedScene" uid="uid://cjdanhbr7qd50" path="res://Scenes/prefabs/items/scrap1.tscn" id="14_q11nm"]
-[ext_resource type="PackedScene" uid="uid://bi3tstfh1x606" path="res://rooms/small_room_2.tscn" id="19_o6rck"]
+[ext_resource type="PackedScene" uid="uid://bi3tstfh1x606" path="res://rooms/strange.tscn" id="19_o6rck"]
 [ext_resource type="PackedScene" uid="uid://bwoto031wapot" path="res://Scenes/pause_menu.tscn" id="20_chau2"]
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="22_lnqaj"]
 [ext_resource type="PackedScene" uid="uid://b0yt2h0ox1gxb" path="res://Scenes/Spawn Points/player_spawn_point.tscn" id="24_gf8n3"]
