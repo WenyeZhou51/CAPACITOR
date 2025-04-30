@@ -116,6 +116,11 @@ func debug_log(category: String, message: String) -> void:
 func _ready() -> void:
 	print("[EARWORM] _ready() called")
 	randomize()
+	
+	# Add to the enemy group for radar detection
+	add_to_group("enemy")
+	add_to_group("earworm")
+	
 	EarwormManager.get_instance().connect("sound_made", _on_sound_made)
 	
 	#delay timer

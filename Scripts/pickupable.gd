@@ -4,6 +4,10 @@ var drop_script
 @export var Price: int
 @export var type: String
 
+func _ready() -> void:
+	# Add to the scrap group for radar detection
+	add_to_group("scrap")
+
 func interact(player: Player) -> void:
 	#if player.inv_size == 4:
 		#var item_socket = player.get_node("Head/ItemSocket")

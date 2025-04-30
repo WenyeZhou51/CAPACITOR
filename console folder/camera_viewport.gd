@@ -8,12 +8,14 @@ var max_detection_distance = 100.0  # Maximum distance to detect walls
 # Stores detected walls and enemies
 var wall_hit_groups = []  # Array of arrays, each inner array contains hit points for one angle
 var detected_enemies = []
+var detected_scraps = []  # New array to track detected scraps
 var all_wall_points = []  # Flattened array of all wall points for nearest neighbor calculations
 
 # Debug variables
 var ray_count = 0
 var wall_hit_count = 0
 var enemy_count = 0
+var scrap_count = 0  # New counter for scraps
 
 # Maximum distance to show on radar
 var max_radar_distance = 100.0
@@ -51,12 +53,14 @@ func _process(_delta):
 	# Clear previous detections
 	wall_hit_groups.clear()
 	detected_enemies.clear()
+	detected_scraps.clear()  # Clear scraps
 	all_wall_points.clear()
 	
 	# Reset debug counters
 	ray_count = 0
 	wall_hit_count = 0
 	enemy_count = 0
+	scrap_count = 0  # Reset scrap counter
 	
 	# Perform the radar scan
 	perform_radar_scan()
@@ -116,18 +120,28 @@ func perform_radar_scan():
 				
 				# Only record hits within max detection distance
 				if hit_distance <= max_detection_distance:
-					wall_hit_count += 1
-					var hit_point = {
-						"position": result.position,
-						"distance": hit_distance,
-						"direction": direction,
-						"normal": result.normal if result.has("normal") else Vector3.ZERO,
-						"display_pos": Vector2.ZERO,  # Will be filled during drawing
-						"connected": false  # Track if this point has been connected
-					}
-					
-					hit_group.append(hit_point)
-					all_wall_points.append(hit_point)
+					# Check if the hit object is an enemy or scrap
+					if result.collider:
+						if result.collider.is_in_group("enemy"):
+							enemy_count += 1
+							detected_enemies.append(result.position)
+						elif result.collider.is_in_group("scrap"):
+							scrap_count += 1
+							detected_scraps.append(result.position)
+						else:
+							# It's a wall or other object
+							wall_hit_count += 1
+							var hit_point = {
+								"position": result.position,
+								"distance": hit_distance,
+								"direction": direction,
+								"normal": result.normal if result.has("normal") else Vector3.ZERO,
+								"display_pos": Vector2.ZERO,  # Will be filled during drawing
+								"connected": false  # Track if this point has been connected
+							}
+							
+							hit_group.append(hit_point)
+							all_wall_points.append(hit_point)
 					
 					# Add to excluded objects for next segment
 					if result.collider and not excluded_objects.has(result.collider):
@@ -149,18 +163,78 @@ func perform_radar_scan():
 		# Add this group of hits to the wall_hit_groups
 		wall_hit_groups.append(hit_group)
 	
-	# Check for all groups that might contain enemies
-	var enemy_groups = ["enemies", "enemy", "venus"]
-	
-	for group_name in enemy_groups:
-		if get_tree().has_group(group_name):
-			# Detect enemies within range
-			for node in get_tree().get_nodes_in_group(group_name):
-				if abs(node.global_position.y - current_floor_y) < y_threshold:
-					var distance = node.global_position.distance_to(player_pos)
+	# Also scan for any enemies or scraps that might be missed by raycasting
+	check_groups_in_range(player_pos, current_floor_y, y_threshold)
+
+# Check for enemies and scraps using the group system
+func check_groups_in_range(player_pos: Vector3, current_floor_y: float, y_threshold: float):
+	# Check for enemies
+	if get_tree().has_group("enemy"):
+		for enemy in get_tree().get_nodes_in_group("enemy"):
+			if enemy is Node3D:
+				if abs(enemy.global_position.y - current_floor_y) < y_threshold:
+					var distance = enemy.global_position.distance_to(player_pos)
 					if distance <= max_detection_distance:
-						enemy_count += 1
-						detected_enemies.append(node.global_position)
+						# Only count if not already detected by raycast
+						var already_detected = false
+						for pos in detected_enemies:
+							if pos.distance_to(enemy.global_position) < 0.5:  # Close enough to be the same
+								already_detected = true
+								break
+						if not already_detected:
+							enemy_count += 1
+							detected_enemies.append(enemy.global_position)
+	
+	# Check for venus enemies specifically
+	if get_tree().has_group("venus"):
+		for venus in get_tree().get_nodes_in_group("venus"):
+			if venus is Node3D:
+				if abs(venus.global_position.y - current_floor_y) < y_threshold:
+					var distance = venus.global_position.distance_to(player_pos)
+					if distance <= max_detection_distance:
+						# Only count if not already detected by raycast
+						var already_detected = false
+						for pos in detected_enemies:
+							if pos.distance_to(venus.global_position) < 0.5:  # Close enough to be the same
+								already_detected = true
+								break
+						if not already_detected:
+							enemy_count += 1
+							detected_enemies.append(venus.global_position)
+	
+	# Check for earworm enemies specifically
+	if get_tree().has_group("earworm"):
+		for earworm in get_tree().get_nodes_in_group("earworm"):
+			if earworm is Node3D:
+				if abs(earworm.global_position.y - current_floor_y) < y_threshold:
+					var distance = earworm.global_position.distance_to(player_pos)
+					if distance <= max_detection_distance:
+						# Only count if not already detected by raycast
+						var already_detected = false
+						for pos in detected_enemies:
+							if pos.distance_to(earworm.global_position) < 0.5:  # Close enough to be the same
+								already_detected = true
+								break
+						if not already_detected:
+							enemy_count += 1
+							detected_enemies.append(earworm.global_position)
+	
+	# Check for scraps
+	if get_tree().has_group("scrap"):
+		for scrap in get_tree().get_nodes_in_group("scrap"):
+			if scrap is Node3D:
+				if abs(scrap.global_position.y - current_floor_y) < y_threshold:
+					var distance = scrap.global_position.distance_to(player_pos)
+					if distance <= max_detection_distance:
+						# Only count if not already detected by raycast
+						var already_detected = false
+						for pos in detected_scraps:
+							if pos.distance_to(scrap.global_position) < 0.5:  # Close enough to be the same
+								already_detected = true
+								break
+						if not already_detected:
+							scrap_count += 1
+							detected_scraps.append(scrap.global_position)
 
 func _draw():
 	if not target_player:
@@ -197,7 +271,7 @@ func _draw():
 			# Draw line between points
 			draw_line(point.display_pos, nearest.display_pos, Color(0, 1, 0), 1.5)
 	
-	# Draw detected enemies (green dots)
+	# Draw detected enemies (red dots)
 	for enemy_pos in detected_enemies:
 		var direction = enemy_pos - player_pos
 		direction.y = 0 # Flatten to 2D plane
@@ -210,8 +284,24 @@ func _draw():
 		var direction_2d = Vector2(direction.x, direction.z).normalized()
 		var point = center + direction_2d * normalized_distance * max_radius
 		
-		# Draw green dot for enemy
-		draw_circle(point, 5, Color(0, 1, 0))
+		# Draw red dot for enemy
+		draw_circle(point, 5, Color(1, 0, 0))
+	
+	# Draw detected scraps (yellow dots)
+	for scrap_pos in detected_scraps:
+		var direction = scrap_pos - player_pos
+		direction.y = 0 # Flatten to 2D plane
+		
+		# Calculate normalized direction and distance
+		var distance = direction.length()
+		var normalized_distance = min(distance, max_radar_distance) / max_radar_distance
+		
+		# Calculate position using normalized direction and distance
+		var direction_2d = Vector2(direction.x, direction.z).normalized()
+		var point = center + direction_2d * normalized_distance * max_radius
+		
+		# Draw yellow dot for scrap
+		draw_circle(point, 5, Color(1, 1, 0))
 	
 	# Draw player position as a green X
 	var x_size = 6
@@ -222,6 +312,7 @@ func _draw():
 	var debug_color = Color(0, 1, 0)
 	draw_string(ThemeDB.fallback_font, Vector2(10, 20), "Walls: " + str(wall_hit_count), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, debug_color)
 	draw_string(ThemeDB.fallback_font, Vector2(10, 40), "Enemies: " + str(enemy_count), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, debug_color)
+	draw_string(ThemeDB.fallback_font, Vector2(10, 60), "Scraps: " + str(scrap_count), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, debug_color)
 
 # Find the nearest neighboring points to the given point
 func find_nearest_points(point, all_points, max_distance):

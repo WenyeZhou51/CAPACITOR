@@ -31,6 +31,11 @@ var los
 func _ready() -> void:
 	#print("[VENUS] _ready() called")
 	randomize()
+	
+	# Add to the enemy group for radar detection
+	add_to_group("enemy")
+	add_to_group("venus")
+	
 	floor_snap_length = 1.0
 	#delay timer
 	#var timer = Timer.new()
