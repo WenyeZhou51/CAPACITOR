@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://dqmh6twbiovrm"]
+
+[ext_resource type="Script" path="res://Scripts/broken_bomb.gd" id="1_hfqrb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0tcbd"]
+size = Vector3(0.3, 0.2, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n3pil"]
+albedo_color = Color(0.262745, 0.247059, 0.247059, 1)
+roughness = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_3oykr"]
+material = SubResource("StandardMaterial3D_n3pil")
+size = Vector3(0.3, 0.2, 0.5)
+
+[node name="BrokenBomb" type="RigidBody3D" groups=["scrap"]]
+collision_layer = 4
+collision_mask = 5
+mass = 3.0
+script = ExtResource("1_hfqrb")
+explosion_time = 20.0
+Price = 700
+type = "brokenbomb"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_0tcbd")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_3oykr")
+
+[node name="TimerDisplay" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.102, 0.151)
+visible = false
+modulate = Color(1, 0, 0, 1)
+font_size = 16
+outline_size = 2

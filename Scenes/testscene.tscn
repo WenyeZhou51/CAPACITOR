@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://c8y6hkpnlip1g"]
+[gd_scene load_steps=42 format=3 uid="uid://c8y6hkpnlip1g"]
 
 [ext_resource type="Script" path="res://Scenes/testscene.gd" id="1_v17iy"]
 [ext_resource type="PackedScene" uid="uid://gin1s6t5p5jh" path="res://Scenes/ui.tscn" id="2_j6u47"]
@@ -33,6 +33,7 @@
 [ext_resource type="PackedScene" uid="uid://cthap72n58ne7" path="res://Scenes/prefabs/items/spraypaint.tscn" id="30_4dy1c"]
 [ext_resource type="PackedScene" uid="uid://dk45gdv2rkl67" path="res://Scenes/prefabs/items/brokenradio.tscn" id="31_7difu"]
 [ext_resource type="PackedScene" uid="uid://xcj3me4ww2u2" path="res://console folder/console.tscn" id="31_pwwba"]
+[ext_resource type="PackedScene" uid="uid://dqmh6twbiovrm" path="res://Scenes/prefabs/items/brokenbomb.tscn" id="32_ejox1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_binvk"]
 sky_top_color = Color(0.0101014, 0.0122771, 0.0165181, 1)
@@ -248,8 +249,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.2851, 15.9619, -3.29192)
 [node name="BrokenRadio" parent="items" instance=ExtResource("31_7difu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 16.6078, -7.00566)
 
-[node name="Earworm" parent="items" instance=ExtResource("9_vw5pj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.0949, 15.5, -2.71838)
+[node name="BrokenBomb" parent="items" instance=ExtResource("32_ejox1")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 39.6314, 17.6653, -2.91304)
+
+[node name="BrokenBomb2" parent="items" instance=ExtResource("32_ejox1")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 39.6314, 17.6653, 0.0491173)
 
 [node name="ItemSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://Scenes/prefabs/items/scrap1.tscn", "res://Scenes/prefabs/items/scrap2.tscn", "res://Scenes/prefabs/items/scrap3.tscn", "res://Scenes/prefabs/Door.tscn", "res://Scenes/prefabs/items/coolant.tscn", "res://Scenes/prefabs/enemies/enemy_earworm.tscn", "res://Scenes/prefabs/enemies/enemy_venus.tscn", "res://Scenes/prefabs/items/flashlight.tscn")
