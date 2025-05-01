@@ -120,11 +120,11 @@ func _spray_paint(player: Node) -> void:
             print("[Spray debug] Surface not sprayable: " + str(result.collider.name))
 
 func _is_sprayable_surface(object: Object) -> bool:
-    # Only allow spraypaint on walls and floors, not on doors or props
+    # Only allow spraypaint on walls and floors, not on doors, props, or cashboxes
     
-    # Check if it's explicitly a door or prop (reject these)
-    if "door" in object.name.to_lower() or "prop" in object.name.to_lower():
-        print("[Spray debug] Not sprayable: door or prop detected")
+    # Check if it's explicitly a door, prop, or cashbox (reject these)
+    if "door" in object.name.to_lower() or "prop" in object.name.to_lower() or "cashbox" in object.name.to_lower() or "cash" in object.name.to_lower():
+        print("[Spray debug] Not sprayable: door, prop, or cashbox detected")
         return false
         
     # Only allow if it's a wall or floor
@@ -134,8 +134,8 @@ func _is_sprayable_surface(object: Object) -> bool:
     
     # Additional check for static level geometry that might be walls/floors but not named as such
     # We only allow specific object types that are likely to be walls/floors
-    if (object is StaticBody3D or object is CSGShape3D) and not ("door" in object.get_parent().name.to_lower() or "prop" in object.get_parent().name.to_lower()):
-        # Extra check - if this has a parent with "door" or "prop" in the name, reject it
+    if (object is StaticBody3D or object is CSGShape3D) and not ("door" in object.get_parent().name.to_lower() or "prop" in object.get_parent().name.to_lower() or "cashbox" in object.get_parent().name.to_lower() or "cash" in object.get_parent().name.to_lower()):
+        # Extra check - if this has a parent with "door", "prop", or "cashbox" in the name, reject it
         print("[Spray debug] Sprayable static geometry detected")
         return true
     
