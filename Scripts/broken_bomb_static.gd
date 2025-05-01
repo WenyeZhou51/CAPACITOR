@@ -46,11 +46,11 @@ func _ready() -> void:
 		flash_light.light_color = Color(1, 0, 0)  # Red light
 		flash_light.light_energy = 0.2  # Start with faint light
 		flash_light.omni_range = 2.0
-		flash_light.visible = timer_started  # Only visible if timer started
+		flash_light.visible = false  # Always off initially
 		add_child(flash_light)
 	else:
 		flash_light = get_node("FlashLight")
-		flash_light.visible = timer_started
+		flash_light.visible = false  # Ensure light is off initially
 	
 	# Create explosion particles (will be invisible until explosion)
 	if !has_node("ExplosionParticles"):
@@ -94,8 +94,6 @@ func _ready() -> void:
 	
 	# Start the timer if it was already started
 	if timer_started and !is_exploded:
-		if flash_light:
-			flash_light.visible = true
 		beep_timer.wait_time = current_beep_interval
 		beep_timer.start()
 
@@ -113,9 +111,8 @@ func _process(delta: float) -> void:
 			# Gradually decrease beep interval from 3 seconds to final_beep_interval
 			current_beep_interval = lerp(3.0, final_beep_interval, elapsed_time / explosion_time)
 			
-			# Increase flash intensity
-			if flash_light:
-				flash_light.light_energy = lerp(0.2, 1.0, elapsed_time / explosion_time)
+			# Don't keep the light on constantly - only during flashes
+			# We'll handle light visibility in the _on_beep_timer_timeout function
 
 func _on_beep_timer_timeout() -> void:
 	if is_exploded:
@@ -131,6 +128,8 @@ func _on_beep_timer_timeout() -> void:
 		var tween = create_tween()
 		tween.tween_property(flash_light, "light_energy", 0.0, 0.1)
 		tween.tween_property(flash_light, "light_energy", lerp(0.2, 1.0, elapsed_time / explosion_time), 0.1)
+		# Hide the light after a short flash
+		tween.tween_callback(func(): flash_light.visible = false).set_delay(0.2)
 	
 	# Set up the next beep
 	beep_timer.wait_time = current_beep_interval
@@ -164,6 +163,7 @@ func explode() -> void:
 		flash_light.light_color = Color(1, 0.8, 0.2)  # Yellow-orange
 		flash_light.light_energy = 5.0  # Very bright
 		flash_light.omni_range = 10.0  # Larger range
+		flash_light.visible = true  # Make sure it's visible for explosion
 		
 		var tween = create_tween()
 		tween.tween_property(flash_light, "light_energy", 0.0, 1.0)
@@ -210,5 +210,80 @@ func explode() -> void:
 	remove_timer.start()
 
 func drop(player: CharacterBody3D, drop_position: Vector3 = Vector3.ZERO, drop_direction: Vector3 = Vector3.FORWARD) -> void:
-	# Call the parent drop function without stopping the timer
-	super.drop(player, drop_position, drop_direction) 
+	# Call the parent drop function 
+	var world = get_tree().current_scene
+	var item_socket = player.get_node("Head/ItemSocket")
+	
+	if self.get_parent() == item_socket:
+		item_socket.remove_child(self)
+		player._set_item_visibility(self, false, "before dropping")  # Hide before conversion
+		
+		var global_transform = player.global_transform
+		self.global_transform.origin = global_transform.origin + (global_transform.basis.z * drop_direction * 2) + drop_position
+		
+		var rigidbody = convert_staticbody_to_rigidbody(self, world)
+		
+		# Transfer the timer state to the rigidbody
+		if rigidbody is BrokenBomb:
+			rigidbody.timer_started = timer_started
+			rigidbody.elapsed_time = elapsed_time
+			rigidbody.is_exploded = is_exploded
+		
+		world.add_child(rigidbody)
+		# Add the dropped item to the scrap group for radar detection
+		rigidbody.add_to_group("scrap")
+		player._set_item_visibility(rigidbody, true, "dropped in world")
+	
+	# Clear from inventory
+	for i in range(player.inventory.size()):
+		if player.inventory[i] == self:
+			player.inventory[i] = null
+			player.inv_size -= 1
+			if str(player.get_tree().get_multiplayer().get_unique_id()) == player.name:
+				GameState.change_ui.emit(i, "empty", 0)
+			break
+	player.is_holding = false
+
+# Override this function to handle bomb-specific conversion
+func convert_staticbody_to_rigidbody(static_body: StaticBody3D, world: Node3D) -> RigidBody3D:
+	# Get the parent node
+	var path = "res://Scenes/prefabs/items/" + str(static_body.type) + ".tscn"
+	print("Attempting to load: ", path)
+	
+	# Create a new RigidBody3D from the scene
+	var scene = load(path)
+	if scene == null:
+		push_error("Failed to load scene: " + path)
+		print("ERROR: Cannot drop item - scene file not found: " + path)
+		return null
+	
+	var rigidbody = scene.instantiate()
+	rigidbody.name = static_body.name  # Retain the same name for clarity
+	
+	# Transfer the transform (position, rotation, scale)
+	rigidbody.transform = static_body.transform
+	
+	# Set properties
+	rigidbody.Price = static_body.Price
+	rigidbody.type = static_body.type
+	
+	# Transfer bomb-specific properties
+	if rigidbody is BrokenBomb:
+		rigidbody.timer_started = timer_started
+		rigidbody.elapsed_time = elapsed_time
+		rigidbody.explosion_time = explosion_time
+		rigidbody.is_exploded = is_exploded
+		rigidbody.damage_amount = damage_amount
+		rigidbody.explosion_radius = explosion_radius
+		rigidbody.final_beep_interval = final_beep_interval
+		print("Transferred bomb timer state: timer_started=", timer_started, ", elapsed_time=", elapsed_time)
+	
+	# Apply impulse to make it feel more natural
+	if rigidbody is RigidBody3D:
+		rigidbody.apply_impulse(Vector3(0, 2, -5))
+	
+	# Clean up the static body
+	self.queue_free()
+	
+	print("Successfully dropped item as: " + rigidbody.name)
+	return rigidbody 

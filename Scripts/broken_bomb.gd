@@ -49,10 +49,11 @@ func _ready() -> void:
 		flash_light.light_color = Color(1, 0, 0)  # Red light
 		flash_light.light_energy = 0.2  # Start with faint light
 		flash_light.omni_range = 2.0
-		flash_light.visible = false
+		flash_light.visible = false  # Always start with light off
 		add_child(flash_light)
 	else:
 		flash_light = get_node("FlashLight")
+		flash_light.visible = false  # Ensure light is off initially
 	
 	# Create explosion particles (will be invisible until explosion)
 	if !has_node("ExplosionParticles"):
@@ -93,6 +94,11 @@ func _ready() -> void:
 	beep_timer.wait_time = current_beep_interval
 	beep_timer.timeout.connect(_on_beep_timer_timeout)
 	add_child(beep_timer)
+	
+	# Start the timer if it was already started
+	if timer_started and !is_exploded:
+		beep_timer.wait_time = current_beep_interval
+		beep_timer.start()
 
 func _process(delta: float) -> void:
 	if timer_started and !is_exploded:
@@ -108,16 +114,13 @@ func _process(delta: float) -> void:
 			# Gradually decrease beep interval from 3 seconds to final_beep_interval
 			current_beep_interval = lerp(3.0, final_beep_interval, elapsed_time / explosion_time)
 			
-			# Increase flash intensity
-			if flash_light:
-				flash_light.light_energy = lerp(0.2, 1.0, elapsed_time / explosion_time)
+			# Don't keep the light on constantly - only during flashes
+			# We'll handle light visibility in the _on_beep_timer_timeout function
 
 func interact(player: Player) -> void:
 	# Start the timer when picked up if not already started
 	if !timer_started:
 		timer_started = true
-		if flash_light:
-			flash_light.visible = true
 		
 		# Start the beep timer
 		beep_timer.wait_time = current_beep_interval
@@ -142,6 +145,8 @@ func _on_beep_timer_timeout() -> void:
 		var tween = create_tween()
 		tween.tween_property(flash_light, "light_energy", 0.0, 0.1)
 		tween.tween_property(flash_light, "light_energy", lerp(0.2, 1.0, elapsed_time / explosion_time), 0.1)
+		# Hide the light after a short flash
+		tween.tween_callback(func(): flash_light.visible = false).set_delay(0.2)
 	
 	# Set up the next beep
 	beep_timer.wait_time = current_beep_interval
@@ -175,6 +180,7 @@ func explode() -> void:
 		flash_light.light_color = Color(1, 0.8, 0.2)  # Yellow-orange
 		flash_light.light_energy = 5.0  # Very bright
 		flash_light.omni_range = 10.0  # Larger range
+		flash_light.visible = true  # Make sure it's visible for explosion
 		
 		var tween = create_tween()
 		tween.tween_property(flash_light, "light_energy", 0.0, 1.0)
@@ -224,5 +230,8 @@ func convert_rigidbody_to_staticbody(rigidbody: RigidBody3D) -> StaticBody3D:
 		static_body.elapsed_time = elapsed_time
 		static_body.explosion_time = explosion_time
 		static_body.is_exploded = is_exploded
+		static_body.damage_amount = damage_amount
+		static_body.explosion_radius = explosion_radius
+		static_body.final_beep_interval = final_beep_interval
 	
 	return static_body 
