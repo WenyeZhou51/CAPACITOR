@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=3 uid="uid://dk45gdv2rkl67"]
+
+[ext_resource type="Script" path="res://Scripts/broken_radio.gd" id="1_yjk2p"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r6j2c"]
+size = Vector3(0.2, 0.4, 0.15)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2hbvx"]
+albedo_color = Color(0.372549, 0.372549, 0.372549, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6dxu8"]
+material = SubResource("StandardMaterial3D_2hbvx")
+size = Vector3(0.2, 0.4, 0.15)
+
+[node name="BrokenRadio" type="RigidBody3D" groups=["scrap"]]
+collision_layer = 4
+collision_mask = 5
+mass = 2.0
+script = ExtResource("1_yjk2p")
+Price = 500
+type = "brokenradio"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_r6j2c")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_6dxu8")
+
+[node name="Antenna" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+
+[node name="AntennaMesh" type="CSGCylinder3D" parent="Antenna"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+radius = 0.01
+height = 0.3
+
+[node name="Panel" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.08)
+
+[node name="PanelMesh" type="CSGBox3D" parent="Panel"]
+size = Vector3(0.18, 0.38, 0.01)
+material = SubResource("StandardMaterial3D_2hbvx")
+
+[node name="Dial1" type="CSGCylinder3D" parent="Panel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, 0.1, 0.01)
+radius = 0.03
+height = 0.01
+
+[node name="Dial2" type="CSGCylinder3D" parent="Panel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.1, 0.01)
+radius = 0.03
+height = 0.01
+
+[node name="Speaker" type="CSGBox3D" parent="Panel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0.01)
+size = Vector3(0.15, 0.15, 0.01)

@@ -26,7 +26,7 @@ size = Vector3(2.74588, 1.71497, 3.32611)
 [node name="Earworm" type="CharacterBody3D" node_paths=PackedStringArray("detection_area", "collision_area")]
 collision_layer = 2
 script = ExtResource("1_f56b5")
-chase_speed = 10.0
+chase_speed = 7.0
 turn_speed = 1.0
 attack_radius = 1.0
 attack_damage = 20.0
