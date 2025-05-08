@@ -24,6 +24,29 @@
 
 ---
 
+### 🌐 Remote Multiplayer
+- **Peer-to-Peer Hosting:**
+  - One player hosts the game, others join directly.
+  - UPnP automatically sets up port forwarding when possible.
+  - Manual port forwarding may be required in some network setups.
+- **How to Host:**
+  1. Click "Host" in the multiplayer menu.
+  2. Enter your player name.
+  3. If UPnP succeeds, your external IP will be displayed.
+  4. Share your IP and port (default: 8080) with friends.
+  5. Click "START" when all players have joined.
+- **How to Join:**
+  1. Click "Join" in the multiplayer menu.
+  2. Enter the host's IP address.
+  3. Enter your player name.
+  4. Wait for the host to start the game.
+- **Troubleshooting:**
+  - If UPnP fails, you'll need to manually forward port 8080 (UDP) in your router.
+  - If players can't connect, try using a VPN service that supports direct connections.
+  - For NAT traversal issues, ensure both the host and clients have UDP port 8080 open.
+
+---
+
 ### ⚡ Electricity System
 - **Generator:** 
   - Managed with fuel (electricity) and heat levels.
