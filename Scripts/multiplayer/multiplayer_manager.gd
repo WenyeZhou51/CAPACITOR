@@ -1,6 +1,11 @@
 extends Node
 
 signal host_msg
+signal external_ip_obtained(ip_address: String)
+
+# Load the IPEncoder class directly
+const IPEncoderClass = preload("res://Scripts/Management/ip_encoder.gd")
+var ip_encoder = IPEncoderClass.new()
 
 ##### GAME VARS AND LOGIC
 var map_seed = 1
@@ -50,72 +55,110 @@ func _ready():
 func _on_connection_timeout():
 	if is_connecting:
 		is_connecting = false
-		host_msg.emit("Connection timed out. Please check the IP and try again.")
+		host_msg.emit("Connection timed out")
 		if multiplayer.multiplayer_peer:
 			multiplayer.multiplayer_peer.close()
 
 ##### UPnP PORT FORWARDING #####
 
 func setup_upnp() -> int:
+	print("[DEBUG] setup_upnp() - Starting UPnP setup")
 	debug_log("Setting up UPnP...")
 	host_msg.emit("Setting up port forwarding...")
 	
 	upnp = UPNP.new()
+	print("[DEBUG] setup_upnp() - Created new UPNP instance")
 	var discover_result = upnp.discover()
+	print("[DEBUG] setup_upnp() - UPnP discover result: " + str(discover_result))
 	
 	if discover_result != UPNP.UPNP_RESULT_SUCCESS:
-		host_msg.emit("UPnP setup failed: No UPnP service found")
+		print("[DEBUG] setup_upnp() - UPnP discovery failed")
+		host_msg.emit("UPnP setup failed")
 		debug_log("UPnP discovery failed with error: " + str(discover_result))
 		return discover_result
 	
+	print("[DEBUG] setup_upnp() - UPnP discovery succeeded")
 	if upnp.get_gateway() and upnp.get_gateway().is_valid_gateway():
+		print("[DEBUG] setup_upnp() - Valid gateway found")
 		# Try getting the external IP
 		external_ip = upnp.query_external_address()
+		print("[DEBUG] setup_upnp() - External IP query result: " + (external_ip if external_ip != "" else "empty"))
+		
 		if external_ip == "":
-			host_msg.emit("UPnP: Couldn't get external IP")
+			print("[DEBUG] setup_upnp() - Failed to get external IP")
+			host_msg.emit("Couldn't get external IP")
 			debug_log("UPnP: Failed to get external IP")
 		else:
+			print("[DEBUG] setup_upnp() - Successfully got external IP: " + external_ip)
 			debug_log("UPnP: External IP: " + external_ip)
 			
 		# Map the port
+		print("[DEBUG] setup_upnp() - Attempting to map port " + str(SERVER_PORT))
 		var port_mapping_result = upnp.add_port_mapping(SERVER_PORT, SERVER_PORT, "Godot Game", "UDP")
+		print("[DEBUG] setup_upnp() - Port mapping result: " + str(port_mapping_result))
+		
 		if port_mapping_result != UPNP.UPNP_RESULT_SUCCESS:
-			host_msg.emit("UPnP: Failed to map port. Manual port forwarding required.")
+			print("[DEBUG] setup_upnp() - Port mapping failed")
+			host_msg.emit("Port forwarding failed")
 			debug_log("UPnP: Port mapping failed with error: " + str(port_mapping_result))
 			return port_mapping_result
 			
+		print("[DEBUG] setup_upnp() - Port mapping successful")
 		debug_log("UPnP: Port mapping successful!")
-		host_msg.emit("Port forwarding successful! External IP: " + external_ip)
 		return UPNP.UPNP_RESULT_SUCCESS
 	else:
-		host_msg.emit("UPnP: Invalid gateway")
+		print("[DEBUG] setup_upnp() - Invalid gateway")
+		host_msg.emit("UPnP gateway invalid")
 		debug_log("UPnP: Invalid gateway")
 		return UPNP.UPNP_RESULT_INVALID_GATEWAY
 
 func remove_upnp_port_mapping():
+	print("[DEBUG] remove_upnp_port_mapping() - Starting function")
+	print("[DEBUG] remove_upnp_port_mapping() - upnp exists: " + str(upnp != null))
+	
 	if upnp and upnp.get_gateway() and upnp.get_gateway().is_valid_gateway():
+		print("[DEBUG] remove_upnp_port_mapping() - Valid gateway found, removing port mapping")
 		var result = upnp.delete_port_mapping(SERVER_PORT, "UDP")
+		print("[DEBUG] remove_upnp_port_mapping() - Result: " + str(result))
+		
 		if result == UPNP.UPNP_RESULT_SUCCESS:
 			debug_log("UPnP port mapping removed successfully")
+			print("[DEBUG] remove_upnp_port_mapping() - Port mapping removed successfully")
 		else:
 			debug_log("Failed to remove UPnP port mapping: " + str(result))
+			print("[DEBUG] remove_upnp_port_mapping() - Failed to remove port mapping: " + str(result))
+	else:
+		print("[DEBUG] remove_upnp_port_mapping() - No valid gateway, nothing to remove")
 
 ##### HOSTING AND JOINING #####
 
 func host_game():
-	multiplayer.multiplayer_peer.close()
+	print("[DEBUG] host_game() - Starting host game function")
+	print("[DEBUG] host_game() - multiplayer_peer exists: " + str(multiplayer.multiplayer_peer != null))
+	
+	if multiplayer.multiplayer_peer != null:
+		print("[DEBUG] host_game() - Closing existing multiplayer peer")
+		multiplayer.multiplayer_peer.close()
+	else:
+		print("[DEBUG] host_game() - No existing multiplayer peer to close")
+	
 	host_msg.emit("Hosting game...")
 	debug_log("Starting host initialization")
 	
 	player_info.username = player_username
+	print("[DEBUG] host_game() - Player username set to: " + player_username)
 	
 	# Try UPnP setup if enabled
 	var upnp_result = UPNP.UPNP_RESULT_NO_DEVICES
 	if upnp_enabled:
+		print("[DEBUG] host_game() - Starting UPnP setup")
 		upnp_result = setup_upnp()
+		print("[DEBUG] host_game() - UPnP setup completed with result: " + str(upnp_result))
 	
 	var server_peer = ENetMultiplayerPeer.new()
+	print("[DEBUG] host_game() - Created new ENetMultiplayerPeer")
 	var error = server_peer.create_server(SERVER_PORT, MAX_PLAYERS)
+	print("[DEBUG] host_game() - create_server result: " + str(error))
 	
 	if error != OK:
 		debug_log("ERROR: Failed to create server: " + str(error))
@@ -123,14 +166,17 @@ func host_game():
 		
 		# Clean up UPnP if we succeeded with that but failed to create server
 		if upnp_result == UPNP.UPNP_RESULT_SUCCESS:
+			print("[DEBUG] host_game() - Removing UPnP port mapping due to server creation failure")
 			remove_upnp_port_mapping()
 		return
 		
 	debug_log("Server created successfully on port " + str(SERVER_PORT))
+	print("[DEBUG] host_game() - Setting multiplayer.multiplayer_peer")
 	multiplayer.multiplayer_peer = server_peer
 	
 	player_info.id = 1
 	players[1] = player_info.duplicate()
+	print("[DEBUG] host_game() - Added host player to players dictionary with ID 1")
 	
 	# set map seed
 	randomize()
@@ -139,55 +185,101 @@ func host_game():
 	
 	# Update network status
 	network_status = "Hosting"
+	print("[DEBUG] host_game() - Network status set to: " + network_status)
 	
 	# Share connection information
-	var host_ip = external_ip if external_ip != "" else "Could not determine external IP"
 	if external_ip != "":
-		host_msg.emit("Success! Share this info with others to join:\nIP: " + host_ip + "\nPort: " + str(SERVER_PORT))
+		print("[DEBUG] host_game() - External IP available: " + external_ip)
+		
+		# Encode the IP using Base36
+		var encoded_ip = ip_encoder.encode_ip(external_ip)
+		print("[DEBUG] host_game() - Encoded IP: " + encoded_ip)
+		
+		print("[DEBUG] host_game() - About to emit external_ip_obtained signal")
+		# Emit signal with the encoded IP for the label
+		external_ip_obtained.emit(encoded_ip)
+		print("[DEBUG] host_game() - Signal external_ip_obtained emitted with: " + encoded_ip)
+		host_msg.emit("Hosting successful!")
 	else:
-		host_msg.emit("Hosting locally. Port forwarding might be needed.\nLocal IP for LAN play: " + IP.get_local_addresses()[0])
+		print("[DEBUG] host_game() - No external IP available")
+		external_ip_obtained.emit("No UPnP - Manual forwarding needed")
+		host_msg.emit("UPnP failed. Manual port forwarding required.")
+	
+	print("[DEBUG] host_game() - Completed host_game function")
 
 func kick_everyone():
+	print("[DEBUG] kick_everyone() - Starting function")
+	print("[DEBUG] kick_everyone() - is_server: " + str(multiplayer.is_server()))
+	print("[DEBUG] kick_everyone() - has_multiplayer_peer: " + str(multiplayer.multiplayer_peer != null))
+	
 	if multiplayer.is_server() and multiplayer.multiplayer_peer:
+		print("[DEBUG] kick_everyone() - Server with valid peer, kicking all clients")
 		for idx in players.keys():
 			if players[idx].id != 1:
+				print("[DEBUG] kick_everyone() - Disconnecting peer: " + str(players[idx].id))
 				multiplayer.multiplayer_peer.disconnect_peer(players[idx].id)
 		# Then disconnect the host
+		print("[DEBUG] kick_everyone() - Clearing players dictionary")
 		players = {}
+		print("[DEBUG] kick_everyone() - Setting multiplayer_peer to null")
 		multiplayer.multiplayer_peer = null
 		
 		# Clean up UPnP port mapping
 		if upnp_enabled:
+			print("[DEBUG] kick_everyone() - Removing UPnP port mapping")
 			remove_upnp_port_mapping()
 		
 		network_status = "Not connected"
 		host_msg.emit("Disconnected from game")
+	else:
+		print("[DEBUG] kick_everyone() - Not a server or no multiplayer peer, nothing to kick")
 
 func kick_client(client_id: int):
+	print("[DEBUG] kick_client() - Starting function for client ID: " + str(client_id))
+	print("[DEBUG] kick_client() - is_server: " + str(multiplayer.is_server()))
+	print("[DEBUG] kick_client() - has_multiplayer_peer: " + str(multiplayer.multiplayer_peer != null))
+	
 	if multiplayer.is_server() and multiplayer.multiplayer_peer:
 		debug_log("Kicking client " + str(client_id))
 		if client_id == 1:
+			print("[DEBUG] kick_client() - Kicking host (client ID 1)")
 			var message = "The host has disconnected! Please rejoin a live session"
 			# Send the message to each connected client
 			for idx in players:
 				#print("Checking players content", players[idx].id)
 				if players[idx].id != 1:
+					print("[DEBUG] kick_client() - Sending disconnect message to client: " + str(players[idx].id))
 					rpc_id(players[idx].id, "display_session_end_message", message)
 			
 			# Clean up UPnP port mapping
 			if upnp_enabled:
+				print("[DEBUG] kick_client() - Removing UPnP port mapping")
 				remove_upnp_port_mapping()
 				
+			print("[DEBUG] kick_client() - Setting multiplayer_peer to null")
 			multiplayer.multiplayer_peer = null
 			network_status = "Not connected"
 		else:
+			print("[DEBUG] kick_client() - Disconnecting client: " + str(client_id))
 			multiplayer.multiplayer_peer.disconnect_peer(client_id)
+	else:
+		print("[DEBUG] kick_client() - Not a server or no multiplayer peer, can't kick client: " + str(client_id))
 
 func join_game():
 	debug_log("Starting client initialization")
-	host_msg.emit("Connecting to " + SERVER_IP + "...")
+	host_msg.emit("Connecting...")
 	
 	player_info.username = player_username
+	
+	# Check if the SERVER_IP is an encoded IP or a standard IP
+	if ip_encoder.is_valid_encoded_ip(SERVER_IP):
+		print("[DEBUG] join_game() - Detected encoded IP: " + SERVER_IP)
+		# Decode the IP
+		var decoded_ip = ip_encoder.decode_ip(SERVER_IP)
+		print("[DEBUG] join_game() - Decoded to: " + decoded_ip)
+		SERVER_IP = decoded_ip
+	else:
+		print("[DEBUG] join_game() - Using standard IP format: " + SERVER_IP)
 	
 	var client_peer = ENetMultiplayerPeer.new()
 	
@@ -220,7 +312,6 @@ func get_network_status() -> String:
 
 func _on_connected_to_server():
 	debug_log("Successfully connected to server!")
-	host_msg.emit("Connected to server successfully!")
 	is_connecting = false
 	connection_timer.stop()
 	network_status = "Connected"
@@ -228,10 +319,13 @@ func _on_connected_to_server():
 	# Register ourselves with the server
 	player_info.id = multiplayer.get_unique_id()
 	register_player.rpc_id(1, player_info)
+	
+	# Show success message to the player
+	host_msg.emit("Joined successfully as " + player_username)
 
 func _on_connection_failed():
 	debug_log("Connection to server failed")
-	host_msg.emit("Failed to connect to server. Check the IP and make sure the server is running.")
+	host_msg.emit("Connection failed")
 	is_connecting = false
 	connection_timer.stop()
 	network_status = "Not connected"
@@ -272,7 +366,9 @@ func register_player(new_player_info):
 	# Update player count and inform all clients
 	player_count = players.size()
 	set_map_seed_and_player_count.rpc(map_seed, player_count)
-	host_msg.emit("Player " + new_player_info.username + " (ID: " + str(sender_id) + ") joined!")
+	
+	# Notify host about new player
+	host_msg.emit("Player " + new_player_info.username + " joined!")
 
 @rpc("any_peer", "call_local")
 func switch_map(url: String):
